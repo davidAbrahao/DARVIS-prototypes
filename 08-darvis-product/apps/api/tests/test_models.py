@@ -13,6 +13,7 @@ def test_authentication_models_are_registered_in_metadata() -> None:
         "tasks",
         "assistant_conversations",
         "assistant_messages",
+        "memory_entries",
     } <= set(Base.metadata.tables)
     assert models.User.__tablename__ == "users"
     assert models.AuthSession.__tablename__ == "auth_sessions"
@@ -58,3 +59,12 @@ def test_project_task_models_declare_database_level_tenant_constraints() -> None
 
     assert models.AssistantConversation.__tablename__ == "assistant_conversations"
     assert models.AssistantMessage.__tablename__ == "assistant_messages"
+
+
+def test_memory_model_declares_manual_source_and_category_constraints() -> None:
+    assert models.MemoryEntry.__tablename__ == "memory_entries"
+    constraints = {
+        constraint.name for constraint in models.MemoryEntry.__table__.constraints
+    }
+    assert "ck_memory_entries_category" in constraints
+    assert "ck_memory_entries_source" in constraints
