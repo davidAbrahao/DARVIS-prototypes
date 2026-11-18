@@ -75,7 +75,7 @@ A rotação simultânea do mesmo token é tratada de forma conservadora: a prime
 
 ## Verificações automatizadas
 
-O fluxo ativo de integração contínua está em `.github/workflows/darvis-api-ci.yml`. Ele instala a API, executa os testes e verifica o código com Ruff para alterações neste diretório.
+O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual pela aba **Actions**. Ele instala a API, executa os testes e verifica o código com Ruff. A execução está deliberadamente pendente da fase de validação.
 
 Para executar localmente:
 
