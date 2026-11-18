@@ -108,7 +108,8 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
         const payload = await authenticate(email, password);
         acceptSession(payload);
       } catch (error) {
-        if (error instanceof ApiError && error.status === 401) {
+        if (error instanceof ApiError) {
+          // 401, 403 e 429 são respostas válidas da API, não falhas de conectividade.
           clearSession();
         } else {
           setStatus("unavailable");
