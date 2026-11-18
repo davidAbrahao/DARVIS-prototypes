@@ -127,7 +127,10 @@ export function DashboardOverview() {
   }, [load]);
 
   const projectNames = useMemo(
-    () => new Map(data.projects.map((project) => [project.id, project.name])),
+    () =>
+      new Map<number, string>(
+        data.projects.map((project) => [project.id, project.name] as const),
+      ),
     [data.projects],
   );
 
