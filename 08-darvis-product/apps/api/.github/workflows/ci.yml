@@ -1,0 +1,43 @@
+name: Verificações da API D.A.R.V.I.S.
+
+on:
+  push:
+    branches: [main, "product/**"]
+    paths:
+      - "08-darvis-product/apps/api/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches: [main]
+    paths:
+      - "08-darvis-product/apps/api/**"
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+jobs:
+  qualidade:
+    name: Testes e análise estática
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 08-darvis-product/apps/api
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: 08-darvis-product/apps/api/pyproject.toml
+
+      - name: Instalar API e ferramentas de desenvolvimento
+        run: python -m pip install -e ".[dev]"
+
+      - name: Executar testes
+        run: pytest -q
+
+      - name: Verificar qualidade do código
+        run: ruff check .
