@@ -212,3 +212,31 @@ def test_update_cannot_set_required_task_fields_to_null(db_session: Session) -> 
             payload=TaskUpdate(status=None),
         )
     assert error.value.status_code == 422
+
+
+def test_empty_patch_is_rejected_for_projects_and_tasks(db_session: Session) -> None:
+    owner = _create_owner(db_session)
+    project = create_project(
+        db_session, user_id=owner.id, payload=ProjectCreate(name="Projeto para patch")
+    )
+    task = create_task(
+        db_session, user_id=owner.id, payload=TaskCreate(title="Tarefa para patch")
+    )
+
+    with pytest.raises(HTTPException) as project_error:
+        update_project(
+            db_session,
+            user_id=owner.id,
+            project_id=project.id,
+            payload=ProjectUpdate(),
+        )
+    with pytest.raises(HTTPException) as task_error:
+        update_task(
+            db_session,
+            user_id=owner.id,
+            task_id=task.id,
+            payload=TaskUpdate(),
+        )
+
+    assert project_error.value.status_code == 422
+    assert task_error.value.status_code == 422
