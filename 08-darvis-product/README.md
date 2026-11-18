@@ -37,9 +37,19 @@ Estas são decisões de arquitetura para o novo espaço do produto, não afirma�
 - [Auditoria estática do backend Claude](docs/AUDITORIA_BACKEND_CLAUDE.md): o que pode ser reaproveitado, riscos encontrados e plano de adaptação.
 - [ADR-0002 — Sessões e autenticação](docs/DECISOES/ADR-0002-SESSOES-E-AUTENTICACAO.md): direção para sessões persistentes, rotação, revogação e detecção de reutilização.
 
-## Primeira entrega
+## Primeira fatia implementada
 
-A primeira etapa será uma fatia vertical segura e verificável: validação de configuração e saúde da API; conexão com banco de dados e migração inicial; autenticação e consulta da identidade autenticada; estrutura responsiva do Cognitive Cockpit; cliente de API autenticado e status real do sistema; verificações automatizadas e documentação de configuração.
+O espaço de produto já contém a fundação de API e a primeira fatia de domínio, em código:
+
+- Autenticação de proprietário único com Argon2id, access JWT curto e refresh token rotativo em cookie HttpOnly.
+- Proteção CSRF, rate limits persistentes, bloqueio temporário de login, auditoria e revogação de sessões.
+- Migrações Alembic incrementais para identidade, sessões, auditoria, projetos e tarefas.
+- CRUD protegido de projetos e tarefas, com isolamento pelo usuário autenticado e vínculo de tarefa apenas a projeto próprio.
+- Resumo agregado de projetos e tarefas para a Central de Comando.
+- Cliente web com restauração da sessão, renovação compartilhada e coordenação entre abas quando a Web Locks API estiver disponível.
+- Tela de login e Cognitive Cockpit com criação de projetos/tarefas, conclusão de tarefas e atualização da situação dos projetos.
+
+**Validação ainda pendente:** migrations não aplicadas em PostgreSQL real; testes automatizados, Ruff, ESLint, TypeScript e build não executados; cookies/CORS ainda precisam ser validados na topologia final; revisão independente de segurança pendente. O produto não está liberado para produção.
 
 ## Organização do repositório
 
