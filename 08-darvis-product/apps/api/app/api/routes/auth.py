@@ -5,8 +5,15 @@ from fastapi import APIRouter, Depends, Header, HTTPException, Request, Response
 from sqlalchemy.orm import Session
 
 from app.api.deps import get_current_user
-from app.api.schemas.auth import AuthResponse, LoginRequest, OwnerSetupRequest, UserResponse
+from app.api.schemas.auth import (
+    AuthResponse,
+    CsrfResponse,
+    LoginRequest,
+    OwnerSetupRequest,
+    UserResponse,
+)
 from app.core.config import get_settings
+from app.core.security import new_csrf_token
 from app.db.session import get_db
 from app.models.user import User
 from app.services.auth import (
@@ -98,6 +105,33 @@ def _response_payload(result: AuthResult) -> AuthResponse:
             id=result.user.id, email=result.user.email, full_name=result.user.full_name
         ),
     )
+
+
+@router.get("/csrf", response_model=CsrfResponse)
+def csrf_bootstrap(request: Request, response: Response) -> CsrfResponse:
+    """Entrega à origem permitida o token necessário para renovar a sessão após recarregar."""
+    origin = request.headers.get("origin")
+    if origin:
+        allowed = {item.rstrip("/") for item in get_settings().cors_origins}
+        if origin.rstrip("/") not in allowed:
+            raise HTTPException(status_code=403, detail="Origem não autorizada")
+
+    csrf_token = request.cookies.get(CSRF_COOKIE)
+    if not csrf_token:
+        settings = get_settings()
+        csrf_token = new_csrf_token()
+        response.set_cookie(
+            CSRF_COOKIE,
+            csrf_token,
+            max_age=settings.refresh_token_ttl_days * 24 * 60 * 60,
+            httponly=False,
+            secure=settings.app_env in {"staging", "production"},
+            samesite="lax",
+            path=_cookie_path(),
+        )
+
+    response.headers["Cache-Control"] = "no-store"
+    return CsrfResponse(csrf_token=csrf_token)
 
 
 @router.post("/setup", response_model=AuthResponse, status_code=status.HTTP_201_CREATED)
