@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from typing import Annotated
 
 import jwt
@@ -43,9 +44,7 @@ def get_current_user(
             AuthSession.id == session_id,
             AuthSession.user_id == user_id,
             AuthSession.revoked_at.is_(None),
-            AuthSession.expires_at > __import__("datetime").datetime.now(
-                __import__("datetime").UTC
-            ),
+            AuthSession.expires_at > datetime.now(UTC),
         )
     )
     user = db.get(User, user_id)
