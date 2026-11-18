@@ -1,77 +1,77 @@
-# Delivery Roadmap
+# Roteiro de desenvolvimento
 
-The project is delivered in small, verifiable vertical slices. A milestone is complete only when its acceptance criteria are met.
+O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa só será considerada concluída quando seus critérios de aceite forem atendidos.
 
-## Phase 0 — Product foundation
-- [x] Create an isolated product workspace.
-- [x] Record product vision and initial architecture.
-- [x] Define security baseline and delivery sequence.
-- [ ] Review the inherited Claude backend against the target architecture.
-- [ ] Confirm supported runtime versions and dependency compatibility.
+## Fase 0 — Fundação do produto
+- [x] Criar um espaço isolado para o produto.
+- [x] Registrar a visão do produto e a arquitetura inicial.
+- [x] Definir a base de segurança e a sequência de entregas.
+- [ ] Revisar o backend herdado do Claude em relação à arquitetura-alvo.
+- [ ] Confirmar versões de execução suportadas e compatibilidade das dependências.
 
-Exit criteria: architecture and repository layout are internally consistent; inherited code is not copied blindly.
+**Critério de saída:** arquitetura e organização do repositório coerentes; nenhum código herdado incorporado sem revisão.
 
-## Phase 1 — Secure application skeleton
-- [ ] Establish web and API application structure.
-- [ ] Add environment examples with placeholders only.
-- [ ] Add configuration validation and safe startup behavior.
-- [ ] Add PostgreSQL connection, SQLAlchemy setup, and Alembic baseline.
-- [ ] Add API health/readiness endpoints.
-- [ ] Add CI for lint, type checks, tests, and build.
-- [ ] Add local development instructions.
+## Fase 1 — Estrutura segura da aplicação
+- [ ] Estabelecer a estrutura das aplicações web e API.
+- [ ] Adicionar exemplos de ambiente contendo apenas valores fictícios.
+- [ ] Implementar validação de configuração e inicialização segura.
+- [ ] Adicionar conexão PostgreSQL, configuração SQLAlchemy e estrutura inicial Alembic.
+- [ ] Adicionar endpoints de saúde e prontidão da API.
+- [ ] Adicionar integração contínua para análise estática, tipagem, testes e compilação.
+- [ ] Documentar a configuração do ambiente local.
 
-Exit criteria: clean setup documented; API and web can start in a controlled environment; CI checks run successfully.
+**Critério de saída:** configuração inicial documentada; API e aplicação web iniciam em ambiente controlado; verificações da integração contínua são executadas com sucesso.
 
-## Phase 2 — Identity and core domain
-- [ ] Implement registration/bootstrap strategy for a single-owner deployment.
-- [ ] Implement secure login, logout, refresh rotation, and revocation.
-- [ ] Add current-user endpoint.
-- [ ] Add task and project CRUD with ownership enforcement.
-- [ ] Add persistent audit events.
-- [ ] Add API integration tests.
+## Fase 2 — Identidade e domínio principal
+- [ ] Implementar estratégia de cadastro inicial para uma instalação de proprietário único.
+- [ ] Implementar login, logout, rotação de tokens de renovação e revogação de sessões.
+- [ ] Adicionar endpoint de usuário autenticado.
+- [ ] Adicionar operações de criação, consulta, atualização e exclusão de tarefas e projetos, com verificação de propriedade.
+- [ ] Adicionar eventos persistentes de auditoria.
+- [ ] Adicionar testes de integração da API.
 
-Exit criteria: authenticated user can create and retrieve their own task/project; unauthorized access is rejected and tested.
+**Critério de saída:** usuário autenticado consegue criar e consultar suas próprias tarefas e projetos; acessos não autorizados são rejeitados e testados.
 
-## Phase 3 — Cognitive Cockpit
-- [ ] Rebuild shared design tokens, typography, navigation, and responsive shell from Stitch.
-- [ ] Implement Command Center with real API data.
-- [ ] Add loading, empty, error, offline, and success states.
-- [ ] Add accessibility and responsive checks.
+## Fase 3 — Cognitive Cockpit
+- [ ] Reconstruir tokens visuais, tipografia, navegação e estrutura responsiva compartilhada a partir do Stitch.
+- [ ] Implementar a Central de Comando com dados reais da API.
+- [ ] Adicionar estados de carregamento, vazio, erro, desconexão e sucesso.
+- [ ] Adicionar verificações de acessibilidade e responsividade.
 
-Exit criteria: interface is usable on desktop and mobile and displays only real backend state.
+**Critério de saída:** interface utilizável em desktop e dispositivos móveis, exibindo apenas estados reais do backend.
 
-## Phase 4 — Assistant and provider abstraction
-- [ ] Define provider-neutral request/response contracts.
-- [ ] Integrate first provider behind server-side adapter.
-- [ ] Add explicit context selection and minimization.
-- [ ] Add conversation persistence and retention controls.
-- [ ] Add strict tool proposal schema and allowlist.
-- [ ] Add server-side approval and idempotent execution.
+## Fase 4 — Assistente e arquitetura de provedores
+- [ ] Definir contratos de requisição e resposta independentes de provedor.
+- [ ] Integrar o primeiro provedor por meio de um adaptador no servidor.
+- [ ] Adicionar seleção explícita e minimização do contexto enviado.
+- [ ] Adicionar persistência de conversas e controles de retenção.
+- [ ] Adicionar esquema estrito e lista de permissões para propostas de ferramentas.
+- [ ] Adicionar aprovação no servidor e execução idempotente.
 
-Exit criteria: assistant can propose a safe, typed task action; approval is enforced by the API and recorded.
+**Critério de saída:** assistente propõe uma ação de tarefa tipada e segura; a API exige aprovação e registra o resultado.
 
-## Phase 5 — Memory and Obsidian
-- [ ] Define structured memory schema and lifecycle.
-- [ ] Define vault folder and frontmatter conventions.
-- [ ] Implement explicit import/export/sync operations.
-- [ ] Add conflict handling, indexing, and deletion propagation.
-- [ ] Add user-visible provenance and sync status.
+## Fase 5 — Memória e Obsidian
+- [ ] Definir o esquema e o ciclo de vida das memórias estruturadas.
+- [ ] Definir convenções de pastas e metadados das notas no cofre.
+- [ ] Implementar operações explícitas de importação, exportação e sincronização.
+- [ ] Adicionar tratamento de conflitos, indexação e propagação de exclusões.
+- [ ] Apresentar ao usuário a origem dos dados e o estado real da sincronização.
 
-Exit criteria: a note can be safely synchronized without silently overwriting user data.
+**Critério de saída:** uma nota pode ser sincronizada com segurança, sem sobrescrever silenciosamente dados do usuário.
 
-## Phase 6 — Integrations and automation
-- [ ] Build integration registry and scoped credential storage.
-- [ ] Add Telegram and selected Google integrations.
-- [ ] Add scheduled jobs with retry and idempotency.
-- [ ] Add execution history, approvals, and kill switch.
+## Fase 6 — Integrações e automações
+- [ ] Construir o registro de integrações e o armazenamento de credenciais com permissões delimitadas.
+- [ ] Adicionar Telegram e integrações Google selecionadas.
+- [ ] Adicionar tarefas agendadas com novas tentativas e idempotência.
+- [ ] Adicionar histórico de execução, aprovações e mecanismo de interrupção.
 
-Exit criteria: every integration exposes real status, permissions, failures, and revocation.
+**Critério de saída:** cada integração apresenta estado real, permissões, falhas e possibilidade de revogação.
 
-## Phase 7 — Voice, PWA, and desktop companion
-- [ ] Add speech input with clear recording state and user consent.
-- [ ] Add PWA install/offline behavior where appropriate.
-- [ ] Evaluate a Windows companion only after API and permission boundaries are stable.
+## Fase 7 — Voz, PWA e aplicativo complementar para desktop
+- [ ] Adicionar entrada por voz com indicação clara de gravação e consentimento do usuário.
+- [ ] Adicionar instalação PWA e funcionamento offline quando apropriado.
+- [ ] Avaliar um aplicativo complementar para Windows somente após estabilizar os limites da API e das permissões.
 
-## Release gates
+## Critérios obrigatórios para publicação
 
-No production release without automated tests and dependency/security checks; secret scanning; database backup and restore procedure; authentication and authorization review; rate limits and abuse protections; privacy/retention policy; deployment rollback plan; verified health, logs, and alerting.
+Nenhuma publicação em produção sem: testes automatizados e verificações de segurança das dependências; varredura de segredos; procedimento de cópia de segurança e restauração do banco; revisão de autenticação e autorização; limites de requisição e proteções contra abuso; política de privacidade e retenção; plano de reversão da implantação; disponibilidade, registros e alertas verificados.
