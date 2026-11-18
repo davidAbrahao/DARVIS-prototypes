@@ -10,6 +10,7 @@ import {
 } from "react";
 import {
   AlertCircle,
+  BookOpen,
   Bot,
   CheckCircle2,
   CircleHelp,
@@ -43,11 +44,37 @@ type Conversation = {
   updated_at: string;
 };
 
+type ContextSourceType = "memory" | "project" | "task";
+
+type ContextSourceRef = {
+  source_type: ContextSourceType;
+  source_id: number;
+};
+
+type ContextOption = ContextSourceRef & {
+  title: string;
+  description: string;
+};
+
+type ContextPreview = {
+  items: Array<{
+    source_type: ContextSourceType;
+    source_id: number;
+    title: string;
+    fields: Record<string, unknown>;
+  }>;
+  context_text: string;
+  character_count: number;
+  context_hash: string;
+};
+
 type AssistantMessage = {
   id: number;
   conversation_id: string;
   role: "user" | "assistant";
   content: string;
+  context_items?: ContextSourceRef[];
+  context_hash?: string | null;
   provider: string | null;
   model: string | null;
   created_at: string;
@@ -55,8 +82,45 @@ type AssistantMessage = {
 
 type PendingRequest = {
   content: string;
+  fingerprint: string;
   requestId: string;
 };
+
+type MemorySource = {
+  id: number;
+  title: string;
+  category: string;
+  content: string;
+  is_archived: boolean;
+};
+
+type ProjectSource = {
+  id: number;
+  name: string;
+  description: string | null;
+  status: string;
+};
+
+type TaskSource = {
+  id: number;
+  title: string;
+  description: string | null;
+  status: string;
+  priority: string;
+  due_at: string | null;
+};
+
+const contextTypeLabel: Record<ContextSourceType, string> = {
+  memory: "Memória",
+  project: "Projeto",
+  task: "Tarefa",
+};
+
+function contextSummary(items: ContextSourceRef[] | undefined): string {
+  if (!items?.length) return "";
+  const types = [...new Set(items.map((item) => contextTypeLabel[item.source_type]))];
+  return items.length + (items.length === 1 ? " fonte · " : " fontes · ") + types.join(", ");
+}
 
 const statusCopy: Record<AssistantStatus["state"], { title: string; detail: string }> = {
   disabled: {
@@ -70,7 +134,7 @@ const statusCopy: Record<AssistantStatus["state"], { title: string; detail: stri
   configured: {
     title: "Provedor configurado",
     detail:
-      "A configuração foi detectada. Ao enviar, o conteúdo e o histórico desta conversa serão enviados ao Google Gemini. Tarefas, projetos e notas não são anexados automaticamente.",
+      "Ao enviar, o histórico desta conversa e a mensagem vão ao Google Gemini. Memórias, projetos e tarefas só entram quando você os seleciona, confere a prévia e confirma aquele envio.",
 
   },
 };
@@ -114,6 +178,13 @@ export function AssistantWorkspace() {
   const [sending, setSending] = useState(false);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [contextPanelOpen, setContextPanelOpen] = useState(false);
+  const [contextOptions, setContextOptions] = useState<ContextOption[]>([]);
+  const [contextSelection, setContextSelection] = useState<ContextSourceRef[]>([]);
+  const [contextLoading, setContextLoading] = useState(false);
+  const [contextPreviewLoading, setContextPreviewLoading] = useState(false);
+  const [contextPreview, setContextPreview] = useState<ContextPreview | null>(null);
+  const [contextError, setContextError] = useState<string | null>(null);
   const pendingRequest = useRef<PendingRequest | null>(null);
   const activeConversationRef = useRef<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -233,6 +304,105 @@ export function AssistantWorkspace() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, messagesLoading]);
 
+  function clearContextSelection() {
+    setContextSelection([]);
+    setContextPreview(null);
+    setContextPreviewLoading(false);
+    setContextError(null);
+    setContextPanelOpen(false);
+  }
+
+  async function toggleContextPanel() {
+    if (contextPanelOpen) {
+      clearContextSelection();
+      return;
+    }
+
+    setContextPanelOpen(true);
+    setContextLoading(true);
+    setContextError(null);
+    try {
+      const [memories, projects, tasks] = await Promise.all([
+        apiRequest<MemorySource[]>("/memories?include_archived=false&limit=100"),
+        apiRequest<ProjectSource[]>("/projects?limit=100"),
+        apiRequest<TaskSource[]>("/tasks?limit=100"),
+      ]);
+      const options: ContextOption[] = [
+        ...memories.map((item) => ({
+          source_type: "memory" as const,
+          source_id: item.id,
+          title: item.title,
+          description: "Memória · " + item.category,
+        })),
+        ...projects.map((item) => ({
+          source_type: "project" as const,
+          source_id: item.id,
+          title: item.name,
+          description: "Projeto · " + item.status,
+        })),
+        ...tasks.map((item) => ({
+          source_type: "task" as const,
+          source_id: item.id,
+          title: item.title,
+          description: "Tarefa · " + item.priority + " · " + item.status,
+        })),
+      ];
+      setContextOptions(options);
+    } catch (cause) {
+      setContextError(getErrorMessage(cause, "Não foi possível carregar suas fontes."));
+    } finally {
+      setContextLoading(false);
+    }
+  }
+
+  function toggleContextItem(option: ContextOption, checked: boolean) {
+    const exists = contextSelection.some(
+      (item) =>
+        item.source_type === option.source_type &&
+        item.source_id === option.source_id,
+    );
+    if (checked && !exists) {
+      if (contextSelection.length >= 8) {
+        setContextError("O limite é de 8 fontes por mensagem.");
+        return;
+      }
+      setContextSelection((current) => [
+        ...current,
+        { source_type: option.source_type, source_id: option.source_id },
+      ]);
+    } else if (!checked && exists) {
+      setContextSelection((current) =>
+        current.filter(
+          (item) =>
+            item.source_type !== option.source_type ||
+            item.source_id !== option.source_id,
+        ),
+      );
+    }
+    setContextPreview(null);
+    setContextError(null);
+    pendingRequest.current = null;
+  }
+
+  async function generateContextPreview() {
+    if (contextSelection.length === 0 || contextPreviewLoading) return;
+    setContextPreviewLoading(true);
+    setContextPreview(null);
+    setContextError(null);
+    try {
+      const preview = await apiRequest<ContextPreview>("/assistant/context-preview", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items: contextSelection }),
+      });
+      setContextPreview(preview);
+    } catch (cause) {
+      setContextError(getErrorMessage(cause, "Não foi possível gerar a prévia do contexto."));
+    } finally {
+      setContextPreviewLoading(false);
+    }
+  }
+
   async function createConversation() {
     if (creatingConversation || sending || deletingConversation || savingTitle) return;
     setCreatingConversation(true);
@@ -254,6 +424,7 @@ export function AssistantWorkspace() {
       setRenamingConversation(false);
       setConfirmDelete(false);
       pendingRequest.current = null;
+      clearContextSelection();
     } catch (cause) {
       setError(getErrorMessage(cause, "Não foi possível criar a conversa."));
     } finally {
@@ -340,10 +511,27 @@ export function AssistantWorkspace() {
     const conversationId = activeConversationId;
     const content = draft.trim();
     if (!conversationId || !content || sending || !assistantStatus?.configured) return;
+    if (contextSelection.length > 0 && !contextPreview) {
+      setContextError("Gere e confira a prévia antes de enviar esta mensagem.");
+      return;
+    }
 
-    if (!pendingRequest.current || pendingRequest.current.content !== content) {
+    const contextItems = contextPreview
+      ? contextPreview.items.map((item) => ({
+          source_type: item.source_type,
+          source_id: item.source_id,
+        }))
+      : [];
+    const contextHash = contextPreview?.context_hash ?? null;
+    const fingerprint = JSON.stringify({
+      content,
+      context_items: contextItems,
+      context_hash: contextHash,
+    });
+    if (!pendingRequest.current || pendingRequest.current.fingerprint !== fingerprint) {
       pendingRequest.current = {
         content,
+        fingerprint,
         requestId: crypto.randomUUID(),
       };
     }
@@ -359,6 +547,9 @@ export function AssistantWorkspace() {
           body: JSON.stringify({
             request_id: pendingRequest.current.requestId,
             content,
+            ...(contextItems.length > 0
+              ? { context_items: contextItems, context_hash: contextHash }
+              : {}),
           }),
         },
       );
@@ -371,12 +562,17 @@ export function AssistantWorkspace() {
       }
       setDraft("");
       pendingRequest.current = null;
+      clearContextSelection();
       try {
         await loadConversations();
       } catch {
         setError("Mensagem salva. Não foi possível atualizar a lista de conversas.");
       }
     } catch (cause) {
+      if (cause instanceof ApiError && cause.status === 409 && contextItems.length > 0) {
+        setContextPreview(null);
+        setContextError("Uma fonte mudou desde a prévia. Gere uma nova prévia e confirme novamente.");
+      }
       setError(
         getErrorMessage(
           cause,
@@ -502,6 +698,7 @@ export function AssistantWorkspace() {
                     setRenamingConversation(false);
                     setConfirmDelete(false);
                     pendingRequest.current = null;
+                    clearContextSelection();
                   }}
                   disabled={
                     sending ||
@@ -645,12 +842,149 @@ export function AssistantWorkspace() {
                       ) : null}
                     </div>
                     <p>{message.content}</p>
+                    {message.role === "user" && message.context_items?.length ? (
+                      <div className="assistant-message-context">
+                        <ShieldCheck size={12} />
+                        Contexto compartilhado: {contextSummary(message.context_items)}
+                      </div>
+                    ) : null}
                   </div>
                 </article>
               ))
             )}
             <div ref={messagesEndRef} />
           </div>
+
+          <div className="assistant-context-toolbar">
+            <div>
+              <strong>Contexto desta mensagem</strong>
+              <span>Memórias, projetos e tarefas só serão compartilhados com sua confirmação.</span>
+            </div>
+            <button
+              type="button"
+              className="assistant-context-trigger"
+              onClick={() => void toggleContextPanel()}
+              disabled={!assistantStatus?.configured || sending || !activeConversationId}
+            >
+              <BookOpen size={14} />
+              {contextPanelOpen ? "Fechar seleção" : "Adicionar contexto"}
+            </button>
+          </div>
+
+          {contextPanelOpen ? (
+            <section className="assistant-context-panel" aria-label="Selecionar contexto">
+              <div className="assistant-context-panel-heading">
+                <div>
+                  <strong>Escolha até 8 fontes</strong>
+                  <span>Nenhum registro vem selecionado automaticamente.</span>
+                </div>
+                <span className="assistant-context-count">
+                  {contextSelection.length}/8 selecionadas
+                </span>
+              </div>
+              {contextLoading ? (
+                <div className="assistant-context-state">
+                  <LoaderCircle size={15} className="auth-spin" />
+                  Carregando suas memórias, projetos e tarefas…
+                </div>
+              ) : contextOptions.length === 0 ? (
+                <div className="assistant-context-state">
+                  Nenhuma fonte disponível. Crie registros na Central de Memória, Projetos ou Tarefas.
+                </div>
+              ) : (
+                <div className="assistant-context-options">
+                  {contextOptions.map((option) => {
+                    const selected = contextSelection.some(
+                      (item) =>
+                        item.source_type === option.source_type &&
+                        item.source_id === option.source_id,
+                    );
+                    return (
+                      <label
+                        className="assistant-context-option"
+                        key={option.source_type + "-" + option.source_id}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selected}
+                          disabled={sending || (!selected && contextSelection.length >= 8)}
+                          onChange={(event) => toggleContextItem(option, event.target.checked)}
+                        />
+                        <span className="assistant-context-option-copy">
+                          <strong>{contextTypeLabel[option.source_type]} · {option.title}</strong>
+                          <small>{option.description}</small>
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              )}
+              {contextError ? (
+                <div className="assistant-context-error" role="alert">{contextError}</div>
+              ) : null}
+              <div className="assistant-context-actions">
+                <button
+                  type="button"
+                  className="assistant-context-secondary"
+                  onClick={clearContextSelection}
+                  disabled={sending || contextPreviewLoading}
+                >
+                  Cancelar seleção
+                </button>
+                <button
+                  type="button"
+                  className="assistant-context-primary"
+                  onClick={() => void generateContextPreview()}
+                  disabled={
+                    contextLoading ||
+                    contextPreviewLoading ||
+                    contextSelection.length === 0 ||
+                    sending
+                  }
+                >
+                  {contextPreviewLoading ? (
+                    <LoaderCircle size={13} className="auth-spin" />
+                  ) : (
+                    <ShieldCheck size={13} />
+                  )}
+                  Gerar prévia
+                </button>
+              </div>
+            </section>
+          ) : null}
+
+          {contextPreview ? (
+            <section className="assistant-context-preview" aria-label="Prévia do contexto que será enviado">
+              <div className="assistant-context-preview-heading">
+                <div>
+                  <strong>Prévia pronta para confirmação</strong>
+                  <span>
+                    {contextPreview.items.length} fontes · {contextPreview.character_count.toLocaleString("pt-BR")} caracteres
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  className="assistant-context-clear"
+                  onClick={clearContextSelection}
+                  disabled={sending}
+                >
+                  <X size={13} />
+                  Remover
+                </button>
+              </div>
+              <div className="assistant-context-preview-items">
+                {contextPreview.items.map((item) => (
+                  <span key={item.source_type + "-" + item.source_id}>
+                    {contextTypeLabel[item.source_type]} · {item.title}
+                  </span>
+                ))}
+              </div>
+              <pre>{contextPreview.context_text}</pre>
+              <p>
+                Esta é a representação exata do contexto adicional que será enviada ao provedor junto do histórico e da sua mensagem. O envio só acontece quando você clicar em Enviar.
+              </p>
+            </section>
+          ) : null}
 
           <form className="assistant-composer" onSubmit={sendMessage}>
             <textarea
@@ -675,7 +1009,9 @@ export function AssistantWorkspace() {
               <span>
                 <CircleHelp size={13} />
                 {assistantStatus?.configured
-                  ? "Enter envia · Shift + Enter quebra linha"
+                  ? contextSelection.length > 0 && !contextPreview
+                    ? "Gere a prévia do contexto antes de enviar"
+                    : "Enter envia · Shift + Enter quebra linha"
                   : "Ferramentas e ações automáticas ainda não estão habilitadas"}
               </span>
               <button
@@ -685,6 +1021,7 @@ export function AssistantWorkspace() {
                   !assistantStatus?.configured ||
                   !activeConversationId ||
                   !draft.trim() ||
+                  (contextSelection.length > 0 && !contextPreview) ||
                   sending
                 }
               >

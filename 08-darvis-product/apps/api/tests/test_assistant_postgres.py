@@ -27,7 +27,6 @@ from app.models import (
     User,
 )
 from app.services import assistant as assistant_service
-from app.services.assistant_context import build_context_preview
 from app.services.assistant import (
     create_conversation,
     delete_conversation,
@@ -35,15 +34,16 @@ from app.services.assistant import (
     send_message,
     update_conversation,
 )
+from app.services.assistant_context import build_context_preview
 from app.services.memory import create_memory
 from app.services.projects import create_project
-from app.services.tasks import create_task
 from app.services.providers import (
     ChatTurn,
     GeneratedReply,
     ProviderGenerationError,
     ProviderNotConfigured,
 )
+from app.services.tasks import create_task
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
 if TEST_DATABASE_URL:
