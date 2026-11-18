@@ -148,3 +148,7 @@
 .quick-task-options select{appearance:auto}
 .quick-task-options input[type="datetime-local"]{font-family:var(--font-mono);font-size:9px}
 @media(max-width:420px){.quick-task-options{grid-template-columns:1fr 1fr}.quick-task-due{grid-column:1/-1}.quick-task-options select,.quick-task-options input{height:34px}}
+
+.task-status-control select{max-width:118px;height:25px;padding:0 5px;border:1px solid #293a50;border-radius:4px;outline:none;background:#0a111c;color:#8397ad;font-size:9px;color-scheme:dark;cursor:pointer}
+.task-status-control select:focus{border-color:rgba(56,189,248,.55);outline:2px solid rgba(56,189,248,.12);outline-offset:1px}
+@media(max-width:420px){.task-status-control select{max-width:103px;font-size:8px}}
