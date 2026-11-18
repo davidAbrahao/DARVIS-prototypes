@@ -17,6 +17,8 @@ Este documento define os requisitos mínimos. Não significa que todos esses con
 - Cookie refresh HttpOnly, SameSite=Lax e Secure em staging/produção; CSRF por double-submit cookie/cabeçalho.
 - Configuração inicial one-time, protegida por token secreto e lock transacional; sem cadastro público.
 - Limites persistentes e compartilhados para tentativas de setup, login e refresh.
+- Bloqueio temporário de conta após 8 falhas consecutivas de autenticação, com prazo de 15 minutos e resposta genérica.
+- Validar `Origin` nos endpoints de mutação e bootstrap acessíveis ao navegador quando o cabeçalho estiver presente.
 - Respostas de autenticação não devem permitir descobrir se uma conta existe.
 
 ## Autorização
