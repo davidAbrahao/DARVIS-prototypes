@@ -8,7 +8,15 @@ from sqlalchemy import create_engine, select
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 
-from app.api.schemas.assistant import ConversationCreate, ConversationUpdate, MessageCreate
+from app.api.schemas.assistant import (
+    ContextItem,
+    ConversationCreate,
+    ConversationUpdate,
+    MessageCreate,
+)
+from app.api.schemas.memory import MemoryCreate
+from app.api.schemas.projects import ProjectCreate
+from app.api.schemas.tasks import TaskCreate
 from app.core.config import get_settings
 from app.core.security import hash_password
 from app.db.base import Base
@@ -19,6 +27,7 @@ from app.models import (
     User,
 )
 from app.services import assistant as assistant_service
+from app.services.assistant_context import build_context_preview
 from app.services.assistant import (
     create_conversation,
     delete_conversation,
@@ -26,6 +35,9 @@ from app.services.assistant import (
     send_message,
     update_conversation,
 )
+from app.services.memory import create_memory
+from app.services.projects import create_project
+from app.services.tasks import create_task
 from app.services.providers import (
     ChatTurn,
     GeneratedReply,
@@ -159,6 +171,221 @@ def test_conversation_messages_persist_and_history_is_reused(
         "assistant.conversation.created",
         "assistant.exchange.completed",
     }
+
+
+def test_context_preview_includes_allowlisted_fields_from_all_sources(
+    db_session: Session,
+) -> None:
+    owner = _create_owner(db_session)
+    memory = create_memory(
+        db_session,
+        user_id=owner.id,
+        payload=MemoryCreate(
+            title="Preferência de planejamento",
+            content="Prefiro blocos curtos.",
+            category="preference",
+            tags=["planejamento"],
+        ),
+    )
+    project = create_project(
+        db_session,
+        user_id=owner.id,
+        payload=ProjectCreate(
+            name="Projeto D.A.R.V.I.S.",
+            description="Construir o cockpit pessoal.",
+        ),
+    )
+    task = create_task(
+        db_session,
+        user_id=owner.id,
+        payload=TaskCreate(
+            title="Validar contexto",
+            description="Conferir a prévia.",
+            project_id=project.id,
+            priority="high",
+        ),
+    )
+
+    request_items = [
+        ContextItem(source_type="memory", source_id=memory.id),
+        ContextItem(source_type="project", source_id=project.id),
+        ContextItem(source_type="task", source_id=task.id),
+    ]
+    preview = build_context_preview(db_session, user_id=owner.id, items=request_items)
+
+    assert [item.source_type for item in preview.items] == ["memory", "project", "task"]
+    assert preview.items[0].fields == {
+        "title": "Preferência de planejamento",
+        "content": "Prefiro blocos curtos.",
+        "category": "preference",
+        "tags": ["planejamento"],
+    }
+    assert preview.items[1].fields["name"] == "Projeto D.A.R.V.I.S."
+    assert preview.items[1].fields["status"] == "active"
+    assert preview.items[2].fields["title"] == "Validar contexto"
+    assert preview.items[2].fields["priority"] == "high"
+    assert preview.items[2].fields["project_name"] == "Projeto D.A.R.V.I.S."
+    assert preview.character_count == len(preview.context_text)
+    assert len(preview.context_hash) == 64
+
+
+def test_context_preview_does_not_expose_foreign_or_archived_sources(
+    db_session: Session,
+) -> None:
+    owner = _create_owner(db_session)
+    another_user = User(
+        email="outro-contexto@darvis.test",
+        full_name="Outro proprietário",
+        password_hash=hash_password("outra-senha-segura"),
+    )
+    db_session.add(another_user)
+    db_session.flush()
+    foreign_memory = create_memory(
+        db_session,
+        user_id=another_user.id,
+        payload=MemoryCreate(title="Privada", content="Não compartilhar."),
+    )
+    archived_memory = create_memory(
+        db_session,
+        user_id=owner.id,
+        payload=MemoryCreate(title="Arquivada", content="Também não compartilhar."),
+    )
+    archived_memory.is_archived = True
+    db_session.commit()
+
+    for source_id in (foreign_memory.id, archived_memory.id, 999999):
+        with pytest.raises(HTTPException) as error:
+            build_context_preview(
+                db_session,
+                user_id=owner.id,
+                items=[ContextItem(source_type="memory", source_id=source_id)],
+            )
+        assert error.value.status_code == 404
+        assert "não estão disponíveis" in error.value.detail
+
+
+def test_context_send_revalidates_hash_and_rejects_changed_source(
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    owner = _create_owner(db_session)
+    provider = FakeProvider()
+    monkeypatch.setattr(assistant_service, "get_chat_provider", lambda: provider)
+    conversation = create_conversation(
+        db_session,
+        user_id=owner.id,
+        payload=ConversationCreate(),
+    )
+    memory = create_memory(
+        db_session,
+        user_id=owner.id,
+        payload=MemoryCreate(title="Preferência", content="Texto original."),
+    )
+    item = ContextItem(source_type="memory", source_id=memory.id)
+    preview = build_context_preview(db_session, user_id=owner.id, items=[item])
+    memory.content = "Texto alterado depois da prévia."
+    db_session.commit()
+
+    with pytest.raises(HTTPException) as error:
+        send_message(
+            db_session,
+            user_id=owner.id,
+            conversation_id=conversation.id,
+            payload=MessageCreate(
+                request_id=uuid4(),
+                content="Use minha preferência.",
+                context_items=[item],
+                context_hash=preview.context_hash,
+            ),
+        )
+
+    assert error.value.status_code == 409
+    assert provider.calls == []
+    assert list_messages(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        limit=20,
+        offset=0,
+    ) == []
+
+
+def test_context_send_persists_only_source_metadata_and_is_idempotent(
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    owner = _create_owner(db_session)
+    provider = FakeProvider("Resposta com contexto aprovado")
+    monkeypatch.setattr(assistant_service, "get_chat_provider", lambda: provider)
+    conversation = create_conversation(
+        db_session,
+        user_id=owner.id,
+        payload=ConversationCreate(),
+    )
+    memory = create_memory(
+        db_session,
+        user_id=owner.id,
+        payload=MemoryCreate(
+            title="Preferência privada",
+            content="Gosto de respostas objetivas e curtas.",
+        ),
+    )
+    item = ContextItem(source_type="memory", source_id=memory.id)
+    preview = build_context_preview(db_session, user_id=owner.id, items=[item])
+    request_id = uuid4()
+    payload = MessageCreate(
+        request_id=request_id,
+        content="Como devo estruturar este resumo?",
+        context_items=[item],
+        context_hash=preview.context_hash,
+    )
+
+    first_result = send_message(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        payload=payload,
+    )
+    repeated_result = send_message(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        payload=payload,
+    )
+
+    assert len(provider.calls) == 1
+    assert [row.id for row in repeated_result] == [row.id for row in first_result]
+    assert first_result[0].content == payload.content
+    assert first_result[0].context_items == [
+        {"source_type": "memory", "source_id": memory.id}
+    ]
+    assert first_result[0].context_hash == preview.context_hash
+    assert "Gosto de respostas objetivas e curtas." not in first_result[0].content
+    assert preview.context_text in provider.calls[0][-1].content
+
+    event = db_session.scalar(
+        select(AuditEvent).where(
+            AuditEvent.actor_user_id == owner.id,
+            AuditEvent.event_type == "assistant.exchange.completed",
+            AuditEvent.resource_id == conversation.id,
+        )
+    )
+    assert event is not None
+    assert event.event_metadata["context_count"] == 1
+    assert event.event_metadata["context_source_types"] == ["memory"]
+    assert "Gosto de respostas objetivas" not in str(event.event_metadata)
+
+    next_turn = send_message(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        payload=MessageCreate(
+            request_id=uuid4(),
+            content="E depois?",
+        ),
+    )
+    assert next_turn[0].context_items == []
+    assert "Gosto de respostas objetivas e curtas." not in provider.calls[1][-1].content
 
 
 def test_conversation_and_message_access_is_scoped_to_owner(

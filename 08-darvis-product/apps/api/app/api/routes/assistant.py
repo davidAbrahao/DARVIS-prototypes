@@ -6,6 +6,8 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_current_user
 from app.api.schemas.assistant import (
     AssistantStatusResponse,
+    ContextPreviewRequest,
+    ContextPreviewResponse,
     ConversationCreate,
     ConversationResponse,
     ConversationUpdate,
@@ -23,8 +25,25 @@ from app.services.assistant import (
     send_message,
     update_conversation,
 )
+from app.services.assistant_context import build_context_preview
 
 router = APIRouter(prefix="/assistant", tags=["assistente"])
+
+
+@router.post(
+    "/context-preview",
+    response_model=ContextPreviewResponse,
+)
+def post_context_preview(
+    payload: ContextPreviewRequest,
+    current_user: Annotated[User, Depends(get_current_user)],
+    db: Annotated[Session, Depends(get_db)],
+) -> ContextPreviewResponse:
+    return build_context_preview(
+        db,
+        user_id=current_user.id,
+        items=payload.items,
+    )
 
 
 @router.get("/status", response_model=AssistantStatusResponse)

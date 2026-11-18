@@ -7,6 +7,7 @@ from sqlalchemy import (
     ForeignKeyConstraint,
     Index,
     Integer,
+    JSON,
     String,
     Text,
     UniqueConstraint,
@@ -55,6 +56,13 @@ class AssistantMessage(Base):
     role: Mapped[str] = mapped_column(String(16), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
     client_message_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
+    context_items: Mapped[list[dict[str, object]]] = mapped_column(
+        JSON,
+        nullable=False,
+        default=list,
+        server_default="[]",
+    )
+    context_hash: Mapped[str | None] = mapped_column(String(64), nullable=True)
     provider: Mapped[str | None] = mapped_column(String(40), nullable=True)
     model: Mapped[str | None] = mapped_column(String(120), nullable=True)
     created_at: Mapped[datetime] = mapped_column(

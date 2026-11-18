@@ -1,3 +1,4 @@
+import hmac
 from datetime import UTC, datetime
 from uuid import uuid4
 
@@ -10,6 +11,7 @@ from app.core.config import get_settings
 from app.models.assistant_conversation import AssistantConversation
 from app.models.assistant_message import AssistantMessage
 from app.models.audit_event import AuditEvent
+from app.services.assistant_context import build_context_preview
 from app.services.auth import _consume_rate_limit
 from app.services.providers import (
     ChatTurn,
@@ -215,6 +217,8 @@ def _existing_idempotent_turn(
     conversation_id: str,
     request_id: str,
     request_content: str,
+    request_context_items: list[dict[str, object]],
+    request_context_hash: str | None,
 ) -> list[AssistantMessage] | None:
     user_message = db.scalar(
         select(AssistantMessage).where(
@@ -226,10 +230,17 @@ def _existing_idempotent_turn(
     )
     if user_message is None:
         return None
-    if user_message.content != request_content:
+    if (
+        user_message.content != request_content
+        or (user_message.context_items or []) != request_context_items
+        or user_message.context_hash != request_context_hash
+    ):
         raise HTTPException(
             status_code=409,
-            detail="Este identificador de envio já foi utilizado com outro conteúdo.",
+            detail=(
+                "Este identificador de envio já foi utilizado com outra mensagem "
+                "ou seleção de contexto."
+            ),
         )
 
     assistant_message = db.scalar(
@@ -262,15 +273,39 @@ def send_message(
         db, user_id=user_id, conversation_id=conversation_id
     )
     request_id = str(payload.request_id)
+    context_items = [
+        item.model_dump(mode="json")
+        for item in payload.context_items
+    ]
+    context_hash = payload.context_hash
     existing_turn = _existing_idempotent_turn(
         db,
         user_id=user_id,
         conversation_id=conversation_id,
         request_id=request_id,
         request_content=payload.content,
+        request_context_items=context_items,
+        request_context_hash=context_hash,
     )
     if existing_turn is not None:
         return existing_turn
+
+    context_text = ""
+    if payload.context_items:
+        preview = build_context_preview(
+            db,
+            user_id=user_id,
+            items=payload.context_items,
+        )
+        if context_hash is None or not hmac.compare_digest(preview.context_hash, context_hash):
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Uma fonte selecionada mudou desde a prévia. "
+                    "Gere uma nova prévia antes de enviar."
+                ),
+            )
+        context_text = preview.context_text
 
     try:
         provider = get_chat_provider()
@@ -320,7 +355,12 @@ def send_message(
             .limit(HISTORY_LIMIT)
         ).all()
     )
-    turns = _build_history(list(reversed(history)), current_prompt=payload.content)
+    provider_prompt = (
+        f"{context_text}\n\n[SOLICITAÇÃO ATUAL DO USUÁRIO]\n{payload.content}"
+        if context_text
+        else payload.content
+    )
+    turns = _build_history(list(reversed(history)), current_prompt=provider_prompt)
 
     # Libera a transação e a conexão durante a chamada de rede ao provedor.
     db.rollback()
@@ -338,6 +378,10 @@ def send_message(
                 event_metadata={
                     "provider": provider.provider_name,
                     "model": provider.model_name,
+                    "context_count": len(context_items),
+                    "context_source_types": sorted(
+                        {str(item["source_type"]) for item in context_items}
+                    ),
                 },
             )
         )
@@ -375,6 +419,8 @@ def send_message(
             conversation_id=conversation_id,
             request_id=request_id,
             request_content=payload.content,
+            request_context_items=context_items,
+            request_context_hash=context_hash,
         )
         if existing_turn is not None:
             return existing_turn
@@ -392,6 +438,8 @@ def send_message(
         role="user",
         content=payload.content,
         client_message_id=request_id,
+        context_items=context_items,
+        context_hash=context_hash,
     )
     assistant_message = AssistantMessage(
         conversation_id=conversation_id,
@@ -412,6 +460,10 @@ def send_message(
             "model": generated.model,
             "input_characters": len(payload.content),
             "output_characters": len(generated.content),
+            "context_count": len(context_items),
+            "context_source_types": sorted(
+                {str(item["source_type"]) for item in context_items}
+            ),
         },
     )
     db.commit()

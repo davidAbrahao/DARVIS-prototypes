@@ -40,6 +40,7 @@ def test_authentication_and_domain_routes_are_registered() -> None:
         ("/api/v1/memories/{memory_id}", "GET"),
         ("/api/v1/memories/{memory_id}", "PATCH"),
         ("/api/v1/memories/{memory_id}", "DELETE"),
+        ("/api/v1/assistant/context-preview", "POST"),
         ("/api/v1/assistant/status", "GET"),
         ("/api/v1/assistant/conversations", "GET"),
         ("/api/v1/assistant/conversations", "POST"),
