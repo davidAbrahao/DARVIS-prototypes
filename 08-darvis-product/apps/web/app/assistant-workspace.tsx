@@ -416,7 +416,9 @@ export function AssistantWorkspace() {
               initialLoading ||
               sending ||
               deletingConversation ||
-              savingTitle
+              savingTitle ||
+              renamingConversation ||
+              confirmDelete
             }
           >
             {creatingConversation ? (
@@ -456,8 +458,15 @@ export function AssistantWorkspace() {
                     setActiveConversationId(conversation.id);
                     setRenamingConversation(false);
                     setConfirmDelete(false);
+                    pendingRequest.current = null;
                   }}
-                  disabled={sending || deletingConversation || savingTitle}
+                  disabled={
+                    sending ||
+                    deletingConversation ||
+                    savingTitle ||
+                    renamingConversation ||
+                    confirmDelete
+                  }
                 >
                   <strong>{conversation.title}</strong>
                   <span>{formatConversationDate(conversation.updated_at)}</span>
