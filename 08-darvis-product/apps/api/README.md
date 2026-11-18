@@ -18,7 +18,7 @@ pip install -e ".[dev]"
 Copy-Item .env.example .env
 ```
 
-Edite o arquivo local `.env`: defina `POSTGRES_PASSWORD` com uma senha aleatória e preencha `DATABASE_URL` com a mesma senha. Gere valores independentes para `SECRET_KEY` e `INITIAL_SETUP_TOKEN` (ambos com pelo menos 32 bytes). Nunca versione o arquivo `.env`.
+Edite o arquivo local `.env`: defina `POSTGRES_PASSWORD` com uma senha aleatória e preencha `DATABASE_URL` com a mesma senha. Gere valores independentes para `SECRET_KEY` e `INITIAL_SETUP_TOKEN` (ambos com pelo menos 32 bytes). Depois de criar o proprietário, remova ou rotacione o token de configuração inicial no ambiente. Nunca versione o arquivo `.env`.
 
 Inicie o PostgreSQL local:
 
@@ -75,7 +75,7 @@ A rotação simultânea do mesmo token é tratada de forma conservadora: a prime
 
 ## Verificações automatizadas
 
-O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual pela aba **Actions**. Ele instala a API, executa os testes e verifica o código com Ruff. A execução está deliberadamente pendente da fase de validação.
+O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual. Ele inicia um PostgreSQL efêmero, aplica as migrações, executa os testes e verifica o código com Ruff. A execução está deliberadamente pendente da fase de validação. Como a PR segue em rascunho e a branch padrão não foi alterada, o acionamento manual ficará disponível quando esse workflow chegar à branch padrão do repositório.
 
 Para executar localmente:
 
