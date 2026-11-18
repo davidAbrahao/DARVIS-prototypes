@@ -1,6 +1,15 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, Index, String, Text, UniqueConstraint, func
+from sqlalchemy import (
+    CheckConstraint,
+    DateTime,
+    ForeignKey,
+    Index,
+    String,
+    Text,
+    UniqueConstraint,
+    func,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -9,6 +18,10 @@ from app.db.base import Base
 class Project(Base):
     __tablename__ = "projects"
     __table_args__ = (
+        CheckConstraint(
+            "status IN ('active', 'on_hold', 'completed', 'archived')",
+            name="ck_projects_status",
+        ),
         UniqueConstraint("id", "user_id", name="uq_projects_id_user"),
         Index("ix_projects_user_status", "user_id", "status"),
         Index("ix_projects_user_updated", "user_id", "updated_at"),
