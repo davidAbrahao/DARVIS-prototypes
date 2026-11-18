@@ -36,6 +36,7 @@ Estas são decisões de arquitetura para o novo espaço do produto, não afirma�
 
 - [Auditoria estática do backend Claude](docs/AUDITORIA_BACKEND_CLAUDE.md): o que pode ser reaproveitado, riscos encontrados e plano de adaptação.
 - [ADR-0002 — Sessões e autenticação](docs/DECISOES/ADR-0002-SESSOES-E-AUTENTICACAO.md): direção para sessões persistentes, rotação, revogação e detecção de reutilização.
+- [ADR-0003 — Conversas e provedores de IA](docs/DECISOES/ADR-0003-CONVERSAS-E-PROVEDORES-IA.md): persistência, idempotência e limites do primeiro assistente textual.
 
 ## Primeira fatia implementada
 
