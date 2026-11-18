@@ -1,0 +1,54 @@
+from typing import Annotated
+
+import jwt
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from app.core.config import get_settings
+from app.core.security import decode_access_token
+from app.db.session import get_db
+from app.models.auth_session import AuthSession
+from app.models.user import User
+
+oauth2_scheme = OAuth2PasswordBearer(
+    tokenUrl=f"{get_settings().api_v1_prefix}/auth/login",
+    auto_error=False,
+)
+
+
+def get_current_user(
+    token: Annotated[str | None, Depends(oauth2_scheme)],
+    db: Annotated[Session, Depends(get_db)],
+) -> User:
+    unauthorized = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Autenticação necessária",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    if not token:
+        raise unauthorized
+    try:
+        claims = decode_access_token(token)
+        user_id = int(claims["sub"])
+        session_id = str(claims["sid"])
+        if claims.get("type") != "access":
+            raise unauthorized
+    except (jwt.InvalidTokenError, KeyError, TypeError, ValueError, RuntimeError):
+        raise unauthorized from None
+
+    session = db.scalar(
+        select(AuthSession).where(
+            AuthSession.id == session_id,
+            AuthSession.user_id == user_id,
+            AuthSession.revoked_at.is_(None),
+            AuthSession.expires_at > __import__("datetime").datetime.now(
+                __import__("datetime").UTC
+            ),
+        )
+    )
+    user = db.get(User, user_id)
+    if session is None or user is None or not user.is_active:
+        raise unauthorized
+    return user
