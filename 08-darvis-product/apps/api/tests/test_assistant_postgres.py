@@ -31,6 +31,7 @@ from app.services.providers import (
     ChatTurn,
     GeneratedReply,
     ProviderGenerationError,
+    ProviderNotConfigured,
 )
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
@@ -357,6 +358,13 @@ def test_repeated_request_id_returns_persisted_turn_without_calling_provider_aga
         conversation_id=conversation.id,
         payload=payload,
     )
+
+    def provider_must_not_be_called():
+        raise ProviderNotConfigured("O provedor foi desativado após o primeiro envio")
+
+    monkeypatch.setattr(
+        assistant_service, "get_chat_provider", provider_must_not_be_called
+    )
     second_result = send_message(
         db_session,
         user_id=owner.id,
@@ -375,3 +383,80 @@ def test_repeated_request_id_returns_persisted_turn_without_calling_provider_aga
             offset=0,
         )
     ) == 2
+
+
+def test_unconfigured_provider_returns_service_unavailable_without_persisting_message(
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    owner = _create_owner(db_session)
+    conversation = create_conversation(
+        db_session,
+        user_id=owner.id,
+        payload=ConversationCreate(),
+    )
+
+    def provider_not_configured():
+        raise ProviderNotConfigured("No provider")
+
+    monkeypatch.setattr(
+        assistant_service, "get_chat_provider", provider_not_configured
+    )
+
+    with pytest.raises(HTTPException) as error:
+        send_message(
+            db_session,
+            user_id=owner.id,
+            conversation_id=conversation.id,
+            payload=MessageCreate(
+                request_id=uuid4(),
+                content="Mensagem enviada sem provedor configurado",
+            ),
+        )
+
+    assert error.value.status_code == 503
+    assert list_messages(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        limit=50,
+        offset=0,
+    ) == []
+
+
+def test_assistant_user_rate_limit_blocks_before_provider_call(
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    owner = _create_owner(db_session)
+    conversation = create_conversation(
+        db_session,
+        user_id=owner.id,
+        payload=ConversationCreate(),
+    )
+    provider = FakeProvider()
+    monkeypatch.setattr(assistant_service, "get_chat_provider", lambda: provider)
+    monkeypatch.setattr(
+        assistant_service, "_consume_rate_limit", lambda *args, **kwargs: True
+    )
+
+    with pytest.raises(HTTPException) as error:
+        send_message(
+            db_session,
+            user_id=owner.id,
+            conversation_id=conversation.id,
+            payload=MessageCreate(
+                request_id=uuid4(),
+                content="Mensagem acima do limite",
+            ),
+        )
+
+    assert error.value.status_code == 429
+    assert provider.calls == []
+    assert list_messages(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        limit=50,
+        offset=0,
+    ) == []
