@@ -3,8 +3,8 @@
 ## Requisitos
 
 - Python 3.12 ou superior.
+- Docker Desktop com Docker Compose para o PostgreSQL local.
 - PostgreSQL 16 ou superior para desenvolvimento integrado e produção.
-- Ambiente virtual Python.
 
 ## Configuração local
 
@@ -18,7 +18,15 @@ pip install -e ".[dev]"
 Copy-Item .env.example .env
 ```
 
-Preencha `DATABASE_URL` no arquivo local `.env` com a conexão PostgreSQL. O arquivo real não deve ser versionado. A API pode iniciar sem banco apenas durante a estruturação inicial; nesse caso, a prontidão informa indisponibilidade.
+Edite o arquivo local `.env`: defina `POSTGRES_PASSWORD` com uma senha aleatória e preencha `DATABASE_URL` com a mesma senha. Use uma senha com caracteres URL-safe ou codifique os caracteres reservados na URL. Nunca versione o arquivo `.env`.
+
+Inicie o PostgreSQL local:
+
+```powershell
+docker compose up -d database
+```
+
+Aguarde o contêiner ficar saudável. A persistência fica em um volume Docker nomeado; parar o contêiner não apaga os dados.
 
 ## Banco e migrações
 
@@ -49,6 +57,6 @@ ruff check .
 
 ## Estado desta entrega
 
-Implementados: configuração tipada, política inicial de produção, engine SQLAlchemy síncrona, dependência de sessão, modelos iniciais de usuário/sessão/auditoria e primeira migração Alembic.
+Implementados: configuração tipada, política inicial de produção, engine SQLAlchemy síncrona, dependência de sessão, modelos iniciais de usuário/sessão/auditoria, primeira migração Alembic e ambiente PostgreSQL local via Docker Compose.
 
 Ainda não implementados: fluxo HTTP de autenticação, criação inicial do proprietário, rotação/revogação de tokens, limitação de tentativas e operações de domínio. A existência dos testes e do fluxo de CI não significa que tenham sido executados ou aprovados nesta entrega.
