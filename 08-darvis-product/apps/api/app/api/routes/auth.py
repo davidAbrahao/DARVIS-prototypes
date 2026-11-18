@@ -39,7 +39,16 @@ def _client_ip(request: Request) -> str:
     return request.client.host if request.client else "unknown"
 
 
+def _validate_origin(request: Request) -> None:
+    origin = request.headers.get("origin")
+    if origin:
+        allowed = {item.rstrip("/") for item in get_settings().cors_origins}
+        if origin.rstrip("/") not in allowed:
+            raise HTTPException(status_code=403, detail="Origem não autorizada")
+
+
 def _set_session_cookies(response: Response, result: AuthResult) -> None:
+    response.headers["Cache-Control"] = "no-store"
     settings = get_settings()
     secure = settings.app_env in {"staging", "production"}
     cookie_path = _cookie_path()
@@ -65,6 +74,7 @@ def _set_session_cookies(response: Response, result: AuthResult) -> None:
 
 
 def _clear_session_cookies(response: Response) -> None:
+    response.headers["Cache-Control"] = "no-store"
     settings = get_settings()
     secure = settings.app_env in {"staging", "production"}
     cookie_path = _cookie_path()
@@ -89,11 +99,7 @@ def _validate_csrf(request: Request, csrf_header: str | None) -> None:
     if not cookie_value or not csrf_header or not hmac.compare_digest(cookie_value, csrf_header):
         raise HTTPException(status_code=403, detail="Validação de segurança da sessão falhou")
 
-    origin = request.headers.get("origin")
-    if origin:
-        allowed = {item.rstrip("/") for item in get_settings().cors_origins}
-        if origin.rstrip("/") not in allowed:
-            raise HTTPException(status_code=403, detail="Origem não autorizada")
+    _validate_origin(request)
 
 
 def _response_payload(result: AuthResult) -> AuthResponse:
@@ -110,11 +116,7 @@ def _response_payload(result: AuthResult) -> AuthResponse:
 @router.get("/csrf", response_model=CsrfResponse)
 def csrf_bootstrap(request: Request, response: Response) -> CsrfResponse:
     """Entrega à origem permitida o token necessário para renovar a sessão após recarregar."""
-    origin = request.headers.get("origin")
-    if origin:
-        allowed = {item.rstrip("/") for item in get_settings().cors_origins}
-        if origin.rstrip("/") not in allowed:
-            raise HTTPException(status_code=403, detail="Origem não autorizada")
+    _validate_origin(request)
 
     csrf_token = request.cookies.get(CSRF_COOKIE)
     if not csrf_token:
@@ -142,6 +144,7 @@ def configure_owner(
     db: Annotated[Session, Depends(get_db)],
     setup_token: Annotated[str | None, Header(alias="X-Setup-Token")] = None,
 ) -> AuthResponse:
+    _validate_origin(request)
     result = setup_owner(
         db,
         email=str(payload.email),
@@ -161,6 +164,7 @@ def authenticate(
     response: Response,
     db: Annotated[Session, Depends(get_db)],
 ) -> AuthResponse:
+    _validate_origin(request)
     result = login(
         db, email=str(payload.email), password=payload.password, ip_address=_client_ip(request)
     )
@@ -207,6 +211,7 @@ def end_all_sessions(
     db: Annotated[Session, Depends(get_db)],
     current_user: Annotated[User, Depends(get_current_user)],
 ) -> Response:
+    _validate_origin(request)
     logout_all(db, user=current_user, ip_address=_client_ip(request))
     _clear_session_cookies(response)
     response.status_code = status.HTTP_204_NO_CONTENT
