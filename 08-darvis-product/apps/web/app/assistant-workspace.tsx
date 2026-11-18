@@ -134,6 +134,8 @@ export function AssistantWorkspace() {
   }, [apiRequest]);
 
   const loadWorkspace = useCallback(async () => {
+    setInitialLoading(true);
+    setError(null);
     try {
       const [providerStatus, rows] = await Promise.all([
         apiRequest<AssistantStatus>("/assistant/status"),
@@ -162,8 +164,44 @@ export function AssistantWorkspace() {
   }, [apiRequest]);
 
   useEffect(() => {
-    void loadWorkspace();
-  }, [loadWorkspace]);
+    let current = true;
+
+    Promise.all([
+      apiRequest<AssistantStatus>("/assistant/status"),
+      apiRequest<Conversation[]>("/assistant/conversations?limit=50"),
+    ])
+      .then(([providerStatus, rows]) => {
+        if (!current) return;
+
+        setAssistantStatus(providerStatus);
+        setConversations(rows);
+        const previousActiveId = activeConversationRef.current;
+        const nextActiveId =
+          previousActiveId && rows.some((conversation) => conversation.id === previousActiveId)
+            ? previousActiveId
+            : rows[0]?.id ?? null;
+        if (nextActiveId !== previousActiveId) {
+          activeConversationRef.current = nextActiveId;
+          setMessages([]);
+          setMessagesLoading(Boolean(nextActiveId));
+        }
+        setActiveConversationId(nextActiveId);
+        setError(null);
+      })
+      .catch((cause: unknown) => {
+        if (current) {
+          setAssistantStatus(null);
+          setError(getErrorMessage(cause, "Não foi possível carregar o assistente."));
+        }
+      })
+      .finally(() => {
+        if (current) setInitialLoading(false);
+      });
+
+    return () => {
+      current = false;
+    };
+  }, [apiRequest]);
 
   useEffect(() => {
     if (!activeConversationId) return;

@@ -106,6 +106,8 @@ export function DashboardOverview() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
       const [summary, tasks, projects] = await Promise.all([
         apiRequest<DashboardSummary>("/dashboard/summary"),
@@ -127,8 +129,36 @@ export function DashboardOverview() {
   }, [apiRequest]);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    let current = true;
+
+    Promise.all([
+      apiRequest<DashboardSummary>("/dashboard/summary"),
+      apiRequest<Task[]>("/tasks?limit=6"),
+      apiRequest<Project[]>("/projects?limit=100"),
+    ])
+      .then(([summary, tasks, projects]) => {
+        if (!current) return;
+        setData({ summary, tasks, projects });
+        setHasLoaded(true);
+        setError(null);
+      })
+      .catch((cause: unknown) => {
+        if (current) {
+          setError(
+            cause instanceof ApiError
+              ? cause.message
+              : "Não foi possível carregar os dados do ambiente.",
+          );
+        }
+      })
+      .finally(() => {
+        if (current) setLoading(false);
+      });
+
+    return () => {
+      current = false;
+    };
+  }, [apiRequest]);
 
   const projectNames = useMemo(
     () =>

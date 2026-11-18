@@ -105,6 +105,8 @@ export function MemoryWorkspace() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     const params = new URLSearchParams({
       include_archived: String(showArchived),
       limit: "100",
@@ -124,8 +126,31 @@ export function MemoryWorkspace() {
   }, [apiRequest, categoryFilter, searchQuery, showArchived]);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    let current = true;
+    const params = new URLSearchParams({
+      include_archived: String(showArchived),
+      limit: "100",
+    });
+    if (categoryFilter !== "all") params.set("category", categoryFilter);
+    if (searchQuery.length >= 2) params.set("query", searchQuery);
+
+    apiRequest<MemoryEntry[]>(`/memories?${params.toString()}`)
+      .then((rows) => {
+        if (!current) return;
+        setEntries(rows);
+        setError(null);
+      })
+      .catch((cause: unknown) => {
+        if (current) setError(messageFor(cause, "Não foi possível carregar sua memória."));
+      })
+      .finally(() => {
+        if (current) setLoading(false);
+      });
+
+    return () => {
+      current = false;
+    };
+  }, [apiRequest, categoryFilter, searchQuery, showArchived]);
 
   function beginCreate() {
     setDraft(emptyDraft);
