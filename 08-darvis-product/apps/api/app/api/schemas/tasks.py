@@ -7,6 +7,12 @@ TaskStatus = Literal["todo", "in_progress", "blocked", "done", "cancelled"]
 TaskPriority = Literal["low", "normal", "high", "urgent"]
 
 
+def _require_timezone(value: datetime | None) -> datetime | None:
+    if value is not None and value.tzinfo is None:
+        raise ValueError("A data deve incluir o fuso horário")
+    return value
+
+
 class TaskCreate(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
 
@@ -23,6 +29,11 @@ class TaskCreate(BaseModel):
         if not value:
             raise ValueError("Título da tarefa não pode ficar vazio")
         return value
+
+    @field_validator("due_at")
+    @classmethod
+    def due_date_must_be_timezone_aware(cls, value: datetime | None) -> datetime | None:
+        return _require_timezone(value)
 
 
 class TaskUpdate(BaseModel):
@@ -41,6 +52,11 @@ class TaskUpdate(BaseModel):
         if value is not None and not value:
             raise ValueError("Título da tarefa não pode ficar vazio")
         return value
+
+    @field_validator("due_at")
+    @classmethod
+    def due_date_must_be_timezone_aware(cls, value: datetime | None) -> datetime | None:
+        return _require_timezone(value)
 
 
 class TaskResponse(BaseModel):
