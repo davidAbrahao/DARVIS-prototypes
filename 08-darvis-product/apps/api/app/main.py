@@ -43,7 +43,7 @@ async def health() -> dict[str, str]:
 
 
 @app.get(f"{settings.api_v1_prefix}/ready", tags=["saúde"])
-async def readiness():
+def readiness():
     """Verifica a disponibilidade real do banco sem expor detalhes da conexão."""
     if engine is None:
         return JSONResponse(
