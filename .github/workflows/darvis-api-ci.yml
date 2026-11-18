@@ -1,16 +1,7 @@
 name: Verificações da API D.A.R.V.I.S.
 
 on:
-  push:
-    branches: [main, "product/**"]
-    paths:
-      - "08-darvis-product/apps/api/**"
-      - ".github/workflows/darvis-api-ci.yml"
-  pull_request:
-    branches: [main]
-    paths:
-      - "08-darvis-product/apps/api/**"
-      - ".github/workflows/darvis-api-ci.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read
