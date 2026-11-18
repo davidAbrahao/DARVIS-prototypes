@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
 import {
   AlertCircle,
   ArrowUpRight,
@@ -113,7 +113,7 @@ export function DashboardOverview() {
       const [summary, tasks, projects] = await Promise.all([
         apiRequest<DashboardSummary>("/dashboard/summary"),
         apiRequest<Task[]>("/tasks?limit=6"),
-        apiRequest<Project[]>("/projects?limit=5"),
+        apiRequest<Project[]>("/projects?limit=100"),
       ]);
       setData({ summary, tasks, projects });
     } catch (cause) {
@@ -136,7 +136,7 @@ export function DashboardOverview() {
     [data.projects],
   );
 
-  async function createTask(event: React.FormEvent<HTMLFormElement>) {
+  async function createTask(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const title = newTaskTitle.trim();
     if (!title || saving) return;
@@ -219,7 +219,7 @@ export function DashboardOverview() {
           <article className="module-card dashboard-stat-card" key={label}>
             <div className="module-top">
               <span className="module-icon"><Icon size={19} /></span>
-              <span className="module-index">AO VIVO</span>
+              <span className="module-index">API</span>
             </div>
             <strong className="dashboard-stat-value">
               {loading ? <LoaderCircle size={21} className="auth-spin" /> : value}
