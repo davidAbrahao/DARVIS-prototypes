@@ -380,7 +380,10 @@ def send_message(
             return existing_turn
         raise HTTPException(
             status_code=409,
-            detail="A conversa foi alterada em outra solicitação. Atualize o histórico e tente novamente.",
+            detail=(
+                "A conversa foi alterada em outra solicitação. "
+                "Atualize o histórico e tente novamente."
+            ),
         )
 
     user_message = AssistantMessage(
