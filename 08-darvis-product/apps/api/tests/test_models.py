@@ -20,3 +20,18 @@ def test_authentication_models_are_registered_in_metadata() -> None:
 
     assert models.Project.__tablename__ == "projects"
     assert models.Task.__tablename__ == "tasks"
+
+
+def test_project_task_models_declare_database_level_tenant_constraints() -> None:
+    project_constraints = {
+        constraint.name for constraint in models.Project.__table__.constraints
+    }
+    task_constraints = {
+        constraint.name for constraint in models.Task.__table__.constraints
+    }
+
+    assert "uq_projects_id_user" in project_constraints
+    assert "ck_projects_status" in project_constraints
+    assert "fk_tasks_project_owner" in task_constraints
+    assert "ck_tasks_status" in task_constraints
+    assert "ck_tasks_priority" in task_constraints
