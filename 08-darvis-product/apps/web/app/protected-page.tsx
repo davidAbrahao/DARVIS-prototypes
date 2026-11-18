@@ -28,8 +28,7 @@ export function ProtectedPage({ children }: Readonly<{ children: ReactNode }>) {
           <span className="auth-eyebrow">CONEXÃO COM A API</span>
           <h1>Não foi possível confirmar sua sessão.</h1>
           <p>
-            A API não respondeu como esperado. Nenhum dado de sessão foi gravado no
-            armazenamento do navegador.
+            A API não respondeu como esperado. O access token não é salvo em armazenamento persistente; tente novamente quando a conexão estiver disponível.
           </p>
           <button className="auth-primary-button" onClick={() => void retrySession()}>
             <RefreshCw size={16} /> Tentar novamente
