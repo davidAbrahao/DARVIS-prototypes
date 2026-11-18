@@ -1,6 +1,12 @@
 name: Verificações web do D.A.R.V.I.S.
 
 on:
+  push:
+    branches:
+      - product/foundation-v0.1
+    paths:
+      - "08-darvis-product/apps/web/**"
+      - ".github/workflows/darvis-web-ci.yml"
   workflow_dispatch:
 
 permissions:

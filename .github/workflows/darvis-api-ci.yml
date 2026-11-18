@@ -1,6 +1,12 @@
 name: Verificações da API D.A.R.V.I.S.
 
 on:
+  push:
+    branches:
+      - product/foundation-v0.1
+    paths:
+      - "08-darvis-product/apps/api/**"
+      - ".github/workflows/darvis-api-ci.yml"
   workflow_dispatch:
 
 permissions:

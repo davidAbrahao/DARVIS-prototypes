@@ -42,3 +42,14 @@ def test_authentication_and_domain_routes_are_registered() -> None:
     }
 
     assert expected <= routes
+
+
+def test_api_routes_are_registered_only_once_per_method() -> None:
+    registered_routes = [
+        (route.path, method)
+        for route in app.routes
+        if isinstance(route, APIRoute)
+        for method in route.methods or set()
+    ]
+
+    assert len(registered_routes) == len(set(registered_routes))
