@@ -27,6 +27,13 @@ def test_authentication_and_domain_routes_are_registered() -> None:
         ("/api/v1/tasks/{task_id}", "PATCH"),
         ("/api/v1/tasks/{task_id}", "DELETE"),
         ("/api/v1/dashboard/summary", "GET"),
+        ("/api/v1/assistant/status", "GET"),
+        ("/api/v1/assistant/conversations", "GET"),
+        ("/api/v1/assistant/conversations", "POST"),
+        ("/api/v1/assistant/conversations/{conversation_id}", "PATCH"),
+        ("/api/v1/assistant/conversations/{conversation_id}", "DELETE"),
+        ("/api/v1/assistant/conversations/{conversation_id}/messages", "GET"),
+        ("/api/v1/assistant/conversations/{conversation_id}/messages", "POST"),
     }
 
     assert expected <= routes
