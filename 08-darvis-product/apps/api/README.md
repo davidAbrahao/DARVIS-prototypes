@@ -36,7 +36,11 @@ Em produção, execute a migração como etapa única e controlada do processo d
 - `GET /api/v1/health`: identidade e estado de configuração do serviço.
 - `GET /api/v1/ready`: verifica se o banco está configurado e aceita uma consulta simples; retorna HTTP 503 quando não estiver pronto.
 
-## Executar verificações
+## Verificações automatizadas
+
+O fluxo de integração contínua em `.github/workflows/ci.yml` instala a API, executa os testes e verifica o código com Ruff para alterações neste diretório.
+
+Para executar localmente:
 
 ```powershell
 pytest
@@ -47,4 +51,4 @@ ruff check .
 
 Implementados: configuração tipada, política inicial de produção, engine SQLAlchemy síncrona, dependência de sessão, modelos iniciais de usuário/sessão/auditoria e primeira migração Alembic.
 
-Ainda não implementados: fluxo HTTP de autenticação, criação inicial do proprietário, rotação/revogação de tokens, limitação de tentativas e operações de domínio. A existência dos testes não significa que foram executados nesta etapa.
+Ainda não implementados: fluxo HTTP de autenticação, criação inicial do proprietário, rotação/revogação de tokens, limitação de tentativas e operações de domínio. A existência dos testes e do fluxo de CI não significa que tenham sido executados ou aprovados nesta entrega.
