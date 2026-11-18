@@ -54,6 +54,7 @@ A instalação é de proprietário único. Não existe cadastro público.
 
 | Método | Endpoint | Objetivo |
 |---|---|---|
+| GET | `/api/v1/auth/csrf` | Bootstrap do token CSRF para restaurar sessão após recarregar o cliente |
 | POST | `/api/v1/auth/setup` | Cadastro one-time do proprietário; exige `X-Setup-Token` |
 | POST | `/api/v1/auth/login` | Autenticação por e-mail e senha |
 | POST | `/api/v1/auth/refresh` | Rotação do refresh token; exige cookie e `X-CSRF-Token` |
@@ -66,6 +67,7 @@ A instalação é de proprietário único. Não existe cadastro público.
 - Senhas são armazenadas com Argon2id (64 MiB, 3 iterações, paralelismo 2); o sistema verifica e atualiza hashes quando os parâmetros mudarem.
 - O access token é JWT HS256, com emissor/audiência fixos e duração padrão de 10 minutos. O cliente deve mantê-lo apenas em memória, não em `localStorage`.
 - O refresh token é aleatório, enviado em cookie HttpOnly, SameSite=Lax e Secure em staging/produção. O servidor persiste somente SHA-256 do valor de alta entropia.
+- O endpoint `GET /auth/csrf` cria ou devolve o cookie CSRF não HttpOnly, verifica a origem quando presente e responde com `Cache-Control: no-store`. O cliente usa esse token no cabeçalho `X-CSRF-Token` para restaurar uma sessão depois de recarregar a página.
 - Um cookie CSRF legível pelo cliente é comparado em tempo constante com o cabeçalho `X-CSRF-Token`; quando a requisição traz `Origin`, ele também precisa estar na lista CORS permitida.
 - Cada renovação consome o token anterior e grava o sucessor na mesma transação. Se um token consumido for apresentado novamente, todas as sessões da família são revogadas.
 - Logout individual revoga uma sessão; logout global revoga todas as sessões do usuário.
@@ -81,7 +83,7 @@ O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta
 
 Uma execução anterior foi interrompida durante a instalação editável porque o setuptools detectou mais de um pacote de nível superior (`app` e `alembic`). A configuração de build foi corrigida para incluir explicitamente apenas `app*`. O workflow não foi executado novamente após essa correção; os testes e Ruff permanecem sem validação em runtime.
 
-A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF, setup one-time, login, rotação/replay de refresh tokens, rate limiting e revogação individual/global. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
+A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, setup one-time, login, rotação/replay de refresh tokens, rate limiting e revogação individual/global. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
 
 Para executar localmente:
 
@@ -92,6 +94,6 @@ ruff check .
 
 ## Estado desta entrega
 
-Implementados em código: modelos e migração incremental de histórico de refresh tokens e rate limits; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; cookies e validação CSRF; auditoria persistente das operações de autenticação.
+Implementados em código: modelos e migração incremental de histórico de refresh tokens e rate limits; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; bootstrap do CSRF; cookies e validação CSRF; auditoria persistente das operações de autenticação.
 
 Ainda não comprovados: instalação editável após a correção, execução das migrações no PostgreSQL, testes automatizados, compatibilidade real entre cliente e API, revisão externa de segurança e execução do CI. Esta entrega não deve ser considerada pronta para produção até essas verificações ocorrerem.
