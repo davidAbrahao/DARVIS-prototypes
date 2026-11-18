@@ -3,6 +3,7 @@ from app.models.assistant_message import AssistantMessage
 from app.models.audit_event import AuditEvent
 from app.models.auth_rate_limit import AuthRateLimit
 from app.models.auth_session import AuthSession
+from app.models.memory_entry import MemoryEntry
 from app.models.project import Project
 from app.models.refresh_token import RefreshToken
 from app.models.task import Task
@@ -18,4 +19,5 @@ __all__ = [
     "Task",
     "AssistantConversation",
     "AssistantMessage",
+    "MemoryEntry",
 ]
