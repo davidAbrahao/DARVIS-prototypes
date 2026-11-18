@@ -1,18 +1,25 @@
 import os
 from collections.abc import Generator
-from sqlalchemy import create_engine, select
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.engine import make_url
-from sqlalchemy.orm import Session
+
 import pytest
 from fastapi import HTTPException
+from sqlalchemy import create_engine, select
+from sqlalchemy.engine import make_url
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 from app.api.schemas.memory import MemoryCreate, MemoryUpdate
 from app.core.config import get_settings
 from app.core.security import hash_password
 from app.db.base import Base
-from app.models import MemoryEntry, User, AuditEvent
-from app.services.memory import create_memory, update_memory, delete_memory, list_memory, get_memory
+from app.models import AuditEvent, MemoryEntry, User
+from app.services.memory import (
+    create_memory,
+    delete_memory,
+    get_memory,
+    list_memory,
+    update_memory,
+)
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
 if TEST_DATABASE_URL:

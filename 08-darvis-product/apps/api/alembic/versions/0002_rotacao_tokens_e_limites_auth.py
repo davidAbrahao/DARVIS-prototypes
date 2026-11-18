@@ -1,7 +1,8 @@
 """Adiciona histórico de refresh tokens e limites persistentes de autenticação."""
 
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 
 revision = "0002_auth_rotation_limits"
 down_revision = "0001_core_identity"

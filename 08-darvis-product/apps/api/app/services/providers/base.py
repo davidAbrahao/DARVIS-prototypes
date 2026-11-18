@@ -1,5 +1,6 @@
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Literal, Protocol, Sequence
+from typing import Literal, Protocol
 
 
 ChatRole = Literal["user", "assistant"]

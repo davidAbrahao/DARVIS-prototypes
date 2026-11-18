@@ -22,7 +22,6 @@ from app.services import assistant as assistant_service
 from app.services.assistant import (
     create_conversation,
     delete_conversation,
-    list_conversations,
     list_messages,
     send_message,
     update_conversation,

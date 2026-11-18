@@ -76,7 +76,7 @@ def _bucket_hash(scope: str, value: str) -> str:
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Autenticação indisponível: configure SECRET_KEY",
         ) from None
-    return hmac.new(key, f"{scope}:{value}".encode("utf-8"), hashlib.sha256).hexdigest()
+    return hmac.new(key, f"{scope}:{value}".encode(), hashlib.sha256).hexdigest()
 
 
 def _consume_rate_limit(

@@ -1,7 +1,8 @@
 """Cria memória estruturada manual e isolada por proprietário."""
 
-from alembic import op
 import sqlalchemy as sa
+
+from alembic import op
 
 revision = "0007_structured_memory"
 down_revision = "0006_assistant_idempotency"

@@ -1,7 +1,7 @@
 import os
 from collections.abc import Generator
-from datetime import UTC, datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
+from datetime import UTC, datetime, timedelta
 from threading import Barrier
 
 import pytest

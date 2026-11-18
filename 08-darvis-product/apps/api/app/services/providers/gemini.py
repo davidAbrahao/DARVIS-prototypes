@@ -1,5 +1,8 @@
 from collections.abc import Sequence
 
+from google import genai
+from google.genai import errors, types
+
 from app.services.providers.base import (
     ChatTurn,
     GeneratedReply,
@@ -34,9 +37,6 @@ class GeminiProvider:
 
     def generate(self, turns: Sequence[ChatTurn]) -> GeneratedReply:
         try:
-            from google import genai
-            from google.genai import types
-
             contents = [
                 types.Content(
                     role="user" if turn.role == "user" else "model",
@@ -55,8 +55,8 @@ class GeminiProvider:
                         max_output_tokens=self._max_output_tokens,
                     ),
                 )
-        except Exception:
-            # Não expor detalhes do SDK, rede ou configuração ao cliente HTTP.
+        except (errors.APIError, TimeoutError, OSError):
+            # Não expor detalhes do provedor ou de conectividade ao cliente HTTP.
             raise ProviderGenerationError(
                 "O provedor Gemini não conseguiu processar a solicitação."
             ) from None
