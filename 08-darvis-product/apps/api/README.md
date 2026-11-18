@@ -18,6 +18,8 @@ pip install -e ".[dev]"
 Copy-Item .env.example .env
 ```
 
+O projeto declara explicitamente o backend de build e inclui apenas o pacote `app`; os scripts de migração Alembic permanecem no repositório e são carregados pelo Alembic CLI, sem serem empacotados como um pacote Python da aplicação.
+
 Edite o arquivo local `.env`: defina `POSTGRES_PASSWORD` com uma senha aleatória e preencha `DATABASE_URL` com a mesma senha. Gere valores independentes para `SECRET_KEY` e `INITIAL_SETUP_TOKEN` (ambos com pelo menos 32 bytes). Depois de criar o proprietário, remova ou rotacione o token de configuração inicial no ambiente. Nunca versione o arquivo `.env`.
 
 Inicie o PostgreSQL local:
@@ -75,7 +77,11 @@ A rotação simultânea do mesmo token é tratada de forma conservadora: a prime
 
 ## Verificações automatizadas
 
-O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual. Ele inicia um PostgreSQL efêmero, aplica as migrações, executa os testes e verifica o código com Ruff. A execução está deliberadamente pendente da fase de validação. Como a PR segue em rascunho e a branch padrão não foi alterada, o acionamento manual ficará disponível quando esse workflow chegar à branch padrão do repositório.
+O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual. Ele inicia um PostgreSQL efêmero, aplica as migrações, executa os testes e verifica o código com Ruff.
+
+Uma execução anterior foi interrompida durante a instalação editável porque o setuptools detectou mais de um pacote de nível superior (`app` e `alembic`). A configuração de build foi corrigida para incluir explicitamente apenas `app*`. O workflow não foi executado novamente após essa correção; os testes e Ruff permanecem sem validação em runtime.
+
+A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF, setup one-time, login, rotação/replay de refresh tokens, rate limiting e revogação individual/global. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
 
 Para executar localmente:
 
@@ -88,4 +94,4 @@ ruff check .
 
 Implementados em código: modelos e migração incremental de histórico de refresh tokens e rate limits; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; cookies e validação CSRF; auditoria persistente das operações de autenticação.
 
-Ainda não comprovados: execução das migrações no PostgreSQL, testes automatizados, compatibilidade real entre cliente e API, revisão externa de segurança e execução do CI. Esta entrega não deve ser considerada pronta para produção até essas verificações ocorrerem.
+Ainda não comprovados: instalação editável após a correção, execução das migrações no PostgreSQL, testes automatizados, compatibilidade real entre cliente e API, revisão externa de segurança e execução do CI. Esta entrega não deve ser considerada pronta para produção até essas verificações ocorrerem.
