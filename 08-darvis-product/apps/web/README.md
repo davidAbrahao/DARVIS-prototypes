@@ -34,11 +34,11 @@ Em uma segunda janela, inicie a API conforme o [guia da API](../api/README.md). 
 
 ## Assistente de IA
 
-A área de conversas utiliza os endpoints autenticados `/assistant/status`, `/assistant/conversations` e `/assistant/conversations/{id}/messages`. Conversas e mensagens são carregadas do PostgreSQL, não do armazenamento local do navegador.
+A área de conversas utiliza os endpoints autenticados `/assistant/status`, `/assistant/conversations` e `/assistant/conversations/{id}/messages`. É possível criar, selecionar, renomear e excluir conversas; a exclusão exige confirmação na interface. Conversas e mensagens são carregadas do PostgreSQL, não do armazenamento local do navegador.
 
 O provedor é configurado somente no ambiente da API, conforme o [guia da API](../api/README.md). Por padrão, `AI_PROVIDER=disabled` e o campo de envio permanece desativado. Nunca crie uma variável `NEXT_PUBLIC_GEMINI_API_KEY` ou envie a chave do provedor para o navegador.
 
-Cada envio mantém um UUID durante as tentativas da mesma mensagem; o servidor usa esse identificador para responder com o turno já persistido caso a mesma requisição seja repetida. A interface não tenta executar ferramentas e não simula respostas quando o provedor não está configurado.
+Cada envio mantém um UUID durante as tentativas da mesma mensagem; o servidor usa esse identificador para responder com o turno já persistido caso a mesma requisição seja repetida. A interface impede troca de conversa enquanto um envio, renomeação ou exclusão está em andamento. A interface não tenta executar ferramentas e não simula respostas quando o provedor não está configurado.
 
 ## Verificações de qualidade
 
