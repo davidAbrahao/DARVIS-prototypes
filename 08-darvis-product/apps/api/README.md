@@ -38,7 +38,7 @@ As tabelas são versionadas pelo Alembic. A aplicação **não executa migraçõ
 alembic upgrade head
 ```
 
-A migração `0002_auth_rotation_limits` acrescenta o histórico de tokens de renovação e os buckets persistentes de limitação de tentativas. Ela não reescreve a migração inicial. O controle de rate limit usa UPSERT atômico do PostgreSQL; SQLite não é um backend suportado para autenticação.
+A migração `0002_auth_rotation_limits` acrescenta o histórico de tokens de renovação e os buckets persistentes de limitação de tentativas. A migração `0003_projetos_tarefas` cria as tabelas de projetos e tarefas, com índices por proprietário, estado e datas. As migrações são incrementais e não reescrevem as anteriores. O controle de rate limit usa UPSERT atômico do PostgreSQL; SQLite não é um backend suportado para autenticação.
 
 Em produção, execute a migração como etapa única e controlada do processo de implantação, antes de disponibilizar a nova versão da API.
 
@@ -77,13 +77,37 @@ A instalação é de proprietário único. Não existe cadastro público.
 
 A rotação simultânea do mesmo token é tratada de forma conservadora: a primeira transação consome o token; a segunda identifica reutilização e revoga a família. O cliente deve evitar disparar duas renovações paralelas.
 
+## Projetos, tarefas e Central de Comando
+
+As operações de domínio exigem access token Bearer e filtram os registros pelo identificador do usuário autenticado. O cliente não pode informar outro proprietário no corpo da requisição.
+
+| Método | Endpoint | Objetivo |
+|---|---|---|
+| GET | `/api/v1/projects` | Lista projetos; aceita filtros `status`, `limit` e `offset` |
+| POST | `/api/v1/projects` | Cria projeto |
+| GET | `/api/v1/projects/{project_id}` | Consulta projeto próprio |
+| PATCH | `/api/v1/projects/{project_id}` | Atualiza nome, descrição ou situação |
+| DELETE | `/api/v1/projects/{project_id}` | Remove projeto próprio; tarefas vinculadas permanecem e ficam sem projeto |
+| GET | `/api/v1/tasks` | Lista tarefas; aceita filtros `status`, `project_id`, `priority`, `limit` e `offset` |
+| POST | `/api/v1/tasks` | Cria tarefa, opcionalmente vinculada a um projeto próprio |
+| GET | `/api/v1/tasks/{task_id}` | Consulta tarefa própria |
+| PATCH | `/api/v1/tasks/{task_id}` | Atualiza título, descrição, projeto, prioridade, prazo ou situação |
+| DELETE | `/api/v1/tasks/{task_id}` | Remove tarefa própria |
+| GET | `/api/v1/dashboard/summary` | Retorna contagens agregadas de projetos e tarefas para o Cognitive Cockpit |
+
+Estados de projeto: `active`, `on_hold`, `completed` e `archived`. Estados de tarefa: `todo`, `in_progress`, `blocked`, `done` e `cancelled`. Prioridades: `low`, `normal`, `high` e `urgent`.
+
+Uma tarefa só pode ser vinculada a um projeto pertencente ao mesmo usuário. Prazos devem incluir fuso horário. Ao marcar uma tarefa como concluída, a API registra `completed_at`; ao reabri-la, limpa esse registro. Alterações de projeto e tarefa geram eventos de auditoria persistentes.
+
+O resumo do painel usa consultas agregadas no PostgreSQL, filtradas pelo proprietário autenticado. Não utiliza números fixos ou dados de demonstração.
+
 ## Verificações automatizadas
 
 O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual. Ele inicia um PostgreSQL efêmero, aplica as migrações, executa os testes e verifica o código com Ruff.
 
 Uma execução anterior foi interrompida durante a instalação editável porque o setuptools detectou mais de um pacote de nível superior (`app` e `alembic`). A configuração de build foi corrigida para incluir explicitamente apenas `app*`. O workflow não foi executado novamente após essa correção; os testes e Ruff permanecem sem validação em runtime.
 
-A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
+A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. A camada de domínio tem testes PostgreSQL para ciclo de vida, vínculo, isolamento de proprietário, exclusão, datas e auditoria; os contratos Pydantic possuem testes de validação. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
 
 Para executar localmente:
 
@@ -94,6 +118,6 @@ ruff check .
 
 ## Estado desta entrega
 
-Implementados em código: modelos e migração incremental de histórico de refresh tokens e rate limits; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; bootstrap do CSRF; cookies e validação CSRF; auditoria persistente das operações de autenticação.
+Implementados em código: modelos e migrações incrementais de identidade, sessões, limites, projetos e tarefas; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; bootstrap do CSRF; cookies e validação CSRF; CRUD protegido de projetos e tarefas; resumo agregado do painel; auditoria persistente de autenticação e alterações de domínio.
 
 Ainda não comprovados: instalação editável após a correção, execução das migrações no PostgreSQL, testes automatizados, compatibilidade real entre cliente e API, revisão externa de segurança e execução do CI. Esta entrega não deve ser considerada pronta para produção até essas verificações ocorrerem.
