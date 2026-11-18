@@ -12,13 +12,14 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 **Critério de saída:** arquitetura e organização do repositório coerentes; nenhum código herdado incorporado sem revisão.
 
 ## Fase 1 — Estrutura segura da aplicação
-- [ ] Estabelecer a estrutura das aplicações web e API.
-- [ ] Adicionar exemplos de ambiente contendo apenas valores fictícios.
-- [ ] Implementar validação de configuração e inicialização segura.
-- [ ] Adicionar conexão PostgreSQL, configuração SQLAlchemy e estrutura inicial Alembic.
-- [ ] Adicionar endpoints de saúde e prontidão da API.
+- [x] Estabelecer a estrutura inicial da API e da aplicação web.
+- [x] Adicionar exemplos de ambiente contendo apenas valores fictícios.
+- [x] Implementar validação tipada de configuração e requisitos básicos de produção.
+- [x] Adicionar engine SQLAlchemy, modelos iniciais e estrutura Alembic.
+- [x] Adicionar migração inicial de identidade, sessões e auditoria.
+- [x] Separar liveness, health de configuração e readiness com verificação real do banco.
 - [ ] Adicionar integração contínua para análise estática, tipagem, testes e compilação.
-- [ ] Documentar a configuração do ambiente local.
+- [ ] Documentar e validar a configuração de um PostgreSQL local.
 
 **Critério de saída:** configuração inicial documentada; API e aplicação web iniciam em ambiente controlado; verificações da integração contínua são executadas com sucesso.
 
