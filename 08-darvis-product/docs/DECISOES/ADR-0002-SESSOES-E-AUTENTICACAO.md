@@ -41,6 +41,8 @@ O bloqueio de linha impede que duas transações consumam o mesmo token ao mesmo
 ### Configuração inicial e limites
 
 - `INITIAL_SETUP_TOKEN` deve conter no mínimo 32 bytes e é comparado em tempo constante.
+- O login bloqueia temporariamente a identidade após 8 falhas consecutivas por 15 minutos; o contador é zerado após autenticação válida ou após expiração do bloqueio.
+- Endpoints browser-facing de setup, login, bootstrap CSRF e logout global validam `Origin` contra `CORS_ORIGINS` quando esse cabeçalho estiver presente; clientes não-browser sem `Origin` continuam aceitos.
 - Um advisory lock transacional do PostgreSQL garante que apenas uma primeira configuração possa criar o proprietário.
 - Rate limits persistentes usam UPSERT atômico do PostgreSQL, com buckets identificados por HMAC-SHA-256. IP e e-mail em claro não são gravados na tabela de limites.
 - Não confiar em cabeçalhos de proxy sem uma lista explícita de proxies confiáveis.
