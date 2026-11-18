@@ -45,19 +45,25 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Adicionar estados de carregamento, vazio, erro e indisponibilidade para dados de domínio.
 - [x] Permitir criação de tarefa/projeto, conclusão de tarefa, alteração de situação de tarefa/projeto e preenchimento de projeto, prioridade e prazo na tarefa.
 - [ ] Completar verificações de acessibilidade e responsividade em dispositivos reais.
-- [ ] Integrar módulos de assistente, memória, agenda e demais áreas.
+- [x] Integrar o espaço de conversas do assistente com histórico persistente e status real do provedor.
+- [ ] Integrar módulos de memória externa, agenda e demais áreas.
 
 **Critério de saída:** interface utilizável em desktop e dispositivos móveis, exibindo apenas estados reais do backend. A primeira fatia de projetos e tarefas está escrita; a validação operacional e as verificações de acessibilidade continuam pendentes.
 
 ## Fase 4 — Assistente e arquitetura de provedores
-- [ ] Definir contratos de requisição e resposta independentes de provedor.
-- [ ] Integrar o primeiro provedor por meio de um adaptador no servidor.
-- [ ] Adicionar seleção explícita e minimização do contexto enviado.
-- [ ] Adicionar persistência de conversas e controles de retenção.
+- [x] Definir contratos de conversa/mensagem e interface de provedor independente de SDK.
+- [x] Integrar o adaptador Gemini no servidor, desativado por padrão e com credencial exclusivamente no ambiente da API.
+- [x] Persistir conversas e mensagens no PostgreSQL com isolamento por proprietário.
+- [x] Adicionar limite de histórico/contexto, rate limit por usuário e auditoria sem gravar o conteúdo do prompt.
+- [x] Adicionar idempotência por UUID e controle otimista para evitar turnos duplicados ou fora de ordem.
+- [ ] Definir controles de retenção, exportação e exclusão além da exclusão individual de conversa.
+- [ ] Adicionar seleção de contexto explícita e minimização configurável pelo usuário.
 - [ ] Adicionar esquema estrito e lista de permissões para propostas de ferramentas.
-- [ ] Adicionar aprovação no servidor e execução idempotente.
+- [ ] Adicionar aprovação no servidor e execução idempotente de ferramentas.
 
-**Critério de saída:** assistente propõe uma ação de tarefa tipada e segura; a API exige aprovação e registra o resultado.
+**Limite atual:** chat textual com histórico persistente. Não há ferramentas, execução de ações, voz, anexos, memória externa ou contexto automático de tarefas/projetos.
+
+**Critério de saída:** o assistente mantém conversas persistentes com um provedor configurável; depois, uma ação tipada só poderá ser executada mediante autorização, aprovação e auditoria no servidor.
 
 ## Fase 5 — Memória e Obsidian
 - [ ] Definir o esquema e o ciclo de vida das memórias estruturadas.
