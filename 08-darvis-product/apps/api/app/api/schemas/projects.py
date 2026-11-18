@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -10,6 +11,13 @@ class ProjectCreate(BaseModel):
 
     name: str = Field(min_length=1, max_length=120)
     description: str | None = Field(default=None, max_length=5000)
+
+    @field_validator("name")
+    @classmethod
+    def name_must_not_be_blank(cls, value: str) -> str:
+        if not value:
+            raise ValueError("Nome do projeto não pode ficar vazio")
+        return value
 
 
 class ProjectUpdate(BaseModel):
@@ -34,5 +42,5 @@ class ProjectResponse(BaseModel):
     name: str
     description: str | None
     status: ProjectStatus
-    created_at: str
-    updated_at: str
+    created_at: datetime
+    updated_at: datetime
