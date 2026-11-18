@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-@import "tailwindcss";
 
 :root{--bg:#080c14;--panel:#0e1522;--panel-2:#111c2b;--line:#1d2a3b;--text:#e6edf7;--muted:#8493a8;--cyan:#38bdf8;--cyan-soft:rgba(56,189,248,.12);--green:#10b981;--font-ui:'Geist',sans-serif;--font-display:'Space Grotesk',sans-serif;--font-mono:'JetBrains Mono',monospace}
 *{box-sizing:border-box}html,body{min-height:100%;margin:0}body{background:var(--bg);color:var(--text);font-family:var(--font-ui);font-size:14px}a{color:inherit;text-decoration:none}button{font:inherit}.shell{min-height:100vh;display:grid;grid-template-columns:252px minmax(0,1fr);background:radial-gradient(ellipse at 72% 0%,rgba(15,68,105,.16),transparent 38%),var(--bg)}
