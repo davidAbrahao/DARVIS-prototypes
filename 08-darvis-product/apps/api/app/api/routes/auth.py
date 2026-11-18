@@ -9,11 +9,22 @@ from app.api.schemas.auth import AuthResponse, LoginRequest, OwnerSetupRequest, 
 from app.core.config import get_settings
 from app.db.session import get_db
 from app.models.user import User
-from app.services.auth import AuthResult, login, logout_all, logout_session, refresh_session, setup_owner
+from app.services.auth import (
+    AuthResult,
+    login,
+    logout_all,
+    logout_session,
+    refresh_session,
+    setup_owner,
+)
 
 router = APIRouter(prefix="/auth", tags=["autenticação"])
 REFRESH_COOKIE = "darvis_refresh"
 CSRF_COOKIE = "darvis_csrf"
+
+
+def _cookie_path() -> str:
+    return f"{get_settings().api_v1_prefix}/auth"
 
 
 def _client_ip(request: Request) -> str:
@@ -23,35 +34,46 @@ def _client_ip(request: Request) -> str:
 
 def _set_session_cookies(response: Response, result: AuthResult) -> None:
     settings = get_settings()
-    secure = settings.app_env == "production"
+    secure = settings.app_env in {"staging", "production"}
+    cookie_path = _cookie_path()
+    max_age = settings.refresh_token_ttl_days * 24 * 60 * 60
     response.set_cookie(
         REFRESH_COOKIE,
         result.refresh_token,
-        max_age=settings.refresh_token_ttl_days * 24 * 60 * 60,
+        max_age=max_age,
         httponly=True,
         secure=secure,
         samesite="lax",
-        path="/api/v1/auth",
+        path=cookie_path,
     )
     response.set_cookie(
         CSRF_COOKIE,
         result.csrf_token,
-        max_age=settings.refresh_token_ttl_days * 24 * 60 * 60,
+        max_age=max_age,
         httponly=False,
         secure=secure,
         samesite="lax",
-        path="/api/v1/auth",
+        path=cookie_path,
     )
 
 
 def _clear_session_cookies(response: Response) -> None:
     settings = get_settings()
-    secure = settings.app_env == "production"
+    secure = settings.app_env in {"staging", "production"}
+    cookie_path = _cookie_path()
     response.delete_cookie(
-        REFRESH_COOKIE, path="/api/v1/auth", secure=secure, httponly=True, samesite="lax"
+        REFRESH_COOKIE,
+        path=cookie_path,
+        secure=secure,
+        httponly=True,
+        samesite="lax",
     )
     response.delete_cookie(
-        CSRF_COOKIE, path="/api/v1/auth", secure=secure, httponly=False, samesite="lax"
+        CSRF_COOKIE,
+        path=cookie_path,
+        secure=secure,
+        httponly=False,
+        samesite="lax",
     )
 
 
