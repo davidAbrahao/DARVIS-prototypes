@@ -19,6 +19,8 @@ def unauthenticated_client():
         "/api/v1/projects",
         "/api/v1/tasks",
         "/api/v1/dashboard/summary",
+        "/api/v1/assistant/status",
+        "/api/v1/assistant/conversations",
     ],
 )
 def test_domain_read_endpoints_reject_requests_without_bearer_token(
@@ -45,3 +47,22 @@ def test_domain_mutation_endpoints_reject_requests_without_bearer_token(
 
     assert project_response.status_code == 401
     assert task_response.status_code == 401
+
+
+def test_assistant_message_endpoints_reject_requests_without_bearer_token(
+    unauthenticated_client: TestClient,
+) -> None:
+    create_response = unauthenticated_client.post(
+        "/api/v1/assistant/conversations",
+        json={"title": "Não deve ser criada"},
+    )
+    send_response = unauthenticated_client.post(
+        "/api/v1/assistant/conversations/00000000-0000-0000-0000-000000000000/messages",
+        json={
+            "request_id": "a46f14c8-8ba5-48f7-a8a6-758f8f630a6c",
+            "content": "Não deve ser enviada",
+        },
+    )
+
+    assert create_response.status_code == 401
+    assert send_response.status_code == 401
