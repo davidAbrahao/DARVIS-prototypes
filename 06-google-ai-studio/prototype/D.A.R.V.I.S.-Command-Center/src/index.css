@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="deep-space"] {
+  color-scheme: dark;
+  --darvis-canvas: #090C10;
+  --darvis-sidebar: #0B0F17;
+  --darvis-surface: #111622;
+  --darvis-inset: #090C10;
+  --darvis-topbar: rgba(9, 12, 16, 0.90);
+  --darvis-border: rgba(30, 41, 59, 0.85);
+  --darvis-border-strong: rgba(51, 65, 85, 0.85);
+  --darvis-ink: #F1F5F9;
+  --darvis-ink-secondary: #CBD5E1;
+  --darvis-ink-muted: #94A3B8;
+  --darvis-ink-subtle: #64748B;
+  --darvis-accent: #06B6D4;
+  --darvis-accent-hover: #22D3EE;
+  --darvis-accent-ink: #020617;
+  --darvis-accent-text: #22D3EE;
+  --darvis-accent-soft: rgba(6, 182, 212, 0.12);
+  --darvis-accent-soft-border: rgba(6, 182, 212, 0.30);
+  --darvis-track: #1E293B;
+  --darvis-hover: rgba(30, 41, 59, 0.55);
+}
+
+[data-theme="cyberpunk-neon"] {
+  color-scheme: dark;
+  --darvis-canvas: #070510;
+  --darvis-sidebar: #0C071B;
+  --darvis-surface: #130B24;
+  --darvis-inset: #090614;
+  --darvis-topbar: rgba(7, 5, 16, 0.92);
+  --darvis-border: rgba(139, 92, 246, 0.32);
+  --darvis-border-strong: rgba(236, 72, 153, 0.45);
+  --darvis-ink: #F8F5FF;
+  --darvis-ink-secondary: #DDD6FE;
+  --darvis-ink-muted: #B8A9E8;
+  --darvis-ink-subtle: #8B7BB8;
+  --darvis-accent: #EC4899;
+  --darvis-accent-hover: #F472B6;
+  --darvis-accent-ink: #090612;
+  --darvis-accent-text: #22D3EE;
+  --darvis-accent-soft: rgba(236, 72, 153, 0.14);
+  --darvis-accent-soft-border: rgba(236, 72, 153, 0.38);
+  --darvis-track: #241842;
+  --darvis-hover: rgba(139, 92, 246, 0.18);
+}
+
+[data-theme="minimalist-light"] {
+  color-scheme: light;
+  --darvis-canvas: #F4F6F9;
+  --darvis-sidebar: #FFFFFF;
+  --darvis-surface: #FFFFFF;
+  --darvis-inset: #F8FAFC;
+  --darvis-topbar: rgba(255, 255, 255, 0.92);
+  --darvis-border: #E2E8F0;
+  --darvis-border-strong: #CBD5E1;
+  --darvis-ink: #0F172A;
+  --darvis-ink-secondary: #334155;
+  --darvis-ink-muted: #475569;
+  --darvis-ink-subtle: #64748B;
+  --darvis-accent: #0284C7;
+  --darvis-accent-hover: #0369A1;
+  --darvis-accent-ink: #FFFFFF;
+  --darvis-accent-text: #0369A1;
+  --darvis-accent-soft: rgba(2, 132, 199, 0.10);
+  --darvis-accent-soft-border: rgba(2, 132, 199, 0.28);
+  --darvis-track: #E2E8F0;
+  --darvis-hover: #F1F5F9;
+}
+
+@theme inline {
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-canvas: var(--darvis-canvas);
+  --color-sidebar: var(--darvis-sidebar);
+  --color-surface: var(--darvis-surface);
+  --color-inset: var(--darvis-inset);
+  --color-topbar: var(--darvis-topbar);
+  --color-edge: var(--darvis-border);
+  --color-edge-strong: var(--darvis-border-strong);
+  --color-ink: var(--darvis-ink);
+  --color-ink-secondary: var(--darvis-ink-secondary);
+  --color-ink-muted: var(--darvis-ink-muted);
+  --color-ink-subtle: var(--darvis-ink-subtle);
+  --color-accent: var(--darvis-accent);
+  --color-accent-hover: var(--darvis-accent-hover);
+  --color-accent-ink: var(--darvis-accent-ink);
+  --color-accent-text: var(--darvis-accent-text);
+  --color-accent-soft: var(--darvis-accent-soft);
+  --color-accent-soft-border: var(--darvis-accent-soft-border);
+  --color-track: var(--darvis-track);
+  --color-hover-surface: var(--darvis-hover);
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--darvis-canvas);
+    color: var(--darvis-ink);
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Custom sleek scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

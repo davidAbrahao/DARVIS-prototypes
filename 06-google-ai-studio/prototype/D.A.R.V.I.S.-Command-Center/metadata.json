@@ -1,0 +1,6 @@
+{
+  "name": "D.A.R.V.I.S.",
+  "description": "David Abrahão Rodrigues Virtual Intelligence System — Central de Inteligência Pessoal, Memória Persistente e Comando Operacional.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
