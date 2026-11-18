@@ -14,10 +14,12 @@ import {
 import {
   ApiError,
   authenticate,
+  authenticatedApiRequest,
   bootstrapCsrf,
   endAllSessions,
   endSession,
   renewSession,
+  type AuthPayload,
   type AuthUser,
 } from "../lib/auth-api";
 
@@ -31,6 +33,7 @@ type AuthContextValue = {
   signOut: () => Promise<void>;
   signOutAll: () => Promise<void>;
   retrySession: () => Promise<void>;
+  apiRequest: <T = unknown>(path: string, init?: RequestInit) => Promise<T>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -40,13 +43,13 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [csrfToken, setCsrfToken] = useState<string | null>(null);
+  const accessTokenRef = useRef<string | null>(null);
+  const csrfTokenRef = useRef<string | null>(null);
   const restoreTask = useRef<Promise<void> | null>(null);
 
-  const acceptSession = useCallback((payload: {
-    access_token: string;
-    csrf_token: string;
-    user: AuthUser;
-  }) => {
+  const acceptSession = useCallback((payload: AuthPayload) => {
+    accessTokenRef.current = payload.access_token;
+    csrfTokenRef.current = payload.csrf_token;
     setAccessToken(payload.access_token);
     setCsrfToken(payload.csrf_token);
     setUser(payload.user);
@@ -54,7 +57,10 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
   }, []);
 
   const clearSession = useCallback(() => {
+    accessTokenRef.current = null;
+    csrfTokenRef.current = null;
     setAccessToken(null);
+    setCsrfToken(null);
     setUser(null);
     setStatus("anonymous");
   }, []);
@@ -68,6 +74,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
       setStatus("checking");
       try {
         const csrf = await bootstrapCsrf();
+        csrfTokenRef.current = csrf;
         setCsrfToken(csrf);
 
         try {
@@ -81,6 +88,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
           throw error;
         }
       } catch {
+        accessTokenRef.current = null;
         setAccessToken(null);
         setUser(null);
         setStatus("unavailable");
@@ -109,7 +117,6 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
         acceptSession(payload);
       } catch (error) {
         if (error instanceof ApiError) {
-          // 401, 403 e 429 são respostas válidas da API, não falhas de conectividade.
           clearSession();
         } else {
           setStatus("unavailable");
@@ -120,21 +127,46 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     [acceptSession, clearSession],
   );
 
+  const apiRequest = useCallback(
+    async <T,>(path: string, init: RequestInit = {}): Promise<T> => {
+      const token = accessTokenRef.current;
+      if (!token) {
+        throw new ApiError("Sua sessão não está autenticada.", 401);
+      }
+
+      try {
+        return await authenticatedApiRequest<T>(path, init, {
+          accessToken: token,
+          csrfToken: csrfTokenRef.current,
+          getLatestAccessToken: () => accessTokenRef.current,
+          onSessionRenewed: acceptSession,
+        });
+      } catch (error) {
+        if (error instanceof ApiError && error.status === 401) {
+          clearSession();
+        } else if (!(error instanceof ApiError)) {
+          setStatus("unavailable");
+        }
+        throw error;
+      }
+    },
+    [acceptSession, clearSession],
+  );
+
   const signOut = useCallback(async () => {
-    const csrf = csrfToken ?? (await bootstrapCsrf());
+    const csrf = csrfTokenRef.current ?? (await bootstrapCsrf());
     await endSession(csrf);
-    setCsrfToken(null);
     clearSession();
-  }, [clearSession, csrfToken]);
+  }, [clearSession]);
 
   const signOutAll = useCallback(async () => {
-    if (!accessToken) {
+    const token = accessTokenRef.current;
+    if (!token) {
       throw new ApiError("Sua sessão não está mais autenticada.", 401);
     }
-    await endAllSessions(accessToken);
-    setCsrfToken(null);
+    await endAllSessions(token);
     clearSession();
-  }, [accessToken, clearSession]);
+  }, [clearSession]);
 
   const value = useMemo<AuthContextValue>(
     () => ({
@@ -145,8 +177,9 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
       signOut,
       signOutAll,
       retrySession,
+      apiRequest,
     }),
-    [status, user, accessToken, signIn, signOut, signOutAll, retrySession],
+    [status, user, accessToken, signIn, signOut, signOutAll, retrySession, apiRequest],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
