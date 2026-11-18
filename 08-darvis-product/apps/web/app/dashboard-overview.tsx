@@ -72,13 +72,6 @@ const taskStatusLabel: Record<Task["status"], string> = {
   cancelled: "Cancelada",
 };
 
-const projectStatusLabel: Record<Project["status"], string> = {
-  active: "Ativo",
-  on_hold: "Em espera",
-  completed: "Concluído",
-  archived: "Arquivado",
-};
-
 const priorityLabel: Record<Task["priority"], string> = {
   low: "Baixa",
   normal: "Normal",
