@@ -21,6 +21,7 @@ def unauthenticated_client():
         "/api/v1/dashboard/summary",
         "/api/v1/assistant/status",
         "/api/v1/assistant/conversations",
+        "/api/v1/memories",
     ],
 )
 def test_domain_read_endpoints_reject_requests_without_bearer_token(
@@ -66,3 +67,17 @@ def test_assistant_message_endpoints_reject_requests_without_bearer_token(
 
     assert create_response.status_code == 401
     assert send_response.status_code == 401
+
+
+def test_memory_mutations_require_an_authenticated_owner(
+    unauthenticated_client: TestClient,
+) -> None:
+    response = unauthenticated_client.post(
+        "/api/v1/memories",
+        json={
+            "title": "Registro sem identidade",
+            "content": "Não deve ser salvo",
+        },
+    )
+
+    assert response.status_code == 401
