@@ -1,4 +1,5 @@
 import os
+from uuid import uuid4
 from collections.abc import Generator
 
 import pytest
@@ -30,7 +31,6 @@ from app.services.providers import (
     ChatTurn,
     GeneratedReply,
     ProviderGenerationError,
-    ProviderNotConfigured,
 )
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
@@ -115,13 +115,13 @@ def test_conversation_messages_persist_and_history_is_reused(
         db_session,
         user_id=owner.id,
         conversation_id=conversation.id,
-        payload=MessageCreate(content="Quero organizar meus projetos."),
+        payload=MessageCreate(request_id=uuid4(), content="Quero organizar meus projetos."),
     )
     second_turn = send_message(
         db_session,
         user_id=owner.id,
         conversation_id=conversation.id,
-        payload=MessageCreate(content="Comece pelas prioridades."),
+        payload=MessageCreate(request_id=uuid4(), content="Comece pelas prioridades."),
     )
 
     assert [message.role for message in first_turn] == ["user", "assistant"]
@@ -195,7 +195,7 @@ def test_conversation_and_message_access_is_scoped_to_owner(
             db_session,
             user_id=owner.id,
             conversation_id=conversation.id,
-            payload=MessageCreate(content="Acesso cruzado"),
+            payload=MessageCreate(request_id=uuid4(), content="Acesso cruzado"),
         )
 
     assert list_error.value.status_code == 404
@@ -230,7 +230,7 @@ def test_provider_failure_is_audited_without_persisting_a_partial_turn(
             db_session,
             user_id=owner.id,
             conversation_id=conversation.id,
-            payload=MessageCreate(content="Teste de indisponibilidade"),
+            payload=MessageCreate(request_id=uuid4(), content="Teste de indisponibilidade"),
         )
 
     assert error.value.status_code == 502
@@ -286,7 +286,7 @@ def test_concurrent_conversation_update_rejects_stale_generation(
             db_session,
             user_id=owner.id,
             conversation_id=conversation.id,
-            payload=MessageCreate(content="Mensagem concorrente"),
+            payload=MessageCreate(request_id=uuid4(), content="Mensagem concorrente"),
         )
 
     assert error.value.status_code == 409
@@ -331,3 +331,47 @@ def test_deleting_conversation_removes_its_messages(db_session: Session) -> None
             AssistantMessage.conversation_id == conversation.id
         )
     ) is None
+
+
+def test_repeated_request_id_returns_persisted_turn_without_calling_provider_again(
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    owner = _create_owner(db_session)
+    provider = FakeProvider("Resposta idempotente")
+    monkeypatch.setattr(assistant_service, "get_chat_provider", lambda: provider)
+    conversation = create_conversation(
+        db_session,
+        user_id=owner.id,
+        payload=ConversationCreate(),
+    )
+    request_id = uuid4()
+    payload = MessageCreate(
+        request_id=request_id,
+        content="Envio que pode ser repetido após uma falha de rede",
+    )
+
+    first_result = send_message(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        payload=payload,
+    )
+    second_result = send_message(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        payload=payload,
+    )
+
+    assert [item.id for item in second_result] == [item.id for item in first_result]
+    assert len(provider.calls) == 1
+    assert len(
+        list_messages(
+            db_session,
+            user_id=owner.id,
+            conversation_id=conversation.id,
+            limit=20,
+            offset=0,
+        )
+    ) == 2
