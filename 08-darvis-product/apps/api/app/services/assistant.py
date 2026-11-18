@@ -208,6 +208,43 @@ def _first_title(prompt: str) -> str:
     return f"{normalized[:69].rstrip()}..."
 
 
+def _existing_idempotent_turn(
+    db: Session,
+    *,
+    user_id: int,
+    conversation_id: str,
+    request_id: str,
+) -> list[AssistantMessage] | None:
+    user_message = db.scalar(
+        select(AssistantMessage).where(
+            AssistantMessage.user_id == user_id,
+            AssistantMessage.conversation_id == conversation_id,
+            AssistantMessage.role == "user",
+            AssistantMessage.client_message_id == request_id,
+        )
+    )
+    if user_message is None:
+        return None
+
+    assistant_message = db.scalar(
+        select(AssistantMessage)
+        .where(
+            AssistantMessage.user_id == user_id,
+            AssistantMessage.conversation_id == conversation_id,
+            AssistantMessage.role == "assistant",
+            AssistantMessage.id > user_message.id,
+        )
+        .order_by(AssistantMessage.id.asc())
+        .limit(1)
+    )
+    if assistant_message is None:
+        raise HTTPException(
+            status_code=409,
+            detail="O envio anterior está incompleto. Atualize a conversa antes de continuar.",
+        )
+    return [user_message, assistant_message]
+
+
 def send_message(
     db: Session,
     *,
@@ -215,6 +252,19 @@ def send_message(
     conversation_id: str,
     payload: MessageCreate,
 ) -> list[AssistantMessage]:
+    conversation = get_conversation(
+        db, user_id=user_id, conversation_id=conversation_id
+    )
+    request_id = str(payload.request_id)
+    existing_turn = _existing_idempotent_turn(
+        db,
+        user_id=user_id,
+        conversation_id=conversation_id,
+        request_id=request_id,
+    )
+    if existing_turn is not None:
+        return existing_turn
+
     try:
         provider = get_chat_provider()
     except ProviderNotConfigured:
@@ -250,9 +300,6 @@ def send_message(
             detail="Limite temporário de uso do assistente atingido. Tente novamente mais tarde.",
         )
 
-    conversation = get_conversation(
-        db, user_id=user_id, conversation_id=conversation_id
-    )
     base_version = conversation.version
     original_title = conversation.title
     history = list(
@@ -324,6 +371,7 @@ def send_message(
         user_id=user_id,
         role="user",
         content=payload.content,
+        client_message_id=request_id,
     )
     assistant_message = AssistantMessage(
         conversation_id=conversation_id,
