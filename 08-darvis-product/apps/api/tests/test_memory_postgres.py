@@ -1,6 +1,7 @@
 import os
 from collections.abc import Generator
 from sqlalchemy import create_engine, select
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 import pytest
@@ -120,3 +121,37 @@ def test_memory_is_isolated_between_owners(db_session: Session) -> None:
         db_session, user_id=owner.id, category=None, query=None,
         include_archived=True, limit=50, offset=0
     ) == []
+
+
+def test_database_rejects_non_manual_source_and_unknown_category(
+    db_session: Session,
+) -> None:
+    owner = create_owner(db_session)
+
+    with pytest.raises(IntegrityError):
+        db_session.add(
+            MemoryEntry(
+                user_id=owner.id,
+                title="Origem inválida",
+                content="Memória não manual.",
+                category="fact",
+                tags=[],
+                source="assistant",
+            )
+        )
+        db_session.flush()
+    db_session.rollback()
+
+    with pytest.raises(IntegrityError):
+        db_session.add(
+            MemoryEntry(
+                user_id=owner.id,
+                title="Categoria inválida",
+                content="Categoria fora da allowlist.",
+                category="unknown",
+                tags=[],
+                source="manual",
+            )
+        )
+        db_session.flush()
+    db_session.rollback()
