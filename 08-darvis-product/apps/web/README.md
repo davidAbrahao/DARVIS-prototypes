@@ -27,7 +27,7 @@ Em uma segunda janela, inicie a API conforme o [guia da API](../api/README.md). 
 - O refresh token permanece em cookie HttpOnly. O cliente não lê nem armazena esse valor.
 - O access token existe somente em memória no provedor React; ele não é salvo em `localStorage`, `sessionStorage` ou IndexedDB.
 - As chamadas que enviam cookies usam `credentials: "include"`; a API deve permitir explicitamente a origem da aplicação.
-- O cliente compartilha uma única tentativa de restauração por vez. Isso evita disparar renovações paralelas, que a API trata de forma conservadora como possível reutilização de token.
+- O cliente compartilha uma única tentativa de restauração por vez e uma única renovação durante chamadas autenticadas. Chamadas concorrentes que recebam 401 aguardam a mesma renovação e repetem a operação com o access token novo.
 - O botão de saída revoga a sessão na API e só depois limpa o estado local.
 - A configuração inicial do proprietário não é executada pelo navegador. `INITIAL_SETUP_TOKEN` é segredo de servidor e nunca deve ser exposto em uma variável `NEXT_PUBLIC_*`.
 
@@ -43,4 +43,4 @@ As verificações acima estão preparadas, mas não foram executadas nesta etapa
 
 ## Estado da interface
 
-A tela de login, a proteção de rota, a restauração e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando preserva a direção visual do Google Stitch; módulos de assistente, memória, projetos, agenda e integrações continuam identificados como planejados até que existam endpoints e dados reais.
+A tela de login, a proteção de rota, a restauração, a renovação controlada e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando consulta indicadores, tarefas e projetos reais; permite criar tarefas e projetos, concluir tarefas e alterar a situação dos projetos. Assistente, memória, agenda e integrações continuam identificados como planejados até que existam serviços e dados reais.
