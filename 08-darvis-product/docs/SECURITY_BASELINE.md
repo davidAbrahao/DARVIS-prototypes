@@ -1,6 +1,6 @@
 # Requisitos mínimos de segurança
 
-Este documento define os requisitos mínimos. Não significa que todos esses controles já estejam implementados.
+Este documento define os requisitos mínimos. Não significa que todos esses controles já estejam implementados ou validados em execução.
 
 ## Segredos e credenciais
 - Incluir no controle de versão somente valores fictícios; nunca incluir chaves reais de API, senhas, chaves de assinatura ou certificados.
@@ -10,13 +10,14 @@ Este documento define os requisitos mínimos. Não significa que todos esses con
 - Renovar qualquer credencial que possa ter sido incluída no controle de versão.
 
 ## Autenticação
-- Proteger senhas com Argon2id e parâmetros revisados.
-- Utilizar credenciais de acesso de curta duração.
-- Renovar os tokens de sessão a cada operação bem-sucedida de renovação.
-- Detectar reutilização de token e revogar a família de sessões afetada.
-- Oferecer logout e revogação de sessão no servidor.
-- Limitar tentativas de login, cadastro inicial, renovação e redefinição de senha.
-- Evitar respostas de autenticação que facilitem descobrir se uma conta existe.
+- Senhas protegidas com Argon2id e parâmetros definidos no ADR-0002.
+- Access JWT curto, validado com algoritmo, emissor e audiência fixos; verificar usuário ativo e sessão não revogada em toda rota protegida.
+- Refresh token aleatório, persistido somente como hash e rotacionado transacionalmente.
+- Reutilização de token consumido revoga a família afetada.
+- Cookie refresh HttpOnly, SameSite=Lax e Secure em staging/produção; CSRF por double-submit cookie/cabeçalho.
+- Configuração inicial one-time, protegida por token secreto e lock transacional; sem cadastro público.
+- Limites persistentes e compartilhados para tentativas de setup, login e refresh.
+- Respostas de autenticação não devem permitir descobrir se uma conta existe.
 
 ## Autorização
 - Negar por padrão.
@@ -44,19 +45,20 @@ Este documento define os requisitos mínimos. Não significa que todos esses con
 
 ## API e infraestrutura
 - Exigir HTTPS nos ambientes implantados.
-- Configurar origens CORS explicitamente.
+- Configurar origens CORS explicitamente; não permitir wildcard com credenciais.
 - Adicionar limites de tamanho de requisição e de frequência.
 - Validar todos os corpos de requisição e parâmetros de consulta.
 - Utilizar cabeçalhos seguros e configuração confiável de proxy.
+- Não confiar em cabeçalhos X-Forwarded-For sem proxies explicitamente confiáveis.
 - Separar verificações de vida do processo e prontidão dos serviços.
-- Executar migrações do banco como etapa controlada da implantação, não simultaneamente em cada réplica da aplicação.
+- Executar migrações do banco como etapa controlada da implantação, não simultaneamente em cada réplica.
 - Manter cópias de segurança criptografadas e testar a restauração.
 - Fixar e revisar dependências; executar verificações automatizadas de vulnerabilidades.
 
 ## Rastreabilidade e auditoria
 
-Persistir eventos relevantes de segurança com responsável, ação, recurso, data e hora, identificador de correlação, decisão e resultado. Os registros de auditoria não podem ser alterados pelos endpoints comuns da aplicação.
+Persistir eventos relevantes de segurança com responsável, ação, recurso, data e hora, identificador de correlação, decisão e resultado. Não registrar tokens, senhas, cookies ou credenciais. Os registros de auditoria não podem ser alterados pelos endpoints comuns da aplicação.
 
 ## Regra para publicação
 
-Qualquer vulnerabilidade crítica ou alta ainda não resolvida impede a publicação em produção. Conveniências de desenvolvimento nunca devem enfraquecer silenciosamente as configurações de produção.
+O código de autenticação desta etapa ainda precisa de testes executados no PostgreSQL, revisão de concorrência e revisão independente. Nenhuma publicação em produção até resolver vulnerabilidades críticas/altas e confirmar todos os critérios do roteiro.
