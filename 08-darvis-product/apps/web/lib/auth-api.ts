@@ -185,20 +185,39 @@ export async function authenticatedApiRequest<T>(
   return readJson<T>(response);
 }
 
-export async function endSession(csrfToken: string): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}/auth/logout`, {
-    method: "POST",
-    credentials: "include",
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      "X-CSRF-Token": csrfToken,
-    },
-  });
+export async function endSession(fallbackCsrfToken: string | null): Promise<void> {
+  const performLogout = async () => {
+    let csrfToken: string | null = null;
+    try {
+      csrfToken = await bootstrapCsrf();
+    } catch {
+      csrfToken = fallbackCsrfToken;
+    }
 
-  if (!response.ok) {
-    await readJson<never>(response);
+    if (!csrfToken) {
+      throw new ApiError("Não foi possível recuperar a proteção da sessão.", 403);
+    }
+
+    const response = await fetch(`${API_BASE_URL}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+      cache: "no-store",
+      headers: {
+        Accept: "application/json",
+        "X-CSRF-Token": csrfToken,
+      },
+    });
+
+    if (!response.ok) {
+      await readJson<never>(response);
+    }
+  };
+
+  if (typeof navigator !== "undefined" && navigator.locks) {
+    await navigator.locks.request("darvis-session-refresh", performLogout);
+    return;
   }
+  await performLogout();
 }
 
 export async function endAllSessions(accessToken: string): Promise<void> {
