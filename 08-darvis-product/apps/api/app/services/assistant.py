@@ -187,7 +187,7 @@ def _build_history(
 ) -> list[ChatTurn]:
     remaining = max(0, MAX_HISTORY_CHARACTERS - len(current_prompt))
     selected: list[ChatTurn] = []
-    for message in messages:
+    for message in reversed(messages):
         if remaining <= 0:
             break
         content = message.content
