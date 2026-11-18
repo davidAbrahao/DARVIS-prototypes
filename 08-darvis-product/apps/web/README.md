@@ -40,7 +40,7 @@ npm run typecheck
 npm run build
 ```
 
-As verificações acima estão preparadas, mas não foram executadas nesta etapa.
+As verificações acima estão preparadas, mas não foram executadas nesta etapa. O workflow manual `.github/workflows/darvis-web-ci.yml` executará ESLint, TypeScript e build Next.js quando estiver disponível na branch padrão e for acionado na fase de validação.
 
 ## Estado da interface
 
