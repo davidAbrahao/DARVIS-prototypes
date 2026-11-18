@@ -6,7 +6,7 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Criar um espaço isolado para o produto.
 - [x] Registrar a visão do produto e a arquitetura inicial.
 - [x] Definir a base de segurança e a sequência de entregas.
-- [ ] Revisar o backend herdado do Claude em relação à arquitetura-alvo.
+- [x] Auditar estaticamente o backend herdado do Claude e registrar riscos e adaptações.
 - [ ] Confirmar versões de execução suportadas e compatibilidade das dependências.
 
 **Critério de saída:** arquitetura e organização do repositório coerentes; nenhum código herdado incorporado sem revisão.
