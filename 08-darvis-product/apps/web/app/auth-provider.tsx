@@ -70,11 +70,9 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     const task = (async () => {
       setStatus("checking");
       try {
-        const csrf = await bootstrapCsrf();
-        csrfTokenRef.current = csrf;
-
         try {
-          const payload = await renewSession(csrf);
+          // A função coordena abas e busca o CSRF somente depois de obter a trava.
+          const payload = await renewSession(csrfTokenRef.current);
           acceptSession(payload);
         } catch (error) {
           if (error instanceof ApiError && error.status === 401) {
