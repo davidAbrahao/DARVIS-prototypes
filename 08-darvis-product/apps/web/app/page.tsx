@@ -4,10 +4,10 @@ import { ProtectedPage } from "./protected-page";
 import { SessionActions } from "./session-actions";
 
 const navigation = [
-  { label: "Central de Comando", icon: Command, active: true },
+  { label: "Central de Comando", icon: Command, active: true, href: "#overview" },
   { label: "Assistente de IA", icon: BrainCircuit },
   { label: "Central de Memória", icon: Network },
-  { label: "Projetos e Tarefas", icon: FolderKanban },
+  { label: "Projetos e Tarefas", icon: FolderKanban, href: "#projects" },
   { label: "Conhecimento", icon: Layers3 },
   { label: "Integrações", icon: Workflow },
 ];
@@ -25,9 +25,9 @@ export default function Home() {
         </a>
         <div className="nav-label">ÁREA DE TRABALHO</div>
         <nav className="navigation" aria-label="Navegação principal">
-          {navigation.map(({ label, icon: Icon, active }) => (
-            active ? (
-              <a className="nav-item active" href="#overview" key={label}>
+          {navigation.map(({ label, icon: Icon, active, href }) => (
+            href ? (
+              <a className={`nav-item ${active ? "active" : ""}`} href={href} key={label}>
                 <Icon size={17} strokeWidth={1.8} /><span>{label}</span>
               </a>
             ) : (
