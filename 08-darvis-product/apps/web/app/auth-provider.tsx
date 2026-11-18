@@ -42,7 +42,6 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [status, setStatus] = useState<AuthStatus>("checking");
   const [user, setUser] = useState<AuthUser | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [csrfToken, setCsrfToken] = useState<string | null>(null);
   const accessTokenRef = useRef<string | null>(null);
   const csrfTokenRef = useRef<string | null>(null);
   const restoreTask = useRef<Promise<void> | null>(null);
@@ -51,7 +50,6 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     accessTokenRef.current = payload.access_token;
     csrfTokenRef.current = payload.csrf_token;
     setAccessToken(payload.access_token);
-    setCsrfToken(payload.csrf_token);
     setUser(payload.user);
     setStatus("authenticated");
   }, []);
@@ -60,7 +58,6 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     accessTokenRef.current = null;
     csrfTokenRef.current = null;
     setAccessToken(null);
-    setCsrfToken(null);
     setUser(null);
     setStatus("anonymous");
   }, []);
@@ -75,7 +72,6 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
       try {
         const csrf = await bootstrapCsrf();
         csrfTokenRef.current = csrf;
-        setCsrfToken(csrf);
 
         try {
           const payload = await renewSession(csrf);
