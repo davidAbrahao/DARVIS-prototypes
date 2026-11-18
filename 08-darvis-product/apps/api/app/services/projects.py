@@ -1,12 +1,13 @@
 from typing import Any
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
 from app.api.schemas.projects import ProjectCreate, ProjectUpdate
 from app.models.audit_event import AuditEvent
 from app.models.project import Project
+from app.models.task import Task
 
 
 def list_projects(
@@ -82,6 +83,12 @@ def update_project(
 
 def delete_project(db: Session, *, user_id: int, project_id: int) -> None:
     project = get_project(db, user_id=user_id, project_id=project_id)
+    # A chave estrangeira composta exige desvincular as tarefas do mesmo proprietário.
+    db.execute(
+        update(Task)
+        .where(Task.project_id == project.id, Task.user_id == user_id)
+        .values(project_id=None)
+    )
     _record_project_event(
         db, user_id=user_id, event_type="project.deleted", project_id=project.id
     )
