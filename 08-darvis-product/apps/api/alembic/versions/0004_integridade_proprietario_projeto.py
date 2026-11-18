@@ -9,6 +9,21 @@ depends_on = None
 
 
 def upgrade() -> None:
+    op.create_check_constraint(
+        "ck_projects_status",
+        "projects",
+        "status IN ('active', 'on_hold', 'completed', 'archived')",
+    )
+    op.create_check_constraint(
+        "ck_tasks_status",
+        "tasks",
+        "status IN ('todo', 'in_progress', 'blocked', 'done', 'cancelled')",
+    )
+    op.create_check_constraint(
+        "ck_tasks_priority",
+        "tasks",
+        "priority IN ('low', 'normal', 'high', 'urgent')",
+    )
     op.create_unique_constraint(
         "uq_projects_id_user",
         "projects",
@@ -30,6 +45,9 @@ def upgrade() -> None:
 
 
 def downgrade() -> None:
+    op.drop_constraint("ck_tasks_priority", "tasks", type_="check")
+    op.drop_constraint("ck_tasks_status", "tasks", type_="check")
+    op.drop_constraint("ck_projects_status", "projects", type_="check")
     op.drop_constraint(
         "fk_tasks_project_owner",
         "tasks",
