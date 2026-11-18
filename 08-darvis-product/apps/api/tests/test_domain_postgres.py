@@ -12,7 +12,7 @@ from app.api.schemas.tasks import TaskCreate, TaskUpdate
 from app.core.config import get_settings
 from app.core.security import hash_password
 from app.db.base import Base
-from app.models import AuditEvent, Project, Task, User
+from app.models import AuditEvent, User
 from app.services.projects import (
     create_project,
     delete_project,
