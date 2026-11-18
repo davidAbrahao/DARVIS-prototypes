@@ -1,12 +1,12 @@
-# D.A.R.V.I.S. API
+# API do D.A.R.V.I.S.
 
-## Requirements
-- Python 3.12 or newer.
-- A virtual environment.
+## Requisitos
+- Python 3.12 ou superior.
+- Ambiente virtual Python.
 
-## Local setup
+## Configuração local
 
-From this directory:
+Execute os comandos a partir deste diretório:
 
 ```powershell
 py -3.12 -m venv .venv
@@ -17,15 +17,15 @@ Copy-Item .env.example .env
 uvicorn app.main:app --reload
 ```
 
-Health endpoints:
-- `GET /health/live`: process liveness only.
-- `GET /api/v1/health`: application identity; database is explicitly reported as not configured in this foundation build.
+## Endpoints de saúde
+- `GET /health/live`: informa apenas se o processo da API está em execução.
+- `GET /api/v1/health`: informa a identidade da aplicação; nesta estrutura inicial, o banco de dados é explicitamente indicado como não configurado.
 
-Run checks:
+## Executar verificações
 
 ```powershell
 pytest
 ruff check .
 ```
 
-This is an initial skeleton. PostgreSQL, authentication, and domain routes have not been implemented yet.
+Esta é uma estrutura inicial. PostgreSQL, autenticação e rotas de domínio ainda não foram implementados.
