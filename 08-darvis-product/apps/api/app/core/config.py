@@ -20,6 +20,10 @@ class Settings(BaseSettings):
     database_url: SecretStr | None = None
     secret_key: SecretStr = SecretStr("")
     initial_setup_token: SecretStr = SecretStr("")
+    ai_provider: Literal["disabled", "gemini"] = "disabled"
+    gemini_api_key: SecretStr = SecretStr("")
+    gemini_model: str = Field(default="gemini-3.8-flash", min_length=1, max_length=120)
+    gemini_max_output_tokens: int = Field(default=2048, ge=128, le=8192)
     access_token_ttl_minutes: int = Field(default=10, ge=5, le=30)
     refresh_token_ttl_days: int = Field(default=30, ge=1, le=90)
 
