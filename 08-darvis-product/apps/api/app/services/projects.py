@@ -25,10 +25,15 @@ def list_projects(
     )
 
 
-def get_project(db: Session, *, user_id: int, project_id: int) -> Project:
-    project = db.scalar(
-        select(Project).where(Project.id == project_id, Project.user_id == user_id)
+def get_project(
+    db: Session, *, user_id: int, project_id: int, lock: bool = False
+) -> Project:
+    statement = select(Project).where(
+        Project.id == project_id, Project.user_id == user_id
     )
+    if lock:
+        statement = statement.with_for_update()
+    project = db.scalar(statement)
     if project is None:
         raise HTTPException(status_code=404, detail="Projeto não encontrado")
     return project
@@ -82,7 +87,7 @@ def update_project(
 
 
 def delete_project(db: Session, *, user_id: int, project_id: int) -> None:
-    project = get_project(db, user_id=user_id, project_id=project_id)
+    project = get_project(db, user_id=user_id, project_id=project_id, lock=True)
     # A chave estrangeira composta exige desvincular as tarefas do mesmo proprietário.
     db.execute(
         update(Task)
