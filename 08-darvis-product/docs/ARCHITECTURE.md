@@ -47,7 +47,7 @@ Todas as consultas de projeto e tarefa aplicam o `user_id` da identidade autenti
 
 Situações de projeto: `active`, `on_hold`, `completed`, `archived`. Situações de tarefa: `todo`, `in_progress`, `blocked`, `done`, `cancelled`. Prioridades: `low`, `normal`, `high`, `urgent`.
 
-A interface mantém o access token somente em memória. O refresh permanece no cookie HttpOnly. A renovação automática de chamadas protegidas compartilha uma promessa na aba e utiliza Web Locks para coordenar abas quando o navegador oferece essa API. Nenhum refresh token é copiado para JavaScript ou para armazenamento persistente do navegador.
+A interface mantém o access token somente em memória. O refresh permanece no cookie HttpOnly. A renovação automática de chamadas protegidas compartilha uma promessa na aba e utiliza Web Locks para coordenar abas quando o navegador oferece essa API. Nenhum refresh token é copiado para JavaScript ou para armazenamento persistente do navegador. Login, refresh e logout usam a mesma trava. Quando o logout é confirmado, um evento BroadcastChannel sem credenciais notifica as outras abas para limpar o estado local.
 
 ## Limites de atuação da IA
 
