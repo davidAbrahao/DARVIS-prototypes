@@ -89,6 +89,8 @@ def create_task(db: Session, *, user_id: int, payload: TaskCreate) -> Task:
 def update_task(db: Session, *, user_id: int, task_id: int, payload: TaskUpdate) -> Task:
     task = get_task(db, user_id=user_id, task_id=task_id)
     changes: dict[str, Any] = payload.model_dump(exclude_unset=True)
+    if not changes:
+        raise HTTPException(status_code=422, detail="Informe ao menos um campo para atualizar")
     for field in ("title", "status", "priority"):
         if field in changes and changes[field] is None:
             raise HTTPException(status_code=422, detail=f"O campo {field} não pode ser nulo")
