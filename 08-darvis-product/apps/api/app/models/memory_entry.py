@@ -1,6 +1,4 @@
 from datetime import datetime
-from typing import Any
-
 from sqlalchemy import (
     Boolean,
     CheckConstraint,
@@ -42,7 +40,12 @@ class MemoryEntry(Base):
     category: Mapped[str] = mapped_column(
         String(24), nullable=False, default="fact", server_default="fact"
     )
-    tags: Mapped[list[str]] = mapped_column(JSON, nullable=False, default=list, server_default="[]")
+    tags: Mapped[list[str]] = mapped_column(
+        JSON,
+        nullable=False,
+        default=list,
+        server_default="[]",
+    )
     is_pinned: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, server_default="false"
     )
