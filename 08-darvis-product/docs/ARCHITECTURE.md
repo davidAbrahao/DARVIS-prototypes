@@ -43,7 +43,7 @@ A primeira fatia do domínio usa PostgreSQL para manter:
 - **Tarefas:** proprietário, projeto opcional, título, descrição, situação, prioridade, prazo com fuso horário e data de conclusão.
 - **Auditoria:** eventos de criação, atualização e exclusão com usuário responsável e identificação do recurso.
 
-Todas as consultas de projeto e tarefa aplicam o `user_id` da identidade autenticada. O serviço valida a propriedade do projeto antes de criar ou vincular uma tarefa. Listagens oferecem filtros e paginação limitados pela API. O resumo da Central de Comando é calculado por consultas agregadas no banco.
+Todas as consultas de projeto e tarefa aplicam o `user_id` da identidade autenticada. O serviço valida a propriedade do projeto antes de criar ou vincular uma tarefa. O banco também impõe uma chave estrangeira composta de `(project_id, user_id)` para `(projects.id, projects.user_id)`, impedindo vínculos cruzados mesmo fora do serviço. Constraints SQL limitam estados e prioridades aos valores definidos pelos contratos. Listagens oferecem filtros e paginação limitados pela API. O resumo da Central de Comando é calculado por consultas agregadas no banco.
 
 Situações de projeto: `active`, `on_hold`, `completed`, `archived`. Situações de tarefa: `todo`, `in_progress`, `blocked`, `done`, `cancelled`. Prioridades: `low`, `normal`, `high`, `urgent`.
 
