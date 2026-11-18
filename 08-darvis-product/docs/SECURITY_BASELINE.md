@@ -54,6 +54,9 @@ Este documento define os requisitos mínimos. Não significa que todos esses con
 - Não enviar dados sensíveis por padrão.
 - Documentar provedor, região, retenção, uso para treinamento e termos aplicáveis antes de habilitar um provedor.
 - Oferecer caminhos para exportação e exclusão de dados.
+- Memórias estruturadas são criadas manualmente nesta versão; impedir ingestão automática pelo modelo ou outras integrações sem consentimento e origem explícitos.
+- Não anexar registros da Central de Memória ao contexto de IA por padrão; exigir seleção explícita e prévia do conteúdo que será compartilhado.
+- Manter memória estruturada PostgreSQL separada de notas Markdown/Obsidian e registrar origem/proveniência dos dados.
 - Evitar registrar prompts, tokens, segredos ou conteúdo pessoal desnecessário.
 
 ## API e infraestrutura
