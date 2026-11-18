@@ -1,5 +1,6 @@
 from collections.abc import Generator
 
+from fastapi import HTTPException
 from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
@@ -39,7 +40,7 @@ SessionLocal = (
 
 def get_db() -> Generator[Session, None, None]:
     if SessionLocal is None:
-        raise RuntimeError("Banco de dados não configurado")
+        raise HTTPException(status_code=503, detail="Banco de dados indisponível")
     db = SessionLocal()
     try:
         yield db
