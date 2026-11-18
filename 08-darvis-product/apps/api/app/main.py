@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.api.routes.auth import router as auth_router
 from app.core.config import get_settings
 from app.db.session import engine
 
@@ -11,7 +12,7 @@ settings = get_settings()
 
 app = FastAPI(
     title=settings.app_name,
-    version="0.2.0",
+    version="0.3.0",
     docs_url="/docs" if settings.app_env != "production" else None,
     redoc_url=None,
 )
@@ -21,8 +22,16 @@ app.add_middleware(
     allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type", "X-Request-ID", "X-CSRF-Token"],
+    allow_headers=[
+        "Authorization",
+        "Content-Type",
+        "X-Request-ID",
+        "X-CSRF-Token",
+        "X-Setup-Token",
+    ],
 )
+
+app.include_router(auth_router, prefix=settings.api_v1_prefix)
 
 
 @app.get("/health/live", tags=["saúde"])
