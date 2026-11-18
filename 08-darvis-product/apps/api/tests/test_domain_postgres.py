@@ -5,6 +5,7 @@ from datetime import UTC, datetime, timedelta
 import pytest
 from fastapi import HTTPException
 from sqlalchemy import create_engine, select
+from sqlalchemy.engine import make_url
 from sqlalchemy.orm import Session
 
 from app.api.schemas.projects import ProjectCreate, ProjectUpdate
@@ -30,6 +31,16 @@ from app.services.tasks import (
 )
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
+if TEST_DATABASE_URL:
+    test_database_url = make_url(TEST_DATABASE_URL)
+    if (
+        test_database_url.get_backend_name() != "postgresql"
+        or not (test_database_url.database or "").endswith("_test")
+    ):
+        raise RuntimeError(
+            "Os testes de integração só podem usar PostgreSQL com nome terminado em _test; "
+            "o fixture apaga registros do banco de teste."
+        )
 pytestmark = pytest.mark.skipif(
     not TEST_DATABASE_URL,
     reason="Defina TEST_DATABASE_URL para executar os testes de domínio PostgreSQL",
