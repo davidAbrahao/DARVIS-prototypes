@@ -32,17 +32,21 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Persistir eventos relevantes de autenticação na auditoria.
 - [ ] Executar e aprovar testes unitários e de integração no PostgreSQL.
 - [ ] Executar revisão independente de segurança da implementação.
-- [ ] Adicionar operações de tarefas e projetos com verificação de propriedade.
+- [x] Adicionar operações CRUD de tarefas e projetos com verificação de propriedade e auditoria persistente.
+- [x] Criar migration incremental de projetos e tarefas com índices por proprietário.
+- [x] Adicionar resumo agregado real para a Central de Comando.
 
-**Critério de saída:** o proprietário autentica e consulta sua identidade; renova e revoga sessões com controles transacionais; testes e revisão de segurança aprovados.
+**Critério de saída:** o proprietário autentica e consulta sua identidade; renova e revoga sessões com controles transacionais; projetos e tarefas são persistidos e isolados por proprietário. Testes executados no PostgreSQL e revisão de segurança permanecem pendentes.
 
 ## Fase 3 — Cognitive Cockpit
-- [ ] Reconstruir tokens visuais, tipografia, navegação e estrutura responsiva compartilhada a partir do Stitch.
-- [ ] Implementar a Central de Comando com dados reais da API.
-- [ ] Adicionar estados de carregamento, vazio, erro, desconexão e sucesso.
-- [ ] Adicionar verificações de acessibilidade e responsividade.
+- [x] Preservar tokens visuais, tipografia, navegação e estrutura responsiva inicial do Stitch.
+- [x] Implementar a Central de Comando com resumo, tarefas e projetos reais da API.
+- [x] Adicionar estados de carregamento, vazio, erro e indisponibilidade para dados de domínio.
+- [x] Permitir criação de tarefa/projeto, conclusão de tarefa e alteração de situação de projeto.
+- [ ] Completar verificações de acessibilidade e responsividade em dispositivos reais.
+- [ ] Integrar módulos de assistente, memória, agenda e demais áreas.
 
-**Critério de saída:** interface utilizável em desktop e dispositivos móveis, exibindo apenas estados reais do backend.
+**Critério de saída:** interface utilizável em desktop e dispositivos móveis, exibindo apenas estados reais do backend. A primeira fatia de projetos e tarefas está escrita; a validação operacional e as verificações de acessibilidade continuam pendentes.
 
 ## Fase 4 — Assistente e arquitetura de provedores
 - [ ] Definir contratos de requisição e resposta independentes de provedor.
