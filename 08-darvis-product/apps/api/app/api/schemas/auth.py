@@ -35,3 +35,7 @@ class AuthResponse(BaseModel):
     expires_in: int
     csrf_token: str
     user: UserResponse
+
+
+class CsrfResponse(BaseModel):
+    csrf_token: str
