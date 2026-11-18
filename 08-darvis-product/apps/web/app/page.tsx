@@ -1,4 +1,6 @@
 import { Activity, BrainCircuit, CalendarDays, Command, FolderKanban, Layers3, Mic2, Network, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { ProtectedPage } from "./protected-page";
+import { SessionActions } from "./session-actions";
 
 const navigation = [
   { label: "Central de Comando", icon: Command, active: true },
@@ -18,6 +20,7 @@ const modules = [
 
 export default function Home() {
   return (
+    <ProtectedPage>
     <main className="shell">
       <aside className="sidebar">
         <a className="brand" href="#overview" aria-label="D.A.R.V.I.S. início">
@@ -47,7 +50,7 @@ export default function Home() {
       <section className="main-area" id="overview">
         <header className="topbar">
           <div className="breadcrumb">D.A.R.V.I.S. <span>/</span> <strong>Central de Comando</strong></div>
-          <div className="topbar-right"><span className="environment"><i /> VERSÃO DE FUNDAÇÃO</span><span className="icon-button" aria-hidden="true"><Activity size={18} /></span></div>
+          <div className="topbar-right"><span className="environment"><i /> VERSÃO DE FUNDAÇÃO</span><SessionActions /></div>
         </header>
 
         <div className="content">
@@ -76,5 +79,6 @@ export default function Home() {
         </div>
       </section>
     </main>
+    </ProtectedPage>
   );
 }
