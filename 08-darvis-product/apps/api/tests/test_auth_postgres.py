@@ -2,6 +2,7 @@ import os
 from collections.abc import Generator
 
 import pytest
+from fastapi import HTTPException
 from sqlalchemy import create_engine, select
 from sqlalchemy.orm import Session
 
@@ -9,8 +10,14 @@ from app.core.config import get_settings
 from app.core.security import hash_refresh_token
 from app.db.base import Base
 from app.models import AuthRateLimit, AuthSession, RefreshToken, User
-from app.services.auth import _consume_rate_limit, login, refresh_session, setup_owner
-from fastapi import HTTPException
+from app.services.auth import (
+    _consume_rate_limit,
+    login,
+    logout_all,
+    logout_session,
+    refresh_session,
+    setup_owner,
+)
 
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL")
 pytestmark = pytest.mark.skipif(
@@ -54,9 +61,11 @@ def test_setup_is_one_time_and_login_creates_a_separate_session(db_session: Sess
     first = _create_owner(db_session)
     user = db_session.scalar(select(User).where(User.email == "proprietario@darvis.test"))
     assert user is not None
-    assert db_session.scalar(select(RefreshToken).where(
-        RefreshToken.token_hash == hash_refresh_token(first.refresh_token)
-    )) is not None
+    assert db_session.scalar(
+        select(RefreshToken).where(
+            RefreshToken.token_hash == hash_refresh_token(first.refresh_token)
+        )
+    ) is not None
 
     with pytest.raises(HTTPException) as error:
         _create_owner(db_session)
@@ -70,15 +79,17 @@ def test_setup_is_one_time_and_login_creates_a_separate_session(db_session: Sess
     )
     assert authenticated.user.id == user.id
     assert authenticated.refresh_token != first.refresh_token
-    assert len(db_session.scalars(
-        select(AuthSession).where(AuthSession.user_id == user.id)
-    ).all()) == 2
+    assert len(
+        db_session.scalars(select(AuthSession).where(AuthSession.user_id == user.id)).all()
+    ) == 2
 
 
 def test_refresh_rotation_and_reuse_revoke_the_session_family(db_session: Session) -> None:
     initial = _create_owner(db_session)
     session = db_session.scalar(
-        select(AuthSession).where(AuthSession.refresh_token_hash == hash_refresh_token(initial.refresh_token))
+        select(AuthSession).where(
+            AuthSession.refresh_token_hash == hash_refresh_token(initial.refresh_token)
+        )
     )
     assert session is not None
 
@@ -113,18 +124,90 @@ def test_refresh_rotation_and_reuse_revoke_the_session_family(db_session: Sessio
 
 def test_rate_limit_is_persistent_and_blocks_after_threshold(db_session: Session) -> None:
     first = _consume_rate_limit(
-        db_session, scope="integration-test", value="192.0.2.99",
-        limit=2, window_seconds=900, block_seconds=1800,
+        db_session,
+        scope="integration-test",
+        value="192.0.2.99",
+        limit=2,
+        window_seconds=900,
+        block_seconds=1800,
     )
     second = _consume_rate_limit(
-        db_session, scope="integration-test", value="192.0.2.99",
-        limit=2, window_seconds=900, block_seconds=1800,
+        db_session,
+        scope="integration-test",
+        value="192.0.2.99",
+        limit=2,
+        window_seconds=900,
+        block_seconds=1800,
     )
     third = _consume_rate_limit(
-        db_session, scope="integration-test", value="192.0.2.99",
-        limit=2, window_seconds=900, block_seconds=1800,
+        db_session,
+        scope="integration-test",
+        value="192.0.2.99",
+        limit=2,
+        window_seconds=900,
+        block_seconds=1800,
     )
     assert first is False
     assert second is True
     assert third is True
     assert db_session.scalar(select(AuthRateLimit)) is not None
+
+
+def test_logout_current_session_then_logout_all(db_session: Session) -> None:
+    first = _create_owner(db_session)
+    second = login(
+        db_session,
+        email="proprietario@darvis.test",
+        password="senha-de-integracao-segura",
+        ip_address="192.0.2.12",
+    )
+
+    first_session = db_session.scalar(
+        select(AuthSession).where(
+            AuthSession.refresh_token_hash == hash_refresh_token(first.refresh_token)
+        )
+    )
+    second_session = db_session.scalar(
+        select(AuthSession).where(
+            AuthSession.refresh_token_hash == hash_refresh_token(second.refresh_token)
+        )
+    )
+    assert first_session is not None
+    assert second_session is not None
+
+    logout_session(
+        db_session, raw_token=first.refresh_token, ip_address="192.0.2.12"
+    )
+    db_session.refresh(first_session)
+    db_session.refresh(second_session)
+    assert first_session.revoked_at is not None
+    assert first_session.revoke_reason == "logout"
+    assert second_session.revoked_at is None
+
+    logout_all(db_session, user=second.user, ip_address="192.0.2.12")
+    db_session.refresh(second_session)
+    assert second_session.revoked_at is not None
+    assert second_session.revoke_reason == "logout_all"
+
+
+def test_invalid_password_returns_generic_authentication_error(db_session: Session) -> None:
+    _create_owner(db_session)
+
+    with pytest.raises(HTTPException) as known_user_error:
+        login(
+            db_session,
+            email="proprietario@darvis.test",
+            password="senha-incorreta",
+            ip_address="192.0.2.31",
+        )
+    with pytest.raises(HTTPException) as unknown_user_error:
+        login(
+            db_session,
+            email="nao-existe@darvis.test",
+            password="senha-incorreta",
+            ip_address="192.0.2.32",
+        )
+
+    assert known_user_error.value.status_code == 401
+    assert unknown_user_error.value.status_code == 401
+    assert known_user_error.value.detail == unknown_user_error.value.detail
