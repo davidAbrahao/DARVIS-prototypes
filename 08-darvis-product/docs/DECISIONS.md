@@ -48,3 +48,11 @@
 - **Motivo:** retomar conversas com isolamento, limitar o contexto, evitar chamadas duplicadas e manter credenciais fora do navegador.
 - **Consequência:** cada envio usa UUID idempotente; a API aplica limite de uso e controle de concorrência. Ferramentas exigirão um fluxo separado de autorização, aprovação e auditoria.
 - **Detalhes:** [ADR-0003 — Conversas e provedores de IA](DECISOES/ADR-0003-CONVERSAS-E-PROVEDORES-IA.md).
+
+
+## ADR-009 — Memória estruturada manual
+- **Situação:** aceita para a primeira implementação; Obsidian e contexto de IA pendentes.
+- **Decisão:** armazenar registros manuais no PostgreSQL, isolados por proprietário, com categorias, etiquetas, fixação, arquivamento, busca e auditoria.
+- **Motivo:** criar uma memória consultável sem captura automática e sem confundir registros transacionais com documentos Markdown.
+- **Consequência:** o assistente não recebe memórias automaticamente; sincronização Obsidian e seleção explícita de contexto serão fases posteriores.
+- **Detalhes:** [ADR-0004 — Memória estruturada manual](DECISOES/ADR-0004-MEMORIA-ESTRUTURADA-MANUAL.md).
