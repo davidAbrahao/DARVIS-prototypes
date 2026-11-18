@@ -47,8 +47,11 @@ def get_task(db: Session, *, user_id: int, task_id: int) -> Task:
 def _validate_project_owner(db: Session, *, user_id: int, project_id: int | None) -> None:
     if project_id is None:
         return
+    # KEY SHARE permite vínculos simultâneos, mas serializa com a exclusão do projeto.
     project_exists = db.scalar(
-        select(Project.id).where(Project.id == project_id, Project.user_id == user_id)
+        select(Project.id)
+        .where(Project.id == project_id, Project.user_id == user_id)
+        .with_for_update(read=True, key_share=True)
     )
     if project_exists is None:
         raise HTTPException(status_code=404, detail="Projeto não encontrado")
