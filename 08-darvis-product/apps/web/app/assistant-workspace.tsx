@@ -66,7 +66,8 @@ const statusCopy: Record<AssistantStatus["state"], { title: string; detail: stri
   configured: {
     title: "Provedor configurado",
     detail:
-      "A configuração foi detectada. A disponibilidade será confirmada ao enviar uma mensagem.",
+      "A configuração foi detectada. Ao enviar, o conteúdo e o histórico desta conversa serão enviados ao Google Gemini. Tarefas, projetos e notas não são anexados automaticamente.",
+
   },
 };
 
