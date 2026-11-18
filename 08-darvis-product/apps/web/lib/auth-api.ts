@@ -80,6 +80,19 @@ async function request(
   });
 }
 
+async function postRefresh(csrfToken: string): Promise<AuthPayload> {
+  const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+    method: "POST",
+    credentials: "include",
+    cache: "no-store",
+    headers: {
+      Accept: "application/json",
+      "X-CSRF-Token": csrfToken,
+    },
+  });
+  return readJson<AuthPayload>(response);
+}
+
 async function renewWithBrowserLock(fallbackCsrfToken: string | null): Promise<AuthPayload> {
   const performRefresh = async () => {
     // Releitura após adquirir a trava: outra aba pode ter acabado de rotacionar o cookie.
@@ -93,7 +106,7 @@ async function renewWithBrowserLock(fallbackCsrfToken: string | null): Promise<A
     if (!csrfToken) {
       throw new ApiError("Não foi possível recuperar a proteção da sessão.", 403);
     }
-    return renewSession(csrfToken);
+    return postRefresh(csrfToken);
   };
 
   if (typeof navigator !== "undefined" && navigator.locks) {
@@ -117,6 +130,10 @@ async function renewOnce(csrfToken: string | null): Promise<AuthPayload> {
   }
 }
 
+export async function renewSession(csrfToken: string): Promise<AuthPayload> {
+  return renewOnce(csrfToken);
+}
+
 export async function bootstrapCsrf(): Promise<string> {
   const response = await fetch(`${API_BASE_URL}/auth/csrf`, {
     method: "GET",
@@ -135,19 +152,6 @@ export async function authenticate(email: string, password: string): Promise<Aut
     cache: "no-store",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({ email, password }),
-  });
-  return readJson<AuthPayload>(response);
-}
-
-export async function renewSession(csrfToken: string): Promise<AuthPayload> {
-  const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
-    method: "POST",
-    credentials: "include",
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      "X-CSRF-Token": csrfToken,
-    },
   });
   return readJson<AuthPayload>(response);
 }
