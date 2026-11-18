@@ -107,7 +107,7 @@ def test_gemini_adapter_sanitizes_transport_exceptions(
 ) -> None:
     class FailingModels:
         def generate_content(self, **kwargs):
-            raise RuntimeError("endpoint interno, token ou detalhe de transporte")
+            raise OSError("endpoint interno, token ou detalhe de transporte")
 
     class FailingClient:
         def __init__(self, *, api_key: str):
