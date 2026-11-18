@@ -57,11 +57,14 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Adicionar limite de histórico/contexto, rate limit por usuário e auditoria sem gravar o conteúdo do prompt.
 - [x] Adicionar idempotência por UUID e controle otimista para evitar turnos duplicados ou fora de ordem.
 - [ ] Definir controles de retenção, exportação e exclusão além da exclusão individual de conversa.
-- [ ] Adicionar seleção de contexto explícita e minimização configurável pelo usuário.
+- [x] Especificar seleção de contexto explícita, allowlist, prévia, autorização e validação contra alterações da fonte ([ADR-0005](DECISOES/ADR-0005-SELECAO-EXPLICITA-DE-CONTEXTO.md)).
+- [ ] Implementar endpoint de prévia e validação do hash no envio.
+- [ ] Persistir metadados mínimos das fontes efetivamente compartilhadas e incluí-los na idempotência.
+- [ ] Implementar seleção por mensagem e prévia fiel no Cognitive Cockpit.
 - [ ] Adicionar esquema estrito e lista de permissões para propostas de ferramentas.
 - [ ] Adicionar aprovação no servidor e execução idempotente de ferramentas.
 
-**Limite atual:** chat textual com histórico persistente. Não há ferramentas, execução de ações, voz, anexos, memória externa ou contexto automático de tarefas/projetos.
+**Limite atual:** chat textual com histórico persistente. O histórico da conversa ativa é enviado ao provedor; memórias, projetos e tarefas não são anexados automaticamente. A especificação de seleção explícita está definida, mas a funcionalidade ainda não foi implementada. Não há ferramentas, execução de ações, voz, anexos ou memória externa.
 
 **Critério de saída:** o assistente mantém conversas persistentes com um provedor configurável; depois, uma ação tipada só poderá ser executada mediante autorização, aprovação e auditoria no servidor.
 
@@ -75,7 +78,8 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [ ] Implementar operações explícitas de importação, exportação e sincronização Obsidian.
 - [ ] Adicionar tratamento de conflitos, indexação e propagação de exclusões.
 - [ ] Apresentar origem e estado real da sincronização.
-- [ ] Permitir seleção explícita de memórias como contexto para o assistente, com prévia do que será compartilhado.
+- [x] Definir como memórias, projetos e tarefas poderão ser selecionados explicitamente, com prévia e autorização ([ADR-0005](DECISOES/ADR-0005-SELECAO-EXPLICITA-DE-CONTEXTO.md)).
+- [ ] Integrar registros da Central de Memória ao seletor de contexto por mensagem.
 
 **Limite atual:** memória estruturada manual no banco. Não existe sincronização Markdown/Obsidian e o assistente não recebe esses registros automaticamente.
 
