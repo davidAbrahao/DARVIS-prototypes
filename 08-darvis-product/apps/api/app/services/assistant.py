@@ -214,6 +214,7 @@ def _existing_idempotent_turn(
     user_id: int,
     conversation_id: str,
     request_id: str,
+    request_content: str,
 ) -> list[AssistantMessage] | None:
     user_message = db.scalar(
         select(AssistantMessage).where(
@@ -225,6 +226,11 @@ def _existing_idempotent_turn(
     )
     if user_message is None:
         return None
+    if user_message.content != request_content:
+        raise HTTPException(
+            status_code=409,
+            detail="Este identificador de envio já foi utilizado com outro conteúdo.",
+        )
 
     assistant_message = db.scalar(
         select(AssistantMessage)
@@ -261,6 +267,7 @@ def send_message(
         user_id=user_id,
         conversation_id=conversation_id,
         request_id=request_id,
+        request_content=payload.content,
     )
     if existing_turn is not None:
         return existing_turn
@@ -367,6 +374,7 @@ def send_message(
             user_id=user_id,
             conversation_id=conversation_id,
             request_id=request_id,
+            request_content=payload.content,
         )
         if existing_turn is not None:
             return existing_turn
