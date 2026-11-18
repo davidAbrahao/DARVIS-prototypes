@@ -38,7 +38,7 @@ As tabelas são versionadas pelo Alembic. A aplicação **não executa migraçõ
 alembic upgrade head
 ```
 
-A migração `0002_auth_rotation_limits` acrescenta o histórico de tokens de renovação e os buckets persistentes de limitação de tentativas. A migração `0003_projetos_tarefas` cria as tabelas de projetos e tarefas, com índices por proprietário, estado e datas. A migração `0004_integridade_proprietario_projeto` adiciona uma chave estrangeira composta para impedir vínculo entre proprietários diferentes e constraints de estado/prioridade. As migrações são incrementais e não reescrevem as anteriores. O controle de rate limit usa UPSERT atômico do PostgreSQL; SQLite não é um backend suportado para autenticação.
+A migração `0002_auth_rotation_limits` acrescenta o histórico de tokens de renovação e os buckets persistentes de limitação de tentativas. A migração `0003_projetos_tarefas` cria as tabelas de projetos e tarefas, com índices por proprietário, estado e datas. A migração `0004_integridade_proprietario_projeto` adiciona uma chave estrangeira composta para impedir vínculo entre proprietários diferentes e constraints de estado/prioridade. A migração `0005_conversas_assistente` cria conversas e mensagens persistentes, com associação composta por proprietário. A migração `0006_idempotencia_assistente` adiciona UUID idempotente aos envios do cliente. As migrações são incrementais e não reescrevem as anteriores. O controle de rate limit usa UPSERT atômico do PostgreSQL; SQLite não é um backend suportado para autenticação.
 
 Em produção, execute a migração como etapa única e controlada do processo de implantação, antes de disponibilizar a nova versão da API.
 
@@ -101,13 +101,58 @@ Uma tarefa só pode ser vinculada a um projeto pertencente ao mesmo usuário. Es
 
 O resumo do painel usa consultas agregadas no PostgreSQL, filtradas pelo proprietário autenticado. Não utiliza números fixos ou dados de demonstração.
 
+## Assistente e conversas
+
+O assistente é textual nesta primeira versão. O provedor é independente do serviço de conversas; o Gemini é o primeiro adaptador. **O provedor permanece desativado por padrão** e não é chamado enquanto não estiver explicitamente habilitado no ambiente da API.
+
+Configure apenas no ambiente do servidor:
+
+```dotenv
+AI_PROVIDER=gemini
+GEMINI_API_KEY=valor-secreto-fornecido-pelo-Google
+GEMINI_MODEL=gemini-3.8-flash
+GEMINI_MAX_OUTPUT_TOKENS=2048
+```
+
+Para manter o assistente desativado, use `AI_PROVIDER=disabled` e deixe `GEMINI_API_KEY` vazio. A chave nunca deve ser adicionada ao repositório, à aplicação web, a variáveis `NEXT_PUBLIC_*` ou a registros de log. O endpoint de estado informa somente se a configuração existe; não valida antecipadamente a disponibilidade externa do modelo.
+
+| Método | Endpoint | Objetivo |
+|---|---|---|
+| GET | `/api/v1/assistant/status` | Informa se o provedor está desativado, sem credencial ou configurado |
+| GET | `/api/v1/assistant/conversations` | Lista conversas próprias, com paginação |
+| POST | `/api/v1/assistant/conversations` | Cria uma conversa |
+| PATCH | `/api/v1/assistant/conversations/{conversation_id}` | Renomeia uma conversa própria |
+| DELETE | `/api/v1/assistant/conversations/{conversation_id}` | Exclui conversa e mensagens |
+| GET | `/api/v1/assistant/conversations/{conversation_id}/messages` | Lista mensagens próprias |
+| POST | `/api/v1/assistant/conversations/{conversation_id}/messages` | Envia mensagem e recebe o turno do assistente |
+
+Todas as rotas exigem access token Bearer e filtram os registros pelo proprietário autenticado. O PostgreSQL também impõe uma FK composta entre conversa e proprietário para impedir vínculos cruzados fora dos serviços.
+
+### Histórico, limites e idempotência
+
+- O corpo de uma mensagem aceita até 16.000 caracteres.
+- O contexto enviado ao provedor usa até as 20 mensagens anteriores, limitado a 48.000 caracteres, além da mensagem atual.
+- O limite persistente inicial é de 20 tentativas de geração por usuário em uma janela de 15 minutos. O estado de bloqueio é coordenado no PostgreSQL e o limite não depende de memória local.
+- Cada envio exige `request_id` UUID. Repetir o mesmo UUID na mesma conversa devolve o turno já persistido, sem gerar outra resposta. O UUID é único por conversa e proprietário.
+- A versão da conversa é atualizada por comparação otimista. Se outra solicitação modificar a conversa enquanto o modelo responde, a API retorna HTTP 409 em vez de gravar turnos fora de ordem.
+- Se o provedor falhar, a API retorna HTTP 502, registra o evento de falha sem gravar uma mensagem incompleta e não expõe detalhes internos do SDK.
+- Mensagens e conversas são persistidas no PostgreSQL. A exclusão de uma conversa remove suas mensagens associadas.
+- Eventos de auditoria registram provedor/modelo, contagem de caracteres e resultado, não o conteúdo do prompt ou a chave de API.
+
+### Limites deliberados desta versão
+
+- O adaptador Gemini usa geração de texto; não configura tools/function calling.
+- O assistente não executa tarefas, projetos, comandos, integrações ou operações no ambiente. Não deve afirmar que executou uma ação.
+- Não há streaming, anexos, áudio, busca na web, contexto de documentos ou memória externa nesta etapa.
+- A política de retenção ainda é explícita: o histórico permanece até que a conversa seja excluída; política de expiração/limpeza automática será definida antes da publicação.
+
 ## Verificações automatizadas
 
 O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual. Ele inicia um PostgreSQL efêmero, aplica as migrações, executa os testes e verifica o código com Ruff.
 
 Uma execução anterior foi interrompida durante a instalação editável porque o setuptools detectou mais de um pacote de nível superior (`app` e `alembic`). A configuração de build foi corrigida para incluir explicitamente apenas `app*`. O workflow não foi executado novamente após essa correção; os testes e Ruff permanecem sem validação em runtime.
 
-A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. A camada de domínio tem testes PostgreSQL para ciclo de vida, vínculo, isolamento de proprietário, exclusão, datas, auditoria e rejeição pelo próprio banco de vínculos/estados inválidos. Os testes que apagam dados verificam que `TEST_DATABASE_URL` é PostgreSQL com nome terminado em `_test`; os contratos Pydantic possuem testes de validação. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
+A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. O assistente possui testes de contratos, registro de rotas, adaptador sem chamada externa, status sem vazamento de segredo, persistência, isolamento, falha de provedor, concorrência e repetição idempotente. A camada de domínio tem testes PostgreSQL para ciclo de vida, vínculo, isolamento de proprietário, exclusão, datas, auditoria e rejeição pelo próprio banco de vínculos/estados inválidos. Os testes que apagam dados verificam que `TEST_DATABASE_URL` é PostgreSQL com nome terminado em `_test`; os contratos Pydantic possuem testes de validação. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
 
 Para executar localmente:
 
@@ -118,6 +163,6 @@ ruff check .
 
 ## Estado desta entrega
 
-Implementados em código: modelos e migrações incrementais de identidade, sessões, limites, projetos, tarefas e integridade de propriedade; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; bootstrap do CSRF; cookies e validação CSRF; CRUD protegido de projetos e tarefas; resumo agregado do painel; auditoria persistente de autenticação e alterações de domínio.
+Implementados em código: modelos e migrações incrementais de identidade, sessões, limites, projetos, tarefas, integridade de propriedade e conversas do assistente; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; bootstrap do CSRF; cookies e validação CSRF; CRUD protegido de projetos e tarefas; resumo agregado do painel; auditoria persistente de autenticação e alterações de domínio.
 
 Ainda não comprovados: instalação editável após a correção, execução das migrações no PostgreSQL, testes automatizados, compatibilidade real entre cliente e API, revisão externa de segurança e execução do CI. Esta entrega não deve ser considerada pronta para produção até essas verificações ocorrerem.
