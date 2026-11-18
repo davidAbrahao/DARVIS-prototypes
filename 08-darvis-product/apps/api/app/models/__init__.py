@@ -1,3 +1,5 @@
+from app.models.assistant_conversation import AssistantConversation
+from app.models.assistant_message import AssistantMessage
 from app.models.audit_event import AuditEvent
 from app.models.auth_rate_limit import AuthRateLimit
 from app.models.auth_session import AuthSession
@@ -14,4 +16,6 @@ __all__ = [
     "AuditEvent",
     "Project",
     "Task",
+    "AssistantConversation",
+    "AssistantMessage",
 ]
