@@ -197,7 +197,7 @@ export function AssistantWorkspace() {
   }, [messages, messagesLoading]);
 
   async function createConversation() {
-    if (creatingConversation) return;
+    if (creatingConversation || sending || deletingConversation || savingTitle) return;
     setCreatingConversation(true);
     setError(null);
     try {
@@ -210,6 +210,7 @@ export function AssistantWorkspace() {
         conversation,
         ...current.filter((item) => item.id !== conversation.id),
       ]);
+      activeConversationRef.current = conversation.id;
       setActiveConversationId(conversation.id);
       setMessages([]);
       setRenamingConversation(false);
@@ -236,14 +237,15 @@ export function AssistantWorkspace() {
 
   async function saveConversationTitle(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const conversationId = activeConversationId;
     const title = renameTitle.trim();
-    if (!activeConversationId || !title || savingTitle) return;
+    if (!conversationId || !title || savingTitle || sending) return;
 
     setSavingTitle(true);
     setError(null);
     try {
       const updated = await apiRequest<Conversation>(
-        `/assistant/conversations/${activeConversationId}`,
+        `/assistant/conversations/${conversationId}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -253,7 +255,9 @@ export function AssistantWorkspace() {
       setConversations((current) =>
         current.map((item) => (item.id === updated.id ? updated : item)),
       );
-      setRenamingConversation(false);
+      if (activeConversationRef.current === conversationId) {
+        setRenamingConversation(false);
+      }
     } catch (cause) {
       setError(getErrorMessage(cause, "Não foi possível renomear a conversa."));
     } finally {
@@ -262,24 +266,29 @@ export function AssistantWorkspace() {
   }
 
   async function deleteCurrentConversation() {
-    if (!activeConversationId || deletingConversation) return;
+    const conversationId = activeConversationId;
+    if (!conversationId || deletingConversation || sending || savingTitle) return;
 
     setDeletingConversation(true);
     setError(null);
     try {
       await apiRequest<void>(
-        `/assistant/conversations/${activeConversationId}`,
+        `/assistant/conversations/${conversationId}`,
         { method: "DELETE" },
       );
       const remaining = conversations.filter(
-        (conversation) => conversation.id !== activeConversationId,
+        (conversation) => conversation.id !== conversationId,
       );
       setConversations(remaining);
-      setActiveConversationId(remaining[0]?.id ?? null);
-      setMessages([]);
-      pendingRequest.current = null;
-      setRenamingConversation(false);
-      setConfirmDelete(false);
+      if (activeConversationRef.current === conversationId) {
+        const nextConversationId = remaining[0]?.id ?? null;
+        activeConversationRef.current = nextConversationId;
+        setActiveConversationId(nextConversationId);
+        setMessages([]);
+        pendingRequest.current = null;
+        setRenamingConversation(false);
+        setConfirmDelete(false);
+      }
     } catch (cause) {
       setError(getErrorMessage(cause, "Não foi possível excluir a conversa."));
     } finally {
@@ -402,7 +411,13 @@ export function AssistantWorkspace() {
             className="assistant-new-conversation"
             type="button"
             onClick={() => void createConversation()}
-            disabled={creatingConversation || initialLoading}
+            disabled={
+              creatingConversation ||
+              initialLoading ||
+              sending ||
+              deletingConversation ||
+              savingTitle
+            }
           >
             {creatingConversation ? (
               <LoaderCircle size={15} className="auth-spin" />
@@ -437,10 +452,12 @@ export function AssistantWorkspace() {
                   type="button"
                   key={conversation.id}
                   onClick={() => {
+                    activeConversationRef.current = conversation.id;
                     setActiveConversationId(conversation.id);
                     setRenamingConversation(false);
                     setConfirmDelete(false);
                   }}
+                  disabled={sending || deletingConversation || savingTitle}
                 >
                   <strong>{conversation.title}</strong>
                   <span>{formatConversationDate(conversation.updated_at)}</span>
@@ -496,6 +513,7 @@ export function AssistantWorkspace() {
                       type="button"
                       className="assistant-chat-action"
                       onClick={beginRename}
+                      disabled={sending || savingTitle || deletingConversation}
                       aria-label="Renomear conversa"
                       title="Renomear conversa"
                     >
@@ -505,6 +523,7 @@ export function AssistantWorkspace() {
                       type="button"
                       className="assistant-chat-action danger"
                       onClick={() => setConfirmDelete(true)}
+                      disabled={sending || savingTitle || deletingConversation}
                       aria-label="Excluir conversa"
                       title="Excluir conversa"
                     >
