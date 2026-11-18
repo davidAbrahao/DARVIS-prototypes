@@ -54,7 +54,25 @@ O espaço de produto já contém a fundação de API e a primeira fatia de domí
 - Tela de login e Cognitive Cockpit com criação de projetos e tarefas, vínculo com projeto, prioridade, prazo, alteração de situação e logout coordenado.
 - Central de Memória conectada à API, com criação, pesquisa, edição, fixação, arquivamento e exclusão de registros manuais.
 
-**Validação ainda pendente:** migrations 0001–0007 não aplicadas em PostgreSQL real; testes automatizados, Ruff, ESLint, TypeScript e build não executados; cookies/CORS ainda precisam ser validados na topologia final; revisão independente de segurança pendente. Os testes que limpam dados estão protegidos para aceitar apenas uma URL PostgreSQL cujo nome de banco termine em `_test`. O produto não está liberado para produção.
+## Validação automatizada
+
+Os workflows do GitHub Actions são acionados automaticamente quando arquivos da API ou da aplicação web são alterados na branch `product/foundation-v0.1`; também podem ser iniciados manualmente.
+
+**API — execução 44362125724 (18/11/2026):**
+- PostgreSQL 16 efêmero iniciado.
+- Migrações Alembic aplicadas até `head` (incluindo 0001–0007).
+- `pytest -q`: 85 testes aprovados.
+- `ruff check .`: aprovado.
+
+**Web — execução 44359854365 (18/11/2026):**
+- Dependências instaladas.
+- ESLint aprovado.
+- TypeScript aprovado.
+- Build Next.js aprovado.
+
+As execuções verdes ocorreram em commits de código ancestrais do HEAD atual; a alteração posterior no HEAD foi documental. A PR permanece aberta, em rascunho e sem merge. Isso comprova os gates automatizados nos commits indicados, não uma validação ponta a ponta no navegador.
+
+**Pendências antes de considerar a fundação concluída:** executar o roteiro local com PostgreSQL e navegador no PC pessoal; validar login, refresh, cookies, CORS e CRUD na topologia real; revisar segurança, acessibilidade e responsividade. O produto não está liberado para produção.
 
 ## Organização do repositório
 
@@ -66,7 +84,7 @@ O espaço de produto já contém a fundação de API e a primeira fatia de domí
 
 ## Pré-visualização local
 
-O roteiro para abrir a versão integrada no navegador, iniciar PostgreSQL/API, criar o primeiro proprietário e executar verificações locais está em [Pré-visualização local](docs/PRE-VISUALIZACAO-LOCAL.md). A aplicação ainda não foi validada em runtime nesta branch.
+O roteiro para abrir a versão integrada no navegador, iniciar PostgreSQL/API, criar o primeiro proprietário e executar verificações locais está em [Pré-visualização local](docs/PRE-VISUALIZACAO-LOCAL.md). A CI valida os gates de API e web; a execução local e a jornada ponta a ponta em navegador continuam pendentes.
 
 ## Regras inegociáveis de engenharia
 
