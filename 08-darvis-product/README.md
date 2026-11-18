@@ -52,6 +52,7 @@ O espaço de produto já contém a fundação de API e a primeira fatia de domí
 - Resumo agregado de projetos e tarefas para a Central de Comando.
 - Cliente web com restauração da sessão, renovação compartilhada e coordenação entre abas quando a Web Locks API estiver disponível; fila local como fallback dentro da aba.
 - Tela de login e Cognitive Cockpit com criação de projetos e tarefas, vínculo com projeto, prioridade, prazo, alteração de situação e logout coordenado.
+- Central de Memória conectada à API, com criação, pesquisa, edição, fixação, arquivamento e exclusão de registros manuais.
 
 **Validação ainda pendente:** migrations 0001–0007 não aplicadas em PostgreSQL real; testes automatizados, Ruff, ESLint, TypeScript e build não executados; cookies/CORS ainda precisam ser validados na topologia final; revisão independente de segurança pendente. Os testes que limpam dados estão protegidos para aceitar apenas uma URL PostgreSQL cujo nome de banco termine em `_test`. O produto não está liberado para produção.
 
