@@ -1,6 +1,16 @@
 from datetime import datetime
 
-from sqlalchemy import DateTime, ForeignKey, ForeignKeyConstraint, Index, Integer, String, Text, func
+from sqlalchemy import (
+    CheckConstraint,
+    DateTime,
+    ForeignKey,
+    ForeignKeyConstraint,
+    Index,
+    Integer,
+    String,
+    Text,
+    func,
+)
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
@@ -9,6 +19,14 @@ from app.db.base import Base
 class Task(Base):
     __tablename__ = "tasks"
     __table_args__ = (
+        CheckConstraint(
+            "status IN ('todo', 'in_progress', 'blocked', 'done', 'cancelled')",
+            name="ck_tasks_status",
+        ),
+        CheckConstraint(
+            "priority IN ('low', 'normal', 'high', 'urgent')",
+            name="ck_tasks_priority",
+        ),
         ForeignKeyConstraint(
             ["project_id", "user_id"],
             ["projects.id", "projects.user_id"],
