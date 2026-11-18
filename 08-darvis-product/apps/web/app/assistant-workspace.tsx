@@ -274,7 +274,7 @@ export function AssistantWorkspace() {
   const currentConversation = conversations.find(
     (conversation) => conversation.id === activeConversationId,
   );
-  const providerState = assistantStatus?.state ?? "unavailable";
+  const providerState = assistantStatus?.state ?? (initialLoading ? "checking" : "unavailable");
   const stateInfo = assistantStatus
     ? statusCopy[assistantStatus.state]
     : {
