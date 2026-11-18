@@ -11,6 +11,8 @@ def test_authentication_models_are_registered_in_metadata() -> None:
         "audit_events",
         "projects",
         "tasks",
+        "assistant_conversations",
+        "assistant_messages",
     } <= set(Base.metadata.tables)
     assert models.User.__tablename__ == "users"
     assert models.AuthSession.__tablename__ == "auth_sessions"
@@ -35,3 +37,6 @@ def test_project_task_models_declare_database_level_tenant_constraints() -> None
     assert "fk_tasks_project_owner" in task_constraints
     assert "ck_tasks_status" in task_constraints
     assert "ck_tasks_priority" in task_constraints
+
+    assert models.AssistantConversation.__tablename__ == "assistant_conversations"
+    assert models.AssistantMessage.__tablename__ == "assistant_messages"
