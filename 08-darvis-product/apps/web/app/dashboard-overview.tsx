@@ -99,6 +99,9 @@ export function DashboardOverview() {
   const [saving, setSaving] = useState(false);
   const [savingProject, setSavingProject] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newTaskProjectId, setNewTaskProjectId] = useState("");
+  const [newTaskPriority, setNewTaskPriority] = useState<Task["priority"]>("normal");
+  const [newTaskDueAt, setNewTaskDueAt] = useState("");
   const [newProjectName, setNewProjectName] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -147,9 +150,18 @@ export function DashboardOverview() {
       await apiRequest<Task>("/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, status: "todo", priority: "normal" }),
+        body: JSON.stringify({
+          title,
+          status: "todo",
+          priority: newTaskPriority,
+          project_id: newTaskProjectId ? Number(newTaskProjectId) : null,
+          due_at: newTaskDueAt ? new Date(newTaskDueAt).toISOString() : null,
+        }),
       });
       setNewTaskTitle("");
+      setNewTaskProjectId("");
+      setNewTaskPriority("normal");
+      setNewTaskDueAt("");
       await load();
     } catch (cause) {
       setError(
@@ -290,19 +302,60 @@ export function DashboardOverview() {
           </div>
 
           <form className="quick-task-form" onSubmit={createTask}>
-            <input
-              type="text"
-              aria-label="Título da nova tarefa"
-              placeholder="Adicionar uma tarefa..."
-              value={newTaskTitle}
-              onChange={(event) => setNewTaskTitle(event.target.value)}
-              maxLength={180}
-              required
-            />
-            <button type="submit" disabled={saving || !newTaskTitle.trim()}>
-              {saving ? <LoaderCircle size={16} className="auth-spin" /> : <Plus size={16} />}
-              Adicionar
-            </button>
+            <div className="quick-task-main-row">
+              <input
+                type="text"
+                aria-label="Título da nova tarefa"
+                placeholder="Adicionar uma tarefa..."
+                value={newTaskTitle}
+                onChange={(event) => setNewTaskTitle(event.target.value)}
+                maxLength={180}
+                required
+              />
+              <button type="submit" disabled={saving || !newTaskTitle.trim()}>
+                {saving ? <LoaderCircle size={16} className="auth-spin" /> : <Plus size={16} />}
+                Adicionar
+              </button>
+            </div>
+            <div className="quick-task-options">
+              <label>
+                <span className="sr-only">Prioridade</span>
+                <select
+                  value={newTaskPriority}
+                  onChange={(event) =>
+                    setNewTaskPriority(event.target.value as Task["priority"])
+                  }
+                  aria-label="Prioridade da nova tarefa"
+                >
+                  <option value="low">Prioridade baixa</option>
+                  <option value="normal">Prioridade normal</option>
+                  <option value="high">Prioridade alta</option>
+                  <option value="urgent">Urgente</option>
+                </select>
+              </label>
+              <label>
+                <span className="sr-only">Projeto</span>
+                <select
+                  value={newTaskProjectId}
+                  onChange={(event) => setNewTaskProjectId(event.target.value)}
+                  aria-label="Projeto da nova tarefa"
+                >
+                  <option value="">Sem projeto</option>
+                  {data.projects.map((project) => (
+                    <option value={project.id} key={project.id}>{project.name}</option>
+                  ))}
+                </select>
+              </label>
+              <label className="quick-task-due">
+                <span className="sr-only">Prazo</span>
+                <input
+                  type="datetime-local"
+                  value={newTaskDueAt}
+                  onChange={(event) => setNewTaskDueAt(event.target.value)}
+                  aria-label="Prazo da nova tarefa"
+                />
+              </label>
+            </div>
           </form>
 
           {loading ? (
