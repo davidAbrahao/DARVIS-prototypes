@@ -138,3 +138,13 @@
 .project-status-control select{max-width:100px;appearance:auto;background-color:#0d1723;cursor:pointer;padding-right:5px}
 .project-status-control select:focus{outline:2px solid rgba(56,189,248,.55);outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.quick-task-form{display:grid;gap:7px}
+.quick-task-main-row{display:flex;gap:8px;min-width:0}
+.quick-task-options{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:7px}
+.quick-task-options label{min-width:0}
+.quick-task-options select,.quick-task-options input{width:100%;height:32px;min-width:0;padding:0 8px;border:1px solid #26364a;border-radius:6px;outline:none;background:#0a111c;color:#8296ac;font-size:9px;color-scheme:dark}
+.quick-task-options select:focus,.quick-task-options input:focus{border-color:rgba(56,189,248,.55);box-shadow:0 0 0 3px rgba(56,189,248,.06)}
+.quick-task-options select{appearance:auto}
+.quick-task-options input[type="datetime-local"]{font-family:var(--font-mono);font-size:9px}
+@media(max-width:420px){.quick-task-options{grid-template-columns:1fr 1fr}.quick-task-due{grid-column:1/-1}.quick-task-options select,.quick-task-options input{height:34px}}
