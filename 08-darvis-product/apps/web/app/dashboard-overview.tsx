@@ -219,14 +219,14 @@ export function DashboardOverview() {
     }
   }
 
-  async function completeTask(task: Task) {
-    if (task.status === "done" || task.status === "cancelled") return;
+  async function changeTaskStatus(task: Task, status: Task["status"]) {
+    if (task.status === status) return;
     setError(null);
     try {
       await apiRequest<Task>(`/tasks/${task.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "done" }),
+        body: JSON.stringify({ status }),
       });
       await load();
     } catch (cause) {
@@ -236,6 +236,11 @@ export function DashboardOverview() {
           : "Não foi possível atualizar a tarefa.",
       );
     }
+  }
+
+  async function completeTask(task: Task) {
+    if (task.status === "done" || task.status === "cancelled") return;
+    await changeTaskStatus(task, "done");
   }
 
   const stats = [
@@ -394,6 +399,22 @@ export function DashboardOverview() {
                   <div className="dashboard-task-meta">
                     <span className={`priority-label priority-${task.priority}`}>{priorityLabel[task.priority]}</span>
                     <span><Clock3 size={12} /> {formatDueDate(task.due_at)}</span>
+                    <label className="task-status-control">
+                      <span className="sr-only">Situação de {task.title}</span>
+                      <select
+                        value={task.status}
+                        onChange={(event) =>
+                          void changeTaskStatus(task, event.target.value as Task["status"])
+                        }
+                        aria-label={`Situação de ${task.title}`}
+                      >
+                        <option value="todo">A fazer</option>
+                        <option value="in_progress">Em andamento</option>
+                        <option value="blocked">Bloqueada</option>
+                        <option value="done">Concluída</option>
+                        <option value="cancelled">Cancelada</option>
+                      </select>
+                    </label>
                   </div>
                 </div>
               ))}
