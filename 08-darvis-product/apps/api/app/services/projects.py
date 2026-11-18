@@ -65,6 +65,8 @@ def update_project(
 ) -> Project:
     project = get_project(db, user_id=user_id, project_id=project_id)
     changes: dict[str, Any] = payload.model_dump(exclude_unset=True)
+    if not changes:
+        raise HTTPException(status_code=422, detail="Informe ao menos um campo para atualizar")
     for field in ("name", "status"):
         if field in changes and changes[field] is None:
             raise HTTPException(status_code=422, detail=f"O campo {field} não pode ser nulo")
