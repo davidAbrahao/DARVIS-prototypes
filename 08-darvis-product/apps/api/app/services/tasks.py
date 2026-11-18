@@ -2,7 +2,7 @@ from datetime import UTC, datetime, timedelta
 from typing import Any
 
 from fastapi import HTTPException
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.api.schemas.tasks import TaskCreate, TaskUpdate
@@ -117,9 +117,7 @@ def delete_task(db: Session, *, user_id: int, task_id: int) -> None:
 
 
 def dashboard_summary(db: Session, *, user_id: int) -> dict[str, int]:
-    from sqlalchemy import func
-
-    now = datetime.now(UTC)
+      now = datetime.now(UTC)
     seven_days = now + timedelta(days=7)
 
     project_total, project_active = db.execute(
