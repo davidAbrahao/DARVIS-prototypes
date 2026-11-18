@@ -436,9 +436,13 @@ export function AssistantWorkspace() {
               onChange={(event) => setDraft(event.target.value)}
               onKeyDown={handleComposerKeyDown}
               placeholder={
-                assistantStatus?.configured
-                  ? "Escreva sua mensagem…"
-                  : "Configure o provedor no servidor para habilitar o envio…"
+                initialLoading
+                  ? "Consultando a configuração do assistente…"
+                  : !assistantStatus
+                    ? "A API não confirmou o estado do assistente."
+                    : assistantStatus.configured
+                      ? "Escreva sua mensagem…"
+                      : "Configure o provedor no servidor para habilitar o envio…"
               }
               aria-label="Mensagem para o assistente"
               maxLength={16000}
