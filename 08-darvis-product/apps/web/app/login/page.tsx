@@ -126,7 +126,7 @@ export default function LoginPage() {
 
         <div className="auth-security-note">
           <ShieldCheck size={15} />
-          <span>Conexão protegida · sessão gerenciada pelo servidor</span>
+          <span>Sessão gerenciada pelo servidor · access token em memória</span>
         </div>
       </section>
       <footer className="auth-footer">D.A.R.V.I.S. <span>·</span> INTELIGÊNCIA PESSOAL SOB SEU CONTROLE</footer>
