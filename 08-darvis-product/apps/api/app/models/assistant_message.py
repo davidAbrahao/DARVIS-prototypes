@@ -9,6 +9,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    UniqueConstraint,
     func,
 )
 from sqlalchemy.orm import Mapped, mapped_column
@@ -22,6 +23,16 @@ class AssistantMessage(Base):
         CheckConstraint(
             "role IN ('user', 'assistant')",
             name="ck_assistant_messages_role",
+        ),
+        CheckConstraint(
+            "role = 'user' OR client_message_id IS NULL",
+            name="ck_assistant_messages_client_id_role",
+        ),
+        UniqueConstraint(
+            "conversation_id",
+            "user_id",
+            "client_message_id",
+            name="uq_assistant_messages_client_id",
         ),
         ForeignKeyConstraint(
             ["conversation_id", "user_id"],
@@ -43,6 +54,7 @@ class AssistantMessage(Base):
     )
     role: Mapped[str] = mapped_column(String(16), nullable=False)
     content: Mapped[str] = mapped_column(Text, nullable=False)
+    client_message_id: Mapped[str | None] = mapped_column(String(36), nullable=True)
     provider: Mapped[str | None] = mapped_column(String(40), nullable=True)
     model: Mapped[str | None] = mapped_column(String(120), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
