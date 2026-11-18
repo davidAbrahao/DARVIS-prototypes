@@ -15,8 +15,6 @@ import {
   ApiError,
   authenticate,
   authenticatedApiRequest,
-  bootstrapCsrf,
-  endAllSessions,
   endSession,
   renewSession,
   type AuthPayload,
@@ -148,19 +146,14 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
   );
 
   const signOut = useCallback(async () => {
-    const csrf = csrfTokenRef.current ?? (await bootstrapCsrf());
-    await endSession(csrf);
+    await endSession(csrfTokenRef.current);
     clearSession();
   }, [clearSession]);
 
   const signOutAll = useCallback(async () => {
-    const token = accessTokenRef.current;
-    if (!token) {
-      throw new ApiError("Sua sessão não está mais autenticada.", 401);
-    }
-    await endAllSessions(token);
+    await apiRequest<void>("/auth/logout-all", { method: "POST" });
     clearSession();
-  }, [clearSession]);
+  }, [apiRequest, clearSession]);
 
   const value = useMemo<AuthContextValue>(
     () => ({
