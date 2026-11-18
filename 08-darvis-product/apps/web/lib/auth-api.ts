@@ -80,13 +80,31 @@ async function request(
   });
 }
 
+async function renewWithBrowserLock(fallbackCsrfToken: string | null): Promise<AuthPayload> {
+  const performRefresh = async () => {
+    // Releitura após adquirir a trava: outra aba pode ter acabado de rotacionar o cookie.
+    let csrfToken: string | null = null;
+    try {
+      csrfToken = await bootstrapCsrf();
+    } catch {
+      csrfToken = fallbackCsrfToken;
+    }
+
+    if (!csrfToken) {
+      throw new ApiError("Não foi possível recuperar a proteção da sessão.", 403);
+    }
+    return renewSession(csrfToken);
+  };
+
+  if (typeof navigator !== "undefined" && navigator.locks) {
+    return navigator.locks.request("darvis-session-refresh", performRefresh);
+  }
+  return performRefresh();
+}
+
 async function renewOnce(csrfToken: string | null): Promise<AuthPayload> {
   if (!refreshInFlight) {
-    const operation = (async () => {
-      const csrf = csrfToken ?? (await bootstrapCsrf());
-      return renewSession(csrf);
-    })();
-    refreshInFlight = operation;
+    refreshInFlight = renewWithBrowserLock(csrfToken);
   }
 
   const operation = refreshInFlight;
