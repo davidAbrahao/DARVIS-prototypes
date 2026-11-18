@@ -32,6 +32,12 @@ Em uma segunda janela, inicie a API conforme o [guia da API](../api/README.md). 
 - O encerramento global passa pelo cliente autenticado, podendo renovar um access token expirado antes de revogar todas as sessões.
 - A configuração inicial do proprietário não é executada pelo navegador. `INITIAL_SETUP_TOKEN` é segredo de servidor e nunca deve ser exposto em uma variável `NEXT_PUBLIC_*`.
 
+## Central de Memória
+
+A Central de Memória usa os endpoints autenticados `/memories` para criar, pesquisar, editar, fixar, arquivar, restaurar e excluir registros persistidos no PostgreSQL. A pesquisa é aplicada pelo servidor, com filtro de categoria e opção de incluir registros arquivados.
+
+Os registros são manuais nesta versão. O assistente não os lê nem os envia ao Gemini automaticamente. A Central de Memória não representa sincronização com Obsidian; importação, exportação e sincronização Markdown permanecem pendentes.
+
 ## Assistente de IA
 
 A área de conversas utiliza os endpoints autenticados `/assistant/status`, `/assistant/conversations` e `/assistant/conversations/{id}/messages`. É possível criar, selecionar, renomear e excluir conversas; a exclusão exige confirmação na interface. Conversas e mensagens são carregadas do PostgreSQL, não do armazenamento local do navegador.
@@ -52,4 +58,4 @@ As verificações acima estão preparadas, mas não foram executadas nesta etapa
 
 ## Estado da interface
 
-A tela de login, a proteção de rota, a restauração, a renovação controlada e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando consulta indicadores, tarefas e projetos reais; permite criar tarefas com projeto, prioridade e prazo, alterar a situação das tarefas, concluir tarefas, criar projetos e alterar a situação dos projetos. O espaço do assistente consulta o estado real do provedor, lista/cria conversas e carrega mensagens persistidas. O envio fica habilitado somente quando a API informa provedor configurado e utiliza UUID idempotente para evitar duplicação em novas tentativas. Sem credencial, a interface explica por que o envio está desabilitado. A aplicação não envia chaves de provedor ao navegador e não oferece execução de ferramentas nesta versão. Memória externa, agenda e integrações continuam planejadas.
+A tela de login, a proteção de rota, a restauração, a renovação controlada e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando consulta indicadores, tarefas e projetos reais; permite criar tarefas com projeto, prioridade e prazo, alterar a situação das tarefas, concluir tarefas, criar projetos e alterar a situação dos projetos. A Central de Memória permite criar, pesquisar, categorizar, etiquetar, fixar, editar, arquivar, restaurar e excluir registros manuais. O espaço do assistente consulta o estado real do provedor, lista/cria conversas e carrega mensagens persistidas. O envio fica habilitado somente quando a API informa provedor configurado e utiliza UUID idempotente para evitar duplicação em novas tentativas. Sem credencial, a interface explica por que o envio está desabilitado. A aplicação não envia chaves de provedor ao navegador e não oferece execução de ferramentas nesta versão. Memória externa, agenda e integrações continuam planejadas.
