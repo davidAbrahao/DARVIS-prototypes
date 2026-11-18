@@ -24,6 +24,22 @@ def test_authentication_models_are_registered_in_metadata() -> None:
     assert models.Task.__tablename__ == "tasks"
 
 
+def test_assistant_models_are_registered_in_metadata() -> None:
+    assert models.AssistantConversation.__tablename__ == "assistant_conversations"
+    assert models.AssistantMessage.__tablename__ == "assistant_messages"
+    conversation_constraints = {
+        constraint.name
+        for constraint in models.AssistantConversation.__table__.constraints
+    }
+    message_constraints = {
+        constraint.name
+        for constraint in models.AssistantMessage.__table__.constraints
+    }
+    assert "uq_assistant_conversations_id_user" in conversation_constraints
+    assert "fk_assistant_messages_conversation_owner" in message_constraints
+    assert "ck_assistant_messages_role" in message_constraints
+
+
 def test_project_task_models_declare_database_level_tenant_constraints() -> None:
     project_constraints = {
         constraint.name for constraint in models.Project.__table__.constraints
