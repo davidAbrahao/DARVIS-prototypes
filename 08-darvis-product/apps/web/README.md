@@ -1,25 +1,25 @@
-# D.A.R.V.I.S. Web
+# Aplicação web do D.A.R.V.I.S.
 
-## Requirements
-- Node.js 20.9 or newer.
+## Requisitos
+- Node.js 20.9 ou superior.
 - npm.
 
-## Local setup
+## Configuração local
 
-From this directory:
+Execute os comandos a partir deste diretório:
 
 ```powershell
 npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Acesse `http://localhost:3000`.
 
-Quality checks:
+## Verificações de qualidade
 
 ```powershell
 npm run lint
 npm run build
 ```
 
-The current screen is the first visual shell of the Stitch-inspired Cognitive Cockpit. Navigation destinations and API-backed data are intentionally marked as not yet implemented.
+A tela atual é a primeira estrutura visual do Cognitive Cockpit, inspirada no Stitch. Os destinos de navegação e os dados provenientes da API estão identificados como ainda não implementados.
