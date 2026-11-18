@@ -135,6 +135,6 @@
 .quick-project-form button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:67px;height:36px;padding:0 9px;border:1px solid rgba(56,189,248,.25);border-radius:6px;background:rgba(56,189,248,.08);color:#a9e7ff;font-size:10px;cursor:pointer}
 .quick-project-form button:disabled{opacity:.45;cursor:not-allowed}
 .project-status-control{display:block}
-.project-status-control select{max-width:100px;appearance:none;background-color:#0d1723;cursor:pointer}
+.project-status-control select{max-width:100px;appearance:auto;background-color:#0d1723;cursor:pointer;padding-right:5px}
 .project-status-control select:focus{outline:2px solid rgba(56,189,248,.55);outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
