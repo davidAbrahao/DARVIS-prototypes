@@ -239,30 +239,32 @@ def test_concurrent_refresh_reuse_revokes_the_session_family() -> None:
 
         barrier = Barrier(2)
 
-        def rotate_token() -> tuple[str, int | str]:
+        def rotate_token(ip_address: str) -> tuple[str, int | str]:
             with session_factory() as db:
                 barrier.wait(timeout=10)
                 try:
                     result = refresh_session(
                         db,
                         raw_token=initial.refresh_token,
-                        ip_address="192.0.2.41",
+                        ip_address=ip_address,
                     )
                     return ("success", result.refresh_token)
                 except HTTPException as error:
                     return ("rejected", error.status_code)
 
         with ThreadPoolExecutor(max_workers=2) as pool:
-            outcomes = list(pool.map(lambda _: rotate_token(), range(2)))
+            outcomes = list(
+                pool.map(rotate_token, ["192.0.2.41", "192.0.2.42"])
+            )
 
         assert sum(outcome[0] == "success" for outcome in outcomes) == 1
         assert sum(outcome == ("rejected", 401) for outcome in outcomes) == 1
 
         with session_factory() as db:
+            owner = db.scalar(select(User).where(User.email == "concorrencia@darvis.test"))
+            assert owner is not None
             session = db.scalar(
-                select(AuthSession).where(
-                    AuthSession.refresh_token_hash == hash_refresh_token(initial.refresh_token)
-                )
+                select(AuthSession).where(AuthSession.user_id == owner.id)
             )
             assert session is not None
             assert session.revoked_at is not None
