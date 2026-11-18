@@ -9,10 +9,13 @@ import {
   Clock3,
   FolderKanban,
   LoaderCircle,
+  Pencil,
   Plus,
   RefreshCw,
+  Save,
   Target,
   Timer,
+  X,
 } from "lucide-react";
 
 import { ApiError } from "../lib/auth-api";
@@ -87,6 +90,15 @@ function formatDueDate(value: string | null): string {
   }).format(new Date(value));
 }
 
+function toDateTimeLocal(value: string | null): string {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 16);
+}
+
 export function DashboardOverview() {
   const { apiRequest } = useAuth();
   const [data, setData] = useState<DashboardData>({
@@ -98,6 +110,14 @@ export function DashboardOverview() {
   const [hasLoaded, setHasLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savingProject, setSavingProject] = useState(false);
+  // TASK_INLINE_EDIT_V1
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  const [savingTaskEdit, setSavingTaskEdit] = useState(false);
+  const [editTaskTitle, setEditTaskTitle] = useState("");
+  const [editTaskDescription, setEditTaskDescription] = useState("");
+  const [editTaskPriority, setEditTaskPriority] = useState<Task["priority"]>("normal");
+  const [editTaskProjectId, setEditTaskProjectId] = useState("");
+  const [editTaskDueAt, setEditTaskDueAt] = useState("");
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [newTaskProjectId, setNewTaskProjectId] = useState("");
   const [newTaskPriority, setNewTaskPriority] = useState<Task["priority"]>("normal");
@@ -272,6 +292,57 @@ export function DashboardOverview() {
     await changeTaskStatus(task, "done");
   }
 
+  // TASK_INLINE_EDIT_V1
+  function beginEditTask(task: Task) {
+    setEditingTaskId(task.id);
+    setEditTaskTitle(task.title);
+    setEditTaskDescription(task.description ?? "");
+    setEditTaskPriority(task.priority);
+    setEditTaskProjectId(task.project_id === null ? "" : String(task.project_id));
+    setEditTaskDueAt(toDateTimeLocal(task.due_at));
+  }
+
+  function cancelEditTask() {
+    setEditingTaskId(null);
+    setEditTaskTitle("");
+    setEditTaskDescription("");
+    setEditTaskPriority("normal");
+    setEditTaskProjectId("");
+    setEditTaskDueAt("");
+  }
+
+  async function saveTaskEdit(event: FormEvent<HTMLFormElement>, task: Task) {
+    event.preventDefault();
+    const title = editTaskTitle.trim();
+    if (!title || savingTaskEdit) return;
+
+    setSavingTaskEdit(true);
+    setError(null);
+    try {
+      await apiRequest<Task>(`/tasks/${task.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          description: editTaskDescription.trim() || null,
+          priority: editTaskPriority,
+          project_id: editTaskProjectId ? Number(editTaskProjectId) : null,
+          due_at: editTaskDueAt ? new Date(editTaskDueAt).toISOString() : null,
+        }),
+      });
+      cancelEditTask();
+      await load();
+    } catch (cause) {
+      setError(
+        cause instanceof ApiError
+          ? cause.message
+          : "Não foi possível atualizar a tarefa.",
+      );
+    } finally {
+      setSavingTaskEdit(false);
+    }
+  }
+
   const stats = [
     { label: "Projetos ativos", value: data.summary.projects_active, icon: FolderKanban, note: `${data.summary.projects_total} no total` },
     { label: "Tarefas em aberto", value: data.summary.tasks_open, icon: Target, note: "Acompanhamento atual" },
@@ -407,44 +478,87 @@ export function DashboardOverview() {
           ) : (
             <div className="dashboard-task-list">
               {data.tasks.map((task) => (
-                <div className="dashboard-task-row" key={task.id}>
-                  <button
-                    type="button"
-                    className={`task-complete-button ${task.status === "done" ? "is-done" : ""}`}
-                    onClick={() => void completeTask(task)}
-                    disabled={task.status === "done" || task.status === "cancelled"}
-                    aria-label={task.status === "done" ? "Tarefa concluída" : `Concluir ${task.title}`}
-                  >
-                    {task.status === "done" ? <Check size={14} /> : <Circle size={15} />}
-                  </button>
-                  <div className="dashboard-task-copy">
-                    <strong className={task.status === "done" ? "task-title-done" : ""}>{task.title}</strong>
-                    <span>
-                      {task.project_id ? projectNames.get(task.project_id) ?? "Projeto" : "Pessoal"}
-                      <span className="task-meta-separator">·</span>
-                      {taskStatusLabel[task.status]}
-                    </span>
+                <div className="dashboard-task-item" key={task.id}>
+                  <div className="dashboard-task-row">
+                    <button
+                      type="button"
+                      className={`task-complete-button ${task.status === "done" ? "is-done" : ""}`}
+                      onClick={() => void completeTask(task)}
+                      disabled={task.status === "done" || task.status === "cancelled"}
+                      aria-label={task.status === "done" ? "Tarefa concluída" : `Concluir ${task.title}`}
+                    >
+                      {task.status === "done" ? <Check size={14} /> : <Circle size={15} />}
+                    </button>
+                    <div className="dashboard-task-copy">
+                      <strong className={task.status === "done" ? "task-title-done" : ""}>{task.title}</strong>
+                      <span>
+                        {task.project_id ? projectNames.get(task.project_id) ?? "Projeto" : "Pessoal"}
+                        <span className="task-meta-separator">·</span>
+                        {taskStatusLabel[task.status]}
+                      </span>
+                    </div>
+                    <div className="dashboard-task-meta">
+                      <span className={`priority-label priority-${task.priority}`}>{priorityLabel[task.priority]}</span>
+                      <span><Clock3 size={12} /> {formatDueDate(task.due_at)}</span>
+                      <button type="button" className="task-edit-button"
+                        onClick={() => beginEditTask(task)} disabled={savingTaskEdit}
+                        aria-label={`Editar ${task.title}`} title="Editar tarefa">
+                        <Pencil size={13} />
+                      </button>
+                      <label className="task-status-control">
+                        <span className="sr-only">Situação de {task.title}</span>
+                        <select value={task.status}
+                          onChange={(event) => void changeTaskStatus(task, event.target.value as Task["status"])}
+                          aria-label={`Situação de ${task.title}`}
+                          disabled={savingTaskEdit && editingTaskId === task.id}>
+                          <option value="todo">A fazer</option>
+                          <option value="in_progress">Em andamento</option>
+                          <option value="blocked">Bloqueada</option>
+                          <option value="done">Concluída</option>
+                          <option value="cancelled">Cancelada</option>
+                        </select>
+                      </label>
+                    </div>
                   </div>
-                  <div className="dashboard-task-meta">
-                    <span className={`priority-label priority-${task.priority}`}>{priorityLabel[task.priority]}</span>
-                    <span><Clock3 size={12} /> {formatDueDate(task.due_at)}</span>
-                    <label className="task-status-control">
-                      <span className="sr-only">Situação de {task.title}</span>
-                      <select
-                        value={task.status}
-                        onChange={(event) =>
-                          void changeTaskStatus(task, event.target.value as Task["status"])
-                        }
-                        aria-label={`Situação de ${task.title}`}
-                      >
-                        <option value="todo">A fazer</option>
-                        <option value="in_progress">Em andamento</option>
-                        <option value="blocked">Bloqueada</option>
-                        <option value="done">Concluída</option>
-                        <option value="cancelled">Cancelada</option>
-                      </select>
-                    </label>
-                  </div>
+                  {editingTaskId === task.id ? (
+                    <form className="task-edit-form" onSubmit={(event) => void saveTaskEdit(event, task)}>
+                      <label className="task-edit-title">
+                        <span>Título</span>
+                        <input value={editTaskTitle} onChange={(event) => setEditTaskTitle(event.target.value)} maxLength={180} required />
+                      </label>
+                      <label className="task-edit-description">
+                        <span>Descrição</span>
+                        <textarea value={editTaskDescription} onChange={(event) => setEditTaskDescription(event.target.value)}
+                          maxLength={5000} rows={2} placeholder="Adicione detalhes (opcional)" />
+                      </label>
+                      <div className="task-edit-fields">
+                        <label><span>Prioridade</span>
+                          <select value={editTaskPriority} onChange={(event) => setEditTaskPriority(event.target.value as Task["priority"])}>
+                            <option value="low">Baixa</option><option value="normal">Normal</option>
+                            <option value="high">Alta</option><option value="urgent">Urgente</option>
+                          </select>
+                        </label>
+                        <label><span>Projeto</span>
+                          <select value={editTaskProjectId} onChange={(event) => setEditTaskProjectId(event.target.value)}>
+                            <option value="">Sem projeto</option>
+                            {data.projects.map((project) => <option value={project.id} key={project.id}>{project.name}</option>)}
+                          </select>
+                        </label>
+                        <label><span>Prazo</span>
+                          <input type="datetime-local" value={editTaskDueAt} onChange={(event) => setEditTaskDueAt(event.target.value)} />
+                        </label>
+                      </div>
+                      <div className="task-edit-actions">
+                        <button type="button" className="task-edit-cancel" onClick={cancelEditTask} disabled={savingTaskEdit}>
+                          <X size={13} /> Cancelar
+                        </button>
+                        <button type="submit" className="task-edit-save" disabled={savingTaskEdit || !editTaskTitle.trim()}>
+                          {savingTaskEdit ? <LoaderCircle size={13} className="auth-spin" /> : <Save size={13} />}
+                          Salvar alterações
+                        </button>
+                      </div>
+                    </form>
+                  ) : null}
                 </div>
               ))}
             </div>

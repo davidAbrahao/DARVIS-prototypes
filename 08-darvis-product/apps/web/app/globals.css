@@ -349,3 +349,25 @@
 .assistant-message-context{display:flex;align-items:center;gap:5px;margin-top:6px;color:#80b8d4;font-size:8px;line-height:1.4}
 .assistant-message-context svg{flex-shrink:0}
 @media(max-width:520px){.assistant-context-toolbar{align-items:flex-start}.assistant-context-options{grid-template-columns:1fr;max-height:155px}.assistant-context-trigger{white-space:nowrap}.assistant-context-panel,.assistant-context-preview{padding:9px}.assistant-context-preview pre{max-height:130px}}
+
+
+/* TASK_INLINE_EDIT_V1 — edição de tarefas no painel */
+.dashboard-task-item{min-width:0;border-bottom:1px solid rgba(29,42,59,.75)}
+.dashboard-task-item:last-child{border-bottom:0}
+.dashboard-task-item .dashboard-task-row{border-bottom:0}
+.task-edit-button{display:inline-grid;place-items:center;width:25px;height:25px;border:1px solid #2b3d52;border-radius:5px;background:#0b1420;color:#8ca4bb;cursor:pointer}
+.task-edit-button:hover:not(:disabled){border-color:rgba(56,189,248,.45);color:#b9e8fb}
+.task-edit-button:disabled{opacity:.4;cursor:not-allowed}
+.task-edit-form{display:grid;gap:9px;margin:0 0 12px 35px;padding:12px;border:1px solid rgba(56,189,248,.2);border-radius:7px;background:#0b1420}
+.task-edit-form label{display:grid;gap:5px;min-width:0}
+.task-edit-form label>span{color:#8296ad;font:8px var(--font-mono);letter-spacing:.1em;text-transform:uppercase}
+.task-edit-form input,.task-edit-form select,.task-edit-form textarea{width:100%;min-width:0;border:1px solid #293a50;border-radius:5px;outline:0;background:#080f19;color:#dce7f3;font:10px var(--font-ui);color-scheme:dark}
+.task-edit-form input,.task-edit-form select{height:33px;padding:0 8px}
+.task-edit-form textarea{min-height:54px;padding:8px;resize:vertical;line-height:1.45}
+.task-edit-form input:focus,.task-edit-form select:focus,.task-edit-form textarea:focus{border-color:rgba(56,189,248,.55);box-shadow:0 0 0 3px rgba(56,189,248,.06)}
+.task-edit-fields{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:8px}
+.task-edit-actions{display:flex;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+.task-edit-actions button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:30px;padding:0 9px;border:1px solid #31465c;border-radius:5px;background:#101c2a;color:#b8c9dc;font-size:9px;cursor:pointer}
+.task-edit-actions .task-edit-save{border-color:rgba(56,189,248,.35);background:rgba(56,189,248,.1);color:#b9e8fb}
+.task-edit-actions button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:520px){.task-edit-form{margin-left:0;padding:9px}.task-edit-fields{grid-template-columns:1fr 1fr}.task-edit-fields label:last-child{grid-column:1/-1}}

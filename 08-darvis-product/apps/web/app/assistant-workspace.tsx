@@ -858,13 +858,17 @@ export function AssistantWorkspace() {
           <div className="assistant-context-toolbar">
             <div>
               <strong>Contexto desta mensagem</strong>
-              <span>Memórias, projetos e tarefas só serão compartilhados com sua confirmação.</span>
+              <span>
+                {assistantStatus?.configured
+                  ? "Memórias, projetos e tarefas só serão compartilhados após conferir a prévia e clicar em Enviar."
+                  : "Você pode selecionar fontes e conferir a prévia. O envio ficará disponível após configurar um provedor."}
+              </span>
             </div>
             <button
               type="button"
               className="assistant-context-trigger"
               onClick={() => void toggleContextPanel()}
-              disabled={!assistantStatus?.configured || sending || !activeConversationId}
+              disabled={sending || !activeConversationId || !assistantStatus}
             >
               <BookOpen size={14} />
               {contextPanelOpen ? "Fechar seleção" : "Adicionar contexto"}
