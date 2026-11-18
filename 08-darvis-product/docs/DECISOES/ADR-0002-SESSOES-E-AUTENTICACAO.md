@@ -24,7 +24,7 @@ Cada sessão tem identificador próprio e família. O valor de refresh é aleat�
 4. Validar expiração, sessão e usuário.
 5. Marcar o token anterior como consumido, criar o sucessor e atualizar o estado da sessão na mesma transação.
 6. Se um token consumido for reapresentado, revogar todas as sessões da família e persistir um evento de segurança.
-7. Emitir novo access token apenas após o commit da transação.
+7. Retornar o novo access token somente depois do commit da transação.
 
 O bloqueio de linha impede que duas transações consumam o mesmo token ao mesmo tempo. Uma segunda apresentação, mesmo que concorrente, é tratada conservadoramente como reutilização; o cliente deverá evitar renovações paralelas.
 
@@ -33,7 +33,9 @@ O bloqueio de linha impede que duas transações consumam o mesmo token ao mesmo
 - Access token retorna no corpo da resposta e deve permanecer apenas em memória no cliente.
 - Refresh token é cookie HttpOnly, SameSite=Lax e Secure em staging/produção.
 - Um cookie CSRF não HttpOnly é comparado com o cabeçalho `X-CSRF-Token`; a origem, quando enviada, precisa constar em `CORS_ORIGINS`.
-- Cookies são limitados ao caminho de autenticação. A topologia final deve manter frontend e API no mesmo site registrável ou reavaliar explicitamente SameSite e CORS.
+- O endpoint `GET /api/v1/auth/csrf` cria ou devolve o cookie CSRF, valida a origem quando presente e retorna o token com `Cache-Control: no-store`. O cliente chama esse endpoint no início da aplicação, antes de tentar renovar uma sessão após um recarregamento.
+- O cookie CSRF e o cookie de refresh são limitados ao caminho de autenticação. O token CSRF pode ser recebido pelo cliente por uma resposta JSON da origem explicitamente permitida; o refresh permanece inacessível ao JavaScript.
+- A topologia final deve manter frontend e API no mesmo site registrável ou reavaliar explicitamente SameSite e CORS.
 - HTTPS é obrigatório nos ambientes implantados.
 
 ### Configuração inicial e limites
