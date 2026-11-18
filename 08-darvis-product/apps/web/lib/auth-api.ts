@@ -130,7 +130,7 @@ async function renewOnce(csrfToken: string | null): Promise<AuthPayload> {
   }
 }
 
-export async function renewSession(csrfToken: string): Promise<AuthPayload> {
+export async function renewSession(csrfToken: string | null): Promise<AuthPayload> {
   return renewOnce(csrfToken);
 }
 
