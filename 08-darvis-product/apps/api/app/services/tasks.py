@@ -117,7 +117,7 @@ def delete_task(db: Session, *, user_id: int, task_id: int) -> None:
 
 
 def dashboard_summary(db: Session, *, user_id: int) -> dict[str, int]:
-      now = datetime.now(UTC)
+    now = datetime.now(UTC)
     seven_days = now + timedelta(days=7)
 
     project_total, project_active = db.execute(
