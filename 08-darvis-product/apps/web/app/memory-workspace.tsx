@@ -105,8 +105,6 @@ export function MemoryWorkspace() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
     const params = new URLSearchParams({
       include_archived: String(showArchived),
       limit: "100",
@@ -117,6 +115,7 @@ export function MemoryWorkspace() {
     try {
       const rows = await apiRequest<MemoryEntry[]>(`/memories?${params.toString()}`);
       setEntries(rows);
+      setError(null);
     } catch (cause) {
       setError(messageFor(cause, "Não foi possível carregar sua memória."));
     } finally {
@@ -246,10 +245,12 @@ export function MemoryWorkspace() {
 
   function search(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
     setSearchQuery(searchDraft.trim());
   }
 
   function resetFilters() {
+    setLoading(true);
     setSearchDraft("");
     setSearchQuery("");
     setCategoryFilter("all");
@@ -290,7 +291,10 @@ export function MemoryWorkspace() {
       {error ? (
         <div className="memory-error" role="alert">
           <span>{error}</span>
-          <button type="button" onClick={() => void load()}>Tentar novamente</button>
+          <button type="button" onClick={() => {
+            setLoading(true);
+            void load();
+          }}>Tentar novamente</button>
         </div>
       ) : null}
 
@@ -393,7 +397,10 @@ export function MemoryWorkspace() {
           <span className="sr-only">Filtrar por categoria</span>
           <select
             value={categoryFilter}
-            onChange={(event) => setCategoryFilter(event.target.value as MemoryCategory | "all")}
+            onChange={(event) => {
+              setLoading(true);
+              setCategoryFilter(event.target.value as MemoryCategory | "all");
+            }}
           >
             <option value="all">Todas as categorias</option>
             {categories.map((category) => (
@@ -405,14 +412,20 @@ export function MemoryWorkspace() {
           <input
             type="checkbox"
             checked={showArchived}
-            onChange={(event) => setShowArchived(event.target.checked)}
+            onChange={(event) => {
+              setLoading(true);
+              setShowArchived(event.target.checked);
+            }}
           />
           Incluir arquivadas
         </label>
         <button
           className="memory-refresh-button"
           type="button"
-          onClick={() => void load()}
+          onClick={() => {
+            setLoading(true);
+            void load();
+          }}
           disabled={loading}
           aria-label="Atualizar memórias"
           title="Atualizar"

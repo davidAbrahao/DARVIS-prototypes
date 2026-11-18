@@ -134,8 +134,6 @@ export function AssistantWorkspace() {
   }, [apiRequest]);
 
   const loadWorkspace = useCallback(async () => {
-    setInitialLoading(true);
-    setError(null);
     try {
       const [providerStatus, rows] = await Promise.all([
         apiRequest<AssistantStatus>("/assistant/status"),
@@ -143,12 +141,18 @@ export function AssistantWorkspace() {
       ]);
       setAssistantStatus(providerStatus);
       setConversations(rows);
-      setActiveConversationId((current) => {
-        if (current && rows.some((conversation) => conversation.id === current)) {
-          return current;
-        }
-        return rows[0]?.id ?? null;
-      });
+      const previousActiveId = activeConversationRef.current;
+      const nextActiveId =
+        previousActiveId && rows.some((conversation) => conversation.id === previousActiveId)
+          ? previousActiveId
+          : rows[0]?.id ?? null;
+      if (nextActiveId !== previousActiveId) {
+        activeConversationRef.current = nextActiveId;
+        setMessages([]);
+        setMessagesLoading(Boolean(nextActiveId));
+      }
+      setActiveConversationId(nextActiveId);
+      setError(null);
     } catch (cause) {
       setAssistantStatus(null);
       setError(getErrorMessage(cause, "Não foi possível carregar o assistente."));
@@ -162,14 +166,9 @@ export function AssistantWorkspace() {
   }, [loadWorkspace]);
 
   useEffect(() => {
-    if (!activeConversationId) {
-      setMessages([]);
-      return;
-    }
+    if (!activeConversationId) return;
 
     let current = true;
-    setMessagesLoading(true);
-    setError(null);
 
     apiRequest<AssistantMessage[]>(
       `/assistant/conversations/${activeConversationId}/messages?limit=100`,
@@ -213,6 +212,7 @@ export function AssistantWorkspace() {
       activeConversationRef.current = conversation.id;
       setActiveConversationId(conversation.id);
       setMessages([]);
+      setMessagesLoading(true);
       setRenamingConversation(false);
       setConfirmDelete(false);
       pendingRequest.current = null;
@@ -285,6 +285,7 @@ export function AssistantWorkspace() {
         activeConversationRef.current = nextConversationId;
         setActiveConversationId(nextConversationId);
         setMessages([]);
+        setMessagesLoading(Boolean(nextConversationId));
         pendingRequest.current = null;
         setRenamingConversation(false);
         setConfirmDelete(false);
@@ -454,8 +455,12 @@ export function AssistantWorkspace() {
                   type="button"
                   key={conversation.id}
                   onClick={() => {
+                    if (activeConversationRef.current === conversation.id) return;
                     activeConversationRef.current = conversation.id;
                     setActiveConversationId(conversation.id);
+                    setMessages([]);
+                    setMessagesLoading(true);
+                    setError(null);
                     setRenamingConversation(false);
                     setConfirmDelete(false);
                     pendingRequest.current = null;

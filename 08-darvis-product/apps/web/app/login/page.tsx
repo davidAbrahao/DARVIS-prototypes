@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Activity, ArrowRight, Fingerprint, LockKeyhole, RefreshCw, ShieldCheck } from "lucide-react";
 
@@ -45,10 +46,10 @@ export default function LoginPage() {
       <div className="auth-ambient auth-ambient-one" aria-hidden="true" />
       <div className="auth-ambient auth-ambient-two" aria-hidden="true" />
       <section className="auth-card">
-        <a className="auth-brand" href="/" aria-label="D.A.R.V.I.S.">
+        <Link className="auth-brand" href="/" aria-label="D.A.R.V.I.S.">
           <span className="auth-brand-mark"><Activity size={22} /></span>
           <span><strong>D.A.R.V.I.S.</strong><small>SISTEMA COGNITIVO</small></span>
-        </a>
+        </Link>
 
         <div className="auth-heading">
           <span className="auth-eyebrow"><span /> ACESSO AO AMBIENTE PESSOAL</span>

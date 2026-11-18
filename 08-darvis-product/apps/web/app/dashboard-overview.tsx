@@ -106,8 +106,6 @@ export function DashboardOverview() {
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
-    setLoading(true);
-    setError(null);
     try {
       const [summary, tasks, projects] = await Promise.all([
         apiRequest<DashboardSummary>("/dashboard/summary"),
@@ -116,6 +114,7 @@ export function DashboardOverview() {
       ]);
       setData({ summary, tasks, projects });
       setHasLoaded(true);
+      setError(null);
     } catch (cause) {
       setError(
         cause instanceof ApiError

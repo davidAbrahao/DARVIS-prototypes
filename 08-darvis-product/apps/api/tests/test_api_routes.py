@@ -1,14 +1,22 @@
-from fastapi.routing import APIRoute
+from fastapi.routing import APIRoute, iter_route_contexts
 
 from app.main import app
 
 
+def registered_route_entries() -> list[tuple[str, set[str]]]:
+    """Retorna os caminhos efetivos, inclusive os prefixos de routers incluídos."""
+    return [
+        (context.path, context.route.methods or set())
+        for context in iter_route_contexts(app.routes)
+        if isinstance(context.route, APIRoute)
+    ]
+
+
 def test_authentication_and_domain_routes_are_registered() -> None:
     routes = {
-        (route.path, method)
-        for route in app.routes
-        if isinstance(route, APIRoute)
-        for method in route.methods or set()
+        (path, method)
+        for path, methods in registered_route_entries()
+        for method in methods
     }
 
     expected = {
@@ -46,10 +54,9 @@ def test_authentication_and_domain_routes_are_registered() -> None:
 
 def test_api_routes_are_registered_only_once_per_method() -> None:
     registered_routes = [
-        (route.path, method)
-        for route in app.routes
-        if isinstance(route, APIRoute)
-        for method in route.methods or set()
+        (path, method)
+        for path, methods in registered_route_entries()
+        for method in methods
     ]
 
     assert len(registered_routes) == len(set(registered_routes))
