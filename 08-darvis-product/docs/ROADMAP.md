@@ -34,6 +34,7 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [ ] Executar revisão independente de segurança da implementação.
 - [x] Adicionar operações CRUD de tarefas e projetos com verificação de propriedade e auditoria persistente.
 - [x] Criar migration incremental de projetos e tarefas com índices por proprietário.
+- [x] Impor no PostgreSQL o vínculo composto entre tarefa, projeto e proprietário e constraints de estado/prioridade.
 - [x] Adicionar resumo agregado real para a Central de Comando.
 
 **Critério de saída:** o proprietário autentica e consulta sua identidade; renova e revoga sessões com controles transacionais; projetos e tarefas são persistidos e isolados por proprietário. Testes executados no PostgreSQL e revisão de segurança permanecem pendentes.
@@ -42,7 +43,7 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Preservar tokens visuais, tipografia, navegação e estrutura responsiva inicial do Stitch.
 - [x] Implementar a Central de Comando com resumo, tarefas e projetos reais da API.
 - [x] Adicionar estados de carregamento, vazio, erro e indisponibilidade para dados de domínio.
-- [x] Permitir criação de tarefa/projeto, conclusão de tarefa e alteração de situação de projeto.
+- [x] Permitir criação de tarefa/projeto, conclusão de tarefa, alteração de situação de tarefa/projeto e preenchimento de projeto, prioridade e prazo na tarefa.
 - [ ] Completar verificações de acessibilidade e responsividade em dispositivos reais.
 - [ ] Integrar módulos de assistente, memória, agenda e demais áreas.
 
