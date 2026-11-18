@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-fixed-variant": "#005236", "tertiary-fixed-dim": "#4edea3", "surface-tint": "#7bd0ff", "on-primary-fixed-variant": "#004c69", "secondary-fixed-dim": "#4cd7f6", "tertiary-container": "#30c88f", "secondary-container": "#03b5d3", "on-primary": "#00354a", "primary-fixed": "#c4e7ff", "outline-variant": "#3e484f", "surface-variant": "#31353e", "surface": "#0f131c", "on-secondary": "#003640", "on-tertiary": "#003824", "surface-container-lowest": "#0a0e16", "surface-bright": "#353942", "on-primary-fixed": "#001e2c", "surface-container-low": "#181c24", "on-background": "#dfe2ee", "on-tertiary-fixed": "#002113", "primary-container": "#38bdf8", "inverse-surface": "#dfe2ee", "on-secondary-container": "#00424e", "tertiary-fixed": "#6ffbbe", "surface-container-highest": "#31353e", "primary-fixed-dim": "#7bd0ff", "outline": "#87929a", "error-container": "#93000a", "on-surface": "#dfe2ee", "on-secondary-fixed": "#001f26", "inverse-on-surface": "#2c3039", "on-surface-variant": "#bdc8d1", "secondary": "#4cd7f6", "surface-container": "#1c2028", "surface-container-high": "#262a33", "on-secondary-fixed-variant": "#004e5c", "on-error-container": "#ffdad6", "primary": "#8ed5ff", "on-primary-container": "#004965", "on-tertiary-container": "#004e34", "secondary-fixed": "#acedff", "background": "#0f131c", "error": "#ffb4ab", "on-error": "#690005", "inverse-primary": "#00668a", "tertiary": "#56e5a9", "surface-dim": "#0f131c" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "1rem", "space-lg": "1.5rem", "margin-md": "1.5rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "gutter-sm": "0.75rem", "space-md": "1rem", "gutter": "1rem", "space-sm": "0.5rem", "margin-lg": "2rem" }, "fontFamily": { "body-md": ["Geist"], "label-telemetry": ["JetBrains Mono"], "headline-sm": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "body-sm": ["Geist"], "body-lg": ["Geist"], "label-micro": ["JetBrains Mono"], "display-lg": ["Space Grotesk"], "display-lg-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "label-telemetry": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-micro": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased selection:bg-primary/20 selection:text-primary"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><img alt="D.A.R.V.I.S. Core Emblem" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBI136RqE1xvxt1qsbNngoDp7_m3l9mA-pV0ybKGD0fITnuRieDWIBLIRe8ADKBPZXJ4WU3UuHv5lcS9PHz27uzpeoQjlfgm4ARN8OnPGJGlgfk7VkqOLlOxqqoGdmDWwdM_fVLznHSR7yiXRx9wmoglWIRPS9kGxzoSVw_urrS4XdQx0Cg5ESeqHIO4HJTrR1OA3KablRuZcc8fm4sIo__oS11NGlQAwOYoR1BDYzP"/><div class="flex flex-col min-w-0 justify-center"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro px-1 py-0.5 rounded bg-surface-container-high text-primary-container font-mono">Command Center</span></div><div class="flex items-center gap-1.5"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase truncate">v1.0.4 • GEMINI_PRO_ONLINE</span></div></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Telemetry Notifications" class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 transition-colors"><span class="material-symbols-outlined text-[20px]">tune</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 w-full pt-16 pb-24 bg-surface flex flex-col relative"><div class="flex flex-col w-full px-margin pb-space-xl space-y-space-md">
+<!-- Tactical Subheader & Diagnostics Banner -->
+<section class="flex flex-col space-y-space-xs pt-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-1.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary-container animate-ping"></span>
+<span class="font-label-micro text-label-micro text-primary-container uppercase tracking-widest font-mono">
+          Kinetic Telemetry // Overload Matrix
+        </span>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono bg-surface-container-high px-2 py-0.5 rounded-full">
+        SYNC: OBSIDIAN_VAULT_OK
+      </span>
+</div>
+<div class="flex items-baseline justify-between">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight font-semibold flex items-center gap-1.5">
+<span>Progressão de Carga</span>
+<span class="text-tertiary text-body-sm font-label-telemetry">v4.2</span>
+</h1>
+<span class="font-label-micro text-label-micro text-tertiary font-mono bg-tertiary-container/10 px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">bolt</span>
+        STATUS: ANABÓLICO
+      </span>
+</div>
+<!-- Macro Metrics Pill Row -->
+<div class="grid grid-cols-3 gap-gutter-sm pt-1">
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">Vol. Semanal</span>
+<span class="material-symbols-outlined text-[14px] text-primary-container">fitness_center</span>
+</div>
+<div class="mt-1">
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-semibold">14.820 <span class="text-[10px] text-on-surface-variant">kg</span></span>
+<div class="flex items-center text-tertiary font-label-micro text-label-micro mt-0.5">
+<span class="material-symbols-outlined text-[12px]">arrow_upward</span>
+<span>+8.4%</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">1RM Supino</span>
+<span class="material-symbols-outlined text-[14px] text-tertiary">military_tech</span>
+</div>
+<div class="mt-1">
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-semibold">112 <span class="text-[10px] text-on-surface-variant">kg</span></span>
+<div class="flex items-center text-primary-container font-label-micro text-label-micro mt-0.5">
+<span class="material-symbols-outlined text-[12px]">trending_up</span>
+<span>Recorde</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">Fadiga Méd.</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">vital_signs</span>
+</div>
+<div class="mt-1">
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-semibold">22%</span>
+<div class="flex items-center text-tertiary font-label-micro text-label-micro mt-0.5">
+<span class="material-symbols-outlined text-[12px]">check_circle</span>
+<span>Recuperado</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter & Movement Switcher -->
+<section class="flex flex-col space-y-space-sm">
+<!-- Exercise Selector Pills (Horizontal Scroll) -->
+<div class="flex space-x-space-xs overflow-x-auto no-scrollbar py-0.5">
+<button class="bg-primary-container text-on-primary-container px-3 py-1.5 rounded-full font-label-telemetry text-label-telemetry font-semibold flex items-center space-x-1 shadow-[0_0_12px_rgba(56,189,248,0.35)] shrink-0 transition-transform active:scale-95">
+<span class="material-symbols-outlined text-[16px]">sports_martial_arts</span>
+<span>Supino Reto</span>
+</button>
+<button class="bg-surface-container-high text-on-surface-variant hover:text-on-surface px-3 py-1.5 rounded-full font-label-telemetry text-label-telemetry shrink-0 transition-colors">
+        Desenv. Militar
+      </button>
+<button class="bg-surface-container-high text-on-surface-variant hover:text-on-surface px-3 py-1.5 rounded-full font-label-telemetry text-label-telemetry shrink-0 transition-colors">
+        Agachamento
+      </button>
+<button class="bg-surface-container-high text-on-surface-variant hover:text-on-surface px-3 py-1.5 rounded-full font-label-telemetry text-label-telemetry shrink-0 transition-colors">
+        Levantamento Terra
+      </button>
+</div>
+<!-- Time Horizon Filter -->
+<div class="flex items-center justify-between bg-surface-container-lowest p-1 rounded-xl">
+<button class="flex-1 py-1 text-center font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface rounded-lg transition-colors">1M</button>
+<button class="flex-1 py-1 text-center font-label-micro text-label-micro bg-surface-container-high text-primary-container font-semibold rounded-lg shadow-sm">3M</button>
+<button class="flex-1 py-1 text-center font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface rounded-lg transition-colors">6M</button>
+<button class="flex-1 py-1 text-center font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface rounded-lg transition-colors">1A</button>
+<button class="flex-1 py-1 text-center font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface rounded-lg transition-colors">TODOS</button>
+</div>
+</section>
+<!-- Interactive HUD Overload Chart & Telemetry Inspector -->
+<section class="bg-surface-container-low rounded-xl p-space-md flex flex-col space-y-space-md relative overflow-hidden shadow-md">
+<!-- Ambient HUD Glow -->
+<div class="absolute -top-12 -right-12 w-36 h-36 bg-primary-container/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between z-10">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-primary-container font-mono tracking-widest uppercase">Target Metric: Carga de Trabalho &amp; 1RM</span>
+<div class="flex items-baseline space-x-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">92.5 kg</span>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">+17.5 kg (+23.3%) neste ciclo</span>
+</div>
+</div>
+<div class="flex items-center space-x-1 bg-surface-container-highest px-2 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[14px] text-tertiary">insights</span>
+<span class="font-label-micro text-label-micro text-on-surface font-mono">R² = 0.96</span>
+</div>
+</div>
+<!-- Stylized SVG Kinetic HUD Chart -->
+<div class="w-full relative z-10">
+<svg class="w-full h-44 overflow-visible" viewbox="0 0 320 160">
+<defs>
+<lineargradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="lineStroke" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#4cd7f6"></stop>
+<stop offset="60%" stop-color="#38bdf8"></stop>
+<stop offset="100%" stop-color="#56e5a9"></stop>
+</lineargradient>
+</defs>
+<!-- Subtle Grid Telemetry Lines -->
+<line stroke="#31353e" stroke-dasharray="3,3" stroke-width="0.75" x1="0" x2="320" y1="30" y2="30"></line>
+<line stroke="#31353e" stroke-dasharray="3,3" stroke-width="0.75" x1="0" x2="320" y1="70" y2="70"></line>
+<line stroke="#31353e" stroke-dasharray="3,3" stroke-width="0.75" x1="0" x2="320" y1="110" y2="110"></line>
+<line stroke="#31353e" stroke-width="1" x1="0" x2="320" y1="150" y2="150"></line>
+<!-- Vertical Guide on latest PR point -->
+<line opacity="0.6" stroke="#38bdf8" stroke-dasharray="2,2" stroke-width="1" x1="255" x2="255" y1="10" y2="150"></line>
+<!-- Area Fill Gradient -->
+<polygon fill="url(#areaGradient)" points="10,140 10,135 60,122 120,105 180,82 255,42 310,32 310,150 10,150"></polygon>
+<!-- Kinetic Load Curve -->
+<polyline fill="none" points="10,135 60,122 120,105 180,82 255,42 310,32" stroke="url(#lineStroke)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></polyline>
+<!-- Data Points -->
+<circle cx="10" cy="135" fill="#1c2028" r="3.5" stroke="#4cd7f6" stroke-width="1.5"></circle>
+<circle cx="60" cy="122" fill="#1c2028" r="3.5" stroke="#4cd7f6" stroke-width="1.5"></circle>
+<circle cx="120" cy="105" fill="#1c2028" r="3.5" stroke="#38bdf8" stroke-width="1.5"></circle>
+<circle cx="180" cy="82" fill="#1c2028" r="3.5" stroke="#38bdf8" stroke-width="1.5"></circle>
+<!-- Highlighted PR Point (14 Fev / 90kg) -->
+<circle class="animate-pulse" cx="255" cy="42" fill="#38bdf8" fill-opacity="0.25" r="6"></circle>
+<circle cx="255" cy="42" fill="#38bdf8" r="4" stroke="#ffffff" stroke-width="1.5"></circle>
+<!-- Current Target Point (92.5kg) -->
+<circle cx="310" cy="32" fill="#56e5a9" r="4" stroke="#0f131c" stroke-width="2"></circle>
+<!-- Data Value Badges along Curve -->
+<text fill="#87929a" font-family="JetBrains Mono" font-size="8" x="10" y="128">75k</text>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="8" x="60" y="115">80k</text>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="8" x="120" y="98">85k</text>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="8" x="180" y="75">87.5k</text>
+<text fill="#38bdf8" font-family="JetBrains Mono" font-size="9" font-weight="bold" x="240" y="32">90k ★</text>
+<text fill="#56e5a9" font-family="JetBrains Mono" font-size="9" font-weight="bold" x="288" y="24">92.5k</text>
+</svg>
+<!-- Horizontal Time Axis -->
+<div class="flex justify-between items-center pt-2 font-label-micro text-label-micro text-on-surface-variant font-mono">
+<span>02 JAN</span>
+<span>18 JAN</span>
+<span>01 FEV</span>
+<span class="text-primary-container font-semibold">14 FEV (PR)</span>
+<span class="text-tertiary">HOJE</span>
+</div>
+</div>
+<!-- Tactical Simulated HUD Tooltip -->
+<div class="bg-surface-container-high/90 backdrop-blur-md rounded-xl p-space-sm flex items-start space-x-space-sm shadow-md">
+<div class="w-8 h-8 rounded-lg bg-primary-container/20 flex items-center justify-center shrink-0 text-primary-container mt-0.5">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-telemetry text-label-telemetry font-bold text-on-surface">14 Fev 2025 // PR Milestone</span>
+<span class="font-label-micro text-label-micro text-tertiary font-mono bg-tertiary-container/20 px-1.5 py-0.5 rounded">RPE 8.5</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+<span class="text-on-surface font-semibold">90 kg × 8 reps</span> • 1RM Est.: <span class="text-primary-container font-mono font-medium">112 kg</span> • <span class="text-tertiary font-mono">+4.2%</span> ganho neural adaptativo.
+        </p>
+</div>
+</div>
+</section>
+<!-- Holographic Cognitive Metric Triad -->
+<section class="grid grid-cols-1 sm:grid-cols-3 gap-gutter-sm">
+<!-- Volume Load Card -->
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">Volume Load / Sessão</span>
+<span class="material-symbols-outlined text-[16px] text-primary">bar_chart</span>
+</div>
+<div class="flex items-end justify-between space-x-1.5 h-12 pt-2">
+<div class="flex-1 bg-surface-container-high rounded-t h-4/6 relative group">
+<span class="absolute -top-4 left-1/2 -translate-x-1/2 font-label-micro text-[8px] text-on-surface-variant font-mono hidden group-hover:block">3.8k</span>
+</div>
+<div class="flex-1 bg-surface-container-high rounded-t h-5/6 relative group"></div>
+<div class="flex-1 bg-surface-container-high rounded-t h-3/6 relative group"></div>
+<div class="flex-1 bg-surface-container-high rounded-t h-5/6 relative group"></div>
+<div class="flex-1 bg-primary-container rounded-t h-full relative group">
+<span class="absolute -top-4 left-1/2 -translate-x-1/2 font-label-micro text-[8px] text-primary-container font-mono font-bold">5.2k</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Méd: 4.820 kg</span>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">+12% vs ciclo ant.</span>
+</div>
+</div>
+<!-- RPE Target Zone Card -->
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">Zona Hipertrofia (RPE)</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">tune</span>
+</div>
+<div class="py-1">
+<div class="flex justify-between items-baseline mb-1">
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-bold">8.1 RPE</span>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">ÓTIMO (7.5-8.5)</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden flex">
+<div class="bg-secondary-container h-full w-[25%]"></div>
+<div class="bg-tertiary h-full w-[55%]"></div>
+<div class="bg-error h-full w-[20%]"></div>
+</div>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">82% do volume em RIR 1-2</span>
+</div>
+<!-- TUT Card (Time Under Tension) -->
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">TUT Médio / Rep</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">timer</span>
+</div>
+<div class="py-1">
+<div class="flex items-baseline space-x-1">
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-bold">3.4</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">seg (3-0-1-0)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 line-clamp-1">Cadência excêntrica controlada</p>
+</div>
+<div class="flex items-center space-x-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">Controle Motor: 98%</span>
+</div>
+</div>
+</section>
+<!-- Chronological Training History (Obsidian Vault Sourced) -->
+<section class="flex flex-col space-y-space-sm pt-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[18px] text-primary-container">database</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Histórico de Sessões Registradas</h2>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">3 SESSÕES ATIVAS</span>
+</div>
+<!-- Training Card A (Yesterday - PR Supino) -->
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm shadow-sm transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-label-micro text-label-micro text-primary-container font-mono uppercase">Ontem, 16:30</span>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">Vault Sincronizado</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5">Treino A: Peito, Ombros e Tríceps</h3>
+</div>
+<span class="bg-primary-container/20 text-primary-container font-label-micro text-label-micro font-bold px-2 py-1 rounded-full flex items-center space-x-1 shrink-0">
+<span class="material-symbols-outlined text-[13px]">military_tech</span>
+<span>PR BATIDO</span>
+</span>
+</div>
+<!-- Quick Metrics Chips -->
+<div class="grid grid-cols-4 gap-gutter-sm bg-surface-container-lowest p-space-sm rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Carga Máx</span>
+<span class="font-label-telemetry text-label-telemetry text-primary-container font-bold font-mono">90 kg</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Volume</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">4.850 kg</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Exercícios</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">5 moves</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Duração</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">42 min</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center space-x-1 text-on-surface-variant font-label-micro text-label-micro font-mono">
+<span class="material-symbols-outlined text-[14px] text-tertiary">psychology</span>
+<span>Sinapse: Foco Máximo • Fadiga Baixa</span>
+</div>
+<button class="font-label-micro text-label-micro text-primary-container hover:text-primary font-mono flex items-center space-x-0.5 transition-colors">
+<span>Ver Telemetria</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Training Card B (12 Fev - Treino B) -->
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm shadow-sm transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">12 Fev, 07:15</span>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Vault: 2025-02-12.md</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5">Treino B: Costas, Bíceps e Trapézio</h3>
+</div>
+<span class="bg-surface-container-highest text-on-surface-variant font-label-micro text-label-micro px-2 py-0.5 rounded font-mono">
+          RPE 8.0
+        </span>
+</div>
+<div class="grid grid-cols-4 gap-gutter-sm bg-surface-container-lowest p-space-sm rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Carga Máx</span>
+<span class="font-label-telemetry text-label-telemetry text-secondary font-bold font-mono">110 kg</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Volume</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">5.200 kg</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Exercícios</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">6 moves</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Duração</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">48 min</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Barra Fixa com sobrecarga +20kg</span>
+<button class="font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface font-mono flex items-center space-x-0.5 transition-colors">
+<span>Ver Telemetria</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Training Card C (10 Fev - Treino C) -->
+<div class="bg-surface-container-low rounded-xl p-space-md space-y-space-sm shadow-sm transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div>
+<div class="flex items-center space-x-2">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase">10 Fev, 18:00</span>
+<span class="inline-block w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Vault: 2025-02-10.md</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-0.5">Treino C: Pernas Completo &amp; Core</h3>
+</div>
+<span class="bg-surface-container-highest text-on-surface-variant font-label-micro text-label-micro px-2 py-0.5 rounded font-mono">
+          RPE 9.0
+        </span>
+</div>
+<div class="grid grid-cols-4 gap-gutter-sm bg-surface-container-lowest p-space-sm rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Carga Máx</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary font-bold font-mono">130 kg</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Volume</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">6.400 kg</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Exercícios</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">7 moves</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Duração</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-medium font-mono">54 min</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">Agachamento Livre 4×6 @ 130kg</span>
+<button class="font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface font-mono flex items-center space-x-0.5 transition-colors">
+<span>Ver Telemetria</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Cockpit Rapid Action Matrix (Thumb Zone) -->
+<section class="flex flex-col space-y-space-xs pt-space-xs">
+<!-- Primary CTA: Initiate Session -->
+<button class="w-full bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold py-3.5 px-space-md rounded-xl shadow-[0_0_20px_rgba(56,189,248,0.4)] flex items-center justify-center space-x-2 transition-transform active:scale-[0.98]">
+<span class="material-symbols-outlined text-[22px]">play_circle</span>
+<span>INICIAR PRÓXIMO TREINO // TELEMETRIA LIVE</span>
+</button>
+<!-- Auxiliary Dual Actions -->
+<div class="grid grid-cols-2 gap-gutter-sm">
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-telemetry text-label-telemetry py-2.5 px-space-sm rounded-xl flex items-center justify-center space-x-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-tertiary">ios_share</span>
+<span>Exportar (.md)</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-telemetry text-label-telemetry py-2.5 px-space-sm rounded-xl flex items-center justify-center space-x-1.5 transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">compare_arrows</span>
+<span>Comparar Ciclos</span>
+</button>
+</div>
+</section>
+</div>
+<script>
+  // Dynamic UI micro-interactions for exercise switcher
+  document.addEventListener('DOMContentLoaded', () => {
+    const pills = document.querySelectorAll('section:nth-of-type(2) button');
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        pills.forEach((p) => {
+          p.classList.remove('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_12px_rgba(56,189,248,0.35)]');
+          p.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+        });
+        pill.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+        pill.classList.add('bg-primary-container', 'text-on-primary-container', 'shadow-[0_0_12px_rgba(56,189,248,0.35)]');
+      });
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-1px_12px_rgba(0,0,0,0.5)]" data-active-classes="text-primary-container drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"><div class="h-16 px-space-xs flex items-center justify-around"><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="command-center" href="#"><span class="material-symbols-outlined text-[22px]">terminal</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Core</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[22px]">auto_awesome</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Neural</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="memory-obsidian" href="#"><span class="material-symbols-outlined text-[22px]">hub</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Synapse</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="projects-tasks" href="#"><span class="material-symbols-outlined text-[22px]">checklist</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Tasks</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="settings-integrations" href="#"><span class="material-symbols-outlined text-[22px]">display_settings</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">System</span></a></div></nav>
+</body></html>

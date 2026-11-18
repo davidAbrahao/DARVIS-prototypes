@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#262a33", "secondary-fixed-dim": "#4cd7f6", "on-secondary-fixed": "#001f26", "inverse-primary": "#00668a", "tertiary": "#56e5a9", "on-background": "#dfe2ee", "secondary-fixed": "#acedff", "primary": "#8ed5ff", "tertiary-fixed": "#6ffbbe", "on-primary-container": "#004965", "secondary-container": "#03b5d3", "surface-bright": "#353942", "on-tertiary": "#003824", "on-primary-fixed-variant": "#004c69", "surface-dim": "#0f131c", "on-tertiary-fixed-variant": "#005236", "inverse-on-surface": "#2c3039", "outline": "#87929a", "primary-fixed-dim": "#7bd0ff", "on-primary": "#00354a", "surface": "#0f131c", "surface-container-low": "#181c24", "surface-container-highest": "#31353e", "surface-tint": "#7bd0ff", "on-error": "#690005", "tertiary-fixed-dim": "#4edea3", "on-secondary": "#003640", "on-primary-fixed": "#001e2c", "on-tertiary-container": "#004e34", "secondary": "#4cd7f6", "background": "#0f131c", "on-secondary-fixed-variant": "#004e5c", "tertiary-container": "#30c88f", "outline-variant": "#3e484f", "on-secondary-container": "#00424e", "surface-variant": "#31353e", "on-tertiary-fixed": "#002113", "on-error-container": "#ffdad6", "primary-fixed": "#c4e7ff", "primary-container": "#38bdf8", "surface-container-lowest": "#0a0e16", "error-container": "#93000a", "on-surface-variant": "#bdc8d1", "error": "#ffb4ab", "inverse-surface": "#dfe2ee", "surface-container": "#1c2028", "on-surface": "#dfe2ee" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "margin-md": "1.5rem", "space-lg": "1.5rem", "space-md": "1rem", "margin": "1rem", "margin-lg": "2rem", "space-xl": "2.5rem", "gutter": "1rem", "gutter-sm": "0.75rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "label-telemetry": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "label-micro": [ "JetBrains Mono" ], "body-lg": [ "Geist" ], "headline-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "display-lg-mobile": [ "Space Grotesk" ], "body-sm": [ "Geist" ], "display-lg": [ "Space Grotesk" ] }, "fontSize": { "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-telemetry": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-micro": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "fontWeight": "600" } ], "display-lg-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "display-lg": [ "48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/95 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[20px]">neurology</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-primary leading-none">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-widest">COGNITIVE // MK-VII</span></div></div><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div></div><div class="px-space-md py-space-xs"><div class="bg-surface-container-low/60 rounded-lg p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[16px]">token</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">NEURAL ENGINE</span></div><span class="font-label-micro text-label-micro text-tertiary">ONLINE 100%</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-sm" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(56,189,248,0.35)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="command-center" href="#"><span class="material-symbols-outlined text-[20px]">view_quilt</span><span>Command Center</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>AI Assistant</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="neural-memory" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span>Neural Memory (Obsidian)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="projects-tasks" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span><span>Projects &amp; Tasks</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="kinetic-protocol" href="#"><span class="material-symbols-outlined text-[20px]">fitness_center</span><span>Kinetic Protocol (Treino)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="system-integrations" href="#"><span class="material-symbols-outlined text-[20px]">integration_instructions</span><span>System Integrations</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="general-settings" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>General Settings</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs"><div class="bg-surface-container-low/40 rounded-lg p-space-sm flex flex-col gap-1"><div class="flex justify-between items-center"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">HUD PROTOCOL</span><span class="font-label-micro text-label-micro text-secondary">SEC//V3.4</span></div><div class="w-full bg-surface-container-highest rounded-full h-1 overflow-hidden"><div class="bg-secondary h-full w-4/5 rounded-full"></div></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs bg-surface-container-low/80 px-space-sm py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span><span class="font-label-telemetry text-label-telemetry text-tertiary">CORE STATUS: ONLINE</span></div><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">LATENCY:</span><span class="font-label-telemetry text-label-telemetry text-primary">14ms</span></div><div class="hidden lg:flex items-center gap-space-sm bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">CPU/NEURAL LOAD:</span><span class="font-label-telemetry text-label-telemetry text-secondary">27.4%</span><div class="w-12 bg-surface-container-highest rounded-full h-1.5 overflow-hidden"><div class="bg-secondary h-full w-[27%]"></div></div></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col text-right"><span class="font-label-telemetry text-label-telemetry text-on-surface tracking-wider">10:42:19 UTC</span><span class="font-label-micro text-label-micro text-on-surface-variant tracking-widest uppercase">SYNCHRONIZED</span></div><div class="w-px h-6 bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm bg-surface-container-low/70 py-1 px-space-sm rounded-lg"><div class="flex flex-col text-right"><span class="font-headline-sm text-body-sm font-semibold text-primary leading-tight">David</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">OPERATOR</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background flex-1"><div class="flex flex-col w-full p-space-lg gap-space-lg">
+<!-- Operational Header & Telemetry Matrix -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-low/70 backdrop-blur-xl p-space-lg rounded-xl shadow-xl relative overflow-hidden">
+<div class="absolute -top-16 -right-16 w-64 h-64 bg-primary-container/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-16 -left-16 w-64 h-64 bg-secondary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col gap-space-xs z-10">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-micro text-label-micro text-secondary tracking-widest uppercase">COGNITIVE ENGINE // SPRINT EXECUTION</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+<span class="bg-surface-container-high px-space-xs py-0.5 rounded text-tertiary font-label-micro text-label-micro font-semibold">SPRINT W42 ACTIVE</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight font-bold">
+        Projetos &amp; Tarefas <span class="text-secondary font-light">// Tactical Kanban Matrix</span>
+</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+        Monitoramento de vetor cognitivo, orquestração de sub-agentes autônomos e sincronização tática contínua com Obsidian Neural Vault.
+      </p>
+</div>
+<!-- Quick Action & Search Hub -->
+<div class="flex flex-wrap sm:flex-nowrap items-center gap-space-md z-10">
+<div class="relative flex-1 sm:w-80">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full bg-surface-container-highest/60 text-on-surface font-body-sm text-body-sm pl-9 pr-8 py-2 rounded-lg outline-none focus:bg-surface-container-high focus:shadow-[0_0_12px_rgba(56,189,248,0.25)] transition-all placeholder:text-on-surface-variant/60" placeholder="Busca semântica NLP ou tag (#rag, #infra)..." type="text"/>
+<span class="material-symbols-outlined absolute right-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant/70 text-[16px] cursor-pointer hover:text-primary">tune</span>
+</div>
+<button class="flex items-center gap-space-xs px-space-md py-2 bg-primary-container text-on-primary-container font-headline-sm text-body-md font-semibold rounded-lg shadow-[0_0_16px_rgba(56,189,248,0.35)] hover:brightness-110 active:scale-95 transition-all whitespace-nowrap" id="btn-nova-tarefa">
+<span class="material-symbols-outlined text-[18px]">add_task</span>
+<span>+ Nova Tarefa Tática</span>
+</button>
+</div>
+</div>
+<!-- Telemetry Gauges Banner -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Metric 1: Sprint Velocity -->
+<div class="bg-surface-container-low/90 backdrop-blur-md p-space-md rounded-xl flex items-center justify-between shadow-md">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">VELOCIDADE OPERACIONAL</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-display-lg-mobile text-display-lg-mobile font-bold text-primary">4.8</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant">tasks / dia</span>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +14.2% vs W41
+        </span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[26px]">speed</span>
+</div>
+</div>
+<!-- Metric 2: Completion Rate -->
+<div class="bg-surface-container-low/90 backdrop-blur-md p-space-md rounded-xl flex items-center justify-between shadow-md">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">TAXA DE CONCLUSÃO</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-display-lg-mobile text-display-lg-mobile font-bold text-tertiary">94.6%</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary-fixed-dim">[ALVO: 90%]</span>
+</div>
+<div class="w-32 bg-surface-container-highest rounded-full h-1.5 mt-2 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full w-[94.6%] shadow-[0_0_8px_rgba(86,229,169,0.5)]"></div>
+</div>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[26px]">task_alt</span>
+</div>
+</div>
+<!-- Metric 3: Active Autonomous Agents -->
+<div class="bg-surface-container-low/90 backdrop-blur-md p-space-md rounded-xl flex items-center justify-between shadow-md">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">SUB-AGENTES ATIVOS</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-display-lg-mobile text-display-lg-mobile font-bold text-secondary">03</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant">em pipeline</span>
+</div>
+<span class="font-label-micro text-label-micro text-secondary flex items-center gap-1 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+          Sub-Agent #09: Gemini-Pro Live
+        </span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[26px]">smart_toy</span>
+</div>
+</div>
+<!-- Metric 4: Obsidian Neural Sync -->
+<div class="bg-surface-container-low/90 backdrop-blur-md p-space-md rounded-xl flex items-center justify-between shadow-md">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">VAULT OBSIDIAN SYNC</span>
+<div class="flex items-baseline gap-space-xs mt-1">
+<span class="font-display-lg-mobile text-display-lg-mobile font-bold text-on-surface">1,428</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant">nós linkados</span>
+</div>
+<span class="font-label-micro text-label-micro text-primary flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[14px]">sync</span> Commit: 00h04m atrás
+        </span>
+</div>
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[26px]">hub</span>
+</div>
+</div>
+</div>
+<!-- Primary Tactical Kanban Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-space-md items-start">
+<!-- COLUMN 1: BACKLOG NEURAL -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low/60 rounded-xl p-space-sm min-h-[640px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm bg-surface-container-high/40 rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span class="font-headline-sm text-body-md font-bold text-on-surface tracking-tight uppercase">BACKLOG NEURAL</span>
+<span class="font-label-micro text-label-micro bg-surface-container-highest px-2 py-0.5 rounded-full text-on-surface-variant font-bold">6</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+<!-- Task Card 1 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-842</span>
+<span class="bg-surface-container-highest text-on-surface-variant font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P3 // BAIXA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Benchmark de embeddings no Qdrant vs Pgvector
+        </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+          Avaliar latência para coleção de memórias semânticas de longo prazo com 500k vetores.
+        </p>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-primary px-1.5 py-0.5 rounded">#infra</span>
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-secondary px-1.5 py-0.5 rounded">#rag</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Est: 4h</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-label-micro text-label-micro font-bold" title="David">
+            D
+          </div>
+</div>
+</div>
+<!-- Task Card 2 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-849</span>
+<span class="bg-surface-container-highest text-secondary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P2 // MÉDIA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Refatorar fallback do Gemini 1.5 Flash para Claude 3.5 Haiku
+        </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+          Evitar throttle de API durante picos de síntese de relatórios matinais.
+        </p>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-primary-fixed-dim px-1.5 py-0.5 rounded">#gemini</span>
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-primary px-1.5 py-0.5 rounded">#infra</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Est: 3h</span>
+</div>
+<div class="flex items-center gap-1 text-secondary font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+<span>Agent #04</span>
+</div>
+</div>
+</div>
+<!-- Task Card 3 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-855</span>
+<span class="bg-surface-container-highest text-on-surface-variant font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P3 // BAIXA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Auditoria de tokens em chamadas de inferência assíncrona
+        </h4>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-secondary px-1.5 py-0.5 rounded">#infra</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Est: 1.5h</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-label-micro text-label-micro font-bold">
+            D
+          </div>
+</div>
+</div>
+<!-- Task Card 4 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-861</span>
+<span class="bg-surface-container-highest text-secondary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P2 // MÉDIA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Pipeline de sumarização diária no canal Telegram D.A.R.V.I.S.
+        </h4>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-primary-fixed-dim px-1.5 py-0.5 rounded">#gemini</span>
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-tertiary px-1.5 py-0.5 rounded">#habitos</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Est: 2h</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-label-micro text-label-micro font-bold">
+            D
+          </div>
+</div>
+</div>
+<!-- Task Card 5 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-864</span>
+<span class="bg-surface-container-highest text-on-surface-variant font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P3 // BAIXA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Backup criptografado S3 dos embeddings semanais
+        </h4>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-primary px-1.5 py-0.5 rounded">#infra</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Est: 1h</span>
+</div>
+<div class="flex items-center gap-1 text-secondary font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+<span>Agent #02</span>
+</div>
+</div>
+</div>
+<!-- Task Card 6 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-870</span>
+<span class="bg-surface-container-highest text-secondary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P2 // MÉDIA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Fine-tuning LoRA para detecção de tom nas anotações Obsidian
+        </h4>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="font-label-micro text-label-micro bg-surface-container-highest/80 text-secondary px-1.5 py-0.5 rounded">#rag</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+<span>Est: 6h</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-label-micro text-label-micro font-bold">
+            D
+          </div>
+</div>
+</div>
+</div>
+<!-- COLUMN 2: A FAZER // SPRINT ATIVA -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low/60 rounded-xl p-space-sm min-h-[640px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm bg-surface-container-high/40 rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-headline-sm text-body-md font-bold text-on-surface tracking-tight uppercase">A FAZER // SPRINT ATIVA</span>
+<span class="font-label-micro text-label-micro bg-primary-container/20 text-primary-container px-2 py-0.5 rounded-full font-bold">4</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+<!-- Sprint Card 1 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-812</span>
+<span class="bg-error-container/30 text-error font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold">P1 // CRÍTICA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Integrar Docker Container de Micro-serviços Treino Kinetic
+        </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+          Garantir isolamento de ambiente para ingestão dos dados biométricos do Apple Watch.
+        </p>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-micro text-label-micro bg-surface-container-highest/50 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[14px] text-secondary">alt_route</span>
+<span>Dep: Docker Hub, HealthKit API</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-primary font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>Hoje, 18:00 UTC</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-semibold">David</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">
+              OP
+            </div>
+</div>
+</div>
+</div>
+<!-- Sprint Card 2 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-818</span>
+<span class="bg-primary/20 text-primary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold">P2 // ALTA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Configuração de Webhook n8n para disparo de alertas automáticos
+        </h4>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-micro text-label-micro bg-surface-container-highest/50 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[14px] text-secondary">alt_route</span>
+<span>Dep: n8n Engine, Telegram Bot</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>Amanhã, 12:00 UTC</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-semibold">David</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">
+              OP
+            </div>
+</div>
+</div>
+</div>
+<!-- Sprint Card 3 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-824</span>
+<span class="bg-primary/20 text-primary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold">P2 // ALTA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Parser de Markdown com AST para gravação atômica no Obsidian
+        </h4>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-micro text-label-micro bg-surface-container-highest/50 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[14px] text-secondary">alt_route</span>
+<span>Dep: Obsidian Local REST API</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>22 Out, 20:00</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-semibold">David</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">
+              OP
+            </div>
+</div>
+</div>
+</div>
+<!-- Sprint Card 4 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/90 hover:bg-surface-container-high/90 transition-all p-space-sm rounded-lg shadow-sm cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-830</span>
+<span class="bg-surface-container-highest text-secondary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P2 // MÉDIA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors leading-tight">
+          Normalização dos pesos no protocolo RPE de Treino
+        </h4>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-micro text-label-micro bg-surface-container-highest/50 px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[14px] text-secondary">alt_route</span>
+<span>Dep: SQLite Kinetic Engine</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span>23 Out, 10:00</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-semibold">David</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">
+              OP
+            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 3: EM PROGRESSO // PROCESSING -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low/60 rounded-xl p-space-sm min-h-[640px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm bg-surface-container-high/40 rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-headline-sm text-body-md font-bold text-secondary tracking-tight uppercase">EM PROGRESSO // PROCESSING</span>
+<span class="font-label-micro text-label-micro bg-secondary-container/20 text-secondary px-2 py-0.5 rounded-full font-bold">3</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+<!-- In Progress Card 1 -->
+<div class="flex flex-col gap-space-xs bg-surface-container-high/90 hover:bg-surface-bright/80 transition-all p-space-sm rounded-lg shadow-md cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-798</span>
+<span class="bg-error-container/30 text-error font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold">P1 // CRÍTICA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-primary group-hover:text-primary-fixed transition-colors leading-tight">
+          Pipeline RAG Vetorial: Ingestão de Notas de Pesquisa
+        </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Indexação semântica em tempo real via chunks híbridos com Obsidian Vault Sync.
+        </p>
+<!-- Progress Indicator (65%) -->
+<div class="flex flex-col gap-1 mt-1">
+<div class="flex justify-between items-center text-label-micro font-label-micro">
+<span class="text-on-surface-variant">Chunking: 320 / 492 notas</span>
+<span class="text-secondary font-semibold">65%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full w-[65%] shadow-[0_0_8px_rgba(76,215,246,0.5)] transition-all duration-500"></div>
+</div>
+</div>
+<!-- Telemetry Logs & Obsidian Link -->
+<div class="bg-surface-container-lowest/70 p- space-xs rounded font-label-micro text-label-micro text-on-surface-variant flex flex-col gap-1 mt-1">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[12px]">terminal</span>
+<span class="truncate">LOG: [OK] Embs: text-embedding-3-large 1536d</span>
+</div>
+<div class="flex items-center gap-1 text-primary truncate hover:underline cursor-pointer">
+<span class="material-symbols-outlined text-[12px]">link</span>
+<span class="truncate">obsidian://vault/DARVIS-Brain/02-RAG-Spec.md</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-secondary font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+<span>Agent #09 (Gemini Pro)</span>
+</div>
+<div class="flex items-center gap-1">
+<div class="w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[9px]">D</div>
+</div>
+</div>
+</div>
+<!-- In Progress Card 2 -->
+<div class="flex flex-col gap-space-xs bg-surface-container-high/90 hover:bg-surface-bright/80 transition-all p-space-sm rounded-lg shadow-md cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-804</span>
+<span class="bg-primary/20 text-primary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold">P2 // ALTA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-primary group-hover:text-primary-fixed transition-colors leading-tight">
+          Sub-Agente de Triagem de E-mails e Tarefas Táticas
+        </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Classificação autônoma de prioridades e extração de pendências acionáveis.
+        </p>
+<!-- Progress Indicator (42%) -->
+<div class="flex flex-col gap-1 mt-1">
+<div class="flex justify-between items-center text-label-micro font-label-micro">
+<span class="text-on-surface-variant">Parsing de mailbox</span>
+<span class="text-secondary font-semibold">42%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full w-[42%] shadow-[0_0_8px_rgba(76,215,246,0.5)]"></div>
+</div>
+</div>
+<!-- Telemetry Logs -->
+<div class="bg-surface-container-lowest/70 p- space-xs rounded font-label-micro text-label-micro text-on-surface-variant flex flex-col gap-1 mt-1">
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[12px]">terminal</span>
+<span class="truncate">LOG: IMAP stream conectado, 18 pendências</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-secondary font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+<span>Agent #01 Autônomo</span>
+</div>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface-variant font-label-micro text-label-micro font-bold">D</div>
+</div>
+</div>
+<!-- In Progress Card 3 -->
+<div class="flex flex-col gap-space-xs bg-surface-container-high/90 hover:bg-surface-bright/80 transition-all p-space-sm rounded-lg shadow-md cursor-grab group">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-809</span>
+<span class="bg-surface-container-highest text-secondary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase">P2 // MÉDIA</span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-primary group-hover:text-primary-fixed transition-colors leading-tight">
+          Visualizador de Biomecânica do Treino Kinetic
+        </h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Renderização dos gráficos de fadiga muscular e recuperação de SNC.
+        </p>
+<!-- Progress Indicator (85%) -->
+<div class="flex flex-col gap-1 mt-1">
+<div class="flex justify-between items-center text-label-micro font-label-micro">
+<span class="text-on-surface-variant">Plotagem de curvas EMG</span>
+<span class="text-tertiary font-semibold">85%</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1.5 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full w-[85%] shadow-[0_0_8px_rgba(86,229,169,0.5)]"></div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[14px]">code</span>
+<span>Dev UI</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-semibold">David</span>
+<div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-[10px]">OP</div>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 4: CONCLUÍDO // ARCHIVED -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low/60 rounded-xl p-space-sm min-h-[640px]">
+<!-- Column Header -->
+<div class="flex items-center justify-between px-space-xs py-space-sm bg-surface-container-high/40 rounded-lg">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-headline-sm text-body-md font-bold text-tertiary tracking-tight uppercase">CONCLUÍDO // ARCHIVED</span>
+<span class="font-label-micro text-label-micro bg-tertiary/20 text-tertiary px-2 py-0.5 rounded-full font-bold">8</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</button>
+</div>
+<!-- Done Card 1 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/70 opacity-90 hover:opacity-100 transition-all p-space-sm rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-780</span>
+<span class="bg-tertiary/20 text-tertiary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">check</span> VERIFICADO
+          </span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight line-through decoration-outline">
+          Setup do Cluster Redis para Cache de Sessões Neurais
+        </h4>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs font-label-micro text-label-micro text-on-surface-variant">
+<span class="text-tertiary">Commit: 9e4f2b1</span>
+<span>19 Out, 15:42</span>
+</div>
+</div>
+<!-- Done Card 2 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/70 opacity-90 hover:opacity-100 transition-all p-space-sm rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-776</span>
+<span class="bg-tertiary/20 text-tertiary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">check</span> VERIFICADO
+          </span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight line-through decoration-outline">
+          Prompt Engineering: Persona Executiva &amp; Tone Optimizer
+        </h4>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs font-label-micro text-label-micro text-on-surface-variant">
+<span class="text-tertiary">Commit: cc812a0</span>
+<span>19 Out, 11:20</span>
+</div>
+</div>
+<!-- Done Card 3 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/70 opacity-90 hover:opacity-100 transition-all p-space-sm rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-772</span>
+<span class="bg-tertiary/20 text-tertiary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">check</span> VERIFICADO
+          </span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight line-through decoration-outline">
+          Pipeline Automático de Geração de Gráficos de Sono &amp; HRV
+        </h4>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs font-label-micro text-label-micro text-on-surface-variant">
+<span class="text-tertiary">Commit: b61d9a8</span>
+<span>18 Out, 21:05</span>
+</div>
+</div>
+<!-- Done Card 4 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/70 opacity-90 hover:opacity-100 transition-all p-space-sm rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-765</span>
+<span class="bg-tertiary/20 text-tertiary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">check</span> VERIFICADO
+          </span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight line-through decoration-outline">
+          Refatoração Tailwind da Shell Global e Topbar HUD
+        </h4>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs font-label-micro text-label-micro text-on-surface-variant">
+<span class="text-tertiary">Commit: 7a012d9</span>
+<span>18 Out, 14:10</span>
+</div>
+</div>
+<!-- Done Card 5 -->
+<div class="flex flex-col gap-space-xs bg-surface-container/70 opacity-90 hover:opacity-100 transition-all p-space-sm rounded-lg shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary font-mono">TASK-758</span>
+<span class="bg-tertiary/20 text-tertiary font-label-micro text-label-micro px-1.5 py-0.5 rounded uppercase font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">check</span> VERIFICADO
+          </span>
+</div>
+<h4 class="font-headline-sm text-body-md font-semibold text-on-surface leading-tight line-through decoration-outline">
+          Autenticação Token Bearer para Endpoints Seguros do D.A.R.V.I.S.
+        </h4>
+<div class="flex items-center justify-between pt-space-xs mt- space-xs font-label-micro text-label-micro text-on-surface-variant">
+<span class="text-tertiary">Commit: fa8812c</span>
+<span>17 Out, 19:30</span>
+</div>
+</div>
+<!-- Collapsed indicator for other 3 archived tasks -->
+<div class="bg-surface-container-highest/40 hover:bg-surface-container-highest transition-colors rounded-lg p-space-xs flex items-center justify-center gap-space-xs cursor-pointer text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px]">history</span>
+<span class="font-label-micro text-label-micro font-medium uppercase">+ 3 Tarefas Antigas Arquivadas</span>
+</div>
+</div>
+</div>
+<!-- Footer Section: Strategic Allocation & Cognitive Load Telemetry -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md bg-surface-container-low/80 backdrop-blur-xl p-space-lg rounded-xl shadow-lg">
+<!-- Domain Distribution Stats -->
+<div class="flex flex-col gap-space-sm col-span-1 lg:col-span-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">pie_chart</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">Distribuição de Esforço Tático</span>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">CICLO W42 // 21 TAREFAS TOTAIS</span>
+</div>
+<!-- Segmented Bar Visualization -->
+<div class="w-full bg-surface-container-highest h-3 rounded-full overflow-hidden flex shadow-inner">
+<div class="bg-primary h-full transition-all duration-700" style="width: 55%;" title="Engenharia: 55%"></div>
+<div class="bg-secondary-container h-full transition-all duration-700" style="width: 30%;" title="IA Core: 30%"></div>
+<div class="bg-tertiary h-full transition-all duration-700" style="width: 15%;" title="Hábitos &amp; Bio: 15%"></div>
+</div>
+<!-- Domain Badges with Details -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-sm bg-surface-container/70 p-space-xs rounded-lg">
+<div class="w-3 h-3 rounded bg-primary"></div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface">Engenharia &amp; Infra</span>
+<span class="font-label-telemetry text-label-micro text-primary">55% (12 tasks)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container/70 p-space-xs rounded-lg">
+<div class="w-3 h-3 rounded bg-secondary-container"></div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface">IA Core &amp; RAG</span>
+<span class="font-label-telemetry text-label-micro text-secondary">30% (6 tasks)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container/70 p-space-xs rounded-lg">
+<div class="w-3 h-3 rounded bg-tertiary"></div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm font-semibold text-on-surface">Hábitos &amp; Cinética</span>
+<span class="font-label-telemetry text-label-micro text-tertiary">15% (3 tasks)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Live Execution Telemetry Micro-terminal -->
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest/80 p-space-md rounded-lg font-label-micro text-label-micro text-on-surface-variant justify-between">
+<div class="flex items-center justify-between">
+<span class="text-secondary font-bold uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></span>
+          DAEMON // AUTONOMIC STREAM
+        </span>
+<span class="text-tertiary">PID: 88410</span>
+</div>
+<div class="flex flex-col gap-1 text-[11px] font-mono leading-tight">
+<p class="text-on-surface-variant/80">&gt; [10:42:01] Vault watcher detected 4 file changes.</p>
+<p class="text-primary">&gt; [10:42:09] Embedded 12 chunks -&gt; vector db ok.</p>
+<p class="text-tertiary">&gt; [10:42:14] Sprint W42 velocity synced with operator David.</p>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="text-on-surface-variant">MEM BUFFER: 184MB / 1GB</span>
+<span class="text-secondary hover:underline cursor-pointer">FULL INSPECT</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function () {
+    const btn = document.getElementById('btn-nova-tarefa');
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const title = prompt('D.A.R.V.I.S. // Insira o identificador ou título da nova tarefa tática:');
+        if (title) {
+          alert('Tarefa submetida ao Backlog Neural: [' + title + ']');
+        }
+      });
+    }
+  })();
+</script></main></div></body></html>

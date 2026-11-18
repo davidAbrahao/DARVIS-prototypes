@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#262a33", "secondary-fixed-dim": "#4cd7f6", "on-secondary-fixed": "#001f26", "inverse-primary": "#00668a", "tertiary": "#56e5a9", "on-background": "#dfe2ee", "secondary-fixed": "#acedff", "primary": "#8ed5ff", "tertiary-fixed": "#6ffbbe", "on-primary-container": "#004965", "secondary-container": "#03b5d3", "surface-bright": "#353942", "on-tertiary": "#003824", "on-primary-fixed-variant": "#004c69", "surface-dim": "#0f131c", "on-tertiary-fixed-variant": "#005236", "inverse-on-surface": "#2c3039", "outline": "#87929a", "primary-fixed-dim": "#7bd0ff", "on-primary": "#00354a", "surface": "#0f131c", "surface-container-low": "#181c24", "surface-container-highest": "#31353e", "surface-tint": "#7bd0ff", "on-error": "#690005", "tertiary-fixed-dim": "#4edea3", "on-secondary": "#003640", "on-primary-fixed": "#001e2c", "on-tertiary-container": "#004e34", "secondary": "#4cd7f6", "background": "#0f131c", "on-secondary-fixed-variant": "#004e5c", "tertiary-container": "#30c88f", "outline-variant": "#3e484f", "on-secondary-container": "#00424e", "surface-variant": "#31353e", "on-tertiary-fixed": "#002113", "on-error-container": "#ffdad6", "primary-fixed": "#c4e7ff", "primary-container": "#38bdf8", "surface-container-lowest": "#0a0e16", "error-container": "#93000a", "on-surface-variant": "#bdc8d1", "error": "#ffb4ab", "inverse-surface": "#dfe2ee", "surface-container": "#1c2028", "on-surface": "#dfe2ee" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "margin-md": "1.5rem", "space-lg": "1.5rem", "space-md": "1rem", "margin": "1rem", "margin-lg": "2rem", "space-xl": "2.5rem", "gutter": "1rem", "gutter-sm": "0.75rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "label-telemetry": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "label-micro": [ "JetBrains Mono" ], "body-lg": [ "Geist" ], "headline-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "display-lg-mobile": [ "Space Grotesk" ], "body-sm": [ "Geist" ], "display-lg": [ "Space Grotesk" ] }, "fontSize": { "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-telemetry": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-micro": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "fontWeight": "600" } ], "display-lg-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "display-lg": [ "48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/95 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[20px]">neurology</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-primary leading-none">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-widest">COGNITIVE // MK-VII</span></div></div><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div></div><div class="px-space-md py-space-xs"><div class="bg-surface-container-low/60 rounded-lg p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[16px]">token</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">NEURAL ENGINE</span></div><span class="font-label-micro text-label-micro text-tertiary">ONLINE 100%</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-sm" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(56,189,248,0.35)]"><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm transition-all bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(56,189,248,0.35)]" data-path="command-center" href="#"><span class="material-symbols-outlined text-[20px]">view_quilt</span><span>Command Center</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>AI Assistant</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="neural-memory" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span>Neural Memory (Obsidian)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="projects-tasks" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span><span>Projects &amp; Tasks</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="kinetic-protocol" href="#"><span class="material-symbols-outlined text-[20px]">fitness_center</span><span>Kinetic Protocol (Treino)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="system-integrations" href="#"><span class="material-symbols-outlined text-[20px]">integration_instructions</span><span>System Integrations</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="general-settings" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>General Settings</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs"><div class="bg-surface-container-low/40 rounded-lg p-space-sm flex flex-col gap-1"><div class="flex justify-between items-center"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">HUD PROTOCOL</span><span class="font-label-micro text-label-micro text-secondary">SEC//V3.4</span></div><div class="w-full bg-surface-container-highest rounded-full h-1 overflow-hidden"><div class="bg-secondary h-full w-4/5 rounded-full"></div></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs bg-surface-container-low/80 px-space-sm py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span><span class="font-label-telemetry text-label-telemetry text-tertiary">CORE STATUS: ONLINE</span></div><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">LATENCY:</span><span class="font-label-telemetry text-label-telemetry text-primary">14ms</span></div><div class="hidden lg:flex items-center gap-space-sm bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">CPU/NEURAL LOAD:</span><span class="font-label-telemetry text-label-telemetry text-secondary">27.4%</span><div class="w-12 bg-surface-container-highest rounded-full h-1.5 overflow-hidden"><div class="bg-secondary h-full w-[27%]"></div></div></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col text-right"><span class="font-label-telemetry text-label-telemetry text-on-surface tracking-wider">10:42:19 UTC</span><span class="font-label-micro text-label-micro text-on-surface-variant tracking-widest uppercase">SYNCHRONIZED</span></div><div class="w-px h-6 bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm bg-surface-container-low/70 py-1 px-space-sm rounded-lg"><div class="flex flex-col text-right"><span class="font-headline-sm text-body-sm font-semibold text-primary leading-tight">David</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">OPERATOR</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background flex-1"><div class="flex flex-col w-full p-space-md lg:p-space-lg gap-space-md max-w-[1600px] mx-auto select-none">
+<!-- HUD STATUS BAR & AMBIENT STREAM -->
+<header class="w-full bg-surface-container-lowest/80 backdrop-blur-xl rounded-xl p-space-md shadow-xl relative overflow-hidden">
+<div class="absolute -right-20 -top-20 w-80 h-80 rounded-full bg-secondary-container/10 blur-3xl pointer-events-none"></div>
+<div class="absolute left-1/3 -bottom-20 w-64 h-64 rounded-full bg-tertiary/5 blur-3xl pointer-events-none"></div>
+<div class="flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-md relative z-10">
+<!-- Operator & Node Ident -->
+<div class="flex items-center gap-space-md">
+<div class="relative flex items-center justify-center w-11 h-11 rounded-lg bg-surface-container-high">
+<span class="material-symbols-outlined text-secondary text-[24px]">terminal</span>
+<span class="absolute -top-1 -right-1 flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-tertiary"></span>
+</span>
+</div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">DAVID</span>
+<span class="font-label-micro text-label-micro px-1.5 py-0.5 rounded bg-secondary-container/20 text-secondary uppercase font-semibold">PROTOCOLO ATIVO</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">SYS//MK-VII</span>
+</div>
+<div class="flex items-center gap-space-sm mt-0.5">
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> SÃO PAULO, BR
+            </span>
+<span class="text-on-surface-variant/40 font-mono">•</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface">24°C NUBLADO</span>
+<span class="text-on-surface-variant/40 font-mono">•</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant font-mono">1014 hPa</span>
+<span class="hidden sm:inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-error-container/40 text-error font-label-micro text-label-micro uppercase">
+<span class="material-symbols-outlined text-[13px]">warning</span> DEFESA CIVIL: ESTÁVEL
+            </span>
+</div>
+</div>
+</div>
+<!-- Realtime Telemetry Nodes -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs w-full xl:w-auto">
+<div class="bg-surface-container/60 rounded-lg px-space-sm py-1.5 flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">timer</span> TEMPO BRT
+          </span>
+<span class="font-label-telemetry text-label-telemetry text-primary font-semibold tracking-wider" id="brt-clock">19:16:08</span>
+</div>
+<div class="bg-surface-container/60 rounded-lg px-space-sm py-1.5 flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-tertiary">bolt</span> GEMINI 1.5 PRO
+          </span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary font-semibold flex items-center gap-1">
+            98ms <span class="font-label-micro text-label-micro text-on-surface-variant">LOW LAT</span>
+</span>
+</div>
+<div class="bg-surface-container/60 rounded-lg px-space-sm py-1.5 flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-secondary">sync</span> VAULT SYNC
+          </span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface font-mono font-semibold">#d4a9f1</span>
+</div>
+<div class="bg-surface-container/60 rounded-lg px-space-sm py-1.5 flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-primary">security</span> NEURAL SEC
+          </span>
+<span class="font-label-telemetry text-label-telemetry text-secondary font-semibold">TOKEN OK</span>
+</div>
+</div>
+</div>
+</header>
+<!-- DIRECTIVES & INSTANT COGNITIVE ACTIONS -->
+<section class="flex flex-col lg:flex-row gap-space-sm items-stretch">
+<!-- Daily Directive Banner -->
+<div class="flex-1 bg-surface-container-low/70 rounded-xl p-space-md flex items-center gap-space-md shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex-shrink-0 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">lightbulb</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-micro text-label-micro uppercase font-bold text-primary tracking-widest">DIRETRIZ MATRIZ // COG-01</span>
+<span class="w-1 h-1 rounded-full bg-on-surface-variant"></span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">PRIORIDADE ALPHA</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface truncate">
+          “Arquitetura deliberada supera esforço reativo. Mantenha os loops fechados e a fricção zero.”
+        </p>
+</div>
+</div>
+<!-- Quick Action Launchers -->
+<div class="flex flex-wrap sm:flex-nowrap items-center gap-space-xs">
+<button class="flex-1 sm:flex-none flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface transition-all shadow-sm group">
+<span class="material-symbols-outlined text-secondary text-[18px] group-hover:scale-110 transition-transform">auto_awesome</span>
+<span class="font-headline-sm text-body-sm font-semibold tracking-tight whitespace-nowrap">Resumo Matinal</span>
+</button>
+<button class="flex-1 sm:flex-none flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface transition-all shadow-sm group">
+<span class="material-symbols-outlined text-primary text-[18px] group-hover:scale-110 transition-transform">mic</span>
+<span class="font-headline-sm text-body-sm font-semibold tracking-tight whitespace-nowrap">Gravar Insight</span>
+</button>
+<button class="flex-1 sm:flex-none flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary-container text-on-primary-container font-semibold shadow-[0_0_16px_rgba(56,189,248,0.35)] hover:bg-primary transition-all">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+<span class="font-headline-sm text-body-sm tracking-tight whitespace-nowrap">Deep Work (90m)</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface transition-all shadow-sm" title="Sincronizar Calendário">
+<span class="material-symbols-outlined text-[20px]">save_as</span>
+</button>
+</div>
+</section>
+<!-- MULTI-COLUMN COCKPIT GRID (12-COL DESKTOP) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md w-full items-start">
+<!-- LEFT PANEL: Daily Agenda & Chrono Stream (Col 3) -->
+<aside class="lg:col-span-3 flex flex-col gap-space-md">
+<!-- Live Meeting HUD Pod -->
+<div class="rounded-xl bg-surface-container-lowest/90 p-space-md shadow-lg relative overflow-hidden">
+<div class="absolute -top-12 -left-12 w-32 h-32 bg-secondary/15 rounded-full blur-2xl"></div>
+<div class="flex items-center justify-between mb-space-xs relative z-10">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary/20 text-secondary font-label-micro text-label-micro font-bold uppercase tracking-widest">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span> AO VIVO AGORA
+          </span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant font-mono">19:00 - 20:00</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mt-space-xs leading-snug">
+          Reunião Técnica // Pipeline FastAPI &amp; pgvector
+        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Alinhamento de throughput do ingestion agent com a stack D.A.R.V.I.S.
+        </p>
+<div class="flex items-center gap-space-xs mt-space-md">
+<button class="flex-1 flex items-center justify-center gap-1.5 py-2 px-space-sm rounded-lg bg-secondary text-on-secondary font-headline-sm text-body-sm font-semibold shadow-[0_0_12px_rgba(76,215,246,0.3)] hover:brightness-110 transition-all">
+<span class="material-symbols-outlined text-[16px]">video_call</span> Entrar no Meet
+          </button>
+<button class="p-2 rounded-lg bg-surface-container-high hover:bg-surface-bright text-secondary hover:text-on-surface transition-all" title="Capturar transcrição e gerar notas automáticas via IA">
+<span class="material-symbols-outlined text-[18px]">summarize</span>
+</button>
+</div>
+</div>
+<!-- Chronological Agenda Timeline -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">schedule</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Timeline do Dia</span>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary uppercase">G-CAL SYNCED</span>
+</div>
+<div class="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-surface-container-highest">
+<!-- Past Slot -->
+<div class="relative group">
+<span class="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-surface-container-highest"></span>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">14:00 - 15:30 • CONCLUÍDO</span>
+<span class="font-body-md text-body-md text-on-surface-variant line-through font-medium">Sprint Review Arquitetura Cloud</span>
+</div>
+</div>
+<!-- Active Slot Marker -->
+<div class="relative group">
+<span class="absolute -left-[21px] top-1 w-3.5 h-3.5 rounded-full bg-secondary flex items-center justify-center shadow-[0_0_8px_#38bdf8]">
+<span class="w-1.5 h-1.5 bg-background rounded-full"></span>
+</span>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-secondary font-mono font-bold">19:00 - 20:00 • EM PROGRESSO</span>
+<span class="font-headline-sm text-body-md text-primary font-semibold">FastAPI Architecture Sync</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Stack review c/ time de engenharia</span>
+</div>
+</div>
+<!-- Upcoming Slot -->
+<div class="relative group">
+<span class="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-surface-bright"></span>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">20:30 - 21:15</span>
+<span class="font-headline-sm text-body-md text-on-surface font-medium">Kinetic Protocol (Treino Noturno)</span>
+<span class="font-label-micro text-label-micro text-tertiary">HIIT + Core Conditioning</span>
+</div>
+</div>
+<!-- Night Slot -->
+<div class="relative group">
+<span class="absolute -left-[19px] top-1 w-2.5 h-2.5 rounded-full bg-surface-bright"></span>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">21:45 - 22:30</span>
+<span class="font-headline-sm text-body-md text-on-surface font-medium">Sessão de Leitura &amp; Fechamento</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Obsidian Daily Note Review</span>
+</div>
+</div>
+</div>
+<div class="mt-space-xs pt-space-xs bg-surface-container/30 rounded p-space-sm flex items-center justify-between text-on-surface-variant">
+<span class="font-label-micro text-label-micro uppercase">Carga Cognitiva Diária</span>
+<span class="font-label-telemetry text-label-telemetry text-secondary">7.5h / 8.0h MAX</span>
+</div>
+</div>
+<!-- Quick Memo Scratchpad -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-md">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-label-micro text-label-micro uppercase text-on-surface-variant font-semibold">SCRATCH BUFFER</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">edit_note</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 text-on-surface font-label-telemetry text-body-sm">
+<p class="text-on-surface-variant">docker exec -it darvis-core redis-cli monitor // Validar timeout no socket do assistente.</p>
+</div>
+</div>
+</aside>
+<!-- CENTER PANEL: Core Telemetry, Habits & Task Intelligence (Col 6) -->
+<main class="lg:col-span-6 flex flex-col gap-space-md">
+<!-- Performance & Efficiency SVG Chart Pod -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-lg flex flex-col gap-space-sm relative">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-xs">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Eficiência &amp; Execução Semanal</span>
+<span class="font-label-micro text-label-micro px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-bold">94.6% OVERALL</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Relação entre Hábitos Executados vs. Sprints Concluídas</p>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<span class="flex items-center gap-1 font-label-micro text-label-micro">
+<span class="w-2.5 h-2.5 rounded-sm bg-primary"></span> TASKS
+            </span>
+<span class="flex items-center gap-1 font-label-micro text-label-micro">
+<span class="w-2.5 h-2.5 rounded-sm bg-tertiary"></span> BIO-HÁBITOS
+            </span>
+<span class="flex items-center gap-1 font-label-micro text-label-micro">
+<span class="w-3 h-0.5 bg-secondary-fixed"></span> SPLINE
+            </span>
+</div>
+</div>
+<!-- Custom Telemetry Inline SVG Chart -->
+<div class="w-full h-48 mt-space-xs relative">
+<svg class="w-full h-full overflow-visible" fill="none" viewbox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="primaryBar" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9"></stop>
+<stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2"></stop>
+</lineargradient>
+<lineargradient id="tertiaryBar" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#56e5a9" stop-opacity="0.9"></stop>
+<stop offset="100%" stop-color="#56e5a9" stop-opacity="0.2"></stop>
+</lineargradient>
+<lineargradient id="splineArea" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4cd7f6" stop-opacity="0.25"></stop>
+<stop offset="100%" stop-color="#4cd7f6" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Gridlines -->
+<line stroke="#1c2028" stroke-dasharray="4 4" stroke-width="1" x1="20" x2="520" y1="30" y2="30"></line>
+<line stroke="#1c2028" stroke-dasharray="4 4" stroke-width="1" x1="20" x2="520" y1="75" y2="75"></line>
+<line stroke="#1c2028" stroke-dasharray="4 4" stroke-width="1" x1="20" x2="520" y1="120" y2="120"></line>
+<line stroke="#262a33" stroke-width="1" x1="20" x2="520" y1="150" y2="150"></line>
+<!-- SEG 1: SEG -->
+<rect fill="url(#primaryBar)" height="95" rx="3" width="14" x="42" y="55"></rect>
+<rect fill="url(#tertiaryBar)" height="80" rx="3" width="14" x="58" y="70"></rect>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="57" y="166">SEG</text>
+<!-- SEG 2: TER -->
+<rect fill="url(#primaryBar)" height="110" rx="3" width="14" x="112" y="40"></rect>
+<rect fill="url(#tertiaryBar)" height="100" rx="3" width="14" x="128" y="50"></rect>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="127" y="166">TER</text>
+<!-- SEG 3: QUA -->
+<rect fill="url(#primaryBar)" height="85" rx="3" width="14" x="182" y="65"></rect>
+<rect fill="url(#tertiaryBar)" height="105" rx="3" width="14" x="198" y="45"></rect>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="197" y="166">QUA</text>
+<!-- SEG 4: QUI -->
+<rect fill="url(#primaryBar)" height="115" rx="3" width="14" x="252" y="35"></rect>
+<rect fill="url(#tertiaryBar)" height="110" rx="3" width="14" x="268" y="40"></rect>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="267" y="166">QUI</text>
+<!-- SEG 5: SEX -->
+<rect fill="url(#primaryBar)" height="120" rx="3" width="14" x="322" y="30"></rect>
+<rect fill="url(#tertiaryBar)" height="112" rx="3" width="14" x="338" y="38"></rect>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="337" y="166">SEX</text>
+<!-- SEG 6: SAB -->
+<rect fill="url(#primaryBar)" height="70" rx="3" width="14" x="392" y="80"></rect>
+<rect fill="url(#tertiaryBar)" height="95" rx="3" width="14" x="408" y="55"></rect>
+<text fill="#87929a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="407" y="166">SAB</text>
+<!-- SEG 7: DOM (HOJE) -->
+<rect fill="url(#primaryBar)" height="105" rx="3" width="14" x="462" y="45"></rect>
+<rect fill="url(#tertiaryBar)" height="115" rx="3" width="14" x="478" y="35"></rect>
+<text fill="#38bdf8" font-family="JetBrains Mono" font-size="10" font-weight="700" text-anchor="middle" x="477" y="166">DOM*</text>
+<!-- Spline Path Area -->
+<path d="M 57 60 Q 127 35 197 50 T 337 32 T 477 36 L 477 150 L 57 150 Z" fill="url(#splineArea)"></path>
+<!-- Spline Curve Line -->
+<path d="M 57 60 Q 127 35 197 50 T 337 32 T 477 36" stroke="#4cd7f6" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Live point halo -->
+<circle cx="477" cy="36" fill="#4cd7f6" r="4.5"></circle>
+<circle cx="477" cy="36" r="8" stroke="#4cd7f6" stroke-opacity="0.4" stroke-width="1.5"></circle>
+</svg>
+</div>
+<div class="grid grid-cols-3 gap-space-xs pt-space-xs">
+<div class="bg-surface-container/40 p-space-xs rounded-lg text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Sprints Fechadas</span>
+<div class="font-headline-sm text-headline-sm text-primary font-bold">24 / 26</div>
+</div>
+<div class="bg-surface-container/40 p-space-xs rounded-lg text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Streak Hábitos</span>
+<div class="font-headline-sm text-headline-sm text-tertiary font-bold">18 Dias</div>
+</div>
+<div class="bg-surface-container/40 p-space-xs rounded-lg text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Foco Médio</span>
+<div class="font-headline-sm text-headline-sm text-secondary font-bold">4.2h / dia</div>
+</div>
+</div>
+</div>
+<!-- Bio-Routine Matrix & GitHub-like Habit Heatmap -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">grid_view</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Bio-Routine Matrix (30 Dias)</span>
+</div>
+<span class="font-label-telemetry text-label-telemetry text-tertiary">STATUS: ÓTIMO</span>
+</div>
+<!-- Heatmap Grid -->
+<div class="p-space-sm bg-surface-container-low/50 rounded-lg flex flex-col gap-2">
+<div class="flex items-center justify-between text-on-surface-variant font-label-micro text-label-micro">
+<span>ROTINA DIÁRIA</span>
+<span>INTENSIDADE: BAIXA → MÁXIMA</span>
+</div>
+<!-- Mini Commit Blocks Grid -->
+<div class="grid grid-flow-col grid-rows-4 gap-1.5 overflow-x-auto py-1">
+<!-- Row 1: Hidratação (30 nodes) -->
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary" title="Dia 1: 100%"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary" title="Dia 2: 100%"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary" title="Dia 3: 100%"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary/70" title="Dia 4: 75%"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary" title="Dia 5: 100%"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary" title="Dia 6: 100%"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary" title="Dia 7: 100%"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary/80"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary/50"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary/90"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary/80"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-tertiary ring-1 ring-primary"></div>
+<!-- Row 2: Treino Kinetic -->
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary/30 ring-1 ring-secondary"></div>
+<!-- Row 3: Deep Work Coding -->
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-primary"></div>
+<!-- Row 4: Leitura Obsidian -->
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-surface-container-highest"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+<div class="w-3.5 h-3.5 rounded-sm bg-secondary-container"></div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between text-label-micro font-label-micro text-on-surface-variant pt-1 px-1">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary"></span> Hidratação 3.5L (96%)</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> Treino Físico (82%)</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> Deep Work (91%)</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary-container"></span> Leitura 30m (93%)</span>
+</div>
+</div>
+<!-- Critical Weekly Sprints & Tasks -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">task_alt</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Prioridades Críticas &amp; Sprints Ativas</span>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono">SPRINT W42</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- Item 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 hover:bg-surface-container-high/70 transition-all flex items-center justify-between group">
+<div class="flex items-center gap-space-sm min-w-0">
+<input checked="" class="w-4 h-4 rounded accent-primary bg-surface-container-lowest cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-md text-on-surface font-medium truncate">Refatorar pipeline de embeddings pgvector (Supabase)</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Batch size otimizado para 250 chunks por requisição</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs flex-shrink-0">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary font-label-micro text-label-micro font-bold">DEV // SUPABASE</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary">100%</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 hover:bg-surface-container-high/70 transition-all flex items-center justify-between group">
+<div class="flex items-center gap-space-sm min-w-0">
+<input class="w-4 h-4 rounded accent-primary bg-surface-container-lowest cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-md text-on-surface font-medium truncate">Integrar Whisper API local c/ Obsidian Daily Auto-Append</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Push-to-talk streaming direto do hardware</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs flex-shrink-0">
+<span class="px-2 py-0.5 rounded bg-secondary-container/20 text-secondary font-label-micro text-label-micro font-bold">AI // OBSIDIAN</span>
+<span class="font-label-telemetry text-label-telemetry text-secondary">65%</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 hover:bg-surface-container-high/70 transition-all flex items-center justify-between group">
+<div class="flex items-center gap-space-sm min-w-0">
+<input class="w-4 h-4 rounded accent-primary bg-surface-container-lowest cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-md text-on-surface font-medium truncate">Cloudflare Worker Edge Cache para respostas D.A.R.V.I.S.</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Reduzir latência global para queries de contexto</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs flex-shrink-0">
+<span class="px-2 py-0.5 rounded bg-surface-bright text-on-surface-variant font-label-micro text-label-micro font-bold">DEVOPS</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant">30%</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- RIGHT PANEL: Obsidian Neural Memory & Cloud Telemetry (Col 3) -->
+<aside class="lg:col-span-3 flex flex-col gap-space-md">
+<!-- Obsidian Neural Graph Module -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-lg flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">hub</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Grafo Neural (Obsidian)</span>
+</div>
+<span class="font-label-micro text-label-micro text-secondary font-mono">1.428 NOTAS</span>
+</div>
+<!-- Interactive Vector Graph Representation -->
+<div class="w-full h-44 rounded-lg bg-surface-container-low/70 relative overflow-hidden flex items-center justify-center border-0">
+<svg class="w-full h-full" viewbox="0 0 240 160">
+<!-- Interconnecting synaptic lines -->
+<line stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1" x1="60" x2="120" y1="40" y2="70"></line>
+<line stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1" x1="120" x2="180" y1="70" y2="50"></line>
+<line stroke="#56e5a9" stroke-opacity="0.3" stroke-width="1" x1="120" x2="90" y1="70" y2="120"></line>
+<line stroke="#38bdf8" stroke-opacity="0.2" stroke-width="1" x1="180" x2="190" y1="50" y2="115"></line>
+<line stroke="#56e5a9" stroke-opacity="0.3" stroke-width="1" x1="90" x2="160" y1="120" y2="130"></line>
+<line stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1" x1="160" x2="190" y1="130" y2="115"></line>
+<line stroke="#4cd7f6" stroke-opacity="0.2" stroke-width="1" x1="40" x2="60" y1="90" y2="40"></line>
+<line stroke="#4cd7f6" stroke-opacity="0.2" stroke-width="1" x1="40" x2="90" y1="90" y2="120"></line>
+<!-- Peripheral Nodes -->
+<circle cx="40" cy="90" fill="#87929a" r="3"></circle>
+<circle cx="60" cy="40" fill="#4cd7f6" r="4.5"></circle>
+<circle cx="180" cy="50" fill="#38bdf8" r="5"></circle>
+<circle cx="90" cy="120" fill="#56e5a9" r="4"></circle>
+<circle cx="190" cy="115" fill="#8ed5ff" r="3.5"></circle>
+<circle cx="160" cy="130" fill="#56e5a9" r="4"></circle>
+<!-- Center Core Hub Node (DARVIS Memory) -->
+<circle cx="120" cy="70" fill="#00354a" r="9"></circle>
+<circle cx="120" cy="70" fill="#38bdf8" r="6"></circle>
+<circle class="animate-spin" cx="120" cy="70" r="14" stroke="#38bdf8" stroke-dasharray="2 2" stroke-opacity="0.4" stroke-width="1" style="transform-origin: 120px 70px;"></circle>
+</svg>
+<div class="absolute bottom-2 left-2 flex items-center gap-1 font-label-micro text-label-micro text-on-surface-variant bg-surface-container-high/80 px-2 py-0.5 rounded backdrop-blur">
+<span>3.840 BACKLINKS</span>
+<span>•</span>
+<span class="text-tertiary">12 CLUSTERS</span>
+</div>
+<div class="absolute top-2 right-2 font-label-micro text-label-micro text-primary bg-surface-container-high/80 px-2 py-0.5 rounded backdrop-blur font-mono">
+            pgvector 98.4%
+          </div>
+</div>
+<div class="flex items-center justify-between text-label-micro font-label-micro text-on-surface-variant">
+<span>Última indexação: Há 4 min</span>
+<a class="text-secondary hover:underline flex items-center gap-0.5" href="#">Explorar Grafo <span class="material-symbols-outlined text-[12px]">open_in_new</span></a>
+</div>
+</div>
+<!-- Audio Vault Feed (Push-to-Talk Insights) -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">graphic_eq</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Audio Vault &amp; Transcrições</span>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary">AUTO-SYNC</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- Audio Card 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-label-micro font-label-micro">
+<span class="text-primary font-mono font-semibold">AUDIO_20241027_1742.mp3</span>
+<span class="text-on-surface-variant">17:42 • 00:48</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              “Implementar camada de validação Pydantic para os esquemas das memórias episódicas antes do upsert no pgvector...”
+            </p>
+<!-- Mini simulated waveform -->
+<div class="flex items-center justify-between h-4 px-1 bg-surface-container-low rounded">
+<span class="w-1 h-2 bg-secondary rounded-full"></span>
+<span class="w-1 h-3.5 bg-secondary rounded-full"></span>
+<span class="w-1 h-1.5 bg-secondary rounded-full"></span>
+<span class="w-1 h-4 bg-secondary rounded-full"></span>
+<span class="w-1 h-3 bg-secondary rounded-full"></span>
+<span class="w-1 h-2 bg-secondary rounded-full"></span>
+<span class="w-1 h-3.5 bg-secondary rounded-full"></span>
+<span class="w-1 h-1 bg-secondary rounded-full"></span>
+<span class="w-1 h-2.5 bg-secondary rounded-full"></span>
+<span class="w-1 h-4 bg-secondary rounded-full"></span>
+<span class="w-1 h-2 bg-secondary rounded-full"></span>
+<span class="w-1 h-1 bg-secondary rounded-full"></span>
+<span class="w-1 h-3 bg-secondary rounded-full"></span>
+</div>
+<div class="flex items-center justify-between pt-0.5">
+<span class="font-label-micro text-label-micro text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">done_all</span> Inserido no Obsidian
+              </span>
+<button class="font-label-micro text-label-micro text-secondary hover:text-primary transition-colors">Tocar Áudio</button>
+</div>
+</div>
+<!-- Audio Card 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-high/40 flex flex-col gap-1.5">
+<div class="flex items-center justify-between text-label-micro font-label-micro">
+<span class="text-primary font-mono font-semibold">AUDIO_20241027_1120.mp3</span>
+<span class="text-on-surface-variant">11:20 • 01:14</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+              “Diretriz para automação de faturas: usar Cloudflare Workers integrados com webhook do gateway...”
+            </p>
+<div class="flex items-center justify-between pt-0.5">
+<span class="font-label-micro text-label-micro text-tertiary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">done_all</span> Inserido no Obsidian
+              </span>
+<button class="font-label-micro text-label-micro text-secondary hover:text-primary transition-colors">Tocar Áudio</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Infrastructure & Telemetry Health Stack -->
+<div class="rounded-xl bg-surface-container-lowest/80 p-space-md shadow-lg flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">dns</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Stack Cloud &amp; Telemetria</span>
+</div>
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+<div class="space-y-2.5">
+<!-- Item 1: Cloudflare -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-label-micro text-label-micro">
+<span class="text-on-surface font-mono">Cloudflare Workers Edge</span>
+<span class="text-tertiary font-bold">99.98% UPTIME</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1 overflow-hidden">
+<div class="bg-tertiary h-full w-[99.98%]"></div>
+</div>
+</div>
+<!-- Item 2: Supabase pgvector -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-label-micro text-label-micro">
+<span class="text-on-surface font-mono">Supabase pgvector (sa-east-1)</span>
+<span class="text-secondary font-bold">18ms PING</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1 overflow-hidden">
+<div class="bg-secondary h-full w-[92%]"></div>
+</div>
+</div>
+<!-- Item 3: Redis Cache -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between font-label-micro text-label-micro">
+<span class="text-on-surface font-mono">Redis Neural Memory Cache</span>
+<span class="text-primary font-bold">142MB / 512MB</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-1 overflow-hidden">
+<div class="bg-primary h-full w-[28%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-space-xs pt-space-xs flex items-center justify-between font-label-micro text-label-micro text-on-surface-variant border-t-0">
+<span class="flex items-center gap-1 font-mono">TLS 1.3 • AES-256</span>
+<span class="text-secondary font-semibold">ALL SYSTEMS NOMINAL</span>
+</div>
+</div>
+</aside>
+</div>
+<!-- Realtime Clock Script micro-handler -->
+<script>
+    (function initHudClock() {
+      const clockEl = document.getElementById('brt-clock');
+      if (!clockEl) return;
+      setInterval(() => {
+        const now = new Date();
+        const hrs = String(now.getHours()).padStart(2, '0');
+        const mins = String(now.getMinutes()).padStart(2, '0');
+        const secs = String(now.getSeconds()).padStart(2, '0');
+        clockEl.textContent = `${hrs}:${mins}:${secs}`;
+      }, 1000);
+    })();
+  </script>
+</div></main></div></body></html>

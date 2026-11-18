@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-fixed-variant": "#005236", "tertiary-fixed-dim": "#4edea3", "surface-tint": "#7bd0ff", "on-primary-fixed-variant": "#004c69", "secondary-fixed-dim": "#4cd7f6", "tertiary-container": "#30c88f", "secondary-container": "#03b5d3", "on-primary": "#00354a", "primary-fixed": "#c4e7ff", "outline-variant": "#3e484f", "surface-variant": "#31353e", "surface": "#0f131c", "on-secondary": "#003640", "on-tertiary": "#003824", "surface-container-lowest": "#0a0e16", "surface-bright": "#353942", "on-primary-fixed": "#001e2c", "surface-container-low": "#181c24", "on-background": "#dfe2ee", "on-tertiary-fixed": "#002113", "primary-container": "#38bdf8", "inverse-surface": "#dfe2ee", "on-secondary-container": "#00424e", "tertiary-fixed": "#6ffbbe", "surface-container-highest": "#31353e", "primary-fixed-dim": "#7bd0ff", "outline": "#87929a", "error-container": "#93000a", "on-surface": "#dfe2ee", "on-secondary-fixed": "#001f26", "inverse-on-surface": "#2c3039", "on-surface-variant": "#bdc8d1", "secondary": "#4cd7f6", "surface-container": "#1c2028", "surface-container-high": "#262a33", "on-secondary-fixed-variant": "#004e5c", "on-error-container": "#ffdad6", "primary": "#8ed5ff", "on-primary-container": "#004965", "on-tertiary-container": "#004e34", "secondary-fixed": "#acedff", "background": "#0f131c", "error": "#ffb4ab", "on-error": "#690005", "inverse-primary": "#00668a", "tertiary": "#56e5a9", "surface-dim": "#0f131c" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "1rem", "space-lg": "1.5rem", "margin-md": "1.5rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "gutter-sm": "0.75rem", "space-md": "1rem", "gutter": "1rem", "space-sm": "0.5rem", "margin-lg": "2rem" }, "fontFamily": { "body-md": ["Geist"], "label-telemetry": ["JetBrains Mono"], "headline-sm": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "body-sm": ["Geist"], "body-lg": ["Geist"], "label-micro": ["JetBrains Mono"], "display-lg": ["Space Grotesk"], "display-lg-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "label-telemetry": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-micro": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased selection:bg-primary/20 selection:text-primary"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><img alt="D.A.R.V.I.S. Core Emblem" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBI136RqE1xvxt1qsbNngoDp7_m3l9mA-pV0ybKGD0fITnuRieDWIBLIRe8ADKBPZXJ4WU3UuHv5lcS9PHz27uzpeoQjlfgm4ARN8OnPGJGlgfk7VkqOLlOxqqoGdmDWwdM_fVLznHSR7yiXRx9wmoglWIRPS9kGxzoSVw_urrS4XdQx0Cg5ESeqHIO4HJTrR1OA3KablRuZcc8fm4sIo__oS11NGlQAwOYoR1BDYzP"/><div class="flex flex-col min-w-0 justify-center"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro px-1 py-0.5 rounded bg-surface-container-high text-primary-container font-mono">Command Center</span></div><div class="flex items-center gap-1.5"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase truncate">v1.0.4 • GEMINI_PRO_ONLINE</span></div></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Telemetry Notifications" class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 transition-colors"><span class="material-symbols-outlined text-[20px]">tune</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 w-full pt-16 pb-24 bg-surface flex flex-col relative"><div class="flex flex-col w-full relative select-none">
+<!-- Backdrop Blur Scrim simulating the Training Cockpit underneath -->
+<div class="fixed inset-0 bg-surface-container-lowest/80 backdrop-blur-md z-40 pointer-events-auto"></div>
+<!-- Tactical HUD Bottom Sheet Modal -->
+<div class="relative z-50 flex flex-col w-full max-w-xl mx-auto rounded-t-xl bg-surface-container-low shadow-[0_-8px_32px_rgba(0,0,0,0.8)] overflow-hidden">
+<!-- Top Ambient Glow Aura Bar -->
+<div class="w-full h-1 bg-gradient-to-r from-transparent via-primary-container to-transparent opacity-90"></div>
+<!-- Modal Header -->
+<div class="px-margin pt-space-md pb-space-sm bg-surface-container flex items-start justify-between">
+<div class="flex flex-col min-w-0 pr-space-xs">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="inline-block w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span class="font-label-micro text-label-micro uppercase font-mono text-primary tracking-widest">Temporal Synapse Calibrator</span>
+<span class="font-label-micro text-label-micro px-1 py-0.5 rounded bg-surface-container-highest text-tertiary font-mono">SYS_SYNC_99.8%</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight flex items-center gap-1.5">
+          Rest Chrono HUD
+          <span class="text-on-surface-variant font-mono font-normal text-body-sm">// CRONÔMETRO</span>
+</h2>
+<p class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase tracking-wider">
+          D.A.R.V.I.S. Biometric Recovery &amp; Neuromuscular Synapse
+        </p>
+</div>
+<button aria-label="Fechar Modal" class="w-10 h-10 rounded-lg bg-surface-container-high text-on-surface-variant hover:text-primary hover:bg-surface-bright flex items-center justify-center transition-colors" id="closeModalBtn">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Active Timer HUD Dial Visualizer -->
+<div class="px-margin pt-space-lg pb-space-md flex flex-col items-center justify-center bg-gradient-to-b from-surface-container to-surface-container-low relative">
+<!-- Arc Dial -->
+<div class="relative w-52 h-52 flex items-center justify-center">
+<!-- SVG Cyber Arcs -->
+<svg class="absolute inset-0 w-full h-full -rotate-90" viewbox="0 0 100 100">
+<!-- Background track -->
+<circle cx="50" cy="50" fill="transparent" r="44" stroke="#1c2028" stroke-width="4"></circle>
+<!-- Minor reticle dashed track -->
+<circle cx="50" cy="50" fill="transparent" r="39" stroke="#31353e" stroke-dasharray="2, 4" stroke-width="1"></circle>
+<!-- Active Cyan Chrono Arc -->
+<circle class="transition-all duration-300" cx="50" cy="50" fill="transparent" id="timerProgressArc" r="44" stroke="#38bdf8" stroke-dasharray="276" stroke-dashoffset="69" stroke-linecap="round" stroke-width="4.5"></circle>
+<!-- Tactical Accent Nodes -->
+<circle class="animate-pulse" cx="50" cy="6" fill="#56e5a9" r="2.5"></circle>
+<circle cx="94" cy="50" fill="#38bdf8" r="1.5"></circle>
+<circle cx="50" cy="94" fill="#38bdf8" r="1.5"></circle>
+<circle cx="6" cy="50" fill="#38bdf8" r="1.5"></circle>
+</svg>
+<!-- Inner Chrono Readout -->
+<div class="flex flex-col items-center justify-center z-10 text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase tracking-widest">Interval Target</span>
+<div class="flex items-baseline gap-1 my-0.5">
+<span class="font-display-lg-mobile text-display-lg-mobile font-headline-lg text-primary tracking-tight font-bold" id="timerDigits">01:30</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant font-mono">SEC</span>
+</div>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-high">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-label-micro text-label-micro font-mono text-tertiary uppercase" id="targetStimulusTag">Força Moderada // 90s</span>
+</div>
+</div>
+</div>
+<!-- Quick Micro-Adjustment Tactical Pad -->
+<div class="w-full flex items-center justify-center gap-space-xs mt-space-md">
+<button class="timer-delta-btn flex-1 py-2 px-1 rounded bg-surface-container text-on-surface font-label-telemetry text-label-telemetry font-mono hover:bg-surface-container-high hover:text-primary transition-all active:scale-95 text-center" data-adjust="-15">
+          -15s
+        </button>
+<button class="timer-delta-btn flex-1 py-2 px-1 rounded bg-surface-container text-on-surface font-label-telemetry text-label-telemetry font-mono hover:bg-surface-container-high hover:text-primary transition-all active:scale-95 text-center" data-adjust="-5">
+          -5s
+        </button>
+<div class="w-1 h-6 bg-surface-variant rounded-full mx-1"></div>
+<button class="timer-delta-btn flex-1 py-2 px-1 rounded bg-surface-container text-on-surface font-label-telemetry text-label-telemetry font-mono hover:bg-surface-container-high hover:text-primary transition-all active:scale-95 text-center" data-adjust="5">
+          +5s
+        </button>
+<button class="timer-delta-btn flex-1 py-2 px-1 rounded bg-surface-container text-on-surface font-label-telemetry text-label-telemetry font-mono hover:bg-surface-container-high hover:text-primary transition-all active:scale-95 text-center" data-adjust="15">
+          +15s
+        </button>
+<button class="timer-delta-btn flex-1 py-2 px-1 rounded bg-surface-container-high text-primary font-label-telemetry text-label-telemetry font-mono hover:bg-surface-bright transition-all active:scale-95 text-center font-semibold" data-adjust="30">
+          +30s
+        </button>
+</div>
+</div>
+<!-- Scrollable Parameter Body -->
+<div class="px-margin py-space-sm space-y-space-md max-h-[406px] overflow-y-auto">
+<!-- Section 1: Presets by Stimulus Objective -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-telemetry text-label-telemetry font-mono text-on-surface-variant uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">biotech</span>
+            Presets Biofisiológicos
+          </span>
+<span class="font-label-micro text-label-micro font-mono text-outline">SELECT_TARGET</span>
+</div>
+<div class="grid grid-cols-1 gap-space-xs">
+<!-- Preset Card 1: Hypertrophy 60s -->
+<div class="preset-card cursor-pointer p-space-sm rounded-lg bg-surface-container transition-all hover:bg-surface-container-high flex items-start justify-between" data-preset-name="Hipertrofia Padrão // 60s" data-preset-sec="60">
+<div class="flex flex-col min-w-0 pr-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Hipertrofia Padrão (60s)</span>
+<span class="font-label-micro text-label-micro font-mono text-on-surface-variant bg-surface-container-highest px-1 rounded">METABÓLICO</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 line-clamp-1">
+                Otimização de estresse metabólico, pump vascular e expansão sarcoplasmática.
+              </p>
+</div>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>
+</div>
+</div>
+<!-- Preset Card 2: Moderate Strength 90s (ACTIVE) -->
+<div class="preset-card active cursor-pointer p-space-sm rounded-lg bg-surface-container-high transition-all flex items-start justify-between shadow-sm" data-preset-name="Composto &amp; Força // 90s" data-preset-sec="90">
+<div class="flex flex-col min-w-0 pr-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-md text-primary font-semibold">Composto &amp; Força Moderada (90s)</span>
+<span class="font-label-micro text-label-micro font-mono text-on-primary bg-primary-container px-1 rounded font-bold">ATIVO</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5 line-clamp-2">
+                Ressíntese ATP-CP ~85%. Proporção ideal para supinos, desenvolvimentos e agachamentos submáximos.
+              </p>
+</div>
+<div class="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0 check-indicator">
+<span class="material-symbols-outlined text-[16px] text-on-primary font-bold">check</span>
+</div>
+</div>
+<!-- Preset Card 3: Pure Strength 150s -->
+<div class="preset-card cursor-pointer p-space-sm rounded-lg bg-surface-container transition-all hover:bg-surface-container-high flex items-start justify-between" data-preset-name="Força Pura / Carga Max // 150s" data-preset-sec="150">
+<div class="flex flex-col min-w-0 pr-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Força Pura / Carga Máxima (150s)</span>
+<span class="font-label-micro text-label-micro font-mono text-tertiary bg-surface-container-highest px-1 rounded">NEUROMUSCULAR</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 line-clamp-1">
+                Foco no SNC, restauração de ATP-CP &gt;95% e minimização de fadiga central acumulada.
+              </p>
+</div>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>
+</div>
+</div>
+<!-- Preset Card 4: Drop-set / Metabolic Extreme 35s -->
+<div class="preset-card cursor-pointer p-space-sm rounded-lg bg-surface-container transition-all hover:bg-surface-container-high flex items-start justify-between" data-preset-name="Metabólico Extremo // 35s" data-preset-sec="35">
+<div class="flex flex-col min-w-0 pr-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold">Drop-Set / Densidade Extrema (35s)</span>
+<span class="font-label-micro text-label-micro font-mono text-error bg-surface-container-highest px-1 rounded">LACTATO HIGH</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 line-clamp-1">
+                Microdescanso para clareamento parcial e exaustão máxima de fibras tipo IIa.
+              </p>
+</div>
+<div class="w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator">
+<span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: HUD In-Training Notification Simulator -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-telemetry text-label-telemetry font-mono text-on-surface-variant uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">visibility</span>
+          Prévia do Alerta Holográfico em Execução (HUD T-10s)
+        </span>
+<div class="p-space-sm rounded-lg bg-surface-container-lowest flex items-center justify-between relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-1 bg-tertiary animate-pulse"></div>
+<div class="flex items-center gap-space-sm pl-1.5 min-w-0">
+<span class="material-symbols-outlined text-tertiary text-[20px] shrink-0">timer_10</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1">
+<span class="font-label-micro text-label-micro font-mono text-tertiary font-bold">⚠️ REST_COMPLETE_T-10</span>
+<span class="font-label-micro text-label-micro text-outline font-mono">• PROTOCOL_ACTIVE</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface truncate">Prepare-se para Série 4: Supino Inclinado c/ Halteres</span>
+</div>
+</div>
+<div class="font-label-telemetry text-label-telemetry font-mono text-tertiary font-bold bg-surface-container-high px-2 py-1 rounded shrink-0 ml-2">
+            00:10
+          </div>
+</div>
+</div>
+<!-- Section 3: Bio-Feedback Triggers & Automation Toggles -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-telemetry text-label-telemetry font-mono text-on-surface-variant uppercase flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">sensors</span>
+          Gatilhos de Biofeedback &amp; Automação
+        </span>
+<div class="flex flex-col gap-space-xs">
+<!-- Toggle 1: Haptic Pulse -->
+<label class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-space-sm min-w-0 pr-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">vibration</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-md text-on-surface">Vibração Tátil Contagem Final</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Pulsos hápticos sincronizados aos 10s, 5s e zero.</span>
+</div>
+</div>
+<input checked="" class="sr-only peer" id="hapticToggle" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-tertiary relative"></div>
+</label>
+<!-- Toggle 2: Synthesized Voice Voiceover -->
+<label class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-space-sm min-w-0 pr-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">record_voice_over</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-md text-on-surface">Voz D.A.R.V.I.S. Neural Voice</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Comando vocal sintético: "Atenção: Série 4 iniciada".</span>
+</div>
+</div>
+<input checked="" class="sr-only peer" id="voiceToggle" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary relative"></div>
+</label>
+<!-- Toggle 3: Auto-trigger on Set Finish -->
+<label class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-space-sm min-w-0 pr-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">play_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-md text-on-surface">Auto-Disparo ao Concluir Série</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Inicia cronometragem no instante da marcação de repetição.</span>
+</div>
+</div>
+<input checked="" class="sr-only peer" id="autoStartToggle" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary relative"></div>
+</label>
+<!-- Toggle 4: Keep Screen Awake -->
+<label class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-space-sm min-w-0 pr-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">screen_lock_portrait</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-md text-on-surface">Keep Screen Awake (Tela Ativa)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Evita repouso do cockpit enquanto o descanso estiver em curso.</span>
+</div>
+</div>
+<input class="sr-only peer" id="awakeToggle" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary relative"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Modal Footer Tactical Actions -->
+<div class="p-margin bg-surface-container flex flex-col gap-space-xs shadow-lg">
+<button class="w-full py-3.5 px-space-md rounded-lg bg-primary-container text-on-primary font-headline-sm text-headline-sm uppercase tracking-wide font-bold flex items-center justify-center gap-space-xs shadow-[0_0_16px_rgba(56,189,248,0.4)] active:scale-[0.99] transition-transform" id="applyRestChronoBtn">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+        Salvar &amp; Aplicar ao Treino Ativo
+      </button>
+<div class="flex items-center gap-space-xs">
+<button class="flex-1 py-2.5 px-space-xs rounded-lg bg-surface-container-high text-on-surface font-body-sm text-body-sm hover:text-primary hover:bg-surface-bright transition-colors flex items-center justify-center gap-1 font-mono" id="saveToVaultBtn">
+<span class="material-symbols-outlined text-[16px]">sync_saved_locally</span>
+          Fixar no Obsidian Vault
+        </button>
+<button class="w-24 py-2.5 px-space-xs rounded-lg bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm hover:text-on-surface transition-colors text-center font-mono" id="cancelModalBtn">
+          Cancelar
+        </button>
+</div>
+</div>
+</div>
+<!-- Interactive JavaScript for Live UI Calibration -->
+<script>
+    (function initRestChronoModal() {
+      let currentSeconds = 90;
+      const totalCircumference = 276;
+      const maxVisualRange = 180;
+
+      const timerDigits = document.getElementById('timerDigits');
+      const timerProgressArc = document.getElementById('timerProgressArc');
+      const targetStimulusTag = document.getElementById('targetStimulusTag');
+      const presetCards = document.querySelectorAll('.preset-card');
+      const deltaButtons = document.querySelectorAll('.timer-delta-btn');
+      const applyBtn = document.getElementById('applyRestChronoBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const cancelBtn = document.getElementById('cancelModalBtn');
+
+      function formatTime(totalSec) {
+        const m = Math.floor(totalSec / 60);
+        const s = totalSec % 60;
+        return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+      }
+
+      function updateChronoDisplay() {
+        if (timerDigits) {
+          timerDigits.textContent = formatTime(currentSeconds);
+        }
+        if (timerProgressArc) {
+          const ratio = Math.min(Math.max(currentSeconds / maxVisualRange, 0.05), 1);
+          const offset = totalCircumference * (1 - ratio);
+          timerProgressArc.style.strokeDashoffset = offset;
+        }
+      }
+
+      // Delta button handlers (-15s, -5s, +5s, +15s, +30s)
+      deltaButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const delta = parseInt(btn.getAttribute('data-adjust'), 10);
+          currentSeconds = Math.max(10, Math.min(360, currentSeconds + delta));
+          updateChronoDisplay();
+          if (targetStimulusTag) {
+            targetStimulusTag.textContent = `Personalizado // ${currentSeconds}s`;
+          }
+          // Reset preset active visual
+          presetCards.forEach(c => {
+            c.classList.remove('active', 'bg-surface-container-high');
+            c.classList.add('bg-surface-container');
+            const ind = c.querySelector('.check-indicator');
+            if (ind) {
+              ind.className = 'w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator';
+              ind.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>';
+            }
+          });
+        });
+      });
+
+      // Preset cards selection
+      presetCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const sec = parseInt(card.getAttribute('data-preset-sec'), 10);
+          const name = card.getAttribute('data-preset-name');
+          currentSeconds = sec;
+          updateChronoDisplay();
+          if (targetStimulusTag) {
+            targetStimulusTag.textContent = name;
+          }
+
+          presetCards.forEach(c => {
+            c.classList.remove('active', 'bg-surface-container-high');
+            c.classList.add('bg-surface-container');
+            const ind = c.querySelector('.check-indicator');
+            if (ind) {
+              ind.className = 'w-6 h-6 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 check-indicator';
+              ind.innerHTML = '<span class="w-2.5 h-2.5 rounded-full bg-transparent"></span>';
+            }
+          });
+
+          card.classList.remove('bg-surface-container');
+          card.classList.add('active', 'bg-surface-container-high');
+          const activeInd = card.querySelector('.check-indicator');
+          if (activeInd) {
+            activeInd.className = 'w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0 check-indicator';
+            activeInd.innerHTML = '<span class="material-symbols-outlined text-[16px] text-on-primary font-bold">check</span>';
+          }
+        });
+      });
+
+      // Confirmation click effect
+      if (applyBtn) {
+        applyBtn.addEventListener('click', () => {
+          applyBtn.textContent = 'PROTOCOLO SINCRONIZADO!';
+          applyBtn.classList.remove('bg-primary-container', 'text-on-primary');
+          applyBtn.classList.add('bg-tertiary', 'text-on-tertiary');
+          setTimeout(() => {
+            applyBtn.innerHTML = '<span class="material-symbols-outlined text-[20px]">bolt</span> Salvar & Aplicar ao Treino Ativo';
+            applyBtn.classList.add('bg-primary-container', 'text-on-primary');
+            applyBtn.classList.remove('bg-tertiary', 'text-on-tertiary');
+          }, 1500);
+        });
+      }
+
+      // Initial visual render
+      updateChronoDisplay();
+    })();
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-1px_12px_rgba(0,0,0,0.5)]" data-active-classes="text-primary-container drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"><div class="h-16 px-space-xs flex items-center justify-around"><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="command-center" href="#"><span class="material-symbols-outlined text-[22px]">terminal</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Core</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[22px]">auto_awesome</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Neural</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="memory-obsidian" href="#"><span class="material-symbols-outlined text-[22px]">hub</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Synapse</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="projects-tasks" href="#"><span class="material-symbols-outlined text-[22px]">checklist</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Tasks</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="settings-integrations" href="#"><span class="material-symbols-outlined text-[22px]">display_settings</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">System</span></a></div></nav>
+</body></html>

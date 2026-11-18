@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>D.A.R.V.I.S. HUD</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "inverse-surface": "#dfe2ee", "on-error": "#690005", "on-tertiary-fixed-variant": "#005236", "inverse-primary": "#00668a", "surface-variant": "#31353e", "error-container": "#93000a", "on-secondary": "#003640", "on-secondary-fixed": "#001f26", "primary-fixed-dim": "#7bd0ff", "secondary-container": "#03b5d3", "surface-container-lowest": "#0a0e16", "on-tertiary": "#003824", "primary": "#8ed5ff", "surface-container-low": "#181c24", "surface-container-highest": "#31353e", "primary-fixed": "#c4e7ff", "on-surface-variant": "#bdc8d1", "tertiary-container": "#30c88f", "outline": "#87929a", "tertiary-fixed": "#6ffbbe", "surface-container": "#1c2028", "surface-container-high": "#262a33", "primary-container": "#38bdf8", "surface": "#0f131c", "surface-bright": "#353942", "error": "#ffb4ab", "on-primary-fixed-variant": "#004c69", "on-surface": "#dfe2ee", "on-secondary-container": "#00424e", "surface-tint": "#7bd0ff", "tertiary-fixed-dim": "#4edea3", "secondary": "#4cd7f6", "on-primary-fixed": "#001e2c", "inverse-on-surface": "#2c3039", "on-tertiary-container": "#004e34", "on-error-container": "#ffdad6", "on-background": "#dfe2ee", "outline-variant": "#3e484f", "on-secondary-fixed-variant": "#004e5c", "on-tertiary-fixed": "#002113", "on-primary-container": "#004965", "secondary-fixed": "#acedff", "tertiary": "#56e5a9", "secondary-fixed-dim": "#4cd7f6", "surface-dim": "#0f131c", "on-primary": "#00354a", "background": "#0f131c" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xl": "2.5rem", "margin-md": "1.5rem", "gutter": "1rem", "margin": "1rem", "space-md": "1rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "gutter-sm": "0.75rem", "space-sm": "0.5rem", "margin-lg": "2rem" }, "fontFamily": { "label-telemetry": ["JetBrains Mono"], "body-md": ["Geist"], "headline-sm": ["Space Grotesk"], "display-lg-mobile": ["Space Grotesk"], "body-lg": ["Geist"], "display-lg": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "label-micro": ["JetBrains Mono"], "headline-lg": ["Space Grotesk"], "body-sm": ["Geist"] }, "fontSize": { "label-telemetry": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-micro": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/80 backdrop-blur-xl shadow-[0_4px_24px_rgba(0,0,0,0.4)]"><div class="h-20 px-margin flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-sm"><div class="w-11 h-11 rounded-lg bg-surface-container-high flex items-center justify-center relative"><span class="material-symbols-outlined text-primary text-[22px]">memory</span><span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-tertiary animate-pulse"></span></div><div class="flex flex-col"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm tracking-wider text-primary">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro text-tertiary px-space-xs py-0.5 rounded bg-surface-container-high">LINK ACTIVE</span></div><div class="flex items-center gap-space-sm font-label-micro text-label-micro text-on-surface-variant"><span>NODE: STARK-NET//04</span><span class="text-outline">•</span><span class="text-primary-container font-label-telemetry">Neural</span></div></div></div><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-high/80"><span class="material-symbols-outlined text-secondary text-[16px]">bolt</span><div class="flex flex-col"><span class="font-label-micro text-label-micro text-secondary font-bold leading-none">98.4%</span><span class="font-label-micro text-[8px] text-on-surface-variant tracking-widest leading-none">ARC CORE</span></div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full px-margin pt-20 pb-28 bg-surface flex-grow"><div class="flex flex-col w-full gap-space-md">
+<!-- HUD STATUS STREAM & METRICS TICKER -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+<span class="font-label-micro text-label-micro text-primary uppercase tracking-widest">HOLO-SYNAPSE // PGVECTOR RAG GRID</span>
+</div>
+<span class="font-label-telemetry text-label-micro text-secondary bg-surface-container-high px-space-xs py-0.5 rounded">SIMILARITY: &gt;0.82</span>
+</div>
+<!-- Quick Stats Grid Pill Bar -->
+<div class="grid grid-cols-2 gap-space-xs sm:grid-cols-4">
+<div class="bg-surface-container-low px-space-sm py-1.5 rounded flex items-center justify-between shadow-sm">
+<span class="font-label-micro text-label-micro text-on-surface-variant">VAULT</span>
+<span class="font-label-telemetry text-label-micro text-primary font-bold">1.482 NOTES</span>
+</div>
+<div class="bg-surface-container-low px-space-sm py-1.5 rounded flex items-center justify-between shadow-sm">
+<span class="font-label-micro text-label-micro text-on-surface-variant">CHUNKS</span>
+<span class="font-label-telemetry text-label-micro text-secondary font-bold">18.940 VEC</span>
+</div>
+<div class="bg-surface-container-low px-space-sm py-1.5 rounded flex items-center justify-between shadow-sm">
+<span class="font-label-micro text-label-micro text-on-surface-variant">METRIC</span>
+<span class="font-label-telemetry text-label-micro text-tertiary font-bold">COSINE_DIST</span>
+</div>
+<div class="bg-surface-container-low px-space-sm py-1.5 rounded flex items-center justify-between shadow-sm">
+<span class="font-label-micro text-label-micro text-on-surface-variant">DIM</span>
+<span class="font-label-telemetry text-label-micro text-primary-fixed-dim font-bold">1536-EMBED</span>
+</div>
+</div>
+</div>
+<!-- SEMANTIC PROMPT / VECTOR QUERY CONSOLE -->
+<div class="bg-surface-container-low p-space-sm rounded-lg shadow-md flex flex-col gap-space-xs relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-28 h-28 bg-primary/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-on-surface-variant flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[14px] text-primary">grain</span>
+        EMBEDDING MODEL: text-embedding-3-large
+      </span>
+<span class="font-label-micro text-label-micro text-tertiary bg-surface-container-highest px-space-xs py-0.5 rounded">SUPABASE VEC_OK</span>
+</div>
+<!-- Glowing Cyber Input Bar -->
+<div class="relative flex items-center">
+<div class="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/15 to-transparent rounded pointer-events-none"></div>
+<div class="w-full bg-surface-container-lowest/90 px-space-sm py-2 rounded flex items-center gap-space-sm shadow-inner z-10">
+<span class="material-symbols-outlined text-primary text-[18px] animate-pulse">radar</span>
+<input class="w-full bg-transparent font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none selection:bg-primary-container" id="vector-query-input" placeholder="Busca vetorial semântica ou query RAG..." type="text" value="Edge Cache Cloudflare Workers streaming SSE FastAPI"/>
+<button class="bg-primary text-on-primary font-headline-sm text-body-sm px-space-sm py-1 rounded flex items-center gap-1 shadow-[0_0_12px_rgba(56,189,248,0.4)] active:scale-95 transition-transform shrink-0" id="search-pulse-btn">
+<span class="material-symbols-outlined text-[16px]">travel_explore</span>
+<span>QUERY</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 3D NEURAL KNOWLEDGE GRAPH COCKPIT CANVAS -->
+<div class="relative w-full rounded-xl bg-surface-container-lowest overflow-hidden shadow-xl min-h-[330px] flex flex-col justify-between">
+<!-- Holographic Background Atmosphere & Coordinate Grid -->
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(56,189,248,0.12)_0%,rgba(15,19,28,0.95)_75%)] pointer-events-none"></div>
+<!-- Tactical HUD Corner Brackets & Coordinate Markers -->
+<div class="absolute top-2 left-2 flex items-center gap-1 z-20 pointer-events-none opacity-80">
+<span class="material-symbols-outlined text-primary text-[14px]">filter_center_focus</span>
+<span class="font-label-telemetry text-label-micro text-on-surface-variant">LOC: [X:412 Y:-89 Z:991]</span>
+</div>
+<div class="absolute top-2 right-2 flex items-center gap-1 z-20 pointer-events-none opacity-80">
+<span class="font-label-telemetry text-label-micro text-tertiary">SPHERE DENSITY: 98.4%</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+</div>
+<!-- Interactive Canvas Layer -->
+<canvas class="w-full h-[330px] block cursor-grab active:cursor-grabbing z-10" id="neuralCanvas"></canvas>
+<!-- Holographic Radar & Reticle Targeting Overlay for Active Node -->
+<div class="absolute top-[48%] left-[52%] -translate-x-1/2 -translate-y-1/2 pointer-events-none z-20 flex flex-col items-center">
+<div class="relative flex items-center justify-center">
+<!-- Radar Pulse rings -->
+<span class="absolute w-12 h-12 rounded-full bg-primary/10 animate-ping"></span>
+<span class="absolute w-8 h-8 rounded-full bg-secondary/20 animate-pulse"></span>
+<div class="w-3 h-3 rounded-full bg-primary shadow-[0_0_12px_#38bdf8]"></div>
+<!-- Reticle Crosshair elements -->
+<div class="absolute -top-3 w-0.5 h-2 bg-primary/60"></div>
+<div class="absolute -bottom-3 w-0.5 h-2 bg-primary/60"></div>
+<div class="absolute -left-3 h-0.5 w-2 bg-primary/60"></div>
+<div class="absolute -right-3 h-0.5 w-2 bg-primary/60"></div>
+</div>
+<!-- Micro Reticle Callout Pill -->
+<div class="mt-2 bg-surface-container-high/90 backdrop-blur-md px-2 py-0.5 rounded shadow-lg flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[11px]">my_location</span>
+<span class="font-label-micro text-label-micro text-primary">TARGET: FASTAPI_WORKERS.MD</span>
+</div>
+</div>
+<!-- Cluster Category Map Pills overlay -->
+<div class="absolute top-10 left-2 right-2 z-20 flex gap-1 overflow-x-auto pb-1 pointer-events-auto">
+<span class="shrink-0 bg-primary/20 text-primary font-label-micro text-label-micro px-2 py-0.5 rounded shadow-sm flex items-center gap-1 backdrop-blur-md">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+        [FASTAPI &amp; ARCH] (FOCUS)
+      </span>
+<span class="shrink-0 bg-tertiary-container/30 text-tertiary font-label-micro text-label-micro px-2 py-0.5 rounded shadow-sm flex items-center gap-1 backdrop-blur-md">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+        [DARVIS CORE]
+      </span>
+<span class="shrink-0 bg-secondary-container/20 text-secondary font-label-micro text-label-micro px-2 py-0.5 rounded shadow-sm flex items-center gap-1 backdrop-blur-md">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+        [NEURAL MEMORY]
+      </span>
+<span class="shrink-0 bg-surface-container-highest/80 text-on-surface-variant font-label-micro text-label-micro px-2 py-0.5 rounded shadow-sm flex items-center gap-1 backdrop-blur-md">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+        [STARTUPS &amp; OPS]
+      </span>
+</div>
+<!-- Cockpit Camera Floating HUD Controls (Bottom thumb-reachable within canvas) -->
+<div class="absolute bottom-2 left-2 right-2 z-20 flex items-center justify-between pointer-events-auto bg-surface-container-lowest/85 backdrop-blur-md p-1.5 rounded-lg shadow-md">
+<!-- Perspective Mode Switch -->
+<div class="flex items-center gap-1 bg-surface-container-low p-0.5 rounded">
+<button class="px-2 py-1 rounded font-label-micro text-label-micro bg-primary text-on-primary font-bold shadow transition-colors" id="btn-mode-3d">3D ORBIT</button>
+<button class="px-2 py-1 rounded font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface transition-colors" id="btn-mode-2d">2D PROJ</button>
+</div>
+<!-- Density slider readout -->
+<div class="hidden sm:flex items-center gap-space-xs px-2">
+<span class="material-symbols-outlined text-outline text-[14px]">tune</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">DENSITY</span>
+<div class="w-16 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-3/4 h-full bg-primary rounded-full"></div>
+</div>
+</div>
+<!-- Zoom & Recenter Controls -->
+<div class="flex items-center gap-1">
+<button class="w-7 h-7 rounded bg-surface-container flex items-center justify-center text-on-surface active:bg-surface-container-highest shadow-sm" id="btn-zoom-in" title="Zoom In">
+<span class="material-symbols-outlined text-[16px]">zoom_in</span>
+</button>
+<button class="w-7 h-7 rounded bg-surface-container flex items-center justify-center text-on-surface active:bg-surface-container-highest shadow-sm" id="btn-zoom-out" title="Zoom Out">
+<span class="material-symbols-outlined text-[16px]">zoom_out</span>
+</button>
+<button class="px-2 h-7 rounded bg-surface-container flex items-center gap-1 text-primary active:bg-surface-container-highest shadow-sm font-label-micro text-label-micro" id="btn-recenter" title="Recenter Constellation">
+<span class="material-symbols-outlined text-[14px]">refresh</span>
+<span>RESET</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ACTIVE NODE INSPECTOR (RAG SYNTHESIS & VETORIAL COCKPIT CARD) -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-lg flex flex-col gap-space-sm relative overflow-hidden">
+<!-- Subtle Top Ambient Glow Accent -->
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-secondary to-tertiary"></div>
+<!-- Inspector Header & Target Metadata -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">note_stack</span>
+          OBSIDIAN VAULT // CORE_ARCHITECTURE
+        </span>
+<span class="font-label-telemetry text-label-micro text-tertiary bg-surface-container-high px-space-xs py-0.5 rounded">SYNCED 2h AGO</span>
+</div>
+<div class="flex items-start justify-between gap-space-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface leading-tight">
+          Arquitetura_FastAPI_Cloudflare_Workers.md
+        </h2>
+<div class="w-8 h-8 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+</div>
+</div>
+<!-- Quick Backlinks & Outlinks Indicators -->
+<div class="flex items-center gap-space-sm mt-1">
+<span class="font-label-micro text-label-micro text-on-surface-variant bg-surface-container px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-secondary text-[12px]">transit_enterexit</span>
+          12 Backlinks
+        </span>
+<span class="font-label-micro text-label-micro text-on-surface-variant bg-surface-container px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[12px]">call_made</span>
+          4 Outlinks
+        </span>
+<span class="font-label-micro text-label-micro text-on-surface-variant bg-surface-container px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-tertiary text-[12px]">database</span>
+          Chunk #04
+        </span>
+</div>
+</div>
+<!-- RAG Semantic Excerpt Retrieval Box -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg flex flex-col gap-space-xs shadow-inner">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">psychology</span>
+          RAG SEMANTIC SYNTHESIS (PGVECTOR CHUNK)
+        </span>
+<span class="font-label-telemetry text-label-micro text-secondary">COS_DIST: 0.942</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface/90 leading-relaxed bg-surface-container-high/30 p-2 rounded">
+        “Implementação de streaming de respostas SSE com latência &lt;40ms integrando Cloudflare Workers Edge Cache com roteamento inteligente para Gemini 1.5 Pro e fallback local Ollama.”
+      </p>
+</div>
+<!-- Vector Similarity Graph Cross-Links -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">Top Synapse Relational Matches</span>
+<span class="font-label-micro text-label-micro text-outline">K-NN = 3</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<!-- Item 1: High Match -->
+<div class="bg-surface-container p-2 rounded flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-2 h-2 rounded-full bg-primary shrink-0"></span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">D.A.R.V.I.S._Pipeline_Audio.md</span>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="w-14 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[94%] h-full bg-primary rounded-full"></div>
+</div>
+<span class="font-label-telemetry text-label-micro text-primary font-bold">0.94</span>
+</div>
+</div>
+<!-- Item 2: Mid-High Match -->
+<div class="bg-surface-container p-2 rounded flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">Supabase_Schema_V3.sql</span>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="w-14 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[89%] h-full bg-secondary rounded-full"></div>
+</div>
+<span class="font-label-telemetry text-label-micro text-secondary font-bold">0.89</span>
+</div>
+</div>
+<!-- Item 3: Standard Match -->
+<div class="bg-surface-container p-2 rounded flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-xs min-w-0">
+<span class="w-2 h-2 rounded-full bg-tertiary shrink-0"></span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">Obsidian_Daily_Note_2025.md</span>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="w-14 h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[83%] h-full bg-tertiary rounded-full"></div>
+</div>
+<span class="font-label-telemetry text-label-micro text-tertiary font-bold">0.83</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- HUD EXECUTION COMMANDS (THUMB-ZONE ACTION CLUSTER) -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<!-- Primary Tactical Injection Action -->
+<button class="w-full h-12 bg-primary text-on-primary rounded-lg font-headline-sm text-body-lg flex items-center justify-center gap-space-sm shadow-[0_0_20px_rgba(56,189,248,0.35)] active:scale-[0.98] transition-all" id="inject-btn">
+<span class="material-symbols-outlined text-[20px]">rocket_launch</span>
+<span>Injetar Contexto no Prompt</span>
+</button>
+<!-- Secondary Split Tactical Controls -->
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="h-10 bg-surface-container-high text-on-surface rounded-lg font-headline-sm text-body-sm flex items-center justify-center gap-space-xs shadow-sm active:bg-surface-container-highest transition-colors" id="reindex-btn">
+<span class="material-symbols-outlined text-secondary text-[16px]">sync</span>
+<span>Reindexar Órfãos (14)</span>
+</button>
+<button class="h-10 bg-surface-container-high text-on-surface rounded-lg font-headline-sm text-body-sm flex items-center justify-center gap-space-xs shadow-sm active:bg-surface-container-highest transition-colors" id="obsidian-app-btn">
+<span class="material-symbols-outlined text-primary text-[16px]">open_in_new</span>
+<span>Abrir no Obsidian</span>
+</button>
+</div>
+<!-- Diagnostic Technical Status Footer -->
+<div class="bg-surface-container-lowest p-2 rounded flex flex-col sm:flex-row items-center justify-between gap-1 shadow-inner">
+<div class="flex items-center gap-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">HYBRID DENSE-SPARSE SEARCH ACTIVE</span>
+</div>
+<div class="flex items-center gap-space-sm font-label-telemetry text-label-micro text-primary">
+<span>RE-RANKER: COHERE v3</span>
+<span>•</span>
+<span class="text-tertiary">LATENCY: 22ms</span>
+</div>
+</div>
+</div>
+</div>
+<!-- INTERACTIVE 3D NEURAL CANVAS & HUD INTERACTION LOGIC -->
+<script>
+  (function () {
+    const canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    // Handle high DPI
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Node Clusters Definition
+    const clusters = [
+      { name: 'FastAPI / Cloudflare', color: '#38bdf8', count: 9, center: { x: 0, y: -20, z: 0 } },
+      { name: 'DARVIS Core', color: '#56e5a9', count: 12, center: { x: -70, y: 30, z: -40 } },
+      { name: 'Neural Memory', color: '#4cd7f6', count: 8, center: { x: 80, y: 40, z: 30 } },
+      { name: 'Startups & Business', color: '#bdc8d1', count: 7, center: { x: -30, y: -70, z: 50 } }
+    ];
+
+    // Generate Nodes in 3D Space
+    const nodes = [];
+    clusters.forEach((cluster) => {
+      for (let i = 0; i < cluster.count; i++) {
+        const radius = 35 + Math.random() * 25;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.acos((Math.random() * 2) - 1);
+        nodes.push({
+          x: cluster.center.x + radius * Math.sin(phi) * Math.cos(theta),
+          y: cluster.center.y + radius * Math.sin(phi) * Math.sin(theta),
+          z: cluster.center.z + radius * Math.cos(phi),
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: (Math.random() - 0.5) * 0.15,
+          vz: (Math.random() - 0.5) * 0.15,
+          size: Math.random() > 0.8 ? 3.5 : 2,
+          color: cluster.color,
+          pulse: Math.random() * Math.PI
+        });
+      }
+    });
+
+    // Make Target Node the first one
+    const targetNode = nodes[0];
+    targetNode.size = 5;
+    targetNode.color = '#38bdf8';
+    targetNode.x = 0;
+    targetNode.y = 0;
+    targetNode.z = 20;
+
+    let rotX = 0.25;
+    let rotY = 0;
+    let zoom = 1.05;
+    let is3D = true;
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    // Interaction controls
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - lastMouseX;
+      const dy = e.clientY - lastMouseY;
+      rotY += dx * 0.007;
+      rotX += dy * 0.007;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    });
+
+    // Touch support for mobile HUD
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        lastMouseX = e.touches[0].clientX;
+        lastMouseY = e.touches[0].clientY;
+      }
+    });
+    window.addEventListener('touchend', () => { isDragging = false; });
+    canvas.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - lastMouseX;
+      const dy = e.touches[0].clientY - lastMouseY;
+      rotY += dx * 0.009;
+      rotX += dy * 0.009;
+      lastMouseX = e.touches[0].clientX;
+      lastMouseY = e.touches[0].clientY;
+    });
+
+    // Buttons bindings
+    document.getElementById('btn-zoom-in')?.addEventListener('click', () => { zoom = Math.min(zoom + 0.15, 2.2); });
+    document.getElementById('btn-zoom-out')?.addEventListener('click', () => { zoom = Math.max(zoom - 0.15, 0.6); });
+    document.getElementById('btn-recenter')?.addEventListener('click', () => {
+      rotX = 0.25;
+      rotY = 0;
+      zoom = 1.05;
+    });
+
+    const btn3d = document.getElementById('btn-mode-3d');
+    const btn2d = document.getElementById('btn-mode-2d');
+    btn3d?.addEventListener('click', () => {
+      is3D = true;
+      btn3d.className = 'px-2 py-1 rounded font-label-micro text-label-micro bg-primary text-on-primary font-bold shadow transition-colors';
+      btn2d.className = 'px-2 py-1 rounded font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface transition-colors';
+    });
+    btn2d?.addEventListener('click', () => {
+      is3D = false;
+      rotX = 0;
+      rotY = 0;
+      btn2d.className = 'px-2 py-1 rounded font-label-micro text-label-micro bg-primary text-on-primary font-bold shadow transition-colors';
+      btn3d.className = 'px-2 py-1 rounded font-label-micro text-label-micro text-on-surface-variant hover:text-on-surface transition-colors';
+    });
+
+    // Animation Loop
+    function render() {
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      const cx = width / 2;
+      const cy = height / 2;
+
+      ctx.clearRect(0, 0, width, height);
+
+      // Auto ambient rotation if not dragging
+      if (!isDragging && is3D) {
+        rotY += 0.002;
+      }
+
+      // Draw Holographic Orbital Rings
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.08)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 90 * zoom, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.strokeStyle = 'rgba(86, 229, 169, 0.06)';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 140 * zoom, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Transform 3D coordinates to Screen
+      const projected = nodes.map(n => {
+        n.x += n.vx;
+        n.y += n.vy;
+        n.z += n.vz;
+
+        // Bounding bounce in virtual sphere
+        if (Math.abs(n.x) > 110) n.vx *= -1;
+        if (Math.abs(n.y) > 110) n.vy *= -1;
+        if (Math.abs(n.z) > 110) n.vz *= -1;
+
+        n.pulse += 0.03;
+
+        let x1 = n.x;
+        let y1 = n.y;
+        let z1 = n.z;
+
+        if (is3D) {
+          // Rotate Y
+          const cosY = Math.cos(rotY);
+          const sinY = Math.sin(rotY);
+          const x2 = x1 * cosY - z1 * sinY;
+          const z2 = x1 * sinY + z1 * cosY;
+
+          // Rotate X
+          const cosX = Math.cos(rotX);
+          const sinX = Math.sin(rotX);
+          const y3 = y1 * cosX - z2 * sinX;
+          const z3 = y1 * sinX + z2 * cosX;
+
+          x1 = x2;
+          y1 = y3;
+          z1 = z3;
+        }
+
+        // Perspective projection
+        const fov = 320;
+        const scale = fov / (fov + z1 + 140) * zoom;
+        return {
+          sx: cx + x1 * scale,
+          sy: cy + y1 * scale,
+          sz: z1,
+          scale: scale,
+          color: n.color,
+          size: n.size,
+          pulse: n.pulse
+        };
+      });
+
+      // Draw Synaptic Edge Connections
+      ctx.lineWidth = 0.8;
+      for (let i = 0; i < projected.length; i++) {
+        for (let j = i + 1; j < projected.length; j++) {
+          const dx = projected[i].sx - projected[j].sx;
+          const dy = projected[i].sy - projected[j].sy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 55 * zoom) {
+            const alpha = (1 - dist / (55 * zoom)) * 0.35;
+            ctx.strokeStyle = `rgba(56, 189, 248, ${alpha})`;
+            ctx.beginPath();
+            ctx.moveTo(projected[i].sx, projected[i].sy);
+            ctx.lineTo(projected[j].sx, projected[j].sy);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw Nodes (sorted by depth for optical correctness)
+      projected.sort((a, b) => a.sz - b.sz);
+      projected.forEach(p => {
+        const radius = Math.max(1, p.size * p.scale);
+        const glow = Math.sin(p.pulse) * 0.4 + 0.6;
+
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.min(1, Math.max(0.2, (p.sz + 180) / 360));
+        ctx.beginPath();
+        ctx.arc(p.sx, p.sy, radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Extra halo for large active nodes
+        if (p.size > 3) {
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(p.sx, p.sy, radius + (2 * glow), 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      });
+      ctx.globalAlpha = 1.0;
+
+      requestAnimationFrame(render);
+    }
+    render();
+
+    // Micro interactive feedback on buttons
+    const injectBtn = document.getElementById('inject-btn');
+    injectBtn?.addEventListener('click', () => {
+      const origText = injectBtn.innerHTML;
+      injectBtn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">cyclone</span> Contexto Injetado no Copilot!';
+      setTimeout(() => {
+        injectBtn.innerHTML = origText;
+      }, 2200);
+    });
+
+    const searchBtn = document.getElementById('search-pulse-btn');
+    searchBtn?.addEventListener('click', () => {
+      rotY += 1.5;
+      zoom = 1.25;
+      setTimeout(() => { zoom = 1.05; }, 400);
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)]" data-active-classes="text-primary bg-primary-container/10 font-medium"><div class="flex justify-between items-center h-16 px-space-xs"><a class="flex-1 flex flex-col items-center justify-center h-14 rounded-lg text-on-surface-variant transition-colors hover:text-on-surface" data-path="core" href="#"><span class="material-symbols-outlined text-[20px]">view_in_ar</span><span class="font-label-micro text-label-micro mt-0.5">Core</span></a><a aria-current="page" class="flex-1 flex flex-col items-center justify-center h-14 rounded-lg transition-colors text-primary bg-primary-container/10 font-medium" data-path="neural" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label-micro text-label-micro mt-0.5">Neural</span></a><a class="flex-1 flex flex-col items-center justify-center h-14 rounded-lg text-on-surface-variant transition-colors hover:text-on-surface" data-path="synapse" href="#"><span class="material-symbols-outlined text-[20px]">psychology</span><span class="font-label-micro text-label-micro mt-0.5">Synapse</span></a><a class="flex-1 flex flex-col items-center justify-center h-14 rounded-lg text-on-surface-variant transition-colors hover:text-on-surface" data-path="tasks" href="#"><span class="material-symbols-outlined text-[20px]">terminal</span><span class="font-label-micro text-label-micro mt-0.5">Tasks</span></a><a class="flex-1 flex flex-col items-center justify-center h-14 rounded-lg text-on-surface-variant transition-colors hover:text-on-surface" data-path="system" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span class="font-label-micro text-label-micro mt-0.5">System</span></a></div></nav></body></html>

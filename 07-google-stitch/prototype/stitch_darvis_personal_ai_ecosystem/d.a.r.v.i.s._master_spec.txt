@@ -1,0 +1,18 @@
+# D.A.R.V.I.S. — Product Vision & Master Development Brief
+**David Abrahão Rodrigues Virtual Intelligence System**
+
+### Identidade & Conceito
+- Personal Intelligence System / AI Personal Assistant / Digital Ecosystem.
+- Plataforma centralizada com IA, memória persistente, agentes, automações e integrações.
+
+### Direção Visual
+- Estética: Futurista, minimalista, sofisticada, sci-fi HUD clean (sem excesso de holograma espalhafatoso), tech dark mode.
+- Paleta: Preto profundo (`#080C14`), grafite (`#111827`), azul profundo (`#1E293B`), destaques em ciano elétrico (`#06B6D4`, `#38BDF8`), acentos verdes sutis para status (`#10B981`).
+- Target device: Mobile (com suporte e ergonomia PWA touch-first).
+
+### Escopo do Protótipo (Telas Principais)
+1. **Command Center (Dashboard Principal)**: Saudação contextual a David, indicador do núcleo D.A.R.V.I.S., prompt de comando rápido/voz, resumo de tarefas do dia, projetos ativos, estado das conexões e telemetria.
+2. **AI Assistant (Conversação & Ferramentas)**: Interface conversacional avançada, raciocínio em tempo real, ativação de ferramentas (Obsidian sync, Telegram relay, automações) e controle de contexto/sessão.
+3. **Memory Center (Obsidian & Long-Term Memory)**: Grafo de nós/tópicos, memórias recentes registradas, categorias de conhecimento, status do Vault sincronizado via GitHub.
+4. **Projects & Task Management**: Visão integrada de objetivos, sprint pessoal, tarefas pendentes com prioridades e progresso de entregas.
+5. **Integrations & Automation Center**: Conexões ativas (Google, GitHub, Telegram, Cloudflare, Gemini), controle de permissões e rotinas automatizadas.

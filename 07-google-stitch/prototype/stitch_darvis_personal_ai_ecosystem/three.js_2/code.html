@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_77 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_77" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_77');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  # D.A.R.V.I.S. // COMPONENT & TYPESCRIPT MASTER ARCHITECTURE GUIDE
+**Version:** 4.8.20-SEC  
+**Theme:** Cognitive Cockpit (Dark / HUD Sci-Fi Cybernetic / Cyberpunk Minimalist)  
+**Stack Target:** Next.js 14+ (App Router) / React 18+ / TypeScript 5.4+ / Tailwind CSS v3.4+ / Lucide Icons / Recharts / Three.js / Web Speech API
+
+---
+
+## 1. DESIGN TOKENS & TAILWIND CONFIGURATION
+
+```typescript
+// tailwind.config.ts
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  darkMode: 'class',
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        surface: {
+          DEFAULT: '#0f131c',
+          dim: '#0b0f17',
+          bright: '#353942',
+          lowest: '#0a0e16',
+          low: '#181c24',
+          container: '#1e222b',
+          high: '#282d37',
+          highest: '#323743',
+        },
+        hud: {
+          cyan: '#38bdf8',
+          'cyan-bright': '#00f0ff',
+          emerald: '#56e5a9',
+          amber: '#fbbf24',
+          rose: '#f43f5e',
+          violet: '#a78bfa',
+          muted: '#64748b',
+          border: 'rgba(56, 189, 248, 0.15)',
+          'border-active': 'rgba(56, 189, 248, 0.4)',
+        },
+      },
+      fontFamily: {
+        sans: ['"Space Grotesk"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      boxShadow: {
+        'hud-glow': '0 0 20px -5px rgba(56, 189, 248, 0.3)',
+        'hud-glow-lg': '0 0 35px -5px rgba(56, 189, 248, 0.45)',
+        'reactor-glow': '0 0 45px rgba(0, 240, 255, 0.5)',
+      },
+      animation: {
+        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'spin-slow': 'spin 20s linear infinite',
+        'spin-reverse': 'spin 15s linear infinite reverse',
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+```
+
+---
+
+## 2. CORE DOMAIN TYPES & INTERFACES (`/types`)
+
+### 2.1. System & Operator Clearance (`/types/system.ts`)
+
+```typescript
+export type OperatorClearance = 'ALPHA-OMEGA' | 'ALPHA-01' | 'TACTICAL' | 'GUEST';
+
+export interface OperatorProfile {
+  id: string;
+  codeName: string; // e.g. "STARK-01"
+  fullName: string; // "David Abrahão Rodrigues"
+  role: string;     // "COGNITIVE PRIME // ROOT SUPERADMIN"
+  clearance: OperatorClearance;
+  location: {
+    city: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+    stationId: string;
+  };
+  metrics: {
+    ragAccuracy: number;     // 99.4%
+    activeAgents: number;    // 12
+    totalAgents: number;     // 12
+    currentCostUSD: number;  // 0.42
+    vaultSyncStatus: 'SYNCED' | 'SYNCING' | 'ERROR';
+  };
+}
+
+export interface SystemHealthTelemetry {
+  coreStatus: 'ONLINE' | 'DEGRADED' | 'OFFLINE';
+  latencyMs: number;
+  cpuLoadPercent: number;
+  neuralLoadPercent: number;
+  utcTimestamp: string;
+  brtTimestamp: string;
+  securityProtocol: {
+    handshake: 'RSA_4096_ENCRYPTED';
+    clearance: OperatorClearance;
+    quantumResistant: boolean;
+    zeroTrustGatewayThreats: number;
+    activeSynapseZones: [number, number]; // [12, 12]
+  };
+}
+```
+
+### 2.2. AI Assistant & Tool Execution (`/types/assistant.ts`)
+
+```typescript
+export type PersonaArchetype = 'TACTICAL' | 'STOIC' | 'ANALYTICAL' | 'CONCISE';
+
+export interface PersonaCalibration {
+  archetype: PersonaArchetype;
+  conciseRatio: number;      // 0 - 100%
+  analyticalRatio: number;   // 0 - 100%
+  stoicismLevel: number;     // 0 - 100%
+  decisiveAssertion: number; // 0 - 100%
+  verbosity: number;         // 0 - 100%
+  toolAutonomy: number;      // 0 - 100%
+}
+
+export type LLMModelId = 'gemini-1.5-pro' | 'gemini-1.5-flash' | 'claude-3-5-sonnet' | 'gpt-4o';
+
+export interface ToolCallExecution {
+  id: string;
+  toolName: 'obsidian_rag_engine' | 'gcal_sync_agent' | 'cf_worker_gateway' | 'telegram_bridge' | 'sqlite_kinetic';
+  status: 'QUEUED' | 'RUNNING' | 'SUCCESS_200' | 'REQUIRES_APPROVAL' | 'FAILED';
+  inputPayload: Record<string, unknown>;
+  outputSummary?: string;
+  latencyMs: number;
+  timestamp: string;
+}
+
+export interface ThoughtStep {
+  stepNumber: number;
+  title: string;
+  durationMs: number;
+  description: string;
+  status: 'PENDING' | 'IN_PROGRESS' | 'PASSED' | 'FLAGGED';
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: 'OPERATOR' | 'DARVIS';
+  timestamp: string;
+  content: string;
+  thoughtChain?: ThoughtStep[];
+  toolCalls?: ToolCallExecution[];
+  audioVoiceBufferRef?: string;
+}
+```
+
+### 2.3. Kinetic Protocol & Bio-Telemetry (`/types/kinetic.ts`)
+
+```typescript
+export type ExerciseMuscleTarget = 'CHEST' | 'SHOULDERS' | 'TRICEPS' | 'BACK' | 'LEGS' | 'CORE';
+
+export interface WorkoutSetData {
+  setNumber: number;
+  weightKg: number;
+  repsTarget: number;
+  repsAchieved?: number;
+  rpeTarget: number;
+  rpeAchieved?: number;
+  cadence: string; // "2-0-1-0"
+  velocityMps?: number; // 0.42 m/s
+  cadenceLossPercent?: number; // -12.4%
+  isFailureConcentric?: boolean;
+}
+
+export interface ActiveExerciseSession {
+  exerciseId: string;
+  exerciseName: string;
+  equipmentType: 'BARBELL' | 'DUMBBELL' | 'CABLE' | 'BODYWEIGHT';
+  currentSetIndex: number;
+  totalSets: number;
+  sets: WorkoutSetData[];
+  bioFeedback: {
+    translationalVelocity: number;
+    velocityLoss: number;
+    fatigueZone: 'OPTIMAL' | 'ACCUMULATED' | 'CRITICAL';
+    predictedFailureRep: number; // e.g. 8.5
+    aiPrescription: string;
+  };
+}
+
+export interface RestTimerState {
+  totalDurationSeconds: number; // 60, 90, 120
+  remainingSeconds: number;
+  isActive: boolean;
+  isPaused: boolean;
+  sncRecoveryStatus: 'RECOVERING' | 'OPTIMAL' | 'OVERLOAD';
+}
+
+export interface BioTelemetryReadings {
+  heartRateBpm: number;
+  heartRateZone: 1 | 2 | 3 | 4 | 5;
+  hrvMs: number;
+  caloriesKcal: number;
+  muscleTension: Record<string, number>; // { 'Pectoral': 92, 'Deltoid': 85 }
+  neuromuscularReadiness: number; // 0 - 100
+}
+```
+
+### 2.4. Projects, Tasks & Obsidian Graph (`/types/tasks.ts` & `/types/graph.ts`)
+
+```typescript
+export type TaskPriority = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+export type TaskColumn = 'BACKLOG' | 'ACTIVE_SPRINT' | 'PROCESSING' | 'ARCHIVED';
+
+export interface TacticalTask {
+  id: string;
+  displayId: string; // "TASK-812"
+  title: string;
+  description: string;
+  priority: TaskPriority;
+  column: TaskColumn;
+  tags: string[]; // ["#infra", "#rag", "#gemini"]
+  estimatedHours: number;
+  assignedAgent?: string; // "Agent #04" | "David"
+  dependencies?: string[];
+  gitCommitSha?: string;
+  obsidianNotePath?: string;
+  progressPercent?: number;
+}
+
+export interface NeuralGraphNode {
+  id: string;
+  title: string;
+  category: 'PROJECTS' | 'ARCHITECTURE' | 'IDEAS' | 'HABITS';
+  vectorCosineScore?: number;
+  backlinksCount: number;
+  position3D: [number, number, number];
+  summaryMarkdown: string;
+}
+
+export interface NeuralGraphEdge {
+  sourceNodeId: string;
+  targetNodeId: string;
+  weight: number;
+}
+```
+
+---
+
+## 3. COMPONENT DIRECTORY SPECIFICATION (`/components`)
+
+```text
+src/
+├── app/
+│   ├── (auth)/
+│   │   └── login/page.tsx               # Biometric Cockpit Gate
+│   ├── (cockpit)/
+│   │   ├── layout.tsx                   # Persistent Desktop HUD Shell + Sidebar
+│   │   ├── page.tsx                     # Command Center Dashboard
+│   │   ├── assistant/page.tsx           # AI Assistant Cockpit HUD (Iron Man)
+│   │   ├── memory/page.tsx              # Grafo Neural 3D Obsidian
+│   │   ├── tasks/page.tsx               # Projects & Kanban Matrix
+│   │   ├── kinetic/page.tsx             # Kinetic Protocol & Bio-Telemetry
+│   │   ├── system/page.tsx              # Integrations & Daemons
+│   │   └── settings/page.tsx            # System Settings
+├── components/
+│   ├── layout/
+│   │   ├── DesktopSidebar.tsx           # Fixed Left Navigation (Cockpit)
+│   │   ├── TacticalHeader.tsx           # Core Status, Latency & Telemetry Topbar
+│   │   ├── MobileTabBar.tsx             # Fixed Bottom Navigation for Mobile
+│   │   └── MobileTopBar.tsx             # Mobile Stack Header
+│   ├── ui/
+│   │   ├── HudButton.tsx                # Tactical Glow / Neon outline buttons
+│   │   ├── HudBadge.tsx                 # Status pills (NOMINAL, CRITICAL, ONLINE)
+│   │   ├── MetricTile.tsx               # Quantized telemetry cards with micro-grid
+│   │   ├── ArcReactorGauge.tsx          # Concentric SVG / Canvas Arc Dial
+│   │   ├── CircularTimer.tsx            # Animated countdown dial (Rest Timer)
+│   │   └── WaveformVisualizer.tsx       # Web Audio API real-time canvas waveform
+│   ├── hud/
+│   │   ├── ChainOfThoughtFeed.tsx       # Autonomous reasoning log cards
+│   │   ├── ToolExecutionMatrix.tsx      # Connected APIs status inspector
+│   │   ├── PushToTalkTrigger.tsx        # Voice trigger with [SPACE] handler
+│   │   └── AudioVaultPlayer.tsx         # Waveform + audio transcript card
+│   ├── kinetic/
+│   │   ├── SetTrackerTable.tsx          # Real-time series, RPE & Velocity table
+│   │   ├── RestTimerModal.tsx           # Floating resting countdown & SNC alert
+│   │   ├── BiomechanicalRadar.tsx       # Muscle tension bar matrix & HRV gauge
+│   │   └── ProgressiveOverloadChart.tsx # Recharts volume tonnage curve
+│   ├── kanban/
+│   │   ├── KanbanColumn.tsx             # Column with header counts & drag container
+│   │   ├── KanbanCard.tsx               # Task card with agent tags & progress
+│   │   └── SemanticTaskSearch.tsx       # NLP query bar
+│   ├── graph/
+│   │   ├── ThreeNeuralCanvas.tsx        # 3D Obsidian node universe (Three.js)
+│   │   ├── PhysicsControlPanel.tsx      # Repulsion, gravity & halo sliders
+│   │   └── NodeInspectorCard.tsx        # Selected node detail & cosine backlinks
+│   └── system/
+│       ├── DaemonStatusCard.tsx         # Cron schedules & background runners
+│       ├── TerminalLogStream.tsx        # Live terminal stream with auto-scroll
+│       └── PersonaSliderGroup.tsx       # D.A.R.V.I.S. tone & autonomy sliders
+```
+
+---
+
+## 4. KEY IMPLEMENTATION SNIPPETS
+
+### 4.1. Core Tactical Button Component (`/components/ui/HudButton.tsx`)
+
+```tsx
+import React from 'react';
+import { LucideIcon } from 'lucide-react';
+
+interface HudButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'danger' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  icon?: LucideIcon;
+  loading?: boolean;
+}
+
+export const HudButton: React.FC<HudButtonProps> = ({
+  children,
+  variant = 'primary',
+  size = 'md',
+  icon: Icon,
+  loading = false,
+  className = '',
+  ...props
+}) => {
+  const baseStyles =
+    'relative inline-flex items-center justify-center font-mono uppercase tracking-wider font-semibold transition-all duration-150 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed select-none active:scale-[0.98]';
+
+  const sizeStyles = {
+    sm: 'text-xs px-3 py-1.5 rounded gap-1.5',
+    md: 'text-sm px-4 py-2.5 rounded-lg gap-2',
+    lg: 'text-base px-6 py-3 rounded-lg gap-2.5',
+  };
+
+  const variantStyles = {
+    primary:
+      'bg-hud-cyan text-surface-lowest hover:bg-hud-cyan-bright hover:shadow-hud-glow border border-hud-cyan',
+    secondary:
+      'bg-surface-high/80 text-hud-cyan border border-hud-border hover:border-hud-cyan hover:bg-surface-container hover:shadow-hud-glow',
+    danger:
+      'bg-hud-rose/20 text-hud-rose border border-hud-rose/40 hover:bg-hud-rose hover:text-white',
+    ghost:
+      'bg-transparent text-slate-400 hover:text-hud-cyan hover:bg-surface-low border border-transparent hover:border-hud-border',
+  };
+
+  return (
+    <button
+      className={`${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
+      {...props}
+    >
+      {loading ? (
+        <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+      ) : Icon ? (
+        <Icon className="w-4 h-4 shrink-0" />
+      ) : null}
+      <span>{children}</span>
+    </button>
+  );
+};
+```
+
+### 4.2. Voice Input Hook (`/hooks/usePushToTalk.ts`)
+
+```typescript
+import { useState, useEffect, useCallback, useRef } from 'react';
+
+interface UsePushToTalkOptions {
+  onTranscriptComplete: (transcript: string) => void;
+  onAudioBufferChange?: (volume: number) => void;
+}
+
+export const usePushToTalk = ({
+  onTranscriptComplete,
+  onAudioBufferChange,
+}: UsePushToTalkOptions) => {
+  const [isRecording, setIsRecording] = useState(false);
+  const [transcript, setTranscript] = useState('');
+  const recognitionRef = useRef<any>(null);
+
+  useEffect(() => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) return;
+
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'pt-BR';
+
+    recognition.onresult = (event: any) => {
+      let currentText = '';
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        currentText += event.results[i][0].transcript;
+      }
+      setTranscript(currentText);
+    };
+
+    recognitionRef.current = recognition;
+  }, []);
+
+  const startRecording = useCallback(() => {
+    if (isRecording || !recognitionRef.current) return;
+    setTranscript('');
+    setIsRecording(true);
+    recognitionRef.current.start();
+  }, [isRecording]);
+
+  const stopRecording = useCallback(() => {
+    if (!isRecording || !recognitionRef.current) return;
+    setIsRecording(false);
+    recognitionRef.current.stop();
+    if (transcript.trim()) {
+      onTranscriptComplete(transcript);
+    }
+  }, [isRecording, transcript, onTranscriptComplete]);
+
+  // Space bar hold listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && !e.repeat && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        startRecording();
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        stopRecording();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [startRecording, stopRecording]);
+
+  return { isRecording, transcript, startRecording, stopRecording };
+};
+```
+
+---
+
+## 5. REPOSITORY & STATE STRUCTURE SUMMARY
+
+| Módulo / Camada | Ferramenta / Lib | Descrição de Responsabilidade |
+|---|---|---|
+| **Global State** | `Zustand` ou `Redux Toolkit` | Telemetria do sistema, estado do áudio, perfil do operador e timer ativo |
+| **Server State / Cache** | `@tanstack/react-query` | Sincronização do Obsidian Vault, tasks do Kanban, chamadas de tools |
+| **Visualizações 3D** | `Three.js` / `@react-three/fiber` | Galáxia interativa do Grafo Neural com nós em coordenadas euclidianas |
+| **Gráficos Analíticos** | `Recharts` | Curvas spline de volume cinético, barras compostas de hábitos e tasks |
+| **Voz & Áudio** | `Web Audio API` + `Web Speech API` | Push-to-Talk via teclado, decodificação FFT para osciloscópio do HUD |
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_77 -->
+</body>
+</html>

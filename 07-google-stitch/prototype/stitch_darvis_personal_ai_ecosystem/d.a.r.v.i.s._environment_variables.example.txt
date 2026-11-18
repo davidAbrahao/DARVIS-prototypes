@@ -1,0 +1,167 @@
+# ==============================================================================
+# D.A.R.V.I.S. // ENVIRONMENT CONFIGURATION TEMPLATE (.env.example)
+# Architecture: Cognitive Cockpit // v4.8.20-SEC
+# Multi-Engine: Next.js 14+ (App Router) / Node.js Runtime / Cloudflare Edge
+# Target Operator: David Abrahão Rodrigues (Clearance: ALPHA-OMEGA [ROOT])
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. CORE OPERATIONAL & ENVIRONMENT METADATA
+# ------------------------------------------------------------------------------
+NODE_ENV=
+APP_ENV=
+PORT=
+NEXT_PUBLIC_APP_URL=
+NEXT_PUBLIC_APP_NAME=
+NEXT_PUBLIC_SYSTEM_VERSION=
+
+# Operador Principal // Identidade Criptográfica
+NEXT_PUBLIC_OPERATOR_CODENAME=
+NEXT_PUBLIC_OPERATOR_NAME=
+NEXT_PUBLIC_OPERATOR_CLEARANCE=
+OPERATOR_PRIMARY_EMAIL=
+
+# Estação Local & Geometria Espacial (São Paulo - BR)
+NEXT_PUBLIC_STATION_ID=
+NEXT_PUBLIC_STATION_CITY=
+NEXT_PUBLIC_STATION_COUNTRY=
+NEXT_PUBLIC_STATION_LAT=
+NEXT_PUBLIC_STATION_LNG=
+NEXT_PUBLIC_TIMEZONE=
+
+# ------------------------------------------------------------------------------
+# 2. AUTONOMOUS COGNITIVE ENGINES & LLM PROVIDERS
+# ------------------------------------------------------------------------------
+# Roteamento Padrão de Modelos: Gemini 1.5 Pro (Raciocínio) / Claude 3.5 Sonnet (Código)
+DEFAULT_COGNITIVE_MODEL=
+FALLBACK_COGNITIVE_MODEL=
+FAST_STREAM_MODEL=
+
+# Google Gemini API // Google AI Studio
+GOOGLE_GENERATIVE_AI_API_KEY=
+GEMINI_API_PROJECT_ID=
+
+# Anthropic API // Claude Engines
+ANTHROPIC_API_KEY=
+
+# OpenAI API // Embeddings & Fallback
+OPENAI_API_KEY=
+OPENAI_ORG_ID=
+
+# Cohere API // Reranker neural para RAG híbrido
+COHERE_API_KEY=
+
+# ------------------------------------------------------------------------------
+# 3. VECTOR DATABASE, PERSISTENCE & CACHE
+# ------------------------------------------------------------------------------
+# Supabase // pgvector Cluster (Second-Brain Embeddings)
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+
+# pgvector Parâmetros de Busca Cosine
+VECTOR_EMBEDDING_DIMENSION=
+VECTOR_SIMILARITY_THRESHOLD=
+VECTOR_MATCH_COUNT=
+
+# Redis / Upstash // Sessões Neurais, Latência Baixa & Rate Limiting
+REDIS_URL=
+REDIS_REST_TOKEN=
+
+# SQLite Local Storage // Telemetria de Treinos Cinéticos (Offline-first)
+KINETIC_SQLITE_DB_PATH=
+
+# ------------------------------------------------------------------------------
+# 4. OBSIDIAN SECOND-BRAIN & LOCAL MESH SYNC
+# ------------------------------------------------------------------------------
+# Obsidian Local REST API Plugin (HTTPS / WSS)
+OBSIDIAN_REST_API_URL=
+OBSIDIAN_REST_API_KEY=
+OBSIDIAN_VAULT_NAME=
+OBSIDIAN_DAILY_NOTE_PATH=
+OBSIDIAN_PROJECTS_NOTE_PATH=
+OBSIDIAN_KINETIC_NOTE_PATH=
+
+# Git Daemon para auto-commit e push atômico de notas
+OBSIDIAN_GIT_SYNC_ENABLED=
+OBSIDIAN_GIT_AUTOCOMMIT_INTERVAL_MIN=
+OBSIDIAN_GIT_REMOTE=
+OBSIDIAN_GIT_BRANCH=
+
+# ------------------------------------------------------------------------------
+# 5. GOOGLE WORKSPACE & CALENDAR INTEGRATION (OAuth 2.0)
+# ------------------------------------------------------------------------------
+# Google Cloud Console // OAuth 2.0 Client Credentials
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT_URI=
+GOOGLE_CALENDAR_ID=
+
+# Google Scopes Ativos:
+# - https://www.googleapis.com/auth/calendar.events.readonly
+# - https://www.googleapis.com/auth/calendar.events
+# - https://www.googleapis.com/auth/gmail.readonly
+GOOGLE_CALENDAR_SYNC_INTERVAL_MIN=
+
+# ------------------------------------------------------------------------------
+# 6. AUDIO, SPEECH & NEURAL SYNTHESIS (VOX DARVIS)
+# ------------------------------------------------------------------------------
+# ElevenLabs API // Voz Sintetizada D.A.R.V.I.S. (Tom JARVIS Britânico/Polido)
+ELEVENLABS_API_KEY=
+ELEVENLABS_VOICE_ID=
+ELEVENLABS_MODEL_ID=
+ELEVENLABS_STABILITY=
+ELEVENLABS_SIMILARITY_BOOST=
+
+# Whisper Transcription Engine (Local ou OpenAI Endpoint)
+WHISPER_ENDPOINT=
+WHISPER_LANGUAGE=
+
+# ------------------------------------------------------------------------------
+# 7. TELEGRAM BOT // NEURAL BRIDGE & PUSH DISPATCH
+# ------------------------------------------------------------------------------
+TELEGRAM_BOT_TOKEN=
+TELEGRAM_OPERATOR_CHAT_ID=
+TELEGRAM_WEBHOOK_SECRET=
+
+# ------------------------------------------------------------------------------
+# 8. CLOUDFLARE EDGE & ZERO-TRUST GATEWAY
+# ------------------------------------------------------------------------------
+CLOUDFLARE_ACCOUNT_ID=
+CLOUDFLARE_API_TOKEN=
+CLOUDFLARE_WORKER_ROUTE=
+CLOUDFLARE_KV_NAMESPACE_ID=
+
+# ------------------------------------------------------------------------------
+# 9. WEATHER & ATMOSPHERIC RADAR TELEMETRY
+# ------------------------------------------------------------------------------
+# OpenWeatherMap ou Radar Defesa Civil
+OPENWEATHER_API_KEY=
+WEATHER_STATION_CODE=
+WEATHER_ALERT_SEVERITY_MIN=
+
+# ------------------------------------------------------------------------------
+# 10. SECURITY, CRYPTOGRAPHY & BIOMETRICS (ZERO-TRUST GATE)
+# ------------------------------------------------------------------------------
+# NextAuth / Auth.js Secret (AES-256 Chave Master)
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+
+# WebAuthn / FIDO2 YubiKey 5C NFC Configuration
+WEBAUTHN_RP_ID=
+WEBAUTHN_RP_NAME=
+WEBAUTHN_ORIGIN=
+
+# Kyber-1024 Quantum-Resistant Key Simulation
+KYBER_QUANTUM_SECRET_TOKEN=
+
+# Master Cryptographic PIN Hash (SHA-256 de contingência)
+OPERATOR_MASTER_PIN_HASH=
+
+# ------------------------------------------------------------------------------
+# 11. AUTONOMOUS CRON DAEMONS SCHEDULE (BRT Timezone)
+# ------------------------------------------------------------------------------
+CRON_DAILY_DIGEST_SCHEDULE=
+CRON_SPRINT_ANALYZER_SCHEDULE=
+CRON_WEATHER_WATCHER_SCHEDULE=
+CRON_BIO_ROUTINE_COMPILER=

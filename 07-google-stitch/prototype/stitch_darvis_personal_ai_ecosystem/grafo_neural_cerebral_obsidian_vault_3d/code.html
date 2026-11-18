@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;min-height:100vh;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary-fixed": "#c4e7ff", "outline": "#87929a", "on-error-container": "#ffdad6", "on-tertiary-fixed-variant": "#005236", "on-surface-variant": "#bdc8d1", "surface-container-high": "#262a33", "on-error": "#690005", "background": "#0f131c", "inverse-primary": "#00668a", "on-surface": "#dfe2ee", "primary": "#8ed5ff", "secondary": "#4cd7f6", "on-tertiary-container": "#004e34", "on-secondary-container": "#00424e", "on-tertiary": "#003824", "secondary-container": "#03b5d3", "on-tertiary-fixed": "#002113", "secondary-fixed": "#acedff", "tertiary-fixed-dim": "#4edea3", "primary-fixed-dim": "#7bd0ff", "on-background": "#dfe2ee", "tertiary-fixed": "#6ffbbe", "on-primary-fixed-variant": "#004c69", "tertiary-container": "#30c88f", "surface-variant": "#31353e", "surface-container-low": "#181c24", "inverse-surface": "#dfe2ee", "on-primary-container": "#004965", "surface-container": "#1c2028", "primary-container": "#38bdf8", "tertiary": "#56e5a9", "outline-variant": "#3e484f", "error": "#ffb4ab", "surface-container-lowest": "#0a0e16", "on-secondary-fixed-variant": "#004e5c", "surface-tint": "#7bd0ff", "on-primary": "#00354a", "error-container": "#93000a", "surface-dim": "#0f131c", "surface-container-highest": "#31353e", "on-primary-fixed": "#001e2c", "surface-bright": "#353942", "secondary-fixed-dim": "#4cd7f6", "inverse-on-surface": "#2c3039", "surface": "#0f131c", "on-secondary-fixed": "#001f26", "on-secondary": "#003640" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter-sm": "0.75rem", "margin-md": "1.5rem", "margin-lg": "2rem", "margin": "1rem", "space-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "space-md": "1rem", "gutter": "1rem" }, fontFamily: { "label-micro": ["JetBrains Mono"], "body-sm": ["Geist"], "display-lg": ["Space Grotesk"], "headline-sm": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-lg": ["Geist"], "body-md": ["Geist"], "display-lg-mobile": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "label-telemetry": ["JetBrains Mono"] }, fontSize: { "label-micro": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-telemetry": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-background font-body-md text-on-surface antialiased flex flex-col min-h-screen selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,0,0,0.4)] pt-safe"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><button aria-label="Fechar ou voltar" class="w-11 h-11 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary active:scale-95 transition-all bg-surface-container/60" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[20px]">close</span></button><div class="flex flex-col min-w-0"><span class="font-label-micro text-label-micro text-secondary tracking-widest uppercase">SYS_CONFIG // HABITS_ENGINE</span><h1 class="font-headline-sm text-headline-sm text-on-surface truncate">Cadastrar Hábito // Habit Protocol</h1></div></div><div class="flex items-center gap-space-xs shrink-0"><div class="hidden xs:flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container-high/60"><span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span><span class="font-label-micro text-label-micro text-tertiary">ONLINE</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full px-margin pt-16 pb-safe bg-background flex-1"><div class="flex flex-col w-full pb-safe space-y-4">
+<!-- HUD System Status Bar -->
+<div class="flex flex-col gap-2 p-3.5 rounded-xl bg-surface-container-low shadow-md backdrop-blur-md">
+<div class="flex items-center justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping shrink-0"></span>
+<span class="font-label-micro text-label-micro text-secondary truncate uppercase tracking-widest">OBSIDIAN_VAULT // NEURAL_SYNAPSE_GRAPH v3.2</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-high shrink-0">
+<span class="font-label-micro text-label-micro text-primary">LATÊNCIA: 8ms</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-2">
+<span class="font-label-telemetry text-label-telemetry text-tertiary font-semibold">3.420 NÓS INDEXADOS</span>
+<span class="text-on-surface-variant font-label-micro text-label-micro">//</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant">12.850 SINAPSES</span>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">PGVECTOR_INDEXED</span>
+</div>
+</div>
+<!-- Holographic RAG Semantic Search Engine -->
+<div class="relative w-full">
+<div class="flex items-center w-full px-3.5 py-2.5 rounded-xl bg-surface-container shadow-sm focus-within:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary text-[20px] mr-2.5 shrink-0">bubble_chart</span>
+<input class="w-full bg-transparent text-on-surface font-body-md text-body-md placeholder:text-on-surface-variant focus:outline-none" id="semanticSearch" placeholder="Buscar conceito, nota ou tag no cérebro..." type="text"/>
+<button aria-label="Filtro Semântico RAG" class="flex items-center gap-1 px-2 py-1 rounded bg-surface-container-highest text-primary font-label-micro text-label-micro active:scale-95 transition-transform shrink-0" type="button">
+<span class="material-symbols-outlined text-[14px]">psychology</span>
+<span>RAG_MODE</span>
+</button>
+</div>
+</div>
+<!-- 3D Cerebral Graph Stage Container -->
+<div class="relative w-full rounded-2xl overflow-hidden bg-surface-container-lowest shadow-xl">
+<!-- Ambient Holographic Glow & Hemispheric Grid Background -->
+<div class="absolute inset-0 bg-gradient-to-tr from-secondary/10 via-transparent to-tertiary/10 pointer-events-none"></div>
+<!-- ThreeJS Cerebral Graph Integration -->
+<!-- STITCH_THREEJS_START:ANIMATION_51 class="w-full h-[400px] bg-transparent rounded-2xl relative block" -->
+<div class="w-full h-[400px] bg-transparent rounded-2xl relative block" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_51" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_51');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  
+const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || 450;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+camera.position.set(0, 0, 18);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+container.appendChild(renderer.domElement);
+
+const brainGroup = new THREE.Group();
+scene.add(brainGroup);
+
+// Generate 3D point cloud and graph in the silhouette/form of a human brain with two hemispheres
+const nodeCount = 180;
+const nodes = [];
+const nodePositions = [];
+const colors = [];
+
+const colorCyan = new THREE.Color('#38bdf8');
+const colorEmerald = new THREE.Color('#56e5a9');
+const colorPurple = new THREE.Color('#a855f7');
+const colorAmber = new THREE.Color('#f59e0b');
+
+for (let i = 0; i < nodeCount; i++) {
+  const side = Math.random() > 0.5 ? 1 : -1;
+  const u = Math.random();
+  const v = Math.random();
+  const theta = u * Math.PI * 2;
+  const phi = Math.acos(2 * v - 1);
+  
+  // Ellipsoidal brain lobes formula
+  let r = 4.8 + Math.sin(theta * 3) * 0.7 + Math.cos(phi * 2) * 0.5;
+  let x = side * (1.2 + Math.abs(r * Math.sin(phi) * Math.cos(theta) * 0.85));
+  let y = r * Math.sin(phi) * Math.sin(theta) * 0.75 + (Math.sin(theta) * 0.5);
+  let z = r * Math.cos(phi) * 1.15;
+  
+  // Indentation between hemispheres (longitudinal fissure)
+  if (Math.abs(x) < 1.0) {
+    x = side * (0.9 + Math.random() * 0.4);
+  }
+  
+  // Cerebellum bulge at lower posterior
+  if (z < -1.5 && y < -1.0) {
+    y += Math.sin(x) * 0.5;
+    r += 0.6;
+  }
+
+  nodePositions.push(new THREE.Vector3(x, y, z));
+  
+  // Categorical coloring for Obsidian neural themes
+  let c = colorCyan;
+  const randType = Math.random();
+  if (randType > 0.75) c = colorEmerald;
+  else if (randType > 0.55) c = colorPurple;
+  else if (randType > 0.45) c = colorAmber;
+  
+  colors.push(c);
+}
+
+// Glowing spheres for nodes
+const sphereGeo = new THREE.SphereGeometry(0.14, 12, 12);
+const coreSphereGeo = new THREE.SphereGeometry(0.25, 14, 14);
+
+nodePositions.forEach((pos, idx) => {
+  const isMajorHub = idx % 12 === 0;
+  const mat = new THREE.MeshBasicMaterial({
+    color: colors[idx],
+    transparent: true,
+    opacity: isMajorHub ? 0.95 : 0.75
+  });
+  const mesh = new THREE.Mesh(isMajorHub ? coreSphereGeo : sphereGeo, mat);
+  mesh.position.copy(pos);
+  brainGroup.add(mesh);
+  nodes.push({ mesh, originalPos: pos.clone(), phase: Math.random() * Math.PI * 2, isHub: isMajorHub });
+});
+
+// Construct synaptic edges between nearby nodes
+const lineMat = new THREE.LineBasicMaterial({
+  color: 0x38bdf8,
+  transparent: true,
+  opacity: 0.22,
+  blending: THREE.AdditiveBlending
+});
+
+const edgePositions = [];
+for (let i = 0; i < nodeCount; i++) {
+  let connections = 0;
+  for (let j = i + 1; j < nodeCount; j++) {
+    const dist = nodePositions[i].distanceTo(nodePositions[j]);
+    if (dist < 2.3 && connections < 4) {
+      edgePositions.push(
+        nodePositions[i].x, nodePositions[i].y, nodePositions[i].z,
+        nodePositions[j].x, nodePositions[j].y, nodePositions[j].z
+      );
+      connections++;
+    }
+  }
+}
+
+const lineGeo = new THREE.BufferGeometry();
+lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(edgePositions, 3));
+const lines = new THREE.LineSegments(lineGeo, lineMat);
+brainGroup.add(lines);
+
+// Ambient pulse point light in the core
+const centerLight = new THREE.PointLight(0x38bdf8, 2, 25);
+centerLight.position.set(0, 0, 0);
+brainGroup.add(centerLight);
+
+// Interactive mouse rotation
+let mouseX = 0, mouseY = 0;
+let targetRotX = 0.2, targetRotY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  const rect = container.getBoundingClientRect();
+  mouseX = ((e.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
+  mouseY = -(((e.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
+  targetRotY = mouseX * 0.8;
+  targetRotX = 0.2 - mouseY * 0.5;
+});
+
+// Touch controls for mobile
+window.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 0) {
+    const touch = e.touches[0];
+    const rect = container.getBoundingClientRect();
+    mouseX = ((touch.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
+    targetRotY = mouseX * 1.2;
+  }
+}, { passive: true });
+
+window.addEventListener('resize', () => {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || 450;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+});
+
+let clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+
+  // Subtle breathing / pulsating of the neural brain
+  brainGroup.rotation.y += 0.004;
+  brainGroup.rotation.x += (targetRotX - brainGroup.rotation.x) * 0.05;
+  brainGroup.rotation.y += (targetRotY - (brainGroup.rotation.y % (Math.PI * 2))) * 0.03;
+
+  // Synaptic pulse on hub nodes
+  nodes.forEach((node) => {
+    if (node.isHub) {
+      const scale = 1.0 + Math.sin(time * 3 + node.phase) * 0.35;
+      node.mesh.scale.set(scale, scale, scale);
+    }
+  });
+
+  lineMat.opacity = 0.18 + Math.sin(time * 2.0) * 0.08;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_51 -->
+<!-- Top Left HUD Overlay: Left Hemisphere -->
+<div class="absolute top-3 left-3 max-w-[48%] p-2 rounded-lg bg-surface-container-lowest/85 backdrop-blur-md shadow-md">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-label-micro text-label-micro text-primary font-bold uppercase truncate">HEMISFÉRIO ESQ.</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Lógica, FastAPI, Docker, Supabase</p>
+<div class="mt-1 flex items-center justify-between text-on-surface">
+<span class="font-label-micro text-label-micro text-secondary font-medium">62% densidade</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">[1.980 nós]</span>
+</div>
+</div>
+<!-- Top Right HUD Overlay: Right Hemisphere -->
+<div class="absolute top-3 right-3 max-w-[48%] p-2 rounded-lg bg-surface-container-lowest/85 backdrop-blur-md shadow-md text-right">
+<div class="flex items-center justify-end gap-1.5 mb-1">
+<span class="font-label-micro text-label-micro text-tertiary font-bold uppercase truncate">HEMISFÉRIO DIR.</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary shrink-0"></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Design, Visão D.A.R.V.I.S., Estoicismo</p>
+<div class="mt-1 flex items-center justify-between text-on-surface">
+<span class="font-label-micro text-label-micro text-on-surface-variant">[1.440 nós]</span>
+<span class="font-label-micro text-label-micro text-tertiary font-medium">38% densidade</span>
+</div>
+</div>
+<!-- Obsidian Graph Simulation HUD Telemetry Bar (Bottom overlay) -->
+<div class="absolute bottom-2 inset-x-2 p-2 rounded-xl bg-surface-container-lowest/90 backdrop-blur-md flex items-center justify-between overflow-x-auto gap-2 no-scrollbar">
+<div class="flex items-center gap-3 shrink-0">
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[13px] text-primary">grain</span>
+<span>REPULSÃO: <strong class="text-on-surface">1.4x</strong></span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[13px] text-secondary">linear_scale</span>
+<span>LINK: <strong class="text-on-surface">180px</strong></span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-label-micro text-label-micro">
+<span class="material-symbols-outlined text-[13px] text-tertiary">adjust</span>
+<span>GRAVIDADE: <strong class="text-tertiary">ATIVA</strong></span>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-label-micro text-label-micro">#core</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-label-micro text-label-micro">#agents</span>
+</div>
+</div>
+</div>
+<!-- Primary Neural Hubs / Clusters Selector -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-1">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Hubs Neurais Principais</span>
+<span class="font-label-micro text-label-micro text-secondary tracking-widest uppercase">CLUSTER_INDEX</span>
+</div>
+<!-- Hubs Horizontal Ribbon -->
+<div class="grid grid-cols-1 gap-2.5">
+<!-- Hub 1 -->
+<div class="p-3 rounded-xl bg-surface-container flex items-center justify-between shadow-sm active:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">hub</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Hub #01: Núcleo D.A.R.V.I.S.</span>
+<span class="px-1.5 py-0.2 rounded bg-primary-container/20 text-primary font-label-micro text-label-micro">CENTRAL</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">148 links diretos · Centralidade 0.94</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">chevron_right</span>
+</div>
+<!-- Hub 2 -->
+<div class="p-3 rounded-xl bg-surface-container flex items-center justify-between shadow-sm active:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-[20px]" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Hub #02: Rotinas de Alta Performance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Cinética &amp; Biohacking · 84 links diretos</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">chevron_right</span>
+</div>
+<!-- Hub 3 -->
+<div class="p-3 rounded-xl bg-surface-container flex items-center justify-between shadow-sm active:bg-surface-container-high transition-colors cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">cloud_sync</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Hub #03: Arquitetura em Nuvem &amp; Cloud Run</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Microservices &amp; Supabase · 62 links diretos</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Focused Node Synapse Inspector -->
+<div class="p-4 rounded-xl bg-surface-container-high shadow-md space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-micro text-label-micro text-secondary font-semibold uppercase tracking-wider">Nó em Foco // Inspeção de Sinapse</span>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant">ID: 0x8F_SYN_VAULT</span>
+</div>
+<!-- Active Note Heading & Breadcrumb -->
+<div class="flex flex-col gap-1">
+<h2 class="font-headline-sm text-headline-sm text-primary font-bold tracking-tight">
+        [[Arquitetura Autônoma com Gemini 1.5 &amp; Obsidian Vault]]
+      </h2>
+<div class="flex flex-wrap items-center gap-1.5 pt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container text-secondary font-label-micro text-label-micro">#ai-core</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-secondary font-label-micro text-label-micro">#pgvector</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-secondary font-label-micro text-label-micro">#fastapi</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-label-micro text-label-micro">#rag-pipeline</span>
+</div>
+</div>
+<!-- Backlinks & Synaptic Density Telemetry -->
+<div class="p-2.5 rounded-lg bg-surface-container-lowest/80 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">link</span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface">36 BACKLINKS ATIVOS</span>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">COGNITIVE_WEIGHT: 0.982</span>
+</div>
+<!-- Memory Excerpt / Semantic Snippet -->
+<div class="p-3 rounded-lg bg-surface-container space-y-1">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">SNIPPET_MEMÓRIA_VAULT</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[14px]">auto_stories</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface italic">
+        "Integração contínua dos arquivos Markdown sincronizados via vetorização assíncrona. Cada bloco de decisão é mapeado como neurônio funcional no grafo de segundo cérebro do operador."
+      </p>
+</div>
+</div>
+<!-- Quick Action Command Dock -->
+<div class="flex flex-col gap-2 pt-1">
+<!-- Primary Cyan Action Trigger -->
+<button class="w-full py-3.5 px-4 rounded-xl bg-primary-container text-on-primary-container font-headline-sm text-headline-sm flex items-center justify-center gap-2 font-bold shadow-lg shadow-primary-container/20 active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">open_in_new</span>
+<span>Explorar Nó Selecionado no Vault</span>
+</button>
+<!-- Secondary Ghost Action Clusters -->
+<div class="grid grid-cols-2 gap-2">
+<button class="py-3 px-2 rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm flex items-center justify-center gap-1.5 active:bg-surface-container-high active:scale-95 transition-all text-center" id="recalcForcesBtn" type="button">
+<span class="material-symbols-outlined text-secondary text-[16px]">restart_alt</span>
+<span class="truncate">Recalcular Forças</span>
+</button>
+<button class="py-3 px-2 rounded-xl bg-surface-container text-on-surface font-body-sm text-body-sm flex items-center justify-center gap-1.5 active:bg-surface-container-high active:scale-95 transition-all text-center" type="button">
+<span class="material-symbols-outlined text-tertiary text-[16px]">download</span>
+<span class="truncate">Exportar Grafo 3D</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interaction feedback for Fruchterman-Reingold re-layout
+  document.getElementById('recalcForcesBtn')?.addEventListener('click', function() {
+    const icon = this.querySelector('.material-symbols-outlined');
+    if (icon) {
+      icon.classList.add('animate-spin');
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+      }, 1000);
+    }
+  });
+</script></main></body></html>

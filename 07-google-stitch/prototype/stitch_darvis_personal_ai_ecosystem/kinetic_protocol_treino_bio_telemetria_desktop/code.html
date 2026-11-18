@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary-container":"#38bdf8","on-error-container":"#ffdad6","on-primary-fixed-variant":"#004c69","on-tertiary-fixed":"#002113","surface-bright":"#353942","surface-container-lowest":"#0a0e16","background":"#0f131c","on-background":"#dfe2ee","surface-tint":"#7bd0ff","outline-variant":"#3e484f","on-secondary":"#003640","on-primary":"#00354a","surface":"#0f131c","primary":"#8ed5ff","tertiary-fixed":"#6ffbbe","on-secondary-fixed-variant":"#004e5c","secondary":"#4cd7f6","primary-fixed":"#c4e7ff","on-secondary-container":"#00424e","inverse-surface":"#dfe2ee","secondary-container":"#03b5d3","on-tertiary-fixed-variant":"#005236","surface-variant":"#31353e","surface-container":"#1c2028","on-error":"#690005","surface-container-high":"#262a33","tertiary-container":"#30c88f","surface-container-highest":"#31353e","surface-container-low":"#181c24","on-surface":"#dfe2ee","on-tertiary":"#003824","on-primary-container":"#004965","inverse-on-surface":"#2c3039","error-container":"#93000a","on-primary-fixed":"#001e2c","outline":"#87929a","tertiary-fixed-dim":"#4edea3","surface-dim":"#0f131c","error":"#ffb4ab","on-surface-variant":"#bdc8d1","on-tertiary-container":"#004e34","inverse-primary":"#00668a","on-secondary-fixed":"#001f26","tertiary":"#56e5a9","secondary-fixed-dim":"#4cd7f6","primary-fixed-dim":"#7bd0ff","secondary-fixed":"#acedff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","gutter":"1rem","space-lg":"1.5rem","margin":"1rem","margin-lg":"2rem","space-xl":"2.5rem","space-sm":"0.5rem","space-md":"1rem","gutter-sm":"0.75rem","margin-md":"1.5rem"},"fontFamily":{"headline-sm":["Space Grotesk"],"display-lg":["Space Grotesk"],"body-lg":["Geist"],"body-md":["Geist"],"display-lg-mobile":["Space Grotesk"],"label-micro":["JetBrains Mono"],"body-sm":["Geist"],"headline-md":["Space Grotesk"],"label-telemetry":["JetBrains Mono"],"headline-lg":["Space Grotesk"]},"fontSize":{"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display-lg-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-micro":["10px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-telemetry":["13px",{"lineHeight":"18px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface min-h-screen selection:bg-primary selection:text-on-primary"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-gutter flex items-center justify-between bg-surface-container-low/40"><div class="flex items-center gap-space-sm"><div class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(56,189,248,0.5)]"></div><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">D.A.R.V.I.S.</span></div><span class="font-label-micro text-label-micro text-primary font-semibold px-space-xs py-0.5 rounded bg-surface-container-high tracking-widest">MK-VII</span></div><div class="px-gutter pt-space-md pb-space-xs"><span class="font-label-micro text-label-micro uppercase tracking-wider text-outline">COGNITIVE ROUTING NODES</span></div><nav class="flex-1 px-space-sm space-y-1 overflow-y-auto" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(56,189,248,0.25)]"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="command-center" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">space_dashboard</span><span class="font-headline-sm text-[14px] leading-tight">Command Center</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">smart_toy</span><span class="font-headline-sm text-[14px] leading-tight">AI Assistant</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="neural-memory" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">hub</span><span class="font-headline-sm text-[14px] leading-tight">Neural Memory (Obsidian)</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="projects-and-tasks" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">view_kanban</span><span class="font-headline-sm text-[14px] leading-tight">Projects &amp; Tasks</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-all group bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(56,189,248,0.25)]" data-path="kinetic-protocol" href="#"><span class="material-symbols-outlined text-tertiary group-hover:text-tertiary-fixed text-[20px]">fitness_center</span><span class="font-headline-sm text-[14px] leading-tight">Kinetic Protocol (Treino)</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="system-integrations" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">extension</span><span class="font-headline-sm text-[14px] leading-tight">System Integrations</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="general-settings" href="#"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface text-[20px]">tune</span><span class="font-headline-sm text-[14px] leading-tight">General Settings</span></a></nav></div><div class="p-gutter bg-surface-container-low/30 space-y-space-xs"><div class="flex items-center justify-between"><span class="font-label-micro text-label-micro text-outline uppercase">SYS_SEC // ENCRYPTED</span><div class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_6px_rgba(86,229,169,0.7)]"></div></div><div class="font-label-telemetry text-label-telemetry text-primary tracking-wide">HUD PROTOCOL SEC//V3.4</div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 flex items-center justify-between px-gutter shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-gutter"><div class="flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span><span class="font-label-telemetry text-label-telemetry text-tertiary font-semibold tracking-wider">CORE STATUS: ONLINE</span></div><div class="hidden xl:flex items-center gap-space-md font-label-telemetry text-label-telemetry text-on-surface-variant"><div class="flex items-center gap-space-xs"><span>LATENCY:</span><span class="text-primary font-semibold">14ms</span></div><div class="flex items-center gap-space-xs"><span>CPU/NEURAL LOAD:</span><span class="text-secondary font-semibold">27.4%</span></div></div></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs font-label-telemetry text-label-telemetry text-on-surface-variant bg-surface-container-low/70 px-space-md py-space-xs rounded"><span class="material-symbols-outlined text-primary text-[16px]">schedule</span><span class="text-on-surface tracking-widest font-semibold">10:42:19 UTC SYNCHRONIZED</span></div><div class="flex items-center gap-space-sm"><div class="text-right hidden sm:block"><div class="font-headline-sm text-body-md text-on-surface font-semibold leading-none">David</div><div class="font-label-micro text-label-micro text-primary tracking-widest uppercase mt-0.5">OPERATOR</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 w-full min-h-screen bg-surface px-gutter py-space-lg"><div class="flex flex-col w-full gap-space-lg text-on-surface">
+<!-- TOP PROTOCOL TELEMETRY BANNER -->
+<section class="relative w-full rounded-xl bg-surface-container-low/90 backdrop-blur-md p-space-md shadow-xl overflow-hidden">
+<!-- Ambient Luminous Gradient Flare -->
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute top-0 right-0 w-80 h-full bg-gradient-to-l from-tertiary/10 via-transparent to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<!-- Title & Operational Segment -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="inline-flex items-center gap-1.5 px-space-xs py-0.5 rounded bg-surface-container-high text-primary font-label-micro text-label-micro tracking-widest uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
+            SYS_BIO // PROTOCOLO CINÉTICO ATIVO
+          </span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary tracking-wide font-medium">
+            HIPERTROFIA &amp; FORÇA EXPLOSIVA
+          </span>
+<span class="text-outline-variant font-label-micro text-label-micro">•</span>
+<span class="text-outline font-label-micro text-label-micro uppercase tracking-wider">MODO EXECUÇÃO REAL-TIME</span>
+</div>
+<div class="flex items-baseline gap-space-md mt-1">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight uppercase">
+            DIVISÃO PUSH (PEITO, OMBRO, TRÍCEPS)
+          </h1>
+<span class="px-space-xs py-0.5 rounded bg-surface-container text-secondary font-label-telemetry text-label-telemetry font-semibold">
+            CICLO W42.3
+          </span>
+</div>
+</div>
+<!-- Live Readout Strips -->
+<div class="grid grid-cols-3 gap-space-sm sm:gap-space-md bg-surface-container-lowest/80 p-space-sm rounded-lg shadow-inner">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-primary">timer</span>
+            DURAÇÃO TOTAL
+          </span>
+<span class="font-label-telemetry text-headline-sm text-primary font-bold tracking-wider mt-0.5" id="sessionTimer">00:48:32</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-tertiary">weight</span>
+            VOLUME ACUMULADO
+          </span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-label-telemetry text-headline-sm text-tertiary font-bold tracking-wider">8.420</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant font-medium">kg</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">speed</span>
+            INTENSIDADE / G-FORCE
+          </span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-label-telemetry text-headline-sm text-secondary font-bold tracking-wider">88%</span>
+<div class="w-10 h-1.5 bg-surface-container-high rounded-full overflow-hidden hidden sm:block">
+<div class="h-full bg-secondary w-[88%] rounded-full shadow-[0_0_8px_rgba(76,215,246,0.8)]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tactical HUD Action Buttons -->
+<div class="flex items-center gap-space-sm flex-wrap xl:flex-nowrap">
+<button class="flex items-center gap-1.5 px-space-md py-space-sm rounded-lg bg-primary text-on-primary font-headline-sm text-body-md font-semibold hover:bg-primary-container transition-all shadow-[0_0_16px_rgba(56,189,248,0.35)] active:scale-95 cursor-pointer" id="btnNewExercise">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>Novo Registro</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-md py-space-sm rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-all font-headline-sm text-body-md font-semibold cursor-pointer">
+<span class="material-symbols-outlined text-[18px] text-secondary">compare_arrows</span>
+<span class="hidden sm:inline">Comparar Ciclo</span>
+</button>
+<!-- Quick Rest Rest Selector Group -->
+<div class="flex items-center bg-surface-container-lowest p-0.5 rounded-lg">
+<button class="rest-btn px-2.5 py-1 rounded text-on-surface-variant hover:text-primary font-label-telemetry text-label-telemetry transition-colors" data-secs="60" onclick="setRestTimer(60)">60s</button>
+<button class="rest-btn px-2.5 py-1 rounded bg-surface-container-high text-primary font-label-telemetry text-label-telemetry font-bold shadow-sm" data-secs="90" onclick="setRestTimer(90)">90s</button>
+<button class="rest-btn px-2.5 py-1 rounded text-on-surface-variant hover:text-primary font-label-telemetry text-label-telemetry transition-colors" data-secs="120" onclick="setRestTimer(120)">120s</button>
+</div>
+</div>
+</div>
+</section>
+<!-- MAIN COCKPIT GRID: 3 COLUMNS -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg w-full">
+<!-- COLUMN 1: ACTIVE SET TRACKER & CONCENTRIC FAILURE GAUGES -->
+<div class="lg:col-span-4 flex flex-col gap-space-lg">
+<!-- Current Live Exercise Pod -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md relative overflow-hidden shadow-lg">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-primary uppercase tracking-widest font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+            EXERCÍCIO EM PROGRESSO [TRACKER_01]
+          </span>
+<span class="font-label-telemetry text-label-micro bg-primary/10 text-primary px-2 py-0.5 rounded font-bold">
+            SÉRIE 3 DE 4
+          </span>
+</div>
+<div class="mt-space-sm flex flex-col">
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight uppercase flex items-center justify-between">
+<span>Supino Reto</span>
+<span class="font-label-telemetry text-headline-sm text-secondary font-semibold">100 kg</span>
+</div>
+<span class="font-label-telemetry text-label-telemetry text-on-surface-variant">BARRA OLÍMPICA 20KG // PEGADA 81CM PROG</span>
+</div>
+<!-- Exercise Cadence & Concentric Velocity Loss Gauge -->
+<div class="mt-space-md p-space-sm rounded-lg bg-surface-container-lowest flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">insights</span>
+              BIO-VELOCIDADE TRANSLACIONAL
+            </span>
+<span class="font-label-micro text-label-micro text-tertiary bg-tertiary/10 px-1.5 py-0.5 rounded font-bold uppercase">ZONA ÓTIMA</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-1">
+<div class="flex flex-col bg-surface-container-low/70 p-2 rounded">
+<span class="font-label-micro text-label-micro text-on-surface-variant">VELOCIDADE MÉDIA</span>
+<span class="font-label-telemetry text-headline-sm text-secondary font-bold">0.42 <span class="font-label-micro text-label-micro font-normal text-on-surface">m/s</span></span>
+</div>
+<div class="flex flex-col bg-surface-container-low/70 p-2 rounded">
+<span class="font-label-micro text-label-micro text-on-surface-variant">PERDA CADÊNCIA</span>
+<span class="font-label-telemetry text-headline-sm text-tertiary font-bold">-12.4%</span>
+</div>
+</div>
+<!-- Velocity Loss Target Arc visual bar -->
+<div class="flex flex-col gap-1 mt-1">
+<div class="flex justify-between font-label-micro text-label-micro text-on-surface-variant">
+<span>FADIGA VELOCIDADE (LIMITE CRÍTICO: 20%)</span>
+<span class="text-tertiary font-semibold">12% / 20%</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden flex">
+<div class="h-full bg-tertiary w-[60%] rounded-l-full shadow-[0_0_8px_rgba(86,229,169,0.7)]"></div>
+<div class="h-full bg-outline-variant/30 flex-1"></div>
+</div>
+</div>
+</div>
+<!-- Historical Sets Matrix Table -->
+<div class="mt-space-md flex flex-col">
+<div class="flex items-center justify-between pb-1">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider">REGISTRO DE SÉRIES (HOJE)</span>
+<span class="font-label-micro text-label-micro text-secondary tracking-widest font-mono">CADÊNCIA ALVO 2-0-1-0</span>
+</div>
+<div class="flex flex-col gap-1.5 mt-1">
+<!-- Row Set 1 -->
+<div class="flex items-center justify-between px-space-sm py-2 rounded bg-surface-container-low/60 text-on-surface-variant font-label-telemetry text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-micro text-label-micro text-outline">1</span>
+<span class="text-on-surface font-semibold">90 kg</span>
+</div>
+<span>10 reps</span>
+<span class="text-tertiary font-medium">RPE 7.0</span>
+<span class="text-primary font-mono text-[11px]">0.54 m/s</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+</div>
+<!-- Row Set 2 -->
+<div class="flex items-center justify-between px-space-sm py-2 rounded bg-surface-container-low/60 text-on-surface-variant font-label-telemetry text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-micro text-label-micro text-outline">2</span>
+<span class="text-on-surface font-semibold">95 kg</span>
+</div>
+<span>8 reps</span>
+<span class="text-tertiary font-medium">RPE 8.0</span>
+<span class="text-primary font-mono text-[11px]">0.47 m/s</span>
+<span class="material-symbols-outlined text-[16px] text-tertiary">check_circle</span>
+</div>
+<!-- Row Set 3 (ACTIVE) -->
+<div class="flex items-center justify-between px-space-sm py-2 rounded bg-primary/10 shadow-[0_0_12px_rgba(56,189,248,0.15)] text-primary font-label-telemetry text-body-sm font-semibold">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-micro text-label-micro font-bold">3</span>
+<span class="text-on-surface font-bold">100 kg</span>
+</div>
+<span class="text-on-surface font-bold">8 reps</span>
+<span class="text-secondary font-bold">RPE 8.5</span>
+<span class="text-primary font-mono text-[11px]">0.42 m/s</span>
+<span class="material-symbols-outlined text-[18px] text-primary animate-pulse">radio_button_checked</span>
+</div>
+<!-- Row Set 4 (PENDING) -->
+<div class="flex items-center justify-between px-space-sm py-2 rounded bg-surface-container-lowest/50 text-outline font-label-telemetry text-body-sm opacity-60">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-micro text-label-micro">4</span>
+<span>100 kg</span>
+</div>
+<span>6-8 reps</span>
+<span>RPE 9.0</span>
+<span class="font-mono text-[11px]">TARGET</span>
+<span class="material-symbols-outlined text-[16px]">hourglass_empty</span>
+</div>
+</div>
+</div>
+<!-- Failure Telemetry HUD box -->
+<div class="mt-space-md p-space-sm rounded-lg bg-surface-container-high relative overflow-hidden flex flex-col gap-1 shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-error uppercase tracking-widest font-bold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+              TELEMETRIA DE FALHA MECÂNICA
+            </span>
+<span class="font-label-micro text-label-micro text-outline font-mono">ALGORITMO DARVIS_KINETIC</span>
+</div>
+<div class="flex items-baseline justify-between mt-1">
+<span class="font-headline-sm text-body-md text-on-surface">PREVISÃO FALHA CONCÊNTRICA:</span>
+<span class="font-label-telemetry text-headline-sm text-error font-extrabold tracking-wider">REP 8.5 <span class="font-label-micro text-label-micro text-on-surface-variant font-normal">(+/-1)</span></span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Queda linear de desaceleração detectada no final do curso excêntrico. Reduza 2.5kg na série 4 caso o objetivo seja RPE &lt; 9.0.
+          </p>
+</div>
+<!-- Animated Circular Rest Timer Inter-Set -->
+<div class="mt-space-md p-space-sm rounded-lg bg-surface-container-lowest flex items-center justify-between gap-space-md">
+<div class="relative w-16 h-16 flex items-center justify-center flex-shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container stroke-current" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke-width="3"></path>
+<path class="text-primary stroke-current transition-all duration-1000 ease-linear shadow-[0_0_12px_rgba(56,189,248,0.8)]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" id="restCircleProgress" stroke-dasharray="72, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<span class="absolute font-label-telemetry text-headline-sm text-primary font-bold" id="restDisplay">54s</span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider">DESCANSO ATIVO</span>
+<span class="font-label-telemetry text-label-micro text-tertiary font-bold tracking-wider">SNC RECUPERANDO</span>
+</div>
+<div class="font-headline-sm text-body-md text-on-surface font-semibold truncate mt-0.5">Janela 90 Segundos</div>
+<div class="flex items-center gap-space-xs mt-1.5">
+<button class="px-2 py-0.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-micro text-label-micro cursor-pointer" onclick="adjustRestTimer(-15)">-15s</button>
+<button class="px-2 py-0.5 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-micro text-label-micro cursor-pointer" onclick="adjustRestTimer(15)">+15s</button>
+<button class="px-2 py-0.5 rounded bg-surface-container text-secondary hover:bg-surface-container-high font-label-micro text-label-micro ml-auto cursor-pointer flex items-center gap-1" onclick="resetRestTimer()">
+<span class="material-symbols-outlined text-[12px]">replay</span>Reset
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Athletic Profile Snapshot Pill Card -->
+<div class="flex items-center justify-between bg-surface-container-low p-space-md rounded-xl shadow-md">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[22px]">vital_signs</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase">METRIC_SENSOR_V8</span>
+<span class="font-headline-sm text-body-md text-on-surface font-bold">HRV / Stress Index: Ótimo</span>
+</div>
+</div>
+<div class="text-right">
+<span class="font-label-telemetry text-headline-sm text-tertiary font-bold">96/100</span>
+<div class="font-label-micro text-label-micro text-on-surface-variant uppercase">Prontidão Neuromuscular</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 2: PROGRESSION ANALYTICS & BIOMECHANICAL STRAIN -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Progressive Overload Volume Load Graph (8 Weeks) -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md shadow-lg relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-primary uppercase tracking-widest font-semibold flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">stacked_line_chart</span>
+              SOBRECARGA PROGRESSIVA (ÚLTIMAS 8 SEMANAS)
+            </span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight mt-0.5">
+              Curva de Volume Tonelagem (Kg × Reps)
+            </span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container-lowest p-1 rounded-lg">
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-label-micro text-label-micro font-bold">PUSH</span>
+<span class="px-2 py-0.5 text-outline font-label-micro text-label-micro">PULL</span>
+<span class="px-2 py-0.5 text-outline font-label-micro text-label-micro">LEGS</span>
+</div>
+</div>
+<!-- SVG Progression Chart Visualizer -->
+<div class="mt-space-md w-full h-52 bg-surface-container-lowest rounded-lg p-space-sm flex flex-col justify-between relative">
+<!-- Background Grid lines -->
+<div class="absolute inset-x-space-sm top-8 h-px bg-surface-variant/40"></div>
+<div class="absolute inset-x-space-sm top-20 h-px bg-surface-variant/40"></div>
+<div class="absolute inset-x-space-sm top-32 h-px bg-surface-variant/40"></div>
+<div class="absolute inset-x-space-sm top-44 h-px bg-surface-variant/40"></div>
+<!-- Live SVG Chart -->
+<svg class="w-full h-40 overflow-visible z-10" fill="none" preserveaspectratio="none" viewbox="0 0 460 140">
+<defs>
+<lineargradient id="loadAreaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#38bdf8" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="secondaryTrendGradient" x1="0" x2="1" y1="0" y2="0">
+<stop offset="0%" stop-color="#56e5a9"></stop>
+<stop offset="100%" stop-color="#38bdf8"></stop>
+</lineargradient>
+</defs>
+<!-- Shaded Area Under Curve -->
+<path d="M 10,115 L 70,105 L 130,90 L 195,95 L 260,70 L 325,55 L 390,40 L 450,22 L 450,140 L 10,140 Z" fill="url(#loadAreaGradient)"></path>
+<!-- Primary Progress Path -->
+<path d="M 10,115 L 70,105 L 130,90 L 195,95 L 260,70 L 325,55 L 390,40 L 450,22" stroke="url(#secondaryTrendGradient)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Projected Dotted Vector -->
+<path d="M 390,40 L 450,22" stroke="#56e5a9" stroke-dasharray="4, 4" stroke-width="2.5"></path>
+<!-- Highlight Data Nodes -->
+<circle cx="10" cy="115" fill="#0f131c" r="3.5" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="70" cy="105" fill="#0f131c" r="3.5" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="130" cy="90" fill="#0f131c" r="3.5" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="195" cy="95" fill="#0f131c" r="3.5" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="260" cy="70" fill="#0f131c" r="3.5" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="325" cy="55" fill="#0f131c" r="3.5" stroke="#38bdf8" stroke-width="2"></circle>
+<circle cx="390" cy="40" fill="#56e5a9" r="4.5" stroke="#0f131c" stroke-width="2"></circle>
+<circle class="animate-pulse" cx="450" cy="22" fill="#38bdf8" r="5" stroke="#dfe2ee" stroke-width="2"></circle>
+</svg>
+<!-- Chart X Axis labels -->
+<div class="flex justify-between items-center px-1 font-label-micro text-label-micro text-outline font-mono z-10">
+<span>W35 [6.8t]</span>
+<span>W37 [7.1t]</span>
+<span>W39 [7.6t]</span>
+<span>W41 [8.1t]</span>
+<span class="text-primary font-bold">W42 [8.4t NOW]</span>
+</div>
+</div>
+<div class="mt-space-sm flex items-center justify-between font-label-telemetry text-body-sm text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span>Delta Sobrecarga: <strong class="text-tertiary">+14.2%</strong> vs ciclo W35</span>
+</div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]">trending_up</span>
+<span class="font-mono text-label-micro">SUPERCOMPENSAÇÃO EFETIVA</span>
+</div>
+</div>
+</div>
+<!-- Biomechanical Radar / Muscle Group Strain Distribution -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Muscle Strain Gauges -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md shadow-md">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-secondary uppercase tracking-widest font-semibold">TENSÃO MUSCULAR ACUMULADA</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">model_training</span>
+</div>
+<div class="flex flex-col gap-3 mt-space-md">
+<!-- Muscle 1: Upper Chest -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-telemetry text-body-sm">
+<span class="text-on-surface font-medium">Peitoral Maior / Clavicular</span>
+<span class="text-primary font-bold">92%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[92%] rounded-full shadow-[0_0_8px_rgba(56,189,248,0.5)]"></div>
+</div>
+</div>
+<!-- Muscle 2: Anterior Deltoid -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-telemetry text-body-sm">
+<span class="text-on-surface font-medium">Deltóide Anterior</span>
+<span class="text-secondary font-bold">85%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[85%] rounded-full shadow-[0_0_8px_rgba(76,215,246,0.5)]"></div>
+</div>
+</div>
+<!-- Muscle 3: Triceps Lateral & Medial -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-telemetry text-body-sm">
+<span class="text-on-surface font-medium">Tríceps Braquial</span>
+<span class="text-tertiary font-bold">78%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[78%] rounded-full shadow-[0_0_8px_rgba(86,229,169,0.5)]"></div>
+</div>
+</div>
+<!-- Muscle 4: Serratus Anterior / Core -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between font-label-telemetry text-body-sm">
+<span class="text-on-surface font-medium">Estabilizadores &amp; Serrátil</span>
+<span class="text-on-surface-variant font-bold">54%</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="h-full bg-outline-variant w-[54%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bio-Routine & Heart Rate Telemetry Pod -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md shadow-md justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-error uppercase tracking-widest font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-ping"></span>
+                FREQUÊNCIA CARDÍACA
+              </span>
+<span class="font-label-telemetry text-label-micro text-outline font-mono">SENSOR POLAR H10</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-label-telemetry text-display-lg-mobile text-on-surface font-bold">148</span>
+<span class="font-label-telemetry text-body-md text-error font-semibold">BPM</span>
+<span class="px-2 py-0.5 rounded bg-error/15 text-error font-label-micro text-label-micro uppercase font-bold ml-auto">ZONA 3</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Cardiopulmonar Estável // Janela Aeróbica Anaeróbica Híbrida</div>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-sm border-t border-surface-container-high/60 mt-3">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase">HRV / R-R INTERVAL</span>
+<span class="font-label-telemetry text-headline-sm text-tertiary font-bold">62 ms</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase">CALORIAS ATIVAS</span>
+<span class="font-label-telemetry text-headline-sm text-secondary font-bold">420 kcal</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- COLUMN 3: EXERCISE CATALOG & AI KINETIC COACH -->
+<div class="lg:col-span-3 flex flex-col gap-space-lg">
+<!-- AI Kinetic Coach DARVIS Intelligence Capsule -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md relative overflow-hidden shadow-xl">
+<div class="absolute -right-12 -top-12 w-32 h-32 bg-primary/15 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-7 h-7 rounded bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[18px]">psychology</span>
+</div>
+<span class="font-headline-sm text-body-md text-primary font-bold uppercase tracking-wider">AI KINETIC COACH</span>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary bg-tertiary/10 px-2 py-0.5 rounded font-mono font-bold">SNC: 94%</span>
+</div>
+<div class="mt-space-md p-space-sm rounded-lg bg-surface-container-lowest/90 flex flex-col gap-2">
+<div class="flex items-center gap-1.5 text-primary font-label-micro text-label-micro font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">tips_and_updates</span>
+            PRESCRIÇÃO TÁTICA DA PRÓXIMA SÉRIE
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed">
+            “Aumentar cadência excêntrica para <strong class="text-secondary font-semibold">3 segundos</strong> na 4ª série para maximizar microlesões estruturais e hipertrofia sarcoplasmática. Recuperação autonômica excelente.”
+          </p>
+<div class="flex items-center justify-between text-outline font-label-micro text-label-micro pt-1 border-t border-surface-container-high">
+<span>D.A.R.V.I.S. Biomecânica MK-VII</span>
+<span class="text-tertiary">CONFIDÊNCIA: 98.2%</span>
+</div>
+</div>
+<!-- Quick Log Input Box with Obsidian Sync Trigger -->
+<div class="mt-space-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider">REGISTRO INSTANTÂNEO DE CARGA</span>
+<span class="font-label-micro text-label-micro text-primary flex items-center gap-1 font-mono">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              OBSIDIAN VAULT SYNC
+            </span>
+</div>
+<form class="flex flex-col gap-space-xs" id="quickLogForm" onsubmit="event.preventDefault(); triggerQuickSync();">
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="flex flex-col">
+<label class="font-label-micro text-label-micro text-on-surface-variant mb-0.5">CARGA (KG)</label>
+<input class="w-full bg-surface-container-lowest px-2.5 py-1.5 rounded font-label-telemetry text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-high transition-all" id="inputWeight" step="0.5" type="number" value="100"/>
+</div>
+<div class="flex flex-col">
+<label class="font-label-micro text-label-micro text-on-surface-variant mb-0.5">RPE ESTIMADO</label>
+<select class="w-full bg-surface-container-lowest px-2.5 py-1.5 rounded font-label-telemetry text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary focus:bg-surface-container-high transition-all" id="inputRPE">
+<option value="7.0">7.0 - Moderado</option>
+<option value="8.0">8.0 - 2 reps sobra</option>
+<option selected="" value="8.5">8.5 - 1.5 reps sobra</option>
+<option value="9.0">9.0 - 1 rep sobra</option>
+<option value="9.5">9.5 - Talvez +1 rep</option>
+<option value="10.0">10.0 - Falha Absoluta</option>
+</select>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<input class="w-20 bg-surface-container-lowest px-2.5 py-1.5 rounded font-label-telemetry text-body-md text-on-surface focus:outline-none focus:ring-1 focus:ring-primary text-center" id="inputReps" placeholder="Reps" type="number" value="8"/>
+<button class="flex-1 py-1.5 px-space-md rounded bg-primary text-on-primary font-headline-sm text-body-sm font-semibold hover:bg-primary-container transition-all flex items-center justify-center gap-1 cursor-pointer" type="submit">
+<span class="material-symbols-outlined text-[16px]">sync_saved_locally</span>
+<span>Registrar &amp; Sincronizar</span>
+</button>
+</div>
+</form>
+<!-- Sync toast alert feedback -->
+<div class="hidden items-center justify-between p-2 rounded bg-tertiary/15 text-tertiary font-label-telemetry text-body-sm" id="syncFeedback">
+<span class="flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+              Gravado em /Obsidian/Treinos/W42-Push.md
+            </span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">AGORA</span>
+</div>
+</div>
+</div>
+<!-- Quick Exercise Search & Library Filter -->
+<div class="flex flex-col bg-surface-container-low rounded-xl p-space-md shadow-md flex-1">
+<div class="flex items-center justify-between pb-2">
+<span class="font-label-micro text-label-micro text-outline uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">fitness_center</span>
+            BIBLIOTECA RÁPIDA DE EXERCÍCIOS
+          </span>
+<span class="font-label-micro text-label-micro text-secondary font-mono">148 DISPONÍVEIS</span>
+</div>
+<!-- Search Bar -->
+<div class="relative mt-1">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-[18px] text-outline">search</span>
+<input class="w-full bg-surface-container-lowest pl-9 pr-3 py-1.5 rounded font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Filtrar padrão motor..." type="text"/>
+</div>
+<!-- Tags filter array -->
+<div class="flex items-center gap-1.5 mt-2 flex-wrap">
+<button class="px-2 py-0.5 rounded-full bg-primary/20 text-primary font-label-micro text-label-micro font-semibold">#peito</button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-micro text-label-micro hover:text-on-surface">#livre</button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-micro text-label-micro hover:text-on-surface">#composto</button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-micro text-label-micro hover:text-on-surface">#ombro</button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-micro text-label-micro hover:text-on-surface">#máquina</button>
+</div>
+<!-- Scrollable Exercises List -->
+<div class="flex flex-col gap-2 mt-space-md overflow-y-auto max-h-56 pr-1">
+<!-- Item 1 Active -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-high/80 text-on-surface cursor-pointer hover:bg-surface-container transition-all">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm font-bold text-primary">Supino Reto Barra</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Peitoral / Barra Olímpica</span>
+</div>
+<span class="font-label-telemetry text-label-micro text-secondary font-mono">EM CURSO</span>
+</div>
+<!-- Item 2 Next Up -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-lowest/70 text-on-surface cursor-pointer hover:bg-surface-container-high transition-all">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm font-medium">Desenvolvimento Militar</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Deltóide Anterior / Halteres</span>
+</div>
+<span class="font-label-micro text-label-micro text-outline">A SEGUIR</span>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-lowest/70 text-on-surface cursor-pointer hover:bg-surface-container-high transition-all">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm font-medium">Elevação Lateral Cabo</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Deltóide Lateral / Polia</span>
+</div>
+<span class="font-label-micro text-label-micro text-outline">3x12-15</span>
+</div>
+<!-- Item 4 -->
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-lowest/70 text-on-surface cursor-pointer hover:bg-surface-container-high transition-all">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm font-medium">Tríceps Testa Banco</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Tríceps / Barra W</span>
+</div>
+<span class="font-label-micro text-label-micro text-outline">3x10-12</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- INTERACTIVE SCRIPTS FOR HUD TIMERS AND TELEMETRY SIMULATION -->
+<script>
+  // Session workout stop-watch
+  let sessionSeconds = 48 * 60 + 32;
+  const timerElem = document.getElementById('sessionTimer');
+  setInterval(() => {
+    sessionSeconds++;
+    const hrs = Math.floor(sessionSeconds / 3600).toString().padStart(2, '0');
+    const mins = Math.floor((sessionSeconds % 3600) / 60).toString().padStart(2, '0');
+    const secs = (sessionSeconds % 60).toString().padStart(2, '0');
+    if (timerElem) {
+      timerElem.textContent = `${hrs}:${mins}:${secs}`;
+    }
+  }, 1000);
+
+  // Active Rest Interval Timer
+  let currentRestMax = 90;
+  let currentRestTime = 54;
+  const restDisplay = document.getElementById('restDisplay');
+  const restCircleProgress = document.getElementById('restCircleProgress');
+
+  function updateRestUI() {
+    if (restDisplay) {
+      restDisplay.textContent = `${currentRestTime}s`;
+    }
+    if (restCircleProgress) {
+      const percentage = Math.max(0, Math.min(100, (currentRestTime / currentRestMax) * 100));
+      restCircleProgress.setAttribute('stroke-dasharray', `${percentage.toFixed(0)}, 100`);
+    }
+  }
+
+  setInterval(() => {
+    if (currentRestTime > 0) {
+      currentRestTime--;
+      updateRestUI();
+    }
+  }, 1000);
+
+  function setRestTimer(seconds) {
+    currentRestMax = seconds;
+    currentRestTime = seconds;
+    document.querySelectorAll('.rest-btn').forEach(btn => {
+      if (parseInt(btn.getAttribute('data-secs')) === seconds) {
+        btn.classList.add('bg-surface-container-high', 'text-primary', 'font-bold', 'shadow-sm');
+        btn.classList.remove('text-on-surface-variant');
+      } else {
+        btn.classList.remove('bg-surface-container-high', 'text-primary', 'font-bold', 'shadow-sm');
+        btn.classList.add('text-on-surface-variant');
+      }
+    });
+    updateRestUI();
+  }
+
+  function adjustRestTimer(delta) {
+    currentRestTime = Math.max(0, currentRestTime + delta);
+    updateRestUI();
+  }
+
+  function resetRestTimer() {
+    currentRestTime = currentRestMax;
+    updateRestUI();
+  }
+
+  // Quick Obsidian Vault Log Confirmation Simulation
+  function triggerQuickSync() {
+    const feedback = document.getElementById('syncFeedback');
+    if (feedback) {
+      feedback.classList.remove('hidden');
+      feedback.classList.add('flex');
+      setTimeout(() => {
+        feedback.classList.add('hidden');
+        feedback.classList.remove('flex');
+      }, 4000);
+    }
+  }
+</script></main></div></body></html>

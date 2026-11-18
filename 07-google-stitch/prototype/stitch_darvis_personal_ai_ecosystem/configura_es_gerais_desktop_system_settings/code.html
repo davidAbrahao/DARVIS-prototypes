@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#262a33", "secondary-fixed-dim": "#4cd7f6", "on-secondary-fixed": "#001f26", "inverse-primary": "#00668a", "tertiary": "#56e5a9", "on-background": "#dfe2ee", "secondary-fixed": "#acedff", "primary": "#8ed5ff", "tertiary-fixed": "#6ffbbe", "on-primary-container": "#004965", "secondary-container": "#03b5d3", "surface-bright": "#353942", "on-tertiary": "#003824", "on-primary-fixed-variant": "#004c69", "surface-dim": "#0f131c", "on-tertiary-fixed-variant": "#005236", "inverse-on-surface": "#2c3039", "outline": "#87929a", "primary-fixed-dim": "#7bd0ff", "on-primary": "#00354a", "surface": "#0f131c", "surface-container-low": "#181c24", "surface-container-highest": "#31353e", "surface-tint": "#7bd0ff", "on-error": "#690005", "tertiary-fixed-dim": "#4edea3", "on-secondary": "#003640", "on-primary-fixed": "#001e2c", "on-tertiary-container": "#004e34", "secondary": "#4cd7f6", "background": "#0f131c", "on-secondary-fixed-variant": "#004e5c", "tertiary-container": "#30c88f", "outline-variant": "#3e484f", "on-secondary-container": "#00424e", "surface-variant": "#31353e", "on-tertiary-fixed": "#002113", "on-error-container": "#ffdad6", "primary-fixed": "#c4e7ff", "primary-container": "#38bdf8", "surface-container-lowest": "#0a0e16", "error-container": "#93000a", "on-surface-variant": "#bdc8d1", "error": "#ffb4ab", "inverse-surface": "#dfe2ee", "surface-container": "#1c2028", "on-surface": "#dfe2ee" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "margin-md": "1.5rem", "space-lg": "1.5rem", "space-md": "1rem", "margin": "1rem", "margin-lg": "2rem", "space-xl": "2.5rem", "gutter": "1rem", "gutter-sm": "0.75rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "label-telemetry": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "label-micro": [ "JetBrains Mono" ], "body-lg": [ "Geist" ], "headline-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "display-lg-mobile": [ "Space Grotesk" ], "body-sm": [ "Geist" ], "display-lg": [ "Space Grotesk" ] }, "fontSize": { "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-telemetry": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-micro": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "fontWeight": "600" } ], "display-lg-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "display-lg": [ "48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/95 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[20px]">neurology</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-primary leading-none">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-widest">COGNITIVE // MK-VII</span></div></div><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div></div><div class="px-space-md py-space-xs"><div class="bg-surface-container-low/60 rounded-lg p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[16px]">token</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">NEURAL ENGINE</span></div><span class="font-label-micro text-label-micro text-tertiary">ONLINE 100%</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-sm" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(56,189,248,0.35)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="command-center" href="#"><span class="material-symbols-outlined text-[20px]">view_quilt</span><span>Command Center</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>AI Assistant</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="neural-memory" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span>Neural Memory (Obsidian)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="projects-tasks" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span><span>Projects &amp; Tasks</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="kinetic-protocol" href="#"><span class="material-symbols-outlined text-[20px]">fitness_center</span><span>Kinetic Protocol (Treino)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="system-integrations" href="#"><span class="material-symbols-outlined text-[20px]">integration_instructions</span><span>System Integrations</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm transition-all bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(56,189,248,0.35)]" data-path="general-settings" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>General Settings</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs"><div class="bg-surface-container-low/40 rounded-lg p-space-sm flex flex-col gap-1"><div class="flex justify-between items-center"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">HUD PROTOCOL</span><span class="font-label-micro text-label-micro text-secondary">SEC//V3.4</span></div><div class="w-full bg-surface-container-highest rounded-full h-1 overflow-hidden"><div class="bg-secondary h-full w-4/5 rounded-full"></div></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs bg-surface-container-low/80 px-space-sm py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span><span class="font-label-telemetry text-label-telemetry text-tertiary">CORE STATUS: ONLINE</span></div><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">LATENCY:</span><span class="font-label-telemetry text-label-telemetry text-primary">14ms</span></div><div class="hidden lg:flex items-center gap-space-sm bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">CPU/NEURAL LOAD:</span><span class="font-label-telemetry text-label-telemetry text-secondary">27.4%</span><div class="w-12 bg-surface-container-highest rounded-full h-1.5 overflow-hidden"><div class="bg-secondary h-full w-[27%]"></div></div></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col text-right"><span class="font-label-telemetry text-label-telemetry text-on-surface tracking-wider">10:42:19 UTC</span><span class="font-label-micro text-label-micro text-on-surface-variant tracking-widest uppercase">SYNCHRONIZED</span></div><div class="w-px h-6 bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm bg-surface-container-low/70 py-1 px-space-sm rounded-lg"><div class="flex flex-col text-right"><span class="font-headline-sm text-body-sm font-semibold text-primary leading-tight">David</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">OPERATOR</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background flex-1"><div class="flex flex-col w-full">
+<!-- Sub-navigation HUD Ribbon -->
+<div class="w-full bg-surface-container-lowest/80 backdrop-blur-md px-space-lg py-space-sm flex items-center justify-between sticky top-16 z-30 shadow-md">
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5">
+<button class="px-space-md py-space-xs rounded-full bg-primary-container text-on-primary-container font-headline-sm text-body-sm font-semibold flex items-center gap-space-xs shadow-[0_0_12px_rgba(56,189,248,0.35)] transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-[16px]">fingerprint</span>
+<span>Identidade &amp; Persona</span>
+</button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-headline-sm text-body-sm font-medium flex items-center gap-space-xs transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-[16px]">neurology</span>
+<span>Modelos &amp; IA Core</span>
+</button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-headline-sm text-body-sm font-medium flex items-center gap-space-xs transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-[16px]">account_tree</span>
+<span>Obsidian &amp; Memória RAG</span>
+</button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-headline-sm text-body-sm font-medium flex items-center gap-space-xs transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-[16px]">graphic_eq</span>
+<span>Áudio &amp; Voz</span>
+</button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-headline-sm text-body-sm font-medium flex items-center gap-space-xs transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-[16px]">key</span>
+<span>Segurança &amp; Chaves</span>
+</button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high font-headline-sm text-body-sm font-medium flex items-center gap-space-xs transition-all whitespace-nowrap">
+<span class="material-symbols-outlined text-[16px]">insights</span>
+<span>Telemetria &amp; Notificações</span>
+</button>
+</div>
+<!-- Quick Meta Status -->
+<div class="hidden lg:flex items-center gap-space-sm pl-space-md">
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-sm py-1 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">SYNC ENGINE:</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary">STABLE // REV-91</span>
+</div>
+</div>
+</div>
+<!-- Primary Content Canvas -->
+<div class="p-space-lg flex flex-col gap-space-lg max-w-[1600px] mx-auto w-full">
+<!-- Top Identity & Mission Header Pod -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-space-lg shadow-lg">
+<div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-secondary/5 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col xl:flex-row items-start xl:items-center justify-between gap-space-lg">
+<div class="flex items-center gap-space-lg">
+<div class="relative">
+<div class="w-20 h-20 rounded-xl bg-surface-container-high flex items-center justify-center overflow-hidden shadow-md">
+<img class="w-full h-full object-cover" data-alt="High contrast cybernetic silhouette avatar of senior operator in minimalist glassmorphism interface, deep navy background with glowing cyan biometric scan lines, hyper clean cinematic tech" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACggC-xIdqzXRhIKZ0Q4r9ssIEXy1C_PLN0ynXUKp3jBULIw1_K112gllKA9uZCm316vyD859fqr5s6bASbGjfO5eVDrKP4f6WxFObmIOApw2AXVK84REokyZAtnHFhThLv4sdDukY3JO5fZJmO11nr0Q19QXlsNXkozSc1UYa7o5W1dL-Tyim3OcIEeqjOIdJNW0xD0J9FbqM9TcGtoMwh2DOG3Evm_xT4hJt4o8"/>
+</div>
+<div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-sm mb-1">
+<span class="font-label-micro text-label-micro px-2 py-0.5 rounded bg-surface-container-highest text-secondary uppercase font-semibold">STARK-01 // COGNITIVE PRIME</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> ROOT SUPERADMIN
+              </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">David Abrahão Rodrigues</h1>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-space-sm mt-0.5">
+<span>Diretiva Autônoma de Resposta &amp; Vetorização de Inteligência Sintética</span>
+<span class="text-outline-variant">•</span>
+<span class="font-label-telemetry text-label-telemetry text-primary">America/Sao_Paulo (UTC-03:00)</span>
+</p>
+</div>
+</div>
+<!-- Telemetry HUD Matrix -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm w-full xl:w-auto">
+<div class="bg-surface-container-lowest/80 p-space-sm rounded-lg flex flex-col min-w-[130px]">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Agentes Ativos</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md text-primary">12</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary">/ 12 OK</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest/80 p-space-sm rounded-lg flex flex-col min-w-[130px]">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Taxa RAG Cache</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md text-secondary">99.4%</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest/80 p-space-sm rounded-lg flex flex-col min-w-[130px]">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Custo Token/Dia</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md text-on-surface">$0.42</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest/80 p-space-sm rounded-lg flex flex-col min-w-[130px]">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Status do Vault</span>
+<div class="flex items-baseline gap-1 mt-1">
+<span class="font-headline-md text-headline-md text-tertiary">SYNCED</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bento Cockpit Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Column Left: AI Engine & Audio (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Module 1: AI Core Architecture -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">psychology</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Motor de Inferência &amp; Orquestração</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">CORE COGNITIVO // MULTI-LLM RUNTIME</span>
+</div>
+</div>
+<span class="px-space-sm py-0.5 rounded bg-surface-container-high text-tertiary font-label-micro text-label-micro uppercase font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Vertex AI Conectado
+            </span>
+</div>
+<!-- Primary Model Configuration -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md bg-surface-container-lowest/70 p-space-md rounded-lg">
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-micro text-label-micro text-on-surface-variant uppercase">Modelo Primário de Alta Capacidade</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high text-on-surface px-space-md py-space-sm rounded font-headline-sm text-body-sm font-medium appearance-none focus:outline-none cursor-pointer">
+<option selected="">Gemini 1.5 Pro (Google AI Studio / Vertex)</option>
+<option>Gemini 1.5 Flash (Latência Ultrabaixa)</option>
+<option>Claude 3.5 Sonnet (Anthropic)</option>
+<option>GPT-4o Omnimodal (OpenAI)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-micro text-label-micro text-on-surface-variant uppercase">Modelo de Fallback Automático</label>
+<div class="relative">
+<select class="w-full bg-surface-container-high text-on-surface px-space-md py-space-sm rounded font-headline-sm text-body-sm font-medium appearance-none focus:outline-none cursor-pointer">
+<option selected="">Claude 3.5 Sonnet (Fallback Padrão)</option>
+<option>GPT-4o (OpenAI Direct)</option>
+<option>Mixtral 8x22B (Groq Local Endpoint)</option>
+<option>Desativado (Interromper em Erro)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Controls: Temperature Slider & Stream Toggle -->
+<div class="flex flex-col gap-space-md pt-space-xs">
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex flex-col gap-space-sm">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-micro text-label-micro text-on-surface uppercase font-semibold">Temperatura Cognitiva:</span>
+<span class="font-label-telemetry text-label-telemetry text-primary font-bold" id="temp-val">0.20</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">(Tático, Racional &amp; Conciso)</span>
+</div>
+<div class="flex gap-space-xs">
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-micro text-label-micro" onclick="document.getElementById('temp-slider').value = '0.0'; updateTemp('0.0')" type="button">0.0 Determinístico</button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-micro text-label-micro" onclick="document.getElementById('temp-slider').value = '0.7'; updateTemp('0.7')" type="button">0.7 Criativo</button>
+</div>
+</div>
+<input class="w-full accent-primary bg-surface-container-highest rounded-lg h-2 cursor-pointer" id="temp-slider" max="1" min="0" oninput="updateTemp(this.value)" step="0.05" type="range" value="0.2"/>
+<div class="flex justify-between text-on-surface-variant font-label-micro text-label-micro">
+<span>0.0 // Raciocínio Puro &amp; Código</span>
+<span>0.5 // Balanceado</span>
+<span>1.0 // Heurístico &amp; Especulativo</span>
+</div>
+</div>
+<!-- Toggles Cluster -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface">SSE Token Streaming</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Resposta em tempo real com baixo TTFT</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface peer-checked:bg-primary-container after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary-container after:border-surface after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+</label>
+</div>
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface">LangGraph Orchestrator</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">FastAPI Worker + State Machine DAG</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-surface peer-checked:bg-primary-container after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-on-primary-container after:border-surface after:border after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Module 2: Audio & Voice Telemetry -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Áudio, Fala &amp; Reconhecimento Acústico</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">HARDWARE I/O // WHISPER-V3 LARGE</span>
+</div>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-2 py-1 rounded">
+<span class="material-symbols-outlined text-[16px] text-tertiary">graphic_eq</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary">DSP READY</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Wake Word Setup -->
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex flex-col gap-space-sm">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Modo de Escuta Ativa</span>
+<div class="flex flex-col gap-space-xs">
+<label class="flex items-center justify-between p-space-xs rounded bg-surface-container-high cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">hearing</span>
+<span class="font-headline-sm text-body-sm text-on-surface">Wake Word ("Hey Jarvis")</span>
+</div>
+<input checked="" class="accent-primary" name="listen_mode" type="radio"/>
+</label>
+<label class="flex items-center justify-between p-space-xs rounded bg-surface-container-high/50 hover:bg-surface-container-high cursor-pointer">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">touch_app</span>
+<span class="font-headline-sm text-body-sm text-on-surface-variant">Push-to-Talk (Space Hold / Cmd+J)</span>
+</div>
+<input class="accent-primary" name="listen_mode" type="radio"/>
+</label>
+</div>
+</div>
+<!-- Voice Synthesis Engine -->
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex flex-col gap-space-sm">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Engine de Síntese de Voz (TTS)</span>
+<div class="relative">
+<select class="w-full bg-surface-container-high text-on-surface px-space-md py-space-sm rounded font-headline-sm text-body-sm font-medium appearance-none focus:outline-none">
+<option selected="">ElevenLabs Custom Voice (Jarvis MK-VII Clone)</option>
+<option>Edge-TTS (Microsoft Neural pt-BR-Antonio)</option>
+<option>OpenAI TTS-1-HD (Echo / Alloy)</option>
+<option>Piper TTS (Local Offline 0ms Latency)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant pointer-events-none text-[18px]">expand_more</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-micro text-label-micro pt-1">
+<span>Taxa de Amostragem: 16kHz</span>
+<span class="text-secondary font-mono">LATÊNCIA TTS: ~180ms</span>
+</div>
+</div>
+</div>
+<!-- Micro Audio Visualizer Bar -->
+<div class="bg-surface-container-lowest/50 p-space-sm rounded-lg flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[18px]">new_window</span>
+<span class="font-label-micro text-label-micro text-on-surface uppercase">Input Acústico Microfone Primário:</span>
+</div>
+<!-- Waveform bars -->
+<div class="flex items-center gap-1 flex-1 max-w-[280px] h-4">
+<span class="w-1 h-2 bg-secondary rounded-full"></span>
+<span class="w-1 h-3 bg-secondary rounded-full"></span>
+<span class="w-1 h-4 bg-primary rounded-full"></span>
+<span class="w-1 h-2 bg-secondary rounded-full"></span>
+<span class="w-1 h-3 bg-primary rounded-full"></span>
+<span class="w-1 h-1 bg-surface-container-highest rounded-full"></span>
+<span class="w-1 h-2 bg-surface-container-highest rounded-full"></span>
+<span class="w-1 h-4 bg-secondary rounded-full"></span>
+<span class="w-1 h-3 bg-secondary rounded-full"></span>
+<span class="w-1 h-2 bg-primary rounded-full"></span>
+<span class="w-1 h-1 bg-surface-container-highest rounded-full"></span>
+<span class="w-1 h-3 bg-secondary rounded-full"></span>
+<span class="w-1 h-4 bg-tertiary rounded-full"></span>
+<span class="w-1 h-2 bg-secondary rounded-full"></span>
+</div>
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-micro text-label-micro uppercase font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Testar Áudio
+            </button>
+</div>
+</div>
+</div>
+<!-- Column Right: Obsidian Memory, Webhooks, Integrations & Security (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Module 3: Obsidian Vault & RAG Memory Pipeline -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-tertiary/10 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">hub</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Memória RAG &amp; Obsidian Vault</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">GRAPH SECOND-BRAIN</span>
+</div>
+</div>
+<button class="p-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-primary transition-all" title="Forçar reindexação vetorial">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+</div>
+<!-- Git Repo Path -->
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest/70 p-space-md rounded-lg">
+<div class="flex justify-between items-center">
+<label class="font-label-micro text-label-micro text-on-surface-variant uppercase">Repositório Git Vault</label>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">RAMO: MAIN</span>
+</div>
+<div class="flex items-center bg-surface-container-high rounded px-space-md py-space-xs gap-space-sm">
+<span class="material-symbols-outlined text-[16px] text-secondary">terminal</span>
+<input class="bg-transparent text-primary font-label-telemetry text-label-telemetry w-full focus:outline-none" type="text" value="git@github.com:david/obsidian-second-brain.git"/>
+</div>
+</div>
+<!-- Vector Store & Sync Rate Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex flex-col gap-space-xs">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Banco Vetorial (RAG)</span>
+<span class="font-headline-sm text-body-md font-semibold text-on-surface">Supabase pgvector</span>
+<span class="font-label-micro text-label-micro text-secondary font-mono">dim: 768 / embedding-004</span>
+</div>
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex flex-col gap-space-xs">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Frequência Auto-Sync Git</span>
+<div class="relative">
+<select class="w-full bg-surface-container-high text-on-surface px-space-sm py-1 rounded font-headline-sm text-body-sm font-medium appearance-none focus:outline-none">
+<option selected="">Ao salvar nota (Instantâneo)</option>
+<option>Intervalo de 5 min</option>
+<option>Intervalo de 30 min</option>
+<option>Manual por comando</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-1.5 text-on-surface-variant pointer-events-none text-[16px]">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Vault Index Stats Mini Visualizer -->
+<div class="bg-surface-container-lowest/70 p-space-md rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Documentos Vetorizados</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">14.892 <span class="font-label-micro text-label-micro text-tertiary">NODES</span></span>
+</div>
+<!-- Radial Progress Ring Inline SVG -->
+<div class="relative w-14 h-14 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<path class="text-surface-container-highest" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="88, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<span class="absolute font-label-micro text-label-micro text-primary font-bold">88%</span>
+</div>
+</div>
+</div>
+<!-- Module 4: Webhooks, Endpoints & API Keys -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">security</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Webhooks, Gateways &amp; Chaves</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">ENDPOINTS EXTERNOS // ENCRYPTED AES-256</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]">lock</span>
+</div>
+<!-- Telegram Bot Token Input -->
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest/70 p-space-md rounded-lg">
+<div class="flex justify-between items-center">
+<label class="font-label-micro text-label-micro text-on-surface-variant uppercase flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span> Telegram Bot Token (Notificações Móveis)
+              </label>
+<span class="font-label-micro text-label-micro text-tertiary font-mono">STATUS: ATIVO</span>
+</div>
+<div class="flex items-center bg-surface-container-high rounded px-space-md py-space-xs gap-space-sm">
+<input class="bg-transparent text-on-surface font-label-telemetry text-label-telemetry w-full focus:outline-none" id="tg-token" readonly="" type="password" value="7194820194:AAHv93z_K83jL9z02n-daV_92"/>
+<button class="text-on-surface-variant hover:text-primary" onclick="toggleVisibility('tg-token')" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Cloudflare Worker Gateway -->
+<div class="flex flex-col gap-space-xs bg-surface-container-lowest/70 p-space-md rounded-lg">
+<div class="flex justify-between items-center">
+<label class="font-label-micro text-label-micro text-on-surface-variant uppercase">Cloudflare Edge Worker Gateway</label>
+<span class="font-label-micro text-label-micro text-secondary font-mono">EDGE HTTPS</span>
+</div>
+<div class="flex items-center bg-surface-container-high rounded px-space-md py-space-xs gap-space-sm">
+<input class="bg-transparent text-on-surface-variant font-label-telemetry text-label-telemetry w-full focus:outline-none" type="text" value="https://darvis-core.david.workers.dev/api/v1/dispatch"/>
+<button class="text-on-surface-variant hover:text-primary" title="Testar Ping">
+<span class="material-symbols-outlined text-[18px]">cell_tower</span>
+</button>
+</div>
+</div>
+<!-- Google Calendar OAuth2 Refresh Token -->
+<div class="flex items-center justify-between bg-surface-container-lowest/70 p-space-md rounded-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">calendar_today</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-md font-semibold text-on-surface">Google Calendar OAuth2</span>
+<span class="font-label-micro text-label-micro text-on-surface-variant">Sincronização de agenda executiva contínua</span>
+</div>
+</div>
+<button class="px-space-md py-1 rounded bg-surface-container-high hover:bg-surface-container-highest text-tertiary font-label-micro text-label-micro font-semibold uppercase flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">check</span> Conectado
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Tactical Control Bar & Actions -->
+<div class="rounded-xl bg-surface-container-low p-space-lg shadow-xl flex flex-col md:flex-row items-center justify-between gap-space-md border-t-0">
+<!-- Utility Action Triggers -->
+<div class="flex flex-wrap items-center gap-space-sm w-full md:w-auto">
+<button class="px-space-md py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-headline-sm text-body-sm font-semibold flex items-center gap-space-xs transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">cloud_download</span>
+<span>Exportar Backup (.zip / .json)</span>
+</button>
+<button class="px-space-md py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-headline-sm text-body-sm font-semibold flex items-center gap-space-xs transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-error">cleaning_services</span>
+<span>Limpar Cache Vetorial</span>
+</button>
+<button class="px-space-md py-space-sm rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-headline-sm text-body-sm font-semibold flex items-center gap-space-xs transition-all shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-outline">receipt_long</span>
+<span>Auditar Logs de Sessão</span>
+</button>
+</div>
+<!-- Primary Persistence Trigger -->
+<div class="flex items-center gap-space-md w-full md:w-auto justify-end">
+<span class="hidden sm:inline font-label-telemetry text-label-telemetry text-on-surface-variant font-mono" id="save-status">ÚLTIMO CHECKPOINT: HOJE 10:41</span>
+<button class="w-full sm:w-auto px-space-lg py-space-sm rounded-lg bg-primary-container text-on-primary-container hover:bg-primary font-headline-sm text-body-md font-bold flex items-center justify-center gap-space-sm shadow-[0_0_20px_rgba(56,189,248,0.4)] active:scale-95 transition-all" onclick="triggerSave(this)">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>Salvar Todas as Configurações</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Micro Interaction Inline Handler Script -->
+<script>
+    function updateTemp(val) {
+      const num = parseFloat(val).toFixed(2);
+      document.getElementById('temp-val').innerText = num;
+    }
+
+    function toggleVisibility(id) {
+      const el = document.getElementById(id);
+      if (el.type === 'password') {
+        el.type = 'text';
+      } else {
+        el.type = 'password';
+      }
+    }
+
+    function triggerSave(btn) {
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = `<span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span><span>Sincronizando Core...</span>`;
+      btn.classList.add('opacity-80');
+
+      setTimeout(() => {
+        btn.innerHTML = `<span class="material-symbols-outlined text-[20px]">check_circle</span><span>Configurações Aplicadas!</span>`;
+        btn.classList.remove('bg-primary-container');
+        btn.classList.add('bg-tertiary', 'text-on-tertiary');
+
+        const now = new Date();
+        const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('save-status').innerText = `ÚLTIMO CHECKPOINT: HOJE ${timeStr}`;
+
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.classList.remove('bg-tertiary', 'text-on-tertiary', 'opacity-80');
+          btn.classList.add('bg-primary-container', 'text-on-primary-container');
+        }, 2500);
+      }, 750);
+    }
+  </script>
+</div></main></div></body></html>

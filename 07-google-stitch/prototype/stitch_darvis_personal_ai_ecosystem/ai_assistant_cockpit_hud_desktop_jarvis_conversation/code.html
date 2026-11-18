@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>D.A.R.V.I.S. // Cognitive Core MK-85 HUD</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Orbitron & JetBrains Mono for authentic holographic sci-fi UI -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&amp;family=Orbitron:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Custom Config -->
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            hud: {
+              bg: '#050810',
+              panel: '#09101d',
+              border: 'rgba(0, 242, 255, 0.22)',
+              cyan: '#00f2ff',
+              cyanMuted: 'rgba(0, 242, 255, 0.45)',
+              cyanGlow: 'rgba(0, 242, 255, 0.12)',
+              blue: '#38bdf8',
+              emerald: '#56e5a9',
+              amber: '#ffb703',
+              crimson: '#ef4444'
+            }
+          },
+          fontFamily: {
+            hud: ['Orbitron', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+<!-- BEGIN: Stylesheets -->
+<style data-purpose="hud-animations">
+    @keyframes spin-cw {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes spin-ccw {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(0, 242, 255, 0.35), inset 0 0 25px rgba(0, 242, 255, 0.25);
+      }
+      50% {
+        box-shadow: 0 0 38px rgba(0, 242, 255, 0.65), inset 0 0 45px rgba(0, 242, 255, 0.45);
+      }
+    }
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(1000%); }
+    }
+
+    .anim-spin-slow { animation: spin-cw 34s linear infinite; }
+    .anim-spin-reverse { animation: spin-ccw 22s linear infinite; }
+    .anim-spin-fast { animation: spin-cw 12s linear infinite; }
+    .anim-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+  </style>
+<style data-purpose="hud-effects">
+    /* Subtle CRT grid line and radial backdrop vignette */
+    .hud-backdrop {
+      background-color: #050810;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.08) 0%, rgba(5, 8, 16, 0.95) 75%),
+        linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+    }
+
+    /* Custom glowing text */
+    .glow-cyan {
+      text-shadow: 0 0 10px rgba(0, 242, 255, 0.65), 0 0 22px rgba(0, 242, 255, 0.3);
+    }
+    .glow-box {
+      box-shadow: 0 0 15px rgba(0, 242, 255, 0.18), inset 0 0 15px rgba(0, 242, 255, 0.08);
+    }
+
+    /* Sci-fi bracket borders */
+    .hud-corner-bracket {
+      position: relative;
+    }
+    .hud-corner-bracket::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid #00f2ff;
+      border-left: 2px solid #00f2ff;
+      pointer-events: none;
+    }
+    .hud-corner-bracket::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid #00f2ff;
+      border-right: 2px solid #00f2ff;
+      pointer-events: none;
+    }
+
+    /* Custom scrollbar for HUD terminal logs */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(5, 12, 22, 0.8);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 242, 255, 0.35);
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 242, 255, 0.7);
+    }
+  </style>
+<!-- END: Stylesheets -->
+</head>
+<body class="hud-backdrop text-hud-cyan font-mono min-h-screen overflow-x-hidden selection:bg-hud-cyan selection:text-black">
+<!-- BEGIN: MainHeader -->
+<header class="w-full border-b border-hud-border bg-hud-panel/80 backdrop-blur-md px-6 py-2.5 z-50 sticky top-0" data-purpose="hud-telemetry-header">
+<div class="max-w-[1720px] mx-auto flex items-center justify-between">
+<!-- Operator Identification & Core Status -->
+<div class="flex items-center space-x-4">
+<div class="relative flex items-center justify-center w-9 h-9 border border-hud-cyan/50 rounded-sm bg-hud-cyan/10">
+<span class="font-hud font-bold text-sm tracking-wider text-hud-cyan">D</span>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-hud-emerald rounded-full animate-ping"></div>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-hud-emerald rounded-full"></div>
+</div>
+<div>
+<div class="flex items-center space-x-2">
+<h1 class="font-hud text-base font-bold tracking-widest text-white glow-cyan">D.A.R.V.I.S.</h1>
+<span class="text-[10px] bg-hud-cyan/15 text-hud-cyan px-1.5 py-0.5 rounded border border-hud-cyan/30">MK-85 COGNITIVE CORE</span>
+</div>
+<p class="text-[11px] text-hud-cyan/70 tracking-tight">OPERATOR: <span class="text-white font-medium">DAVID ABRAHÃO RODRIGUES</span> // SYS_VER: 4.8.19</p>
+</div>
+</div>
+<!-- Live Center Telemetry Readouts -->
+<div class="hidden lg:flex items-center space-x-8 text-xs">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 rounded-full bg-hud-emerald"></span>
+<span class="text-hud-cyan/60">NEURAL LINK:</span>
+<span class="font-bold text-hud-emerald uppercase">SYNCHRONIZED</span>
+</div>
+<div class="border-l border-hud-cyan/20 pl-6 flex items-center space-x-2">
+<span class="text-hud-cyan/60">LATENCY:</span>
+<span class="text-white font-bold">4ms</span>
+<span class="text-[10px] text-hud-cyan/50">(QUANTUM TUNNEL)</span>
+</div>
+<div class="border-l border-hud-cyan/20 pl-6 flex items-center space-x-2">
+<span class="text-hud-cyan/60">CONTEXT WINDOW:</span>
+<span class="text-hud-blue font-bold">128,490 / 200,000</span>
+<span class="text-[10px] text-hud-blue/70">TKNS</span>
+</div>
+<div class="border-l border-hud-cyan/20 pl-6 flex items-center space-x-2">
+<span class="text-hud-cyan/60">REASONING:</span>
+<span class="text-hud-emerald font-bold">AUTONOMOUS</span>
+</div>
+</div>
+<!-- Right HUD Time & Tactical Control Buttons -->
+<div class="flex items-center space-x-4">
+<div class="text-right">
+<div class="font-hud text-sm font-semibold tracking-wider text-white glow-cyan" id="hud-clock">00:00:00 BRT</div>
+<div class="text-[10px] text-hud-cyan/60 uppercase">SECTOR 07 // ONLINE</div>
+</div>
+<button class="p-2 border border-hud-cyan/30 hover:border-hud-cyan bg-hud-cyan/5 hover:bg-hud-cyan/20 transition rounded-sm text-hud-cyan" title="Tactical Settings">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: HUDMainGrid -->
+<main class="max-w-[1720px] mx-auto p-4 lg:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 relative" data-purpose="hud-primary-workspace">
+<!-- LEFT COLUMN: Secondary Telemetry & Power Gauge (Inspirado no canto superior esquerdo e indicador de bateria/memória da imagem de referência) -->
+<aside class="lg:col-span-3 flex flex-col space-y-6 order-2 lg:order-1" data-purpose="hud-telemetry-panel-left">
+<!-- Circular Arc Power Gauge (Reference: "100% Power High" + Date Wheel) -->
+<section class="border border-hud-border bg-hud-panel/60 p-5 rounded hud-corner-bracket glow-box" data-purpose="power-dial-widget">
+<div class="flex items-center justify-between border-b border-hud-border/50 pb-2 mb-4">
+<span class="text-xs uppercase font-hud tracking-widest text-hud-cyan/80">PRIMARY STORAGE &amp; POWER</span>
+<span class="text-[10px] text-hud-emerald bg-hud-emerald/10 border border-hud-emerald/30 px-1.5 py-0.2 rounded font-mono">NOMINAL</span>
+</div>
+<div class="flex items-center justify-around py-2">
+<!-- Mini Arc Dial -->
+<div class="relative w-28 h-28 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 120 120">
+<circle cx="60" cy="60" fill="transparent" r="50" stroke="rgba(0, 242, 255, 0.15)" stroke-width="6"></circle>
+<circle cx="60" cy="60" fill="transparent" r="50" stroke="#00f2ff" stroke-dasharray="314" stroke-dashoffset="31.4" stroke-linecap="round" stroke-width="6"></circle>
+<circle cx="60" cy="60" fill="transparent" r="40" stroke="rgba(56, 189, 248, 0.2)" stroke-dasharray="4 6" stroke-width="2"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-hud text-lg font-bold text-white glow-cyan">100%</span>
+<span class="text-[9px] uppercase tracking-wider text-hud-cyan/70 font-mono">POWER HIGH</span>
+</div>
+</div>
+<!-- Capacity Details directly referencing Image 2: 133G capacity / 61G free -->
+<div class="space-y-2 text-xs">
+<div class="border-l-2 border-hud-cyan/40 pl-3">
+<div class="text-[10px] text-hud-cyan/60">FULL CAPACITY</div>
+<div class="font-bold text-white font-hud tracking-wider">133.0 GB</div>
+</div>
+<div class="border-l-2 border-hud-emerald/60 pl-3">
+<div class="text-[10px] text-hud-emerald/80">FREE CAPACITY</div>
+<div class="font-bold text-hud-emerald font-hud tracking-wider">61.0 GB</div>
+</div>
+<div class="border-l-2 border-hud-blue/50 pl-3">
+<div class="text-[10px] text-hud-blue/70">NEURAL BUFFERS</div>
+<div class="font-bold text-hud-blue font-hud tracking-wider">ACTIVE (8/8)</div>
+</div>
+</div>
+</div>
+<!-- Quick Access Communication Modules (From Reference: Hotmail / Communication / Docs) -->
+<div class="mt-4 pt-3 border-t border-hud-border/40 grid grid-cols-2 gap-2 text-[11px]">
+<button class="px-2.5 py-1.5 bg-hud-cyan/5 hover:bg-hud-cyan/15 border border-hud-cyan/30 rounded flex items-center justify-between text-hud-cyan/90 transition">
+<span>COMM_SYNC</span>
+<span class="w-1.5 h-1.5 rounded-full bg-hud-emerald"></span>
+</button>
+<button class="px-2.5 py-1.5 bg-hud-cyan/5 hover:bg-hud-cyan/15 border border-hud-cyan/30 rounded flex items-center justify-between text-hud-cyan/90 transition">
+<span>VAULT_INDEX</span>
+<span class="w-1.5 h-1.5 rounded-full bg-hud-cyan"></span>
+</button>
+</div>
+</section>
+<!-- Active Reasoning & Chain-of-Thought Stream -->
+<section class="border border-hud-border bg-hud-panel/60 p-4 rounded hud-corner-bracket flex-1 flex flex-col min-h-[360px]" data-purpose="hud-cot-stream">
+<div class="flex items-center justify-between border-b border-hud-border/50 pb-2 mb-3">
+<div class="flex items-center space-x-2">
+<div class="w-2 h-2 bg-hud-cyan rounded-full animate-ping"></div>
+<span class="text-xs uppercase font-hud tracking-widest text-hud-cyan">CHAIN OF THOUGHT // STREAM</span>
+</div>
+<span class="text-[10px] text-hud-cyan/50 font-mono">PASS: 0.89</span>
+</div>
+<!-- Thought Logs Scrollable Container -->
+<div class="flex-1 overflow-y-auto space-y-3 text-[11px] pr-2 text-hud-cyan/80">
+<div class="p-2 border-l-2 border-hud-cyan bg-hud-cyan/5 rounded-r">
+<div class="text-[10px] text-hud-cyan/50 flex justify-between">
+<span>STEP 01: INTENT DECODING</span>
+<span>0.12s</span>
+</div>
+<p class="mt-1 text-white/90">Identificado pedido tático do operador David: Análise e resumo executivo dos diários de automação no Obsidian.</p>
+</div>
+<div class="p-2 border-l-2 border-hud-blue bg-hud-blue/5 rounded-r">
+<div class="text-[10px] text-hud-blue/70 flex justify-between">
+<span>STEP 02: VECTOR SEARCH</span>
+<span>0.24s</span>
+</div>
+<p class="mt-1 text-white/90">Consulta vetorial enviada ao Supabase Vector Store. Top 4 chunks retornados com score cosine &gt; 0.88.</p>
+</div>
+<div class="p-2 border-l-2 border-hud-emerald bg-hud-emerald/5 rounded-r">
+<div class="text-[10px] text-hud-emerald/70 flex justify-between">
+<span>STEP 03: SYNTHESIS CORE</span>
+<span>0.38s</span>
+</div>
+<p class="mt-1 text-white/90">Agregando cronograma do Google Calendar com diretivas de deploy do Cloudflare Worker. Geração de resposta acionável iniciada.</p>
+</div>
+<div class="p-2 border-l-2 border-hud-cyan/40 bg-white/5 rounded-r">
+<div class="text-[10px] text-hud-cyan/40 flex justify-between">
+<span>STEP 04: SANITIZE &amp; AUDIT</span>
+<span>0.05s</span>
+</div>
+<p class="mt-1 text-white/70">Nenhuma violação de integridade ou token leakage detectada. Saída liberada para o Cockpit.</p>
+</div>
+</div>
+<!-- Telemetry bar below COT -->
+<div class="mt-3 pt-2 border-t border-hud-border/40 text-[10px] flex justify-between text-hud-cyan/50">
+<span>THINKING TIME: 790ms</span>
+<span>GPU LOAD: 34%</span>
+</div>
+</section>
+<!-- Bottom Weather & Atmospheric Analysis (Direct reference to Image 2: "mostly cloudy / 30° / Atmospheric Analysis") -->
+<section class="border border-hud-border bg-hud-panel/60 p-4 rounded hud-corner-bracket flex items-center justify-between" data-purpose="hud-weather-widget">
+<div>
+<div class="text-[10px] uppercase tracking-wider text-hud-cyan/60">ATMOSPHERIC ANALYSIS</div>
+<div class="font-hud text-base font-semibold text-white uppercase glow-cyan">MOSTLY CLOUDY</div>
+<div class="text-[10px] text-hud-emerald flex items-center space-x-1 mt-0.5">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-hud-emerald"></span>
+<span>PRESSURE: 1013.2 hPa // HUMIDITY 64%</span>
+</div>
+</div>
+<div class="relative w-16 h-16 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="transparent" r="42" stroke="rgba(0, 242, 255, 0.15)" stroke-width="5"></circle>
+<circle cx="50" cy="50" fill="transparent" r="42" stroke="#00f2ff" stroke-dasharray="264" stroke-dashoffset="75" stroke-linecap="round" stroke-width="5"></circle>
+</svg>
+<div class="absolute font-hud text-xl font-bold text-white glow-cyan">30°</div>
+</div>
+</section>
+</aside>
+<!-- CENTER COLUMN: Arc Holographic Reactor & Tactical Conversation Stream -->
+<section class="lg:col-span-6 flex flex-col space-y-4 order-1 lg:order-2" data-purpose="hud-conversation-and-reactor">
+<!-- Holographic Arc Reactor Display (Direct Visual Translation of IMAGE_2 central core) -->
+<div class="relative w-full h-[250px] border border-hud-border bg-hud-panel/50 rounded flex items-center justify-center overflow-hidden hud-corner-bracket glow-box" data-purpose="central-reactor-hud">
+<!-- Background Grid & Orbital Rings -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
+<!-- Outer static gauge ticks -->
+<div class="w-[280px] h-[280px] rounded-full border border-dashed border-hud-cyan/40"></div>
+</div>
+<!-- Rotating Outer Segments (Clockwise) -->
+<div class="absolute w-[220px] h-[220px] rounded-full border border-hud-cyan/30 anim-spin-slow pointer-events-none flex items-center justify-center">
+<div class="w-full h-full border-t-2 border-b-2 border-hud-cyan"></div>
+</div>
+<!-- Rotating Middle Segment (Counter Clockwise) -->
+<div class="absolute w-[180px] h-[180px] rounded-full border-2 border-dashed border-hud-blue/50 anim-spin-reverse pointer-events-none"></div>
+<!-- High-tech Serrated Arc Ring (Direct tribute to Image 2's glowing blue serrated wheel) -->
+<div class="absolute w-[140px] h-[140px] rounded-full border-4 border-dashed border-hud-cyan anim-spin-fast opacity-90 filter drop-shadow(0 0 8px #00f2ff)"></div>
+<!-- Inner Core Arc Reactor Center -->
+<div class="relative z-10 w-24 h-24 rounded-full bg-hud-bg/90 border-2 border-hud-cyan flex flex-col items-center justify-center anim-pulse-glow">
+<!-- Glowing Mini Reactor Core -->
+<div class="w-12 h-12 rounded-full border-2 border-hud-cyan bg-cyan-400/20 flex items-center justify-center">
+<div class="w-5 h-5 rounded-full bg-white glow-cyan"></div>
+</div>
+<span class="font-hud text-[9px] font-bold text-hud-cyan tracking-widest mt-1">CORE MK-85</span>
+</div>
+<!-- HUD Quadrant Tactical Tags on Reactor -->
+<div class="absolute top-3 left-4 text-[10px] text-hud-cyan/60 font-mono">
+<span>FREQ: 142.85 MHz</span><br/>
+<span>FLUX: STABLE</span>
+</div>
+<div class="absolute top-3 right-4 text-right text-[10px] text-hud-cyan/60 font-mono">
+<span>QUANTUM DEPTH: 16-BIT</span><br/>
+<span>SYNC RATIO: 99.98%</span>
+</div>
+<div class="absolute bottom-3 left-4 text-[10px] text-hud-emerald font-mono">
+<span>● AUDIO VOX STREAM: READY</span>
+</div>
+<div class="absolute bottom-3 right-4 text-right text-[10px] text-hud-cyan/60 font-mono">
+<span>MODE: CONVERSATIONAL AGENT</span>
+</div>
+</div>
+<!-- Tactical Dialogue Stream (Operator David vs. D.A.R.V.I.S.) -->
+<div class="border border-hud-border bg-hud-panel/75 rounded hud-corner-bracket flex-1 flex flex-col p-4 min-h-[460px] max-h-[580px] overflow-hidden" data-purpose="hud-chat-history">
+<!-- Dialogue Log Top Header -->
+<div class="flex items-center justify-between border-b border-hud-border/40 pb-2 mb-3 text-xs">
+<div class="flex items-center space-x-2">
+<span class="inline-block w-2 h-2 bg-hud-cyan rounded-full"></span>
+<span class="font-hud text-white uppercase tracking-wider text-xs">TACTICAL AUDIO &amp; TEXT LOGS</span>
+</div>
+<div class="flex items-center space-x-3 text-[11px] text-hud-cyan/60">
+<span>SESSION ID: #DVR-2024-X11</span>
+<button class="hover:text-hud-cyan text-[10px] uppercase border border-hud-cyan/30 px-1.5 py-0.5 rounded bg-hud-cyan/5">EXPORT LOG</button>
+</div>
+</div>
+<!-- Chat Stream Scrollable Area -->
+<div class="flex-1 overflow-y-auto space-y-4 pr-2 text-xs">
+<!-- System Initializer -->
+<div class="text-center my-1">
+<span class="px-3 py-1 bg-hud-cyan/10 border border-hud-cyan/30 rounded-full text-[10px] text-hud-cyan/80 uppercase tracking-widest font-mono">
+              [ NEURAL DIALOGUE INITIALIZED // ALL SUBSYSTEMS NOMINAL ]
+            </span>
+</div>
+<!-- Message: Operator David -->
+<div class="flex flex-col items-end">
+<div class="flex items-center space-x-2 mb-1">
+<span class="text-[10px] text-hud-cyan/60 font-mono">14:02:18 BRT</span>
+<span class="font-hud text-[11px] text-hud-emerald font-semibold uppercase">DAVID A. RODRIGUES</span>
+<span class="w-1.5 h-1.5 rounded-full bg-hud-emerald"></span>
+</div>
+<div class="max-w-[85%] bg-hud-cyan/10 border border-hud-cyan/40 p-3 rounded-lg rounded-tr-none text-white shadow-sm">
+<p class="leading-relaxed">
+                "D.A.R.V.I.S., realize uma varredura nas notas de arquitetura do Obsidian Vault e sincronize meus compromissos de amanhã. Preciso saber se há conflito de deploy no Cloudflare Worker com a reunião de sprint."
+              </p>
+</div>
+</div>
+<!-- Message: D.A.R.V.I.S. with Tool Execution Details -->
+<div class="flex flex-col items-start">
+<div class="flex items-center space-x-2 mb-1">
+<span class="w-1.5 h-1.5 rounded-full bg-hud-cyan"></span>
+<span class="font-hud text-[11px] text-hud-cyan font-bold uppercase">D.A.R.V.I.S. // MK-85</span>
+<span class="text-[10px] text-hud-cyan/60 font-mono">14:02:20 BRT (180ms)</span>
+</div>
+<div class="max-w-[90%] bg-hud-panel border border-hud-cyan/30 p-3.5 rounded-lg rounded-tl-none text-hud-cyan space-y-3">
+<p class="text-white leading-relaxed">
+                Com prazer, senhor David. Protocolo de inspeção tática concluído com sucesso.
+              </p>
+<!-- Inline Tool Activity Preview Box -->
+<div class="bg-black/40 border border-hud-cyan/30 rounded p-2.5 font-mono text-[11px] space-y-1.5">
+<div class="flex items-center justify-between text-hud-emerald">
+<div class="flex items-center space-x-1.5">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="font-bold">CALL: obsidian_vault_rag</span>
+</div>
+<span class="text-[10px] bg-hud-emerald/20 px-1 rounded">200 OK (84ms)</span>
+</div>
+<div class="text-hud-cyan/70 text-[10px] pl-5">
+                  • 2 documentos encontrados: <span class="text-white">"Deploy_Pipeline_V4.md"</span> e <span class="text-white">"Infra_Cloudflare_Routes.md"</span>.
+                </div>
+<div class="flex items-center justify-between text-hud-blue pt-1 border-t border-hud-cyan/20">
+<div class="flex items-center space-x-1.5">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="font-bold">CALL: google_calendar_sync</span>
+</div>
+<span class="text-[10px] bg-hud-blue/20 px-1 rounded">200 OK (112ms)</span>
+</div>
+<div class="text-hud-cyan/70 text-[10px] pl-5">
+                  • Sincronização de 3 eventos para 17/Nov. Reunião de Sprint agendada para às 10:30 BRT.
+                </div>
+</div>
+<!-- Verbal Response -->
+<div class="text-white/95 leading-relaxed">
+                Identifiquei uma sobreposição crítica: a esteira de release do <span class="text-hud-cyan font-semibold">Cloudflare Worker Gateway</span> está estimada para as <span class="text-hud-amber font-semibold">10:15 BRT</span>, apenas 15 minutos antes da Reunião de Sprint.
+                <br/><br/>
+                Recomendo antecipar a janela de deployment para às <span class="text-hud-emerald font-semibold">08:30 BRT</span> ou delegar o canary release autônomo ao agente de contingência. Posso agendar a alteração no Google Calendar e atualizar a nota do vault?
+              </div>
+<!-- Quick Action Chips -->
+<div class="flex flex-wrap gap-2 pt-1">
+<button class="px-2.5 py-1 text-[11px] bg-hud-cyan/20 hover:bg-hud-cyan/30 text-white border border-hud-cyan rounded transition flex items-center space-x-1">
+<span>Confirmar Antecipação (08:30 BRT)</span>
+</button>
+<button class="px-2.5 py-1 text-[11px] bg-hud-panel hover:bg-hud-cyan/10 text-hud-cyan/80 border border-hud-cyan/40 rounded transition">
+                  Manter Horário e Monitorar
+                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Float Input Bar for Tactical Voice & Command Interaction -->
+<div class="mt-3 pt-3 border-t border-hud-border/50" data-purpose="hud-input-bar">
+<form class="relative flex items-center space-x-2" onsubmit="event.preventDefault();">
+<!-- Voice PTT (Push-to-Talk) Button with Glow -->
+<button class="relative group p-3 bg-hud-cyan/15 hover:bg-hud-cyan/30 border border-hud-cyan rounded-md text-hud-cyan transition flex items-center justify-center anim-pulse-glow" title="Segurar barra de espaço para falar" type="button">
+<svg class="w-5 h-5 text-hud-cyan group-hover:scale-110 transition-transform" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4zm4 10.93A7.001 7.001 0 0017 8a1 1 0 10-2 0A5 5 0 015 8a1 1 0 00-2 0 7.001 7.001 0 006 6.93V17H6a1 1 0 100 2h8a1 1 0 100-2h-3v-2.07z" fill-rule="evenodd"></path>
+</svg>
+</button>
+<!-- Text Input Container -->
+<div class="relative flex-1">
+<input class="w-full bg-hud-bg/90 border border-hud-cyan/40 focus:border-hud-cyan focus:ring-1 focus:ring-hud-cyan rounded-md py-2.5 pl-3.5 pr-24 text-xs text-white placeholder-hud-cyan/40 font-mono tracking-wide" placeholder="Pressione [ESPAÇO] para Voz // Digite diretiva tática para o D.A.R.V.I.S...." type="text"/>
+<div class="absolute right-2 top-2 flex items-center space-x-1.5">
+<!-- Attachment / Vault Selector -->
+<button class="p-1 hover:text-white text-hud-cyan/60 transition" title="Anexar Artefato / Documento do Vault" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<span class="text-[10px] text-hud-cyan/40 font-mono">⌘K</span>
+</div>
+</div>
+<!-- Send Directive Button -->
+<button class="px-4 py-2.5 bg-hud-cyan text-black hover:bg-white font-hud font-bold text-xs uppercase tracking-wider rounded-md transition shadow-[0_0_15px_rgba(0,242,255,0.4)] flex items-center space-x-1" type="submit">
+<span>ENVIAR</span>
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</form>
+<!-- Hotkey Hint Bar -->
+<div class="flex justify-between items-center text-[10px] text-hud-cyan/50 mt-2 px-1">
+<span>VOX ENGINE: Whisper V3 Active</span>
+<span class="tracking-wide">ESC: Cancelar // TAB: Auto-completar Comando // ESPAÇO: Microfone PTT</span>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT COLUMN: Tools Matrix & Autonomous Inspector (Direct tribute to the right-hand apps/modules & concentric ring in Image 2) -->
+<aside class="lg:col-span-3 flex flex-col space-y-6 order-3" data-purpose="hud-tool-matrix-panel">
+<!-- Top Concentric Circular Status Indicator (Direct tribute to image 2's upper right circular reactor with radial links: Documents, Videos, Music, Programs) -->
+<section class="border border-hud-border bg-hud-panel/60 p-4 rounded hud-corner-bracket glow-box" data-purpose="neural-cpu-concentric-widget">
+<div class="flex items-center justify-between border-b border-hud-border/40 pb-2 mb-3">
+<span class="text-xs uppercase font-hud tracking-widest text-hud-cyan">NEURAL SUBSYSTEMS</span>
+<span class="text-[10px] text-hud-cyan/70 font-mono">KARTIK'S ARCHITECTURE</span>
+</div>
+<div class="flex items-center justify-center py-2">
+<!-- Multi-Ring Radial Display -->
+<div class="relative w-36 h-36 flex items-center justify-center">
+<!-- Ring 1 Outer -->
+<div class="absolute inset-0 rounded-full border-2 border-dashed border-hud-cyan/40 anim-spin-slow"></div>
+<!-- Ring 2 Mid -->
+<div class="absolute w-28 h-28 rounded-full border border-hud-blue/60 anim-spin-reverse"></div>
+<!-- Ring 3 Inner Glowing -->
+<div class="absolute w-20 h-20 rounded-full border-2 border-hud-cyan bg-hud-cyan/10 flex items-center justify-center anim-pulse-glow">
+<!-- Arc Core Dot Matrix -->
+<div class="w-10 h-10 rounded-full border border-white flex items-center justify-center text-[10px] font-hud font-bold text-white">
+                MK85
+              </div>
+</div>
+</div>
+</div>
+<!-- Connected Subsystem Links (Like Image 2's Documents, Videos, Music, Programs, Gmail, etc.) -->
+<div class="grid grid-cols-2 gap-2 mt-2 pt-3 border-t border-hud-border/40 text-[11px]">
+<div class="flex items-center justify-between bg-black/30 p-1.5 border border-hud-border/40 rounded">
+<span class="text-white/80">Obsidian Vault</span>
+<span class="w-2 h-2 rounded-full bg-hud-emerald"></span>
+</div>
+<div class="flex items-center justify-between bg-black/30 p-1.5 border border-hud-border/40 rounded">
+<span class="text-white/80">Google Cal</span>
+<span class="w-2 h-2 rounded-full bg-hud-emerald"></span>
+</div>
+<div class="flex items-center justify-between bg-black/30 p-1.5 border border-hud-border/40 rounded">
+<span class="text-white/80">CF Worker</span>
+<span class="w-2 h-2 rounded-full bg-hud-emerald"></span>
+</div>
+<div class="flex items-center justify-between bg-black/30 p-1.5 border border-hud-border/40 rounded">
+<span class="text-white/80">Supabase DB</span>
+<span class="w-2 h-2 rounded-full bg-hud-cyan"></span>
+</div>
+</div>
+</section>
+<!-- Tool Execution Inspector (Real-time Autonomous API Invocation Engine) -->
+<section class="border border-hud-border bg-hud-panel/60 p-4 rounded hud-corner-bracket flex-1 flex flex-col min-h-[380px]" data-purpose="hud-autonomous-tool-inspector">
+<div class="flex items-center justify-between border-b border-hud-border/40 pb-2 mb-3">
+<div class="flex items-center space-x-2">
+<span class="w-2 h-2 bg-hud-emerald rounded-full animate-pulse"></span>
+<span class="text-xs uppercase font-hud tracking-widest text-hud-cyan">TOOL MATRIX &amp; RUNTIMES</span>
+</div>
+<span class="text-[10px] text-hud-emerald border border-hud-emerald/30 px-1 rounded bg-hud-emerald/10">5 ACTIVE</span>
+</div>
+<!-- Tool Call Stream Logs -->
+<div class="space-y-3 flex-1 overflow-y-auto pr-1 text-[11px]">
+<!-- Tool Card 1: Obsidian RAG -->
+<div class="border border-hud-border/60 bg-black/40 rounded p-2.5 hover:border-hud-cyan transition">
+<div class="flex items-center justify-between mb-1">
+<span class="font-bold text-white font-mono flex items-center space-x-1">
+<span class="text-hud-cyan">&gt;</span>
+<span>obsidian_rag_engine</span>
+</span>
+<span class="text-[9px] text-hud-emerald uppercase font-mono">STATUS: 200 OK</span>
+</div>
+<p class="text-[10px] text-hud-cyan/70">Target: Local Markdown Vault (1,420 Notes)</p>
+<div class="mt-2 bg-hud-bg p-1.5 rounded text-[10px] font-mono text-hud-cyan/90 border border-hud-border/30 overflow-x-auto">
+              {"query": "Deploy Cloudflare", "matches": 2, "latency": "84ms"}
+            </div>
+</div>
+<!-- Tool Card 2: Calendar Tool -->
+<div class="border border-hud-border/60 bg-black/40 rounded p-2.5 hover:border-hud-cyan transition">
+<div class="flex items-center justify-between mb-1">
+<span class="font-bold text-white font-mono flex items-center space-x-1">
+<span class="text-hud-cyan">&gt;</span>
+<span>gcal_sync_agent</span>
+</span>
+<span class="text-[9px] text-hud-blue uppercase font-mono">MONITORING</span>
+</div>
+<p class="text-[10px] text-hud-cyan/70">Target: Primary David Schedule</p>
+<div class="mt-2 bg-hud-bg p-1.5 rounded text-[10px] font-mono text-hud-cyan/90 border border-hud-border/30 overflow-x-auto">
+              {"action": "detect_conflicts", "range": "2024-11-17", "alert": true}
+            </div>
+</div>
+<!-- Tool Card 3: Cloudflare Gateway -->
+<div class="border border-hud-border/60 bg-black/40 rounded p-2.5 hover:border-hud-cyan transition">
+<div class="flex items-center justify-between mb-1">
+<span class="font-bold text-white font-mono flex items-center space-x-1">
+<span class="text-hud-cyan">&gt;</span>
+<span>cf_worker_gateway</span>
+</span>
+<span class="text-[9px] text-hud-amber uppercase font-mono">APPROVAL REQ</span>
+</div>
+<p class="text-[10px] text-hud-cyan/70">Target: Edge Release Canary 1.14</p>
+<div class="mt-2 flex items-center justify-between pt-1">
+<span class="text-[10px] text-hud-amber/80">Aguardando confirmação</span>
+<button class="px-2 py-0.5 bg-hud-amber/20 hover:bg-hud-amber/30 text-hud-amber text-[10px] border border-hud-amber/40 rounded transition">
+                Autorizar
+              </button>
+</div>
+</div>
+<!-- Tool Card 4: Telegram Neural Bot -->
+<div class="border border-hud-border/60 bg-black/40 rounded p-2.5 hover:border-hud-cyan transition">
+<div class="flex items-center justify-between mb-1">
+<span class="font-bold text-white font-mono flex items-center space-x-1">
+<span class="text-hud-cyan">&gt;</span>
+<span>telegram_bridge</span>
+</span>
+<span class="text-[9px] text-hud-emerald uppercase font-mono">IDLE (POLLING)</span>
+</div>
+<p class="text-[10px] text-hud-cyan/70">Gateway: Webhook @DARVIS_operator_bot</p>
+</div>
+</div>
+<!-- System Stats Footer Bar -->
+<div class="mt-3 pt-2.5 border-t border-hud-border/40 text-[10px] text-hud-cyan/60 flex items-center justify-between font-mono">
+<span>PARALLEL CALLS: 4/12</span>
+<span>SUCCESS RATE: 99.4%</span>
+</div>
+</section>
+</aside>
+</main>
+<!-- END: HUDMainGrid -->
+<!-- BEGIN: HUDTacticalFooter -->
+<footer class="w-full border-t border-hud-border/60 bg-hud-panel/90 px-6 py-2 text-[11px] text-hud-cyan/60 backdrop-blur-md" data-purpose="hud-telemetry-footer">
+<div class="max-w-[1720px] mx-auto flex flex-col md:flex-row items-center justify-between gap-2">
+<div class="flex items-center space-x-4">
+<span>SECURITY LEVEL: <strong class="text-hud-emerald">ALPHA-OMEGA</strong></span>
+<span>•</span>
+<span>ENCRYPTION: <strong class="text-white">KYBER-1024 QUANTUM RESISTANT</strong></span>
+<span>•</span>
+<span>JARVIS PROTOCOL: <strong class="text-hud-cyan">ONLINE &amp; ACTIVE</strong></span>
+</div>
+<div class="flex items-center space-x-4">
+<span class="text-white/80">DARVIS COCKPIT // DESIGNED FOR OPERATOR DAVID ABRAHÃO RODRIGUES</span>
+<span class="px-2 py-0.5 bg-hud-cyan/10 border border-hud-cyan/30 text-hud-cyan text-[10px] rounded">HUD 1080P/4K WIDE READY</span>
+</div>
+</div>
+</footer>
+<!-- END: HUDTacticalFooter -->
+<!-- BEGIN: Scripts -->
+<script data-purpose="hud-clock-manager">
+    // Live Tactical BRT Clock updater
+    function updateHUDClock() {
+      const clockElement = document.getElementById('hud-clock');
+      if (!clockElement) return;
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      clockElement.textContent = `${hours}:${minutes}:${seconds} BRT`;
+    }
+    setInterval(updateHUDClock, 1000);
+    updateHUDClock();
+  </script>
+<!-- END: Scripts -->
+</body></html>

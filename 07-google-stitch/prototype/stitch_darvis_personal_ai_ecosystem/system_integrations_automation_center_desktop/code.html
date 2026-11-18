@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary-container":"#38bdf8","on-error-container":"#ffdad6","on-primary-fixed-variant":"#004c69","on-tertiary-fixed":"#002113","surface-bright":"#353942","surface-container-lowest":"#0a0e16","background":"#0f131c","on-background":"#dfe2ee","surface-tint":"#7bd0ff","outline-variant":"#3e484f","on-secondary":"#003640","on-primary":"#00354a","surface":"#0f131c","primary":"#8ed5ff","tertiary-fixed":"#6ffbbe","on-secondary-fixed-variant":"#004e5c","secondary":"#4cd7f6","primary-fixed":"#c4e7ff","on-secondary-container":"#00424e","inverse-surface":"#dfe2ee","secondary-container":"#03b5d3","on-tertiary-fixed-variant":"#005236","surface-variant":"#31353e","surface-container":"#1c2028","on-error":"#690005","surface-container-high":"#262a33","tertiary-container":"#30c88f","surface-container-highest":"#31353e","surface-container-low":"#181c24","on-surface":"#dfe2ee","on-tertiary":"#003824","on-primary-container":"#004965","inverse-on-surface":"#2c3039","error-container":"#93000a","on-primary-fixed":"#001e2c","outline":"#87929a","tertiary-fixed-dim":"#4edea3","surface-dim":"#0f131c","error":"#ffb4ab","on-surface-variant":"#bdc8d1","on-tertiary-container":"#004e34","inverse-primary":"#00668a","on-secondary-fixed":"#001f26","tertiary":"#56e5a9","secondary-fixed-dim":"#4cd7f6","primary-fixed-dim":"#7bd0ff","secondary-fixed":"#acedff"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","gutter":"1rem","space-lg":"1.5rem","margin":"1rem","margin-lg":"2rem","space-xl":"2.5rem","space-sm":"0.5rem","space-md":"1rem","gutter-sm":"0.75rem","margin-md":"1.5rem"},"fontFamily":{"headline-sm":["Space Grotesk"],"display-lg":["Space Grotesk"],"body-lg":["Geist"],"body-md":["Geist"],"display-lg-mobile":["Space Grotesk"],"label-micro":["JetBrains Mono"],"body-sm":["Geist"],"headline-md":["Space Grotesk"],"label-telemetry":["JetBrains Mono"],"headline-lg":["Space Grotesk"]},"fontSize":{"headline-sm":["18px",{"lineHeight":"26px","fontWeight":"600"}],"display-lg":["48px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"display-lg-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-micro":["10px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"headline-md":["22px",{"lineHeight":"30px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-telemetry":["13px",{"lineHeight":"18px","letterSpacing":"0.04em","fontWeight":"500"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface min-h-screen selection:bg-primary selection:text-on-primary"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col flex-1 min-h-0"><div class="h-16 px-gutter flex items-center justify-between bg-surface-container-low/40"><div class="flex items-center gap-space-sm"><div class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(56,189,248,0.5)]"></div><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface uppercase">D.A.R.V.I.S.</span></div><span class="font-label-micro text-label-micro text-primary font-semibold px-space-xs py-0.5 rounded bg-surface-container-high tracking-widest">MK-VII</span></div><div class="px-gutter pt-space-md pb-space-xs"><span class="font-label-micro text-label-micro uppercase tracking-wider text-outline">COGNITIVE ROUTING NODES</span></div><nav class="flex-1 px-space-sm space-y-1 overflow-y-auto" data-active-classes="bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(56,189,248,0.25)]"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="command-center" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">space_dashboard</span><span class="font-headline-sm text-[14px] leading-tight">Command Center</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">smart_toy</span><span class="font-headline-sm text-[14px] leading-tight">AI Assistant</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="neural-memory" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">hub</span><span class="font-headline-sm text-[14px] leading-tight">Neural Memory (Obsidian)</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="projects-and-tasks" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">view_kanban</span><span class="font-headline-sm text-[14px] leading-tight">Projects &amp; Tasks</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="kinetic-protocol" href="#"><span class="material-symbols-outlined text-tertiary group-hover:text-tertiary-fixed text-[20px]">fitness_center</span><span class="font-headline-sm text-[14px] leading-tight">Kinetic Protocol (Treino)</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-all group bg-primary-container text-on-primary-container font-semibold shadow-[0_0_12px_rgba(56,189,248,0.25)]" data-path="system-integrations" href="#"><span class="material-symbols-outlined text-primary group-hover:text-primary-container text-[20px]">extension</span><span class="font-headline-sm text-[14px] leading-tight">System Integrations</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all group" data-path="general-settings" href="#"><span class="material-symbols-outlined text-on-surface-variant group-hover:text-on-surface text-[20px]">tune</span><span class="font-headline-sm text-[14px] leading-tight">General Settings</span></a></nav></div><div class="p-gutter bg-surface-container-low/30 space-y-space-xs"><div class="flex items-center justify-between"><span class="font-label-micro text-label-micro text-outline uppercase">SYS_SEC // ENCRYPTED</span><div class="w-1.5 h-1.5 rounded-full bg-tertiary shadow-[0_0_6px_rgba(86,229,169,0.7)]"></div></div><div class="font-label-telemetry text-label-telemetry text-primary tracking-wide">HUD PROTOCOL SEC//V3.4</div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl z-40 flex items-center justify-between px-gutter shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-gutter"><div class="flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span><span class="font-label-telemetry text-label-telemetry text-tertiary font-semibold tracking-wider">CORE STATUS: ONLINE</span></div><div class="hidden xl:flex items-center gap-space-md font-label-telemetry text-label-telemetry text-on-surface-variant"><div class="flex items-center gap-space-xs"><span>LATENCY:</span><span class="text-primary font-semibold">14ms</span></div><div class="flex items-center gap-space-xs"><span>CPU/NEURAL LOAD:</span><span class="text-secondary font-semibold">27.4%</span></div></div></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs font-label-telemetry text-label-telemetry text-on-surface-variant bg-surface-container-low/70 px-space-md py-space-xs rounded"><span class="material-symbols-outlined text-primary text-[16px]">schedule</span><span class="text-on-surface tracking-widest font-semibold">10:42:19 UTC SYNCHRONIZED</span></div><div class="flex items-center gap-space-sm"><div class="text-right hidden sm:block"><div class="font-headline-sm text-body-md text-on-surface font-semibold leading-none">David</div><div class="font-label-micro text-label-micro text-primary tracking-widest uppercase mt-0.5">OPERATOR</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 w-full min-h-screen bg-surface px-gutter py-space-lg"><div class="flex flex-col w-full space-y-gutter">
+<!-- TOP HUD TELEMETRY & CONTROL DECK -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-low p-gutter shadow-xl">
+<div class="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div class="relative flex flex-col xl:flex-row xl:items-center justify-between gap-space-lg">
+<!-- System Ident & Tactical Title -->
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-micro text-label-micro px-space-xs py-0.5 rounded bg-primary-container text-on-primary-container uppercase font-semibold">GATEWAY_CORE // SEC-V9</span>
+<span class="font-label-micro text-label-micro text-tertiary flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-ping"></span>
+            CLUSTER SYNCED: BR-SAO-1
+          </span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tight flex items-baseline gap-space-sm">
+<span>CENTRAL DE INTEGRAÇÕES &amp; AUTOMAÇÃO</span>
+<span class="font-label-telemetry text-label-telemetry text-outline hidden sm:inline">// SYSTEM GATEWAY</span>
+</div>
+</div>
+<!-- Quick Telemetry Badges Strip -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm font-label-telemetry text-label-telemetry">
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase">APIs Conectadas</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-on-surface font-semibold">12 ATIVAS</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase">Latência Média</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="material-symbols-outlined text-primary text-[14px]">speed</span>
+<span class="text-primary font-semibold">24ms</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase">Disparos Hoje</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="material-symbols-outlined text-secondary text-[14px]">bolt</span>
+<span class="text-on-surface font-semibold">1.842</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col">
+<span class="font-label-micro text-label-micro text-outline uppercase">Failover Matrix</span>
+<div class="flex items-center gap-space-xs mt-0.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-tertiary font-semibold">REDIS/SUPABASE</span>
+</div>
+</div>
+</div>
+<!-- Primary Action Clustered Pod -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<button class="px-space-md py-space-sm rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-body-md flex items-center gap-space-xs shadow-[0_0_16px_rgba(56,189,248,0.35)] hover:opacity-90 transition-all" id="btn-oauth-modal">
+<span class="material-symbols-outlined text-[18px]">add_link</span>
+<span>+ Nova Integração OAuth</span>
+</button>
+<button class="px-space-md py-space-sm rounded-lg bg-surface-container-high text-on-surface font-headline-sm text-body-md flex items-center gap-space-xs hover:bg-surface-variant transition-all" id="btn-trigger-webhook">
+<span class="material-symbols-outlined text-secondary text-[18px]">send_time_extension</span>
+<span>Disparar Webhook</span>
+</button>
+<button class="p-space-sm rounded-lg bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-all" id="btn-clear-logs" title="Logs de Execução">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+</button>
+</div>
+</div>
+</div>
+<!-- MAIN COCKPIT 3-COLUMN TRIDIMENSIONAL GRID -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- ================= COLUMN 1: CONNECTED CLOUD & WORKSPACE SERVICES (4 COLS) ================= -->
+<div class="lg:col-span-4 flex flex-col space-y-gutter">
+<!-- Section Title Capsule -->
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+<span class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">Cloud &amp; Local Mesh</span>
+</div>
+<span class="font-label-telemetry text-label-micro text-primary">5/5 HEALTHY</span>
+</div>
+<!-- Service Card: Google Workspace -->
+<div class="group relative rounded-xl bg-surface-container-low p-space-md shadow-md transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[22px]">calendar_today</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold leading-tight">Google Workspace &amp; Cal</div>
+<div class="font-label-micro text-label-micro text-outline mt-0.5">OAUTH 2.0 (SCOPES: EVENTS.RW, GMAIL.RO)</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-micro text-label-micro font-semibold uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+            Online
+          </span>
+</div>
+<div class="mt-space-md p-space-sm rounded bg-surface-container-lowest/80 font-label-telemetry text-body-sm space-y-1">
+<div class="flex justify-between text-on-surface-variant">
+<span>Sincronização:</span>
+<span class="text-tertiary font-medium">Contínua (Heurística)</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Eventos Processados Hoje:</span>
+<span class="text-on-surface font-semibold">48 registros</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Latência Gateway:</span>
+<span class="text-primary font-medium">38ms</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between pt-space-xs">
+<button class="font-label-telemetry text-body-sm text-primary flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[16px]">tune</span> Regras de Parsing
+          </button>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary-container"></div>
+</label>
+</div>
+</div>
+<!-- Service Card: Obsidian Local REST API & Git -->
+<div class="group relative rounded-xl bg-surface-container-low p-space-md shadow-md transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[22px]">book_online</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold leading-tight">Obsidian Vault REST &amp; Git</div>
+<div class="font-label-micro text-label-micro text-outline mt-0.5">127.0.0.1:27124 // MAIN BRANCH</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-micro text-label-micro font-semibold uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+            Online
+          </span>
+</div>
+<div class="mt-space-md p-space-sm rounded bg-surface-container-lowest/80 font-label-telemetry text-body-sm space-y-1">
+<div class="flex justify-between text-on-surface-variant">
+<span>Commit Daemon:</span>
+<span class="text-tertiary font-medium">Auto-Commit em Write</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Vault Sync Latency:</span>
+<span class="text-primary font-semibold">4ms (Local IPC)</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Último Snap:</span>
+<span class="text-on-surface">hash: 8f4e22a (2m atrás)</span>
+</div>
+</div>
+<div class="mt-space-md flex items-center justify-between pt-space-xs">
+<span class="font-label-micro text-label-micro text-outline">AUTO-REBASE ON CONFLICT: YES</span>
+<span class="material-symbols-outlined text-primary text-[20px] cursor-pointer hover:opacity-80">sync</span>
+</div>
+</div>
+<!-- Service Card: Cloudflare Edge Workers -->
+<div class="group relative rounded-xl bg-surface-container-low p-space-md shadow-md transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[22px]">cloud_sync</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold leading-tight">Cloudflare Edge Proxy</div>
+<div class="font-label-micro text-label-micro text-outline mt-0.5">GATEWAY ROTATOR + REDIS KV</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-primary-container/20 text-primary font-label-micro text-label-micro font-semibold uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+            Nominal
+          </span>
+</div>
+<div class="mt-space-md grid grid-cols-2 gap-space-xs font-label-telemetry text-body-sm">
+<div class="p-space-xs rounded bg-surface-container-lowest">
+<div class="font-label-micro text-label-micro text-outline">CACHE HIT RATIO</div>
+<div class="text-on-surface font-semibold text-headline-sm">94.2%</div>
+</div>
+<div class="p-space-xs rounded bg-surface-container-lowest">
+<div class="font-label-micro text-label-micro text-outline">RATE SHIELD</div>
+<div class="text-tertiary font-semibold text-headline-sm">0 BLOCKS</div>
+</div>
+</div>
+</div>
+<!-- Service Card: Supabase pgvector -->
+<div class="group relative rounded-xl bg-surface-container-low p-space-md shadow-md transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-[22px]">database</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold leading-tight">Supabase pgvector</div>
+<div class="font-label-micro text-label-micro text-outline mt-0.5">EMBEDDINGS (text-embedding-3-small)</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-micro text-label-micro font-semibold uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            Conectado
+          </span>
+</div>
+<div class="mt-space-md p-space-sm rounded bg-surface-container-lowest/80 font-label-telemetry text-body-sm space-y-1">
+<div class="flex justify-between text-on-surface-variant">
+<span>Vetores Indexados:</span>
+<span class="text-on-surface font-semibold">14.892 vetores</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Índice Cosine:</span>
+<span class="text-primary font-medium">HNSW (m=16, ef=64)</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Tempo Médio Busca:</span>
+<span class="text-tertiary font-semibold">18ms</span>
+</div>
+</div>
+</div>
+<!-- Service Card: Telegram Bot Webhook -->
+<div class="group relative rounded-xl bg-surface-container-low p-space-md shadow-md transition-all hover:bg-surface-container">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[22px]">smart_toy</span>
+</div>
+<div>
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold leading-tight">Telegram Bot Webhook</div>
+<div class="font-label-micro text-label-micro text-outline mt-0.5">ID: @darvis_operator_bot</div>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-micro text-label-micro font-semibold uppercase flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            Ativo
+          </span>
+</div>
+<div class="mt-space-sm font-body-sm text-body-sm text-on-surface-variant">
+          Relay bidirecional para comandos de áudio transcritos via Whisper, lembretes urgentes e gatilhos de rotina executados sem latência.
+        </div>
+</div>
+</div>
+<!-- ================= COLUMN 2: AUTONOMOUS DAEMONS & STREAM CONSOLE (5 COLS) ================= -->
+<div class="lg:col-span-5 flex flex-col space-y-gutter">
+<!-- Section Title Capsule -->
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[18px]">rebase_edit</span>
+<span class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">Autonomous Daemons Matrix</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-telemetry text-label-micro text-tertiary">4 DAEMONS LIVE</span>
+</div>
+</div>
+<!-- Daemons Grid Matrix -->
+<div class="space-y-space-sm">
+<!-- Daemon 1: Daily Digest -->
+<div class="p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-lg text-on-surface font-semibold">Daily Digest Audio Briefing</span>
+<span class="font-label-micro text-label-micro px-1.5 py-0.5 rounded bg-surface-container-high text-primary">CRON: 07:00 BRT</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Sintetiza calendários, headlines de mercado e treinos via ElevenLabs TTS + Whisper.</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]">play_circle</span>
+</div>
+<div class="mt-space-sm flex items-center justify-between font-label-telemetry text-body-sm pt-space-xs">
+<span class="text-outline">PRÓXIMA EXECUÇÃO: <span class="text-on-surface font-semibold">07:00:00 (em 4h 18m)</span></span>
+<span class="text-tertiary">100% SUCCESS</span>
+</div>
+</div>
+<!-- Daemon 2: Sprint Velocity Analyzer -->
+<div class="p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-lg text-on-surface font-semibold">Sprint Velocity Analyzer</span>
+<span class="font-label-micro text-label-micro px-1.5 py-0.5 rounded bg-surface-container-high text-secondary">A CADA 6 HORAS</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Cruza cards concluídos no Kanban com git commits locais e calcula taxa de avanço.</div>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">monitoring</span>
+</div>
+<div class="mt-space-sm flex items-center justify-between font-label-telemetry text-body-sm pt-space-xs">
+<span class="text-outline">ÚLTIMO DISPARO: <span class="text-on-surface font-semibold">08:00:00 UTC (Ok)</span></span>
+<span class="text-primary font-medium">BURNDOWN NOMINAL</span>
+</div>
+</div>
+<!-- Daemon 3: Weather Alert Watcher -->
+<div class="p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-lg text-on-surface font-semibold">Weather Alert Watcher</span>
+<span class="font-label-micro text-label-micro px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">INTERVAL: 15 MIN</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Consulta radar meteorológico e Defesa Civil para ajuste dinâmico de Kinetic Protocol.</div>
+</div>
+<span class="material-symbols-outlined text-primary-container text-[20px]">cyclone</span>
+</div>
+<div class="mt-space-sm flex items-center justify-between font-label-telemetry text-body-sm pt-space-xs">
+<span class="text-outline">STATUS AMBIENTAL: <span class="text-tertiary font-semibold">SEM ALERTAS</span></span>
+<span class="text-outline">PING: 110ms</span>
+</div>
+</div>
+<!-- Daemon 4: Bio-Routine Heatmap Compiler -->
+<div class="p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="space-y-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-body-lg text-on-surface font-semibold">Bio-Routine Heatmap Compiler</span>
+<span class="font-label-micro text-label-micro px-1.5 py-0.5 rounded bg-surface-container-high text-primary">CRON: 23:30 BRT</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Compila ingestão calórica, carga de treinos e sono no Obsidian Daily Note.</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]">fitness_center</span>
+</div>
+<div class="mt-space-sm flex items-center justify-between font-label-telemetry text-body-sm pt-space-xs">
+<span class="text-outline">DATA TARGET: <span class="text-on-surface font-semibold">Vault/Diário/2025-05-18.md</span></span>
+<span class="text-tertiary">READY</span>
+</div>
+</div>
+</div>
+<!-- Terminal de Stream de Logs em Tempo Real -->
+<div class="flex-1 min-h-[380px] rounded-xl bg-surface-container-lowest p-gutter flex flex-col justify-between shadow-2xl relative overflow-hidden font-label-telemetry">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low/20 px-space-xs rounded">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-error inline-block"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary inline-block"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary inline-block"></span>
+<span class="font-label-micro text-label-micro text-outline ml-2">DEV://TTY/STREAMS/INTEGRATION.LOG</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-label-micro text-tertiary animate-pulse uppercase">LIVE STREAM</span>
+<button class="text-outline hover:text-on-surface text-label-micro uppercase" id="btn-pause-log">PAUSE</button>
+</div>
+</div>
+<!-- Terminal Output Screen -->
+<div class="flex-1 space-y-1.5 text-body-sm overflow-y-auto leading-relaxed pr-space-xs" id="terminal-stream">
+<div class="text-on-surface-variant">
+<span class="text-outline">[10:41:02.129]</span>
+<span class="text-primary font-semibold">[GW_INGRESS]</span>
+<span class="text-tertiary">POST /api/v1/webhook/telegram</span> - 200 OK (31ms)
+          </div>
+<div class="text-on-surface-variant">
+<span class="text-outline">[10:41:02.340]</span>
+<span class="text-secondary font-semibold">[NLP_DISPATCH]</span>
+            Payload parsed: "Preparar análise de fechamento de sprint" -&gt; Intent: <span class="text-primary">ANALYTICS_TRIGGER</span>
+</div>
+<div class="text-on-surface-variant">
+<span class="text-outline">[10:41:15.002]</span>
+<span class="text-primary font-semibold">[CRON_SCHED]</span>
+            Checking worker: Weather Severe Alert Watcher... <span class="text-tertiary">No warnings issued by regional radar</span>.
+          </div>
+<div class="text-on-surface-variant">
+<span class="text-outline">[10:41:40.892]</span>
+<span class="text-primary-container font-semibold">[OBSIDIAN_IPC]</span>
+            POST /vault/patch - modified: <span class="text-on-surface">"Sprint_Velocity_W20.md"</span> (diff: +24 lines)
+          </div>
+<div class="text-on-surface-variant">
+<span class="text-outline">[10:42:01.011]</span>
+<span class="text-tertiary font-semibold">[PG_VECTOR]</span>
+            Match similarity threshold 0.82 hit for query 'Sprint Velocity Trends'. Retornados 4 nós.
+          </div>
+<div class="text-on-surface-variant animate-pulse">
+<span class="text-outline">[10:42:19.490]</span>
+<span class="text-secondary font-semibold">[HEARTBEAT]</span>
+            All sub-agent daemons synchronized. Awaiting next cron cycle.
+          </div>
+</div>
+<div class="pt-space-sm flex items-center justify-between text-label-micro text-outline bg-surface-container-low/10 px-space-xs rounded mt-space-sm">
+<span>BUFFER: 4.096 BYTES // ENCRYPTED WITH AES-GCM-256</span>
+<span class="text-primary">AUTOREFRESH 1000ms</span>
+</div>
+</div>
+</div>
+<!-- ================= COLUMN 3: PERSONA CALIBRATION & SECURITY AUDIT (3 COLS) ================= -->
+<div class="lg:col-span-3 flex flex-col space-y-gutter">
+<!-- Section Title Capsule -->
+<div class="flex items-center justify-between px-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">psychology</span>
+<span class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-tight">Persona &amp; Governança</span>
+</div>
+<span class="font-label-telemetry text-label-micro text-secondary">EXEC_READY</span>
+</div>
+<!-- Persona & Tone Calibration Pod -->
+<div class="rounded-xl bg-surface-container-low p-space-md shadow-md space-y-space-md">
+<div class="flex items-center justify-between">
+<div>
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold">Calibração de Persona</div>
+<div class="font-label-micro text-label-micro text-primary">MODO ATUAL: TÁTICO HUD</div>
+</div>
+<div class="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+</div>
+</div>
+<div class="p-space-sm rounded bg-surface-container-lowest font-label-telemetry text-body-sm text-on-surface-variant flex justify-between">
+<span>Preset Executivo:</span>
+<span class="text-tertiary font-semibold">80% Conciso / 20% Analítico</span>
+</div>
+<!-- Sliders Matrix -->
+<div class="space-y-space-sm font-label-telemetry text-body-sm">
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-on-surface-variant">Estoicismo &amp; Formalidade</span>
+<span class="text-primary font-semibold">88%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 88%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-on-surface-variant">Assertividade Decisória</span>
+<span class="text-secondary font-semibold">94%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 94%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-on-surface-variant">Verbosidade &amp; Diálogo</span>
+<span class="text-outline font-semibold">18%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-outline h-full rounded-full" style="width: 18%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-1">
+<span class="text-on-surface-variant">Autonomia Tool-Use (Bash/APIs)</span>
+<span class="text-tertiary font-semibold">90%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 90%"></div>
+</div>
+</div>
+</div>
+<div class="pt-space-xs">
+<button class="w-full py-space-xs rounded bg-surface-container-high hover:bg-surface-variant text-on-surface font-headline-sm text-body-sm font-semibold transition-all">
+            Salvar Calibração no Vault
+          </button>
+</div>
+</div>
+<!-- Credential & Token Key Ring Audit -->
+<div class="rounded-xl bg-surface-container-low p-space-md shadow-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold">Cofre de Credenciais</div>
+<span class="material-symbols-outlined text-outline text-[18px]">lock</span>
+</div>
+<div class="space-y-space-xs font-label-telemetry text-body-sm">
+<div class="p-space-xs rounded bg-surface-container-lowest flex items-center justify-between">
+<div>
+<div class="text-on-surface font-medium">OPENAI_SECRET_KEY</div>
+<div class="font-label-micro text-label-micro text-outline">SHA256: 7d89...fbc4</div>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary bg-tertiary/10 px-1 rounded">ROT: 4d</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-lowest flex items-center justify-between">
+<div>
+<div class="text-on-surface font-medium">ANTHROPIC_CLAUDE_PRO</div>
+<div class="font-label-micro text-label-micro text-outline">SHA256: a13c...98ef</div>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary bg-tertiary/10 px-1 rounded">ROT: 18d</span>
+</div>
+<div class="p-space-xs rounded bg-surface-container-lowest flex items-center justify-between">
+<div>
+<div class="text-on-surface font-medium">ELEVENLABS_VOICE_GATEWAY</div>
+<div class="font-label-micro text-label-micro text-outline">SHA256: 49b2...01aa</div>
+</div>
+<span class="font-label-micro text-label-micro text-secondary bg-secondary/10 px-1 rounded">VAL: OK</span>
+</div>
+</div>
+<div class="pt-space-xs flex justify-between font-label-micro text-label-micro text-outline">
+<span>HARDWARE KEY: YUBIKEY PINNED</span>
+<span class="text-primary hover:underline cursor-pointer">Rotacionar Todas</span>
+</div>
+</div>
+<!-- AI Inference & Token Cost Accounting -->
+<div class="rounded-xl bg-surface-container-low p-space-md shadow-md space-y-space-sm flex-1 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-xs">
+<div class="font-headline-sm text-body-lg text-on-surface font-semibold">Auditoria de Custos &amp; Contexto</div>
+<span class="material-symbols-outlined text-secondary text-[18px]">credit_card</span>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">Consumo de tokens em ciclo contínuo (Janela de 24 horas).</div>
+</div>
+<div class="space-y-space-sm font-label-telemetry text-body-sm">
+<div class="p-space-sm rounded bg-surface-container-lowest space-y-1">
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Gemini 1.5 Pro</span>
+<span class="text-primary font-semibold">412.300 tokens</span>
+</div>
+<div class="flex justify-between">
+<span class="text-on-surface-variant">Claude 3.5 Sonnet</span>
+<span class="text-secondary font-semibold">189.400 tokens</span>
+</div>
+<div class="flex justify-between pt-1 text-tertiary">
+<span class="font-semibold">Custo Atual (Hoje):</span>
+<span class="font-bold text-headline-sm">$0.42 USD</span>
+</div>
+</div>
+<div class="flex items-center justify-between font-label-micro text-label-micro text-outline">
+<span>POOL DE CONTEXTO: 128K ATIVO</span>
+<span class="text-tertiary">DENTRO DO ORÇAMENTO</span>
+</div>
+</div>
+<button class="w-full py-space-xs rounded bg-surface-container-high hover:bg-surface-variant text-primary font-headline-sm text-body-sm transition-all mt-space-sm">
+          Exportar Relatório FinOps (.csv)
+        </button>
+</div>
+</div>
+</div>
+<!-- MODAL: NOVA INTEGRAÇÃO OAUTH (HIDDEN BY DEFAULT) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-surface-container-lowest/80 backdrop-blur-md hidden" id="oauth-modal">
+<div class="w-full max-w-xl rounded-xl bg-surface-container-low p-gutter shadow-2xl relative space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">vpn_key</span>
+<span class="font-headline-md text-headline-md text-on-surface">Configurar Conector OAuth 2.0</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-outline hover:text-on-surface" id="btn-close-modal">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="space-y-space-sm">
+<div>
+<label class="block font-label-telemetry text-body-sm text-on-surface-variant mb-1">Selecione o Provedor de API</label>
+<select class="w-full rounded bg-surface-container px-space-md py-space-sm font-headline-sm text-body-md text-on-surface focus:outline-none">
+<option>GitHub Enterprise / Copilot Hub</option>
+<option>Notion Knowledge Graph</option>
+<option>Linear Project Tracking</option>
+<option>Slack Real-Time RTM Bot</option>
+<option>Strava Bio-Telemetry Engine</option>
+</select>
+</div>
+<div>
+<label class="block font-label-telemetry text-body-sm text-on-surface-variant mb-1">Client ID</label>
+<input class="w-full rounded bg-surface-container px-space-md py-space-sm font-label-telemetry text-body-sm text-on-surface focus:outline-none" placeholder="darvis_client_id_live_..." type="text"/>
+</div>
+<div>
+<label class="block font-label-telemetry text-body-sm text-on-surface-variant mb-1">Client Secret</label>
+<input class="w-full rounded bg-surface-container px-space-md py-space-sm font-label-telemetry text-body-sm text-on-surface focus:outline-none" placeholder="••••••••••••••••••••••••••••" type="password"/>
+</div>
+<div>
+<label class="block font-label-telemetry text-body-sm text-on-surface-variant mb-1">Callback URL (Webhook Ingress)</label>
+<div class="p-space-sm rounded bg-surface-container-lowest font-label-telemetry text-body-sm text-primary select-all">
+            https://gateway.darvis.internal/auth/callback/v3
+          </div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-sm">
+<button class="px-space-md py-space-sm rounded bg-surface-container-high text-on-surface font-headline-sm text-body-md hover:bg-surface-variant transition-all" id="btn-cancel-modal">Cancelar</button>
+<button class="px-space-md py-space-sm rounded bg-primary-container text-on-primary-container font-headline-sm text-body-md font-semibold hover:opacity-90 shadow-[0_0_12px_rgba(56,189,248,0.3)] transition-all" id="btn-save-oauth">Autenticar Handshake</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Handlers & Real-Time Log Generator -->
+<script>
+  (function() {
+    const modal = document.getElementById('oauth-modal');
+    const openBtn = document.getElementById('btn-oauth-modal');
+    const closeBtn = document.getElementById('btn-close-modal');
+    const cancelBtn = document.getElementById('btn-cancel-modal');
+    const saveBtn = document.getElementById('btn-save-oauth');
+    const triggerWebhookBtn = document.getElementById('btn-trigger-webhook');
+    const terminal = document.getElementById('terminal-stream');
+    const pauseBtn = document.getElementById('btn-pause-log');
+
+    let logPaused = false;
+
+    // Modal toggles
+    const toggleModal = (show) => {
+      if (modal) modal.classList.toggle('hidden', !show);
+    };
+
+    if (openBtn) openBtn.addEventListener('click', () => toggleModal(true));
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleModal(false));
+    if (cancelBtn) cancelBtn.addEventListener('click', () => toggleModal(false));
+    if (saveBtn) {
+      saveBtn.addEventListener('click', () => {
+        appendLog('[OAUTH_AUTH]', 'Autenticação concluída com sucesso para o canal seguro.', 'text-tertiary');
+        toggleModal(false);
+      });
+    }
+
+    // Append log helper
+    function appendLog(tag, message, colorClass = 'text-primary') {
+      if (!terminal) return;
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+      
+      const row = document.createElement('div');
+      row.className = 'text-on-surface-variant transition-all duration-300';
+      row.innerHTML = `<span class="text-outline">[${timeStr}]</span> <span class="${colorClass} font-semibold">${tag}</span> ${message}`;
+      
+      terminal.appendChild(row);
+      terminal.scrollTop = terminal.scrollHeight;
+      
+      // Limit terminal node count
+      if (terminal.children.length > 40) {
+        terminal.removeChild(terminal.children[0]);
+      }
+    }
+
+    // Manual Webhook Trigger
+    if (triggerWebhookBtn) {
+      triggerWebhookBtn.addEventListener('click', () => {
+        appendLog('[MANUAL_HOOK]', 'Iniciando teste de ping HTTP POST -&gt; Cloudflare Edge Worker...', 'text-secondary');
+        setTimeout(() => {
+          appendLog('[GW_RESPONSE]', 'HTTP 200 OK - Worker processou requisição em 19ms. Cache revalidado.', 'text-tertiary');
+        }, 350);
+      });
+    }
+
+    // Pause toggle
+    if (pauseBtn) {
+      pauseBtn.addEventListener('click', () => {
+        logPaused = !logPaused;
+        pauseBtn.textContent = logPaused ? 'RESUME' : 'PAUSE';
+        pauseBtn.classList.toggle('text-primary', logPaused);
+      });
+    }
+
+    // Ambient background logs stream
+    const simulatedEvents = [
+      { tag: '[PG_VECTOR]', msg: 'Sync incremental: 12 novos embeddings anexados ao Obsidian Vault.', color: 'text-tertiary' },
+      { tag: '[REDIS_CACHE]', msg: 'Cache hit para rota /api/v1/user/bio-metrics. TTL: 300s.', color: 'text-primary' },
+      { tag: '[TELEGRAM_BOT]', msg: 'Comando de voz recebido. Áudio 3.4s enviado para Whisper.', color: 'text-secondary' },
+      { tag: '[DAEMON_CRON]', msg: 'Sprint Velocity Analyzer: Heurística recalibrada com 2 novos commits na main.', color: 'text-on-surface' },
+      { tag: '[SYS_AUDIT]', msg: 'Verificação de integridade HMAC em Webhooks de terceiros: VÁLIDO.', color: 'text-primary-container' }
+    ];
+
+    setInterval(() => {
+      if (!logPaused) {
+        const item = simulatedEvents[Math.floor(Math.random() * simulatedEvents.length)];
+        appendLog(item.tag, item.msg, item.color);
+      }
+    }, 4500);
+
+  })();
+</script></main></div></body></html>

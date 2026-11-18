@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-high": "#262a33", "secondary-fixed-dim": "#4cd7f6", "on-secondary-fixed": "#001f26", "inverse-primary": "#00668a", "tertiary": "#56e5a9", "on-background": "#dfe2ee", "secondary-fixed": "#acedff", "primary": "#8ed5ff", "tertiary-fixed": "#6ffbbe", "on-primary-container": "#004965", "secondary-container": "#03b5d3", "surface-bright": "#353942", "on-tertiary": "#003824", "on-primary-fixed-variant": "#004c69", "surface-dim": "#0f131c", "on-tertiary-fixed-variant": "#005236", "inverse-on-surface": "#2c3039", "outline": "#87929a", "primary-fixed-dim": "#7bd0ff", "on-primary": "#00354a", "surface": "#0f131c", "surface-container-low": "#181c24", "surface-container-highest": "#31353e", "surface-tint": "#7bd0ff", "on-error": "#690005", "tertiary-fixed-dim": "#4edea3", "on-secondary": "#003640", "on-primary-fixed": "#001e2c", "on-tertiary-container": "#004e34", "secondary": "#4cd7f6", "background": "#0f131c", "on-secondary-fixed-variant": "#004e5c", "tertiary-container": "#30c88f", "outline-variant": "#3e484f", "on-secondary-container": "#00424e", "surface-variant": "#31353e", "on-tertiary-fixed": "#002113", "on-error-container": "#ffdad6", "primary-fixed": "#c4e7ff", "primary-container": "#38bdf8", "surface-container-lowest": "#0a0e16", "error-container": "#93000a", "on-surface-variant": "#bdc8d1", "error": "#ffb4ab", "inverse-surface": "#dfe2ee", "surface-container": "#1c2028", "on-surface": "#dfe2ee" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "margin-md": "1.5rem", "space-lg": "1.5rem", "space-md": "1rem", "margin": "1rem", "margin-lg": "2rem", "space-xl": "2.5rem", "gutter": "1rem", "gutter-sm": "0.75rem" }, "fontFamily": { "headline-lg": [ "Space Grotesk" ], "label-telemetry": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "label-micro": [ "JetBrains Mono" ], "body-lg": [ "Geist" ], "headline-md": [ "Space Grotesk" ], "headline-sm": [ "Space Grotesk" ], "display-lg-mobile": [ "Space Grotesk" ], "body-sm": [ "Geist" ], "display-lg": [ "Space Grotesk" ] }, "fontSize": { "headline-lg": [ "28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "label-telemetry": [ "13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "fontWeight": "400" } ], "label-micro": [ "10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" } ], "body-lg": [ "16px", { "lineHeight": "24px", "fontWeight": "400" } ], "headline-md": [ "22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "18px", { "lineHeight": "26px", "fontWeight": "600" } ], "display-lg-mobile": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" } ], "body-sm": [ "12px", { "lineHeight": "18px", "fontWeight": "400" } ], "display-lg": [ "48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" } ] } } } };</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest/95 backdrop-blur-xl z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-7 h-7 rounded bg-secondary-container/20 flex items-center justify-center"><span class="material-symbols-outlined text-secondary text-[20px]">neurology</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-primary leading-none">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-widest">COGNITIVE // MK-VII</span></div></div><div class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></div></div><div class="px-space-md py-space-xs"><div class="bg-surface-container-low/60 rounded-lg p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[16px]">token</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">NEURAL ENGINE</span></div><span class="font-label-micro text-label-micro text-tertiary">ONLINE 100%</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-sm" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-[0_0_12px_rgba(56,189,248,0.35)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="command-center" href="#"><span class="material-symbols-outlined text-[20px]">view_quilt</span><span>Command Center</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[20px]">smart_toy</span><span>AI Assistant</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="neural-memory" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span>Neural Memory (Obsidian)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="projects-tasks" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span><span>Projects &amp; Tasks</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="kinetic-protocol" href="#"><span class="material-symbols-outlined text-[20px]">fitness_center</span><span>Kinetic Protocol (Treino)</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="system-integrations" href="#"><span class="material-symbols-outlined text-[20px]">integration_instructions</span><span>System Integrations</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-lg text-on-surface-variant font-body-md text-body-md hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="general-settings" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>General Settings</span></a></nav></div><div class="p-space-md flex flex-col gap-space-xs"><div class="bg-surface-container-low/40 rounded-lg p-space-sm flex flex-col gap-1"><div class="flex justify-between items-center"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">HUD PROTOCOL</span><span class="font-label-micro text-label-micro text-secondary">SEC//V3.4</span></div><div class="w-full bg-surface-container-highest rounded-full h-1 overflow-hidden"><div class="bg-secondary h-full w-4/5 rounded-full"></div></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl z-40 flex items-center justify-between px-space-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs bg-surface-container-low/80 px-space-sm py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span><span class="font-label-telemetry text-label-telemetry text-tertiary">CORE STATUS: ONLINE</span></div><div class="hidden xl:flex items-center gap-space-xs bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">LATENCY:</span><span class="font-label-telemetry text-label-telemetry text-primary">14ms</span></div><div class="hidden lg:flex items-center gap-space-sm bg-surface-container-low/50 px-space-sm py-1 rounded"><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">CPU/NEURAL LOAD:</span><span class="font-label-telemetry text-label-telemetry text-secondary">27.4%</span><div class="w-12 bg-surface-container-highest rounded-full h-1.5 overflow-hidden"><div class="bg-secondary h-full w-[27%]"></div></div></div></div><div class="flex items-center gap-space-md"><div class="hidden md:flex flex-col text-right"><span class="font-label-telemetry text-label-telemetry text-on-surface tracking-wider">10:42:19 UTC</span><span class="font-label-micro text-label-micro text-on-surface-variant tracking-widest uppercase">SYNCHRONIZED</span></div><div class="w-px h-6 bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm bg-surface-container-low/70 py-1 px-space-sm rounded-lg"><div class="flex flex-col text-right"><span class="font-headline-sm text-body-sm font-semibold text-primary leading-tight">David</span><span class="font-label-micro text-label-micro text-on-surface-variant uppercase">OPERATOR</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-background flex-1"><div class="flex flex-col w-full relative h-[calc(100vh-4rem)] overflow-hidden select-none">
+<!-- Interactive WebGL Universe Canvas Simulated Engine -->
+<canvas class="absolute inset-0 w-full h-full cursor-crosshair z-0" id="neuralCanvas"></canvas>
+<!-- Ambient Cockpit Atmospheric Vignette & Grid Backdrop -->
+<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(10,14,22,0.85)_100%)] z-10"></div>
+<div class="pointer-events-none absolute inset-0 opacity-15 bg-[linear-gradient(to_right,rgba(56,189,248,0.15)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.15)_1px,transparent_1px)] bg-[size:48px_48px] z-10"></div>
+<!-- HUD Reticle Sights & Corner Frames (No borders, pure geometric marks) -->
+<div class="pointer-events-none absolute inset-0 z-20 flex flex-col justify-between p-space-md">
+<div class="flex justify-between items-start">
+<div class="flex flex-col gap-1">
+<div class="w-8 h-1 bg-primary/40 rounded-full"></div>
+<div class="w-1 h-8 bg-primary/40 rounded-full"></div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="w-8 h-1 bg-secondary/40 rounded-full"></div>
+<div class="w-1 h-8 bg-secondary/40 rounded-full"></div>
+</div>
+</div>
+<!-- Central Aim Reticle -->
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center">
+<div class="w-20 h-20 rounded-full bg-surface-container-highest/20 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-primary/60 animate-ping"></div>
+<div class="w-1 h-1 rounded-full bg-primary"></div>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<div class="flex flex-col gap-1">
+<div class="w-1 h-8 bg-primary/40 rounded-full"></div>
+<div class="w-8 h-1 bg-primary/40 rounded-full"></div>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="w-1 h-8 bg-secondary/40 rounded-full"></div>
+<div class="w-8 h-1 bg-secondary/40 rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- TOP HUD BAR: Orbital Telemetry Stream & Cluster Status -->
+<header class="relative z-30 w-full px-space-lg pt-space-md flex items-center justify-between pointer-events-none">
+<!-- Left Title & Subsystem Coordinates -->
+<div class="flex items-center gap-space-md pointer-events-auto">
+<div class="bg-surface-container-lowest/90 backdrop-blur-xl px-space-md py-space-sm rounded-xl shadow-2xl flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">bubble_chart</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight">Grafo Neural 3D</span>
+<span class="bg-surface-container-high px-1.5 py-0.5 rounded text-[10px] font-label-micro text-secondary font-bold">MK-VII</span>
+</div>
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase tracking-wider">Obsidian Second-Brain Universe // Widescreen 3D</span>
+</div>
+</div>
+<!-- Quick Status Chip -->
+<div class="hidden xl:flex items-center gap-space-xs bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-sm rounded-lg shadow-lg">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-telemetry text-label-telemetry text-on-surface">SYNAPSE FLOW: 108.4 GB/s</span>
+</div>
+</div>
+<!-- Center/Right Live Metrics Array -->
+<div class="flex items-center gap-space-sm pointer-events-auto">
+<!-- Metric 1: Notes -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-xl px-space-md py-space-xs rounded-xl shadow-xl flex items-center gap-space-sm">
+<div class="w-2 h-7 rounded-full bg-primary"></div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Notas Vetorizadas</span>
+<span class="font-label-telemetry text-label-telemetry font-bold text-primary">1,428 <span class="text-[10px] font-normal text-on-surface-variant">NODES</span></span>
+</div>
+</div>
+<!-- Metric 2: Synapses -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-xl px-space-md py-space-xs rounded-xl shadow-xl flex items-center gap-space-sm">
+<div class="w-2 h-7 rounded-full bg-secondary"></div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Sinapses Ativas</span>
+<span class="font-label-telemetry text-label-telemetry font-bold text-secondary">3,840 <span class="text-[10px] font-normal text-on-surface-variant">EDGES</span></span>
+</div>
+</div>
+<!-- Metric 3: Clusters -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-xl px-space-md py-space-xs rounded-xl shadow-xl flex items-center gap-space-sm">
+<div class="w-2 h-7 rounded-full bg-tertiary"></div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Clusters Semânticos</span>
+<span class="font-label-telemetry text-label-telemetry font-bold text-tertiary">12 <span class="text-[10px] font-normal text-on-surface-variant">ZONES</span></span>
+</div>
+</div>
+<!-- Metric 4: Density -->
+<div class="bg-surface-container-lowest/85 backdrop-blur-xl px-space-md py-space-xs rounded-xl shadow-xl hidden md:flex items-center gap-space-sm">
+<div class="w-2 h-7 rounded-full bg-surface-tint"></div>
+<div class="flex flex-col">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Densidade de Rede</span>
+<span class="font-label-telemetry text-label-telemetry font-bold text-surface-tint">0.84 <span class="text-[10px] font-normal text-tertiary">OPT</span></span>
+</div>
+</div>
+<!-- Camera Reset Button -->
+<button class="h-10 px-space-sm bg-surface-container-low hover:bg-surface-container-high rounded-xl text-primary flex items-center justify-center transition-all shadow-lg active:scale-95" id="recenterBtn" title="Recentralizar Câmera">
+<span class="material-symbols-outlined text-[20px]">filter_center_focus</span>
+</button>
+</div>
+</header>
+<!-- MAIN HUD WORKSPACE: Overlaid holographic controls and telemetry inspectors -->
+<div class="relative z-30 flex-1 w-full px-space-lg pb-space-md pt-space-sm flex justify-between items-stretch pointer-events-none">
+<!-- LEFT COCKPIT COLUMN: Holographic Node Inspector Card -->
+<div class="w-96 flex flex-col justify-between pointer-events-auto">
+<!-- Active Node Holographic Card -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-2xl rounded-2xl p-space-md shadow-2xl flex flex-col gap-space-md transition-all duration-300" id="inspectorCard">
+<!-- Node Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+<span class="font-label-micro text-label-micro uppercase text-secondary tracking-widest">NÓ SELECIONADO // ID-982</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary font-bold mt-1" id="nodeTitle">Cognitive Architecture // DARVIS Core</h2>
+</div>
+<span class="bg-secondary/10 text-secondary px-2 py-0.5 rounded text-label-micro font-label-micro font-semibold">ARQUITETURA</span>
+</div>
+<!-- AI Semantic Abstract -->
+<div class="bg-surface-container-low/70 rounded-xl p-space-sm flex flex-col gap-1">
+<div class="flex items-center gap-space-xs text-tertiary">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+<span class="font-label-micro text-label-micro font-semibold uppercase tracking-wider">Resumo Gerado por IA</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed" id="nodeSummary">
+            Mapeamento neuro-simbólico que orquestra modelos LLM com armazenamento persistente em grafos do Obsidian. Centraliza vetores de memória episódica, reflexões heurísticas e pipelines RAG multi-agentes.
+          </p>
+</div>
+<!-- Semantic Backlinks & Synaptic Proximity -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-micro text-label-micro uppercase text-on-surface-variant font-semibold">Backlinks Relevantes (6)</span>
+<span class="font-label-micro text-label-micro text-secondary">COSINE &gt; 0.91</span>
+</div>
+<div class="flex flex-col gap-1">
+<button class="w-full text-left bg-surface-container-high/60 hover:bg-surface-container-highest px-space-sm py-1.5 rounded-lg flex items-center justify-between group transition-colors">
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors truncate">[[Memória Vetorial &amp; ChromaDB]]</span>
+<span class="font-label-micro text-label-micro text-secondary opacity-75">98%</span>
+</button>
+<button class="w-full text-left bg-surface-container-high/60 hover:bg-surface-container-highest px-space-sm py-1.5 rounded-lg flex items-center justify-between group transition-colors">
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors truncate">[[Protocolo de Treino Cinético]]</span>
+<span class="font-label-micro text-label-micro text-tertiary opacity-75">92%</span>
+</button>
+<button class="w-full text-left bg-surface-container-high/60 hover:bg-surface-container-highest px-space-sm py-1.5 rounded-lg flex items-center justify-between group transition-colors">
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors truncate">[[Gemini 1.5 Pro // Function Calling]]</span>
+<span class="font-label-micro text-label-micro text-primary opacity-75">89%</span>
+</button>
+</div>
+</div>
+<!-- Action Trigger: Open in Obsidian -->
+<div class="pt-space-xs flex gap-space-sm">
+<a class="flex-1 bg-primary-container text-on-primary-container font-headline-sm text-body-sm font-semibold py-2.5 px-space-md rounded-xl flex items-center justify-center gap-space-xs shadow-[0_0_16px_rgba(56,189,248,0.35)] hover:brightness-110 active:scale-98 transition-all" href="obsidian://open?vault=SecondBrain&amp;file=CognitiveArchitecture">
+<span class="material-symbols-outlined text-[18px]">launch</span>
+<span>Abrir no Obsidian Vault</span>
+</a>
+<button class="w-10 bg-surface-container-high hover:bg-surface-container-highest rounded-xl text-on-surface flex items-center justify-center transition-all" title="Fixar Nó">
+<span class="material-symbols-outlined text-[18px]">push_pin</span>
+</button>
+</div>
+</div>
+<!-- Left Bottom: Cluster Legend Floating Badge -->
+<div class="bg-surface-container-lowest/80 backdrop-blur-xl rounded-xl p-space-sm shadow-xl flex items-center justify-between gap-space-sm mt-space-sm">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="font-label-micro text-label-micro text-on-surface">Projetos</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-micro text-label-micro text-on-surface">Arquitetura</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span class="font-label-micro text-label-micro text-on-surface">Ideias</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-tint"></span>
+<span class="font-label-micro text-label-micro text-on-surface">Hábitos</span>
+</div>
+</div>
+</div>
+<!-- CENTER OVERLAY: Dynamic Quick Focus HUD (Bottom Anchored) -->
+<div class="self-end mb-2 pointer-events-auto flex flex-col items-center gap-space-sm">
+<!-- Tag Filters Strip -->
+<div class="bg-surface-container-lowest/90 backdrop-blur-xl px-space-md py-space-xs rounded-full shadow-2xl flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[16px] ml-1">tag</span>
+<button class="px-space-sm py-1 rounded-full text-label-micro font-label-micro font-semibold bg-primary-container text-on-primary-container transition-all">#todos (1.4k)</button>
+<button class="px-space-sm py-1 rounded-full text-label-micro font-label-micro font-semibold bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant transition-all">#rag (412)</button>
+<button class="px-space-sm py-1 rounded-full text-label-micro font-label-micro font-semibold bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant transition-all">#gemini (290)</button>
+<button class="px-space-sm py-1 rounded-full text-label-micro font-label-micro font-semibold bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant transition-all">#infra (324)</button>
+<button class="px-space-sm py-1 rounded-full text-label-micro font-label-micro font-semibold bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant transition-all">#fitness (180)</button>
+</div>
+<!-- Quick Status Hint -->
+<div class="text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant opacity-80 uppercase tracking-widest">
+          Arraste com botão esquerdo para orbitar // Roda do mouse para zoom cósmico // Clique duplo no nó para focar
+        </span>
+</div>
+</div>
+<!-- RIGHT COCKPIT COLUMN: 3D Physics Simulator Controls & Orbital Mini-Radar -->
+<div class="w-80 flex flex-col justify-between items-end pointer-events-auto">
+<!-- Top Right: Realtime 3D Topology & Physics Parameters -->
+<div class="w-full bg-surface-container-lowest/90 backdrop-blur-2xl rounded-2xl p-space-md shadow-2xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">tune</span>
+<span class="font-headline-sm text-body-sm font-bold text-on-surface uppercase">Física Cósmica 3D</span>
+</div>
+<span class="font-label-micro text-label-micro text-tertiary">LIVE 60 FPS</span>
+</div>
+<!-- Mode Selectors -->
+<div class="grid grid-cols-2 gap-space-xs p-1 bg-surface-container-high rounded-xl">
+<button class="py-1.5 px-space-xs rounded-lg font-label-micro text-label-micro font-bold bg-primary-container text-on-primary-container shadow-md flex items-center justify-center gap-1 transition-all" id="modeGalaxy">
+<span class="material-symbols-outlined text-[16px]">blur_circular</span>
+<span>Galáxia</span>
+</button>
+<button class="py-1.5 px-space-xs rounded-lg font-label-micro text-label-micro font-bold text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1 transition-all" id="modeSphere">
+<span class="material-symbols-outlined text-[16px]">track_changes</span>
+<span>Esfera Neural</span>
+</button>
+</div>
+<!-- Sliders: Gravity & Repulsion -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<!-- Slider 1: Repulsion -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Repulsão de Nós</span>
+<span class="font-label-telemetry text-label-telemetry text-primary" id="repulsionVal">350 N</span>
+</div>
+<input class="w-full accent-primary h-1 bg-surface-container-highest rounded-lg cursor-pointer" id="repulsionSlider" max="800" min="100" type="range" value="350"/>
+</div>
+<!-- Slider 2: Gravitational Pull -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Gravidade Cósmica</span>
+<span class="font-label-telemetry text-label-telemetry text-secondary" id="gravityVal">0.42 G</span>
+</div>
+<input class="w-full accent-secondary h-1 bg-surface-container-highest rounded-lg cursor-pointer" id="gravitySlider" max="100" min="1" type="range" value="42"/>
+</div>
+<!-- Slider 3: Edge Opacity -->
+<div class="flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Luminância Sináptica</span>
+<span class="font-label-telemetry text-label-telemetry text-tertiary">78%</span>
+</div>
+<input class="w-full accent-tertiary h-1 bg-surface-container-highest rounded-lg cursor-pointer" max="100" min="20" type="range" value="78"/>
+</div>
+</div>
+<!-- Quick Toggles -->
+<div class="pt-space-xs flex justify-between items-center">
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high border-0 accent-primary" type="checkbox"/>
+<span class="font-label-micro text-label-micro text-on-surface">Auto-Rotação 360°</span>
+</label>
+<label class="flex items-center gap-space-xs cursor-pointer">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high border-0 accent-secondary" type="checkbox"/>
+<span class="font-label-micro text-label-micro text-on-surface">Halos Quânticos</span>
+</label>
+</div>
+</div>
+<!-- Bottom Right: Mini Radar Orbital 360° Viewport & Cam Coordinates -->
+<div class="w-full bg-surface-container-lowest/90 backdrop-blur-2xl rounded-2xl p-space-sm shadow-2xl flex flex-col gap-space-xs mt-space-sm">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Radar Espacial 360°</span>
+<span class="font-label-telemetry text-label-telemetry text-secondary">POS // X:142 Y:88 Z:410</span>
+</div>
+<!-- Radar Graphic Display -->
+<div class="relative w-full h-32 bg-surface-container-lowest rounded-xl overflow-hidden flex items-center justify-center">
+<!-- Concentric Radar Rings -->
+<div class="absolute w-28 h-28 rounded-full border border-primary/20"></div>
+<div class="absolute w-20 h-20 rounded-full border border-secondary/20"></div>
+<div class="absolute w-10 h-10 rounded-full border border-tertiary/20"></div>
+<div class="absolute w-full h-[1px] bg-primary/10"></div>
+<div class="absolute h-full w-[1px] bg-primary/10"></div>
+<!-- Radar Sweep Line -->
+<div class="absolute w-full h-full rounded-full bg-[conic-gradient(from_0deg,transparent_75%,rgba(56,189,248,0.25)_100%)] animate-[spin_4s_linear_infinite] origin-center pointer-events-none"></div>
+<!-- Radar Cluster Dots -->
+<span class="absolute top-7 left-14 w-2 h-2 rounded-full bg-primary shadow-[0_0_8px_#38bdf8]"></span>
+<span class="absolute bottom-6 left-20 w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_6px_#4cd7f6]"></span>
+<span class="absolute top-10 right-16 w-2 h-2 rounded-full bg-tertiary shadow-[0_0_8px_#56e5a9]"></span>
+<span class="absolute bottom-10 right-12 w-1.5 h-1.5 rounded-full bg-surface-tint shadow-[0_0_6px_#7bd0ff]"></span>
+<!-- Observer Camera Point -->
+<div class="w-3 h-3 rounded-full bg-primary-container flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-background"></span>
+</div>
+<!-- Direct Camera Control Overlay Buttons -->
+<div class="absolute bottom-1 right-1 flex items-center gap-1">
+<button class="w-6 h-6 bg-surface-container-high/80 hover:bg-surface-container-highest rounded text-on-surface flex items-center justify-center font-bold text-xs" id="radarZoomIn">+</button>
+<button class="w-6 h-6 bg-surface-container-high/80 hover:bg-surface-container-highest rounded text-on-surface flex items-center justify-center font-bold text-xs" id="radarZoomOut">-</button>
+</div>
+</div>
+<div class="flex items-center justify-between px-1">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">SETOR: ALFA-OBSIDIAN</span>
+<span class="font-label-micro text-label-micro text-tertiary">SINC: ATUALIZADO</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // High-performance ThreeJS-like simulated cosmic neural graph on 2D Context for zero external dependencies
+  (function initNeuralUniverse() {
+    const canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const CLUSTERS = [
+      { name: 'Projetos', color: '#8ed5ff', glow: 'rgba(142, 213, 255, 0.6)' },
+      { name: 'Arquitetura', color: '#4cd7f6', glow: 'rgba(76, 215, 246, 0.6)' },
+      { name: 'Ideias', color: '#56e5a9', glow: 'rgba(86, 229, 169, 0.6)' },
+      { name: 'Hábitos', color: '#7bd0ff', glow: 'rgba(123, 208, 255, 0.6)' }
+    ];
+
+    const NODE_NAMES = [
+      "Cognitive Architecture // DARVIS Core",
+      "Obsidian Second-Brain Sync Engine",
+      "ChromaDB Vector Retrieval Protocol",
+      "Kinetic Workout Daily Tracker",
+      "Deep Learning Transformer Reasoning",
+      "FastAPI Asynchronous Broker",
+      "Executive Briefing Automation",
+      "Habit Formation & Dopamine Cycles",
+      "Agentic Tools Registry // Gemini",
+      "Multi-Agent Swarm Orchestrator",
+      "Obsidian Graph Visualization HUD",
+      "Memory Stream Episodic Recall",
+      "Neuroplasticity & Recovery Matrix",
+      "NextGen Desktop Shell UX",
+      "Realtime WebSocket Telemetry"
+    ];
+
+    const NODE_COUNT = 90;
+    const nodes = [];
+
+    // Generate 3D Cartesian coordinates
+    for (let i = 0; i < NODE_COUNT; i++) {
+      const clusterIdx = Math.floor(Math.random() * CLUSTERS.length);
+      const angle = Math.random() * Math.PI * 2;
+      const radius = 100 + Math.random() * 380;
+      
+      nodes.push({
+        id: i,
+        name: NODE_NAMES[i % NODE_NAMES.length],
+        cluster: CLUSTERS[clusterIdx],
+        // 3D coordinates in space
+        x: Math.cos(angle) * radius + (Math.random() - 0.5) * 60,
+        y: (Math.random() - 0.5) * 350,
+        z: Math.sin(angle) * radius + (Math.random() - 0.5) * 60,
+        baseRadius: Math.random() > 0.85 ? 4.5 : (Math.random() > 0.5 ? 2.5 : 1.8),
+        pulse: Math.random() * Math.PI * 2,
+        connections: []
+      });
+    }
+
+    // Connect nodes by proximity
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const dz = nodes[i].z - nodes[j].z;
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+        if (dist < 130 && nodes[i].connections.length < 4) {
+          nodes[i].connections.push(nodes[j]);
+        }
+      }
+    }
+
+    // Camera & Physics state
+    let rotX = 0.25;
+    let rotY = 0;
+    let autoRotate = true;
+    let zoom = 1.0;
+    let selectedNode = nodes[0];
+
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      lastMouseX = e.clientX;
+      lastMouseY = e.clientY;
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        const deltaX = e.clientX - lastMouseX;
+        const deltaY = e.clientY - lastMouseY;
+        rotY += deltaX * 0.005;
+        rotX += deltaY * 0.005;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      }
+    });
+
+    canvas.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      zoom += e.deltaY * -0.0015;
+      zoom = Math.min(Math.max(0.4, zoom), 2.2);
+    }, { passive: false });
+
+    // Interactive Node Selection
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      let closest = null;
+      let minDistance = 18;
+
+      nodes.forEach(node => {
+        if (node.screenX && node.screenY) {
+          const d = Math.hypot(node.screenX - mouseX, node.screenY - mouseY);
+          if (d < minDistance) {
+            minDistance = d;
+            closest = node;
+          }
+        }
+      });
+
+      if (closest) {
+        selectedNode = closest;
+        const titleEl = document.getElementById('nodeTitle');
+        if (titleEl) titleEl.innerText = closest.name;
+        const card = document.getElementById('inspectorCard');
+        if (card) {
+          card.classList.remove('scale-95');
+          void card.offsetWidth;
+          card.classList.add('scale-100');
+        }
+      }
+    });
+
+    // Top control toggles
+    const recenterBtn = document.getElementById('recenterBtn');
+    if (recenterBtn) {
+      recenterBtn.addEventListener('click', () => {
+        rotX = 0.25;
+        rotY = 0;
+        zoom = 1.0;
+      });
+    }
+
+    const repulsionSlider = document.getElementById('repulsionSlider');
+    const repulsionVal = document.getElementById('repulsionVal');
+    if (repulsionSlider && repulsionVal) {
+      repulsionSlider.addEventListener('input', (e) => {
+        repulsionVal.innerText = `${e.target.value} N`;
+      });
+    }
+
+    const gravitySlider = document.getElementById('gravitySlider');
+    const gravityVal = document.getElementById('gravityVal');
+    if (gravitySlider && gravityVal) {
+      gravitySlider.addEventListener('input', (e) => {
+        gravityVal.innerText = `0.${e.target.value} G`;
+      });
+    }
+
+    const modeGalaxy = document.getElementById('modeGalaxy');
+    const modeSphere = document.getElementById('modeSphere');
+    if (modeGalaxy && modeSphere) {
+      modeGalaxy.addEventListener('click', () => {
+        modeGalaxy.className = "py-1.5 px-space-xs rounded-lg font-label-micro text-label-micro font-bold bg-primary-container text-on-primary-container shadow-md flex items-center justify-center gap-1 transition-all";
+        modeSphere.className = "py-1.5 px-space-xs rounded-lg font-label-micro text-label-micro font-bold text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1 transition-all";
+      });
+      modeSphere.addEventListener('click', () => {
+        modeSphere.className = "py-1.5 px-space-xs rounded-lg font-label-micro text-label-micro font-bold bg-secondary-container text-on-secondary-container shadow-md flex items-center justify-center gap-1 transition-all";
+        modeGalaxy.className = "py-1.5 px-space-xs rounded-lg font-label-micro text-label-micro font-bold text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1 transition-all";
+      });
+    }
+
+    // Render loop
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+
+      if (autoRotate && !isDragging) {
+        rotY += 0.0018;
+      }
+
+      const fov = 450;
+      const cx = width / 2;
+      const cy = height / 2;
+
+      const cosY = Math.cos(rotY);
+      const sinY = Math.sin(rotY);
+      const cosX = Math.cos(rotX);
+      const sinX = Math.sin(rotX);
+
+      // Project nodes in 3D
+      nodes.forEach(node => {
+        node.pulse += 0.03;
+        // Rotation Y
+        let x1 = node.x * cosY - node.z * sinY;
+        let z1 = node.z * cosY + node.x * sinY;
+
+        // Rotation X
+        let y2 = node.y * cosX - z1 * sinX;
+        let z2 = z1 * cosX + node.y * sinX;
+
+        // Perspective projection
+        const depth = z2 + 650;
+        if (depth > 20) {
+          const scale = (fov / depth) * zoom;
+          node.screenX = cx + x1 * scale;
+          node.screenY = cy + y2 * scale;
+          node.screenScale = scale;
+          node.depth = depth;
+        } else {
+          node.screenScale = 0;
+        }
+      });
+
+      // Sort by depth for correct spatial rendering
+      const sortedNodes = [...nodes].sort((a, b) => b.depth - a.depth);
+
+      // 1. Draw Synapses (Edges)
+      ctx.lineWidth = 1;
+      nodes.forEach(node => {
+        if (!node.screenScale) return;
+        node.connections.forEach(target => {
+          if (!target.screenScale) return;
+          const alpha = Math.min(0.35, Math.max(0.04, (1 / (node.depth * 0.002))));
+          ctx.strokeStyle = `rgba(76, 215, 246, ${alpha})`;
+          ctx.beginPath();
+          ctx.moveTo(node.screenX, node.screenY);
+          ctx.lineTo(target.screenX, target.screenY);
+          ctx.stroke();
+        });
+      });
+
+      // 2. Draw Nodes
+      sortedNodes.forEach(node => {
+        if (!node.screenScale || node.screenScale <= 0) return;
+
+        const isSelected = selectedNode === node;
+        const radius = (node.baseRadius * node.screenScale * (isSelected ? 2.2 : 1)) + Math.sin(node.pulse) * 0.5;
+
+        // Outer Glow
+        const gradient = ctx.createRadialGradient(
+          node.screenX, node.screenY, 0,
+          node.screenX, node.screenY, radius * 3.5
+        );
+        gradient.addColorStop(0, node.cluster.glow);
+        gradient.addColorStop(1, 'transparent');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(node.screenX, node.screenY, radius * 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Node Solid Core
+        ctx.fillStyle = isSelected ? '#ffffff' : node.cluster.color;
+        ctx.beginPath();
+        ctx.arc(node.screenX, node.screenY, Math.max(radius, 1.2), 0, Math.PI * 2);
+        ctx.fill();
+
+        // Label if active or high scale
+        if (isSelected || (node.baseRadius > 4 && node.screenScale > 0.8)) {
+          ctx.font = isSelected ? '600 11px JetBrains Mono' : '400 9px JetBrains Mono';
+          ctx.fillStyle = isSelected ? '#8ed5ff' : 'rgba(223, 226, 238, 0.6)';
+          ctx.fillText(node.name.slice(0, 24), node.screenX + radius + 4, node.screenY + 3);
+        }
+      });
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+  })();
+</script></main></div></body></html>

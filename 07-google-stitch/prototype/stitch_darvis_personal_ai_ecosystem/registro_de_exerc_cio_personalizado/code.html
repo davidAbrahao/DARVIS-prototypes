@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-fixed-variant": "#005236", "tertiary-fixed-dim": "#4edea3", "surface-tint": "#7bd0ff", "on-primary-fixed-variant": "#004c69", "secondary-fixed-dim": "#4cd7f6", "tertiary-container": "#30c88f", "secondary-container": "#03b5d3", "on-primary": "#00354a", "primary-fixed": "#c4e7ff", "outline-variant": "#3e484f", "surface-variant": "#31353e", "surface": "#0f131c", "on-secondary": "#003640", "on-tertiary": "#003824", "surface-container-lowest": "#0a0e16", "surface-bright": "#353942", "on-primary-fixed": "#001e2c", "surface-container-low": "#181c24", "on-background": "#dfe2ee", "on-tertiary-fixed": "#002113", "primary-container": "#38bdf8", "inverse-surface": "#dfe2ee", "on-secondary-container": "#00424e", "tertiary-fixed": "#6ffbbe", "surface-container-highest": "#31353e", "primary-fixed-dim": "#7bd0ff", "outline": "#87929a", "error-container": "#93000a", "on-surface": "#dfe2ee", "on-secondary-fixed": "#001f26", "inverse-on-surface": "#2c3039", "on-surface-variant": "#bdc8d1", "secondary": "#4cd7f6", "surface-container": "#1c2028", "surface-container-high": "#262a33", "on-secondary-fixed-variant": "#004e5c", "on-error-container": "#ffdad6", "primary": "#8ed5ff", "on-primary-container": "#004965", "on-tertiary-container": "#004e34", "secondary-fixed": "#acedff", "background": "#0f131c", "error": "#ffb4ab", "on-error": "#690005", "inverse-primary": "#00668a", "tertiary": "#56e5a9", "surface-dim": "#0f131c" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin": "1rem", "space-lg": "1.5rem", "margin-md": "1.5rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "gutter-sm": "0.75rem", "space-md": "1rem", "gutter": "1rem", "space-sm": "0.5rem", "margin-lg": "2rem" }, "fontFamily": { "body-md": ["Geist"], "label-telemetry": ["JetBrains Mono"], "headline-sm": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "body-sm": ["Geist"], "body-lg": ["Geist"], "label-micro": ["JetBrains Mono"], "display-lg": ["Space Grotesk"], "display-lg-mobile": ["Space Grotesk"], "headline-lg": ["Space Grotesk"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "label-telemetry": ["13px", { "lineHeight": "18px", "letterSpacing": "0.04em", "fontWeight": "500" }], "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-md": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-micro": ["10px", { "lineHeight": "14px", "letterSpacing": "0.08em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "display-lg-mobile": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface font-body-md text-body-md min-h-screen flex flex-col antialiased selection:bg-primary/20 selection:text-primary"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm min-w-0"><img alt="D.A.R.V.I.S. Core Emblem" class="h-8 w-auto object-contain shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrBI136RqE1xvxt1qsbNngoDp7_m3l9mA-pV0ybKGD0fITnuRieDWIBLIRe8ADKBPZXJ4WU3UuHv5lcS9PHz27uzpeoQjlfgm4ARN8OnPGJGlgfk7VkqOLlOxqqoGdmDWwdM_fVLznHSR7yiXRx9wmoglWIRPS9kGxzoSVw_urrS4XdQx0Cg5ESeqHIO4HJTrR1OA3KablRuZcc8fm4sIo__oS11NGlQAwOYoR1BDYzP"/><div class="flex flex-col min-w-0 justify-center"><div class="flex items-center gap-space-xs"><span class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">D.A.R.V.I.S.</span><span class="font-label-micro text-label-micro px-1 py-0.5 rounded bg-surface-container-high text-primary-container font-mono">Command Center</span></div><div class="flex items-center gap-1.5"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-micro text-label-micro text-on-surface-variant font-mono uppercase truncate">v1.0.4 • GEMINI_PRO_ONLINE</span></div></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Telemetry Notifications" class="w-11 h-11 flex items-center justify-center rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-high/50 transition-colors"><span class="material-symbols-outlined text-[20px]">tune</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 w-full pt-16 pb-24 bg-surface flex flex-col relative"><div class="flex flex-col w-full px-margin pb-space-xl">
+<!-- HUD Sub-Header / Back & Identification Strip -->
+<div class="flex flex-col gap-space-sm pt-space-md pb-space-sm">
+<div class="flex items-center justify-between">
+<a class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high transition-colors text-label-micro font-label-micro uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Voltar ao Modo Treino</span>
+</a>
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-high text-primary font-label-micro text-label-micro tracking-widest">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+<span>#LFT-CUST-042</span>
+</div>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-2">
+<h1 class="text-headline-md font-headline-md text-on-surface tracking-tight">Novo Exercício</h1>
+<span class="px-2 py-0.5 rounded bg-primary/10 text-primary text-label-micro font-label-micro tracking-wider uppercase font-semibold">Novo Registro</span>
+</div>
+<p class="text-label-micro font-label-micro text-on-surface-variant uppercase tracking-widest flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px] text-primary">hub</span>
+        Kinetic Matrix // Cadastro na Biblioteca Neural
+      </p>
+</div>
+</div>
+<!-- Main Blueprint Workspace -->
+<form class="flex flex-col gap-space-lg mt-space-sm" onsubmit="event.preventDefault();">
+<!-- Card 1: Core Identification -->
+<div class="relative flex flex-col gap-space-md p-margin rounded-xl bg-surface-container-low shadow-md overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<span class="text-label-micro font-label-micro text-primary uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">id_card</span> 01 // Assinatura Cinética
+        </span>
+<span class="text-label-micro font-label-micro text-on-surface-variant/60">SYS: READY</span>
+</div>
+<!-- Exercise Name -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider" for="ex-name">
+          Nome do Movimento Personalizado
+        </label>
+<div class="relative flex items-center">
+<input class="w-full h-12 px-3.5 bg-surface-container text-on-surface font-body-md text-body-md placeholder:text-on-surface-variant/40 rounded-lg outline-none focus:bg-surface-container-high focus:shadow-[0_0_12px_rgba(56,189,248,0.25)] transition-all" id="ex-name" placeholder="Ex: Supino Inclinado com Halteres 30º" type="text" value="Supino Inclinado com Halteres 30º"/>
+<span class="material-symbols-outlined absolute right-3 text-primary text-[20px] pointer-events-none">fitness_center</span>
+</div>
+</div>
+<!-- Movement Class Grid -->
+<div class="flex flex-col gap-2">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+          Categoria do Movimento
+        </label>
+<div class="grid grid-cols-3 gap-2">
+<label class="flex flex-col items-center justify-center p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high cursor-pointer transition-all has-[:checked]:bg-primary-container has-[:checked]:text-on-primary-container text-on-surface-variant">
+<input checked="" class="hidden" name="mov_cat" type="radio"/>
+<span class="material-symbols-outlined text-[20px] mb-1">view_in_ar</span>
+<span class="font-label-micro text-label-micro text-center tracking-tight leading-tight">Multiarticular</span>
+</label>
+<label class="flex flex-col items-center justify-center p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high cursor-pointer transition-all has-[:checked]:bg-primary-container has-[:checked]:text-on-primary-container text-on-surface-variant">
+<input class="hidden" name="mov_cat" type="radio"/>
+<span class="material-symbols-outlined text-[20px] mb-1">adjust</span>
+<span class="font-label-micro text-label-micro text-center tracking-tight leading-tight">Isolador</span>
+</label>
+<label class="flex flex-col items-center justify-center p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high cursor-pointer transition-all has-[:checked]:bg-primary-container has-[:checked]:text-on-primary-container text-on-surface-variant">
+<input class="hidden" name="mov_cat" type="radio"/>
+<span class="material-symbols-outlined text-[20px] mb-1">accessibility_new</span>
+<span class="font-label-micro text-label-micro text-center tracking-tight leading-tight">Calistenia</span>
+</label>
+</div>
+</div>
+<!-- Equipment Type -->
+<div class="flex flex-col gap-2">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+          Vetor de Sobrecarga / Equipamento
+        </label>
+<div class="flex flex-wrap gap-1.5">
+<button class="px-2.5 py-1.5 rounded-lg text-label-micro font-label-micro bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" type="button">Barra Olímpica</button>
+<button class="px-2.5 py-1.5 rounded-lg text-label-micro font-label-micro bg-primary text-on-primary font-semibold shadow-[0_0_10px_rgba(56,189,248,0.3)]" type="button">Halteres</button>
+<button class="px-2.5 py-1.5 rounded-lg text-label-micro font-label-micro bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" type="button">Polia / Cabo</button>
+<button class="px-2.5 py-1.5 rounded-lg text-label-micro font-label-micro bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" type="button">Máq. Articulada</button>
+<button class="px-2.5 py-1.5 rounded-lg text-label-micro font-label-micro bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" type="button">Smith Machine</button>
+<button class="px-2.5 py-1.5 rounded-lg text-label-micro font-label-micro bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" type="button">Barra Fixa</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Muscular Recruitment HUD -->
+<div class="relative flex flex-col gap-space-md p-margin rounded-xl bg-surface-container-low shadow-md overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="text-label-micro font-label-micro text-primary uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">neurology</span> 02 // Recrutamento Mioelétrico
+        </span>
+<span class="px-1.5 py-0.5 rounded bg-tertiary-container/20 text-tertiary font-label-micro text-label-micro tracking-wider">MAPA ATIVO</span>
+</div>
+<!-- Primary Target -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+            Agrupamento Primário (Alvo Direto)
+          </label>
+<span class="text-label-micro font-label-micro text-primary">PEITO SELECIONADO</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5">
+<!-- Active Chest Pill -->
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-primary-container text-on-primary-container font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">shield</span>
+<span>Peito</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">view_agenda</span>
+<span>Costas</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">hdr_strong</span>
+<span>Ombros</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">directions_walk</span>
+<span>Quadríceps</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">straighten</span>
+<span>Isquiotibiais</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">sports_martial_arts</span>
+<span>Bíceps</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">electric_bolt</span>
+<span>Tríceps</span>
+</button>
+<button class="flex flex-col items-center justify-center p-2 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high font-label-micro text-label-micro transition-all" type="button">
+<span class="material-symbols-outlined text-[18px] mb-0.5">sports_gymnastics</span>
+<span>Core</span>
+</button>
+</div>
+</div>
+<!-- Synergists Secondary Multi-selection -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+          Músculos Sinérgicos / Secundários (Assistência)
+        </label>
+<div class="flex flex-wrap gap-1.5">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-container/20 text-secondary text-label-micro font-label-micro">
+<span class="material-symbols-outlined text-[14px]">check</span> Tríceps Anterior
+          </span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-container/20 text-secondary text-label-micro font-label-micro">
+<span class="material-symbols-outlined text-[14px]">check</span> Deltóide Anterior
+          </span>
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface text-label-micro font-label-micro transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">add</span> Serrátil
+          </button>
+<button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface text-label-micro font-label-micro transition-colors" type="button">
+<span class="material-symbols-outlined text-[14px]">add</span> Peitoral Superior
+          </button>
+</div>
+</div>
+</div>
+<!-- Card 3: Biomechanical Metrics & Telemetry Presets -->
+<div class="relative flex flex-col gap-space-md p-margin rounded-xl bg-surface-container-low shadow-md overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="text-label-micro font-label-micro text-primary uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span> 03 // Parâmetros &amp; Telemetria Padrão
+        </span>
+<span class="text-label-micro font-label-micro text-tertiary">ESTÁVEL // RPE 8.0</span>
+</div>
+<!-- Rest Interval Selector -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+            Intervalo de Recuperação Neural
+          </label>
+<span class="font-label-telemetry text-label-telemetry text-primary font-bold">90 SECONDS</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-10 px-3 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-telemetry text-label-telemetry font-bold" type="button">
+            -15s
+          </button>
+<div class="flex-1 h-10 px-3 rounded-lg bg-surface-container flex items-center justify-center gap-2 font-label-telemetry text-label-telemetry text-on-surface font-semibold">
+<span class="material-symbols-outlined text-primary text-[18px]">timelapse</span>
+<span>01:30 min</span>
+</div>
+<button class="h-10 px-3 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-telemetry text-label-telemetry font-bold" type="button">
+            +15s
+          </button>
+<button class="h-10 px-3 rounded-lg bg-primary-container/20 text-primary-container hover:bg-primary-container/30 transition-colors font-label-micro text-label-micro uppercase font-medium" type="button">
+            AI Auto
+          </button>
+</div>
+</div>
+<!-- Cadence TUT (Time Under Tension) Matrix -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<div class="flex items-center justify-between">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+            Cadência Padrão // Time Under Tension (TUT)
+          </label>
+<span class="font-label-micro text-label-micro text-on-surface-variant">3-0-1-0</span>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<div class="flex flex-col gap-1 p-2 rounded-lg bg-surface-container text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Excêntrica</span>
+<input class="w-full text-center bg-surface-container-high text-primary font-label-telemetry text-label-telemetry font-bold py-1 rounded outline-none" type="number" value="3"/>
+<span class="font-label-micro text-label-micro text-on-surface-variant/60">Descida</span>
+</div>
+<div class="flex flex-col gap-1 p-2 rounded-lg bg-surface-container text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Iso Fundo</span>
+<input class="w-full text-center bg-surface-container-high text-on-surface font-label-telemetry text-label-telemetry font-bold py-1 rounded outline-none" type="number" value="0"/>
+<span class="font-label-micro text-label-micro text-on-surface-variant/60">Alongado</span>
+</div>
+<div class="flex flex-col gap-1 p-2 rounded-lg bg-surface-container text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Concêntrica</span>
+<input class="w-full text-center bg-surface-container-high text-primary font-label-telemetry text-label-telemetry font-bold py-1 rounded outline-none" type="number" value="1"/>
+<span class="font-label-micro text-label-micro text-on-surface-variant/60">Subida</span>
+</div>
+<div class="flex flex-col gap-1 p-2 rounded-lg bg-surface-container text-center">
+<span class="font-label-micro text-label-micro text-on-surface-variant uppercase">Iso Topo</span>
+<input class="w-full text-center bg-surface-container-high text-on-surface font-label-telemetry text-label-telemetry font-bold py-1 rounded outline-none" type="number" value="0"/>
+<span class="font-label-micro text-label-micro text-on-surface-variant/60">Pico</span>
+</div>
+</div>
+</div>
+<!-- Target RPE Dial -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<div class="flex items-center justify-between">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+            Esforço Percebido Padrão (RPE Target)
+          </label>
+<span class="font-label-telemetry text-label-telemetry text-tertiary">@8.5 (RIR 1-2 reps)</span>
+</div>
+<div class="flex items-center justify-between gap-1 p-1 rounded-lg bg-surface-container">
+<button class="flex-1 py-1.5 rounded text-label-micro font-label-micro text-on-surface-variant hover:text-on-surface" type="button">@7.0</button>
+<button class="flex-1 py-1.5 rounded text-label-micro font-label-micro text-on-surface-variant hover:text-on-surface" type="button">@7.5</button>
+<button class="flex-1 py-1.5 rounded text-label-micro font-label-micro text-on-surface-variant hover:text-on-surface" type="button">@8.0</button>
+<button class="flex-1 py-1.5 rounded text-label-micro font-label-micro bg-primary text-on-primary font-bold shadow-[0_0_8px_rgba(56,189,248,0.4)]" type="button">@8.5</button>
+<button class="flex-1 py-1.5 rounded text-label-micro font-label-micro text-on-surface-variant hover:text-on-surface" type="button">@9.0</button>
+<button class="flex-1 py-1.5 rounded text-label-micro font-label-micro text-on-surface-variant hover:text-on-surface" type="button">@10</button>
+</div>
+</div>
+<!-- Progression Model Type -->
+<div class="flex flex-col gap-2 pt-space-xs">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider">
+          Estratégia de Sobrecarga Progressiva
+        </label>
+<div class="grid grid-cols-3 gap-2">
+<button class="p-2.5 rounded-lg bg-primary-container text-on-primary-container flex flex-col items-center gap-1 font-label-micro text-label-micro font-medium" type="button">
+<span class="material-symbols-outlined text-[18px]">line_axis</span>
+<span>Carga Linear (+kg)</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high flex flex-col items-center gap-1 font-label-micro text-label-micro transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">repeat</span>
+<span>Volume de Reps</span>
+</button>
+<button class="p-2.5 rounded-lg bg-surface-container text-on-surface-variant hover:bg-surface-container-high flex flex-col items-center gap-1 font-label-micro text-label-micro transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">speed</span>
+<span>Densidade Tempo</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4: AI Coaching & Obsidian Integration Directives -->
+<div class="relative flex flex-col gap-space-md p-margin rounded-xl bg-surface-container-low shadow-md overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="text-label-micro font-label-micro text-primary uppercase tracking-widest flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">psychology</span> 04 // Diretrizes de Bio-Feedback D.A.R.V.I.S.
+        </span>
+<span class="flex items-center gap-1 text-label-micro font-label-micro text-primary">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span> PROMPT_LIVE
+        </span>
+</div>
+<!-- Coach Textarea Prompt -->
+<div class="flex flex-col gap-1.5">
+<label class="text-label-micro font-label-micro text-on-surface uppercase tracking-wider flex items-center justify-between" for="bio-prompts">
+<span>Gatilhos Posturais &amp; Alertas Motores</span>
+<span class="text-on-surface-variant/60 font-mono">MD-COMPATIBLE</span>
+</label>
+<textarea class="w-full p-3 bg-surface-container text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant/40 rounded-lg outline-none focus:bg-surface-container-high focus:shadow-[0_0_12px_rgba(56,189,248,0.2)] transition-all resize-none leading-relaxed" id="bio-prompts" placeholder="Instruções posturais que o D.A.R.V.I.S. deve auditar durante o set (ex: Manter cotovelos a 45º do tronco, focar em retração escapular na base, evitar extensão lombar excessiva no banco)." rows="3">Banco inclinado rigorosamente a 30 graus. Travar retração escapular antes de iniciar a descida. Cotovelos a 45º protegendo a cápsula articular anterior. Conduzir os halteres em arco controlado sem tocar no topo.</textarea>
+</div>
+<!-- Tactical Checkboxes -->
+<div class="flex flex-col gap-2.5 pt-space-xs">
+<label class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high cursor-pointer transition-colors group">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high accent-primary text-on-primary border-none cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-telemetry text-label-telemetry text-on-surface group-hover:text-primary transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">sync</span>
+              Sincronizar com Obsidian Vault (#exercise-catalog)
+            </span>
+<span class="font-label-micro text-label-micro text-on-surface-variant truncate">Cria arquivo markdown instantâneo na pasta /Vault/Treinos/Atlas-Cinético/</span>
+</div>
+</label>
+<label class="flex items-center gap-3 p-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high cursor-pointer transition-colors group">
+<input checked="" class="w-4 h-4 rounded bg-surface-container-high accent-primary text-on-primary border-none cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-telemetry text-label-telemetry text-on-surface group-hover:text-primary transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-tertiary">calculate</span>
+              Calcular 1RM e Zonas de Intensidade Automaticamente
+            </span>
+<span class="font-label-micro text-label-micro text-on-surface-variant truncate">Aplica modelo Brzycki/Epley nos logs das primeiras 3 sessões</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Visual Confirmation / Summary Strip -->
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+<span class="text-label-micro font-label-micro uppercase tracking-wider text-on-surface">Compatibilidade Neural: 100% OK</span>
+</div>
+<span class="text-label-micro font-label-micro font-mono text-tertiary">READY_TO_COMPILE</span>
+</div>
+<!-- Foot Action Cluster -->
+<div class="flex flex-col gap-2.5 pt-space-xs">
+<button class="w-full h-12 rounded-xl bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-bold flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(56,189,248,0.4)] active:scale-[0.98] transition-all hover:brightness-110 tracking-tight" type="submit">
+<span class="material-symbols-outlined text-[22px]">save</span>
+<span>SALVAR NA BIBLIOTECA NEURAL</span>
+</button>
+<button class="w-full h-11 rounded-xl bg-surface-container-high text-on-surface font-body-md text-body-md font-semibold flex items-center justify-center gap-2 hover:bg-surface-bright active:scale-[0.98] transition-all" type="button">
+<span class="material-symbols-outlined text-secondary text-[20px]">play_circle</span>
+<span>Salvar &amp; Iniciar Imediatamente</span>
+</button>
+</div>
+</form>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl shadow-[0_-1px_12px_rgba(0,0,0,0.5)]" data-active-classes="text-primary-container drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"><div class="h-16 px-space-xs flex items-center justify-around"><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="command-center" href="#"><span class="material-symbols-outlined text-[22px]">terminal</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Core</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="ai-assistant" href="#"><span class="material-symbols-outlined text-[22px]">auto_awesome</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Neural</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="memory-obsidian" href="#"><span class="material-symbols-outlined text-[22px]">hub</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Synapse</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="projects-tasks" href="#"><span class="material-symbols-outlined text-[22px]">checklist</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">Tasks</span></a><a class="flex flex-col items-center justify-center w-14 h-14 rounded-lg text-on-surface-variant transition-all hover:text-on-surface" data-path="settings-integrations" href="#"><span class="material-symbols-outlined text-[22px]">display_settings</span><span class="font-label-micro text-label-micro tracking-widest mt-0.5 uppercase">System</span></a></div></nav>
+</body></html>
