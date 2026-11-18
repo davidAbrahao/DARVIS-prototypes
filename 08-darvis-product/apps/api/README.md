@@ -166,16 +166,22 @@ Todas as rotas exigem access token Bearer e filtram os registros pelo proprietá
 
 ## Verificações automatizadas
 
-O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta etapa, permanece com acionamento manual. Ele inicia um PostgreSQL efêmero, aplica as migrações, executa os testes e verifica o código com Ruff.
+O workflow `.github/workflows/darvis-api-ci.yml` é acionado automaticamente em alterações de arquivos da API na branch `product/foundation-v0.1`; também oferece acionamento manual. A execução cria um PostgreSQL 16 efêmero, instala a API e ferramentas de desenvolvimento, aplica as migrações, executa os testes e verifica o código com Ruff.
 
-Uma execução anterior foi interrompida durante a instalação editável porque o setuptools detectou mais de um pacote de nível superior (`app` e `alembic`). A configuração de build foi corrigida para incluir explicitamente apenas `app*`. O workflow não foi executado novamente após essa correção; os testes e Ruff permanecem sem validação em runtime.
+**Última execução verde confirmada:** [GitHub Actions #44362125724](https://github.com/davidAbrahao/DARVIS-prototypes/actions/runs/44362125724), em 18/11/2026:
+- Serviço PostgreSQL 16 iniciado e saudável.
+- `alembic upgrade head` concluído com as migrações 0001–0007.
+- `pytest -q`: 85 testes aprovados.
+- `ruff check .`: todos os checks aprovados.
 
-A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. O assistente possui testes de contratos, registro de rotas, adaptador sem chamada externa, status sem vazamento de segredo, persistência, isolamento, falha de provedor, concorrência e repetição idempotente. A camada de domínio tem testes PostgreSQL para ciclo de vida, vínculo, isolamento de proprietário, exclusão, datas, auditoria e rejeição pelo próprio banco de vínculos/estados inválidos. A memória tem testes de contratos, CRUD, pesquisa, arquivamento, origem manual, auditoria e isolamento entre proprietários. Os testes que apagam dados verificam que `TEST_DATABASE_URL` é PostgreSQL com nome terminado em `_test`; os contratos Pydantic possuem testes de validação. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
+Essa execução ocorreu em um commit de código ancestral do HEAD atual; a alteração posterior na branch foi documental. A validação automatizada não substitui o teste da API e da sessão no navegador no ambiente local.
+
+A suíte cobre configuração e primitivas de segurança, schemas, proteção CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. O assistente possui testes de contratos, registro de rotas, adaptador sem chamada externa, status sem vazamento de segredo, persistência, isolamento, falha de provedor, concorrência e repetição idempotente. A camada de domínio tem testes PostgreSQL para ciclo de vida, vínculo, isolamento de proprietário, exclusão, datas, auditoria e rejeição pelo próprio banco de vínculos/estados inválidos. A memória tem testes de contratos, CRUD, pesquisa, arquivamento, origem manual, auditoria e isolamento entre proprietários. Os testes que apagam dados verificam que `TEST_DATABASE_URL` é PostgreSQL com nome terminado em `_test`; os contratos Pydantic possuem testes de validação.
 
 Para executar localmente:
 
 ```powershell
-pytest
+pytest -q
 ruff check .
 ```
 
