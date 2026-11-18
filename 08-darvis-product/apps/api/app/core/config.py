@@ -1,0 +1,75 @@
+from functools import lru_cache
+from typing import Literal
+
+from pydantic import Field, SecretStr, field_validator, model_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+        case_sensitive=False,
+    )
+
+    app_name: str = "D.A.R.V.I.S. API"
+    app_env: Literal["development", "test", "staging", "production"] = "development"
+    api_v1_prefix: str = "/api/v1"
+    cors_origins: list[str] = ["http://localhost:3000"]
+    database_url: SecretStr | None = None
+    secret_key: SecretStr = SecretStr("")
+    initial_setup_token: SecretStr = SecretStr("")
+    ai_provider: Literal["disabled", "gemini"] = "disabled"
+    gemini_api_key: SecretStr = SecretStr("")
+    gemini_model: str = Field(default="gemini-3.8-flash", min_length=1, max_length=120)
+    gemini_max_output_tokens: int = Field(default=2048, ge=128, le=8192)
+    access_token_ttl_minutes: int = Field(default=10, ge=5, le=30)
+    refresh_token_ttl_days: int = Field(default=30, ge=1, le=90)
+
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def empty_database_url_is_unconfigured(cls, value):
+        return None if value == "" else value
+
+    @field_validator("gemini_model")
+    @classmethod
+    def validate_gemini_model(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("GEMINI_MODEL não pode ficar vazio")
+        return normalized
+
+    @field_validator("api_v1_prefix")
+    @classmethod
+    def validate_api_prefix(cls, value: str) -> str:
+        if not value.startswith("/") or value == "/":
+            raise ValueError("API_V1_PREFIX deve começar com / e não pode ser apenas /")
+        return value.rstrip("/")
+
+    @field_validator("cors_origins")
+    @classmethod
+    def validate_cors_origins(cls, value: list[str]) -> list[str]:
+        normalized = list(dict.fromkeys(origin.rstrip("/") for origin in value))
+        if "*" in normalized:
+            raise ValueError("CORS não permite origem curinga")
+        return normalized
+
+    @model_validator(mode="after")
+    def validate_production_settings(self) -> "Settings":
+        if self.app_env == "production":
+            if self.database_url is None:
+                raise ValueError("DATABASE_URL é obrigatório em produção")
+            url = self.database_url.get_secret_value()
+            if not url.startswith(("postgresql://", "postgresql+psycopg://")):
+                raise ValueError("Produção exige PostgreSQL com o driver psycopg")
+            if len(self.secret_key.get_secret_value().encode("utf-8")) < 32:
+                raise ValueError("SECRET_KEY deve ter pelo menos 32 bytes em produção")
+            if not self.cors_origins:
+                raise ValueError("CORS_ORIGINS deve declarar as origens permitidas em produção")
+        return self
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()

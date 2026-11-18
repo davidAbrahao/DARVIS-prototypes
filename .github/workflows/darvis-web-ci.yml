@@ -1,0 +1,43 @@
+name: Verificações web do D.A.R.V.I.S.
+
+on:
+  push:
+    branches:
+      - product/foundation-v0.1
+    paths:
+      - "08-darvis-product/apps/web/**"
+      - ".github/workflows/darvis-web-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qualidade:
+    name: Qualidade e build da aplicação web
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 08-darvis-product/apps/web
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Verificar ESLint
+        run: npm run lint
+
+      - name: Verificar tipos TypeScript
+        run: npm run typecheck
+
+      - name: Gerar build Next.js
+        run: npm run build
+        env:
+          NEXT_PUBLIC_DARVIS_API_URL: http://localhost:8000/api/v1
