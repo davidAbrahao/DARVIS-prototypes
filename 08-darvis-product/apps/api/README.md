@@ -38,7 +38,7 @@ Em produção, execute a migração como etapa única e controlada do processo d
 
 ## Verificações automatizadas
 
-O fluxo de integração contínua em `.github/workflows/ci.yml` instala a API, executa os testes e verifica o código com Ruff para alterações neste diretório.
+O fluxo ativo de integração contínua está em `.github/workflows/darvis-api-ci.yml`. Ele instala a API, executa os testes e verifica o código com Ruff para alterações neste diretório.
 
 Para executar localmente:
 
