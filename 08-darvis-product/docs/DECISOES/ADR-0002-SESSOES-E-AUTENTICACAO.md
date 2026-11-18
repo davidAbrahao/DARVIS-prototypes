@@ -36,6 +36,7 @@ O bloqueio de linha impede que duas transações consumam o mesmo token ao mesmo
 - O endpoint `GET /api/v1/auth/csrf` cria ou devolve o cookie CSRF, valida a origem quando presente e retorna o token com `Cache-Control: no-store`. O cliente chama esse endpoint no início da aplicação, antes de tentar renovar uma sessão após um recarregamento.
 - O cookie CSRF e o cookie de refresh são limitados ao caminho de autenticação. O token CSRF pode ser recebido pelo cliente por uma resposta JSON da origem explicitamente permitida; o refresh permanece inacessível ao JavaScript.
 - O cliente coordena renovações concorrentes dentro da aba com uma promessa compartilhada e, quando disponível, entre abas com a Web Locks API. A operação relê o token CSRF após adquirir a trava; o refresh token nunca é transferido para JavaScript nem armazenado em armazenamento persistente.
+- O logout individual usa a mesma trava para não disputar a rotação do cookie. O logout global usa o cliente autenticado e permite renovar o access token antes da revogação.
 - A topologia final deve manter frontend e API no mesmo site registrável ou reavaliar explicitamente SameSite e CORS.
 - HTTPS é obrigatório nos ambientes implantados.
 
