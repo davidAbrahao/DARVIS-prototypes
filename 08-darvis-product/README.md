@@ -1,55 +1,55 @@
-# D.A.R.V.I.S. — Product Workspace
+# D.A.R.V.I.S. — Espaço de desenvolvimento do produto
 
 **David Abrahão Rodrigues Virtual Intelligence System**
 
-This directory is the beginning of the integrated product. The six prototype projects remain preserved as reference material; this workspace is where the production-oriented application will be assembled.
+Este diretório marca o início do produto integrado. Os seis projetos de protótipo permanecem preservados como material de referência; é neste espaço que a aplicação orientada à produção será construída.
 
-## Product principle
+## Princípio do produto
 
-D.A.R.V.I.S. is a personal intelligence system: it should understand user-approved context, organize knowledge and work, help make decisions, and execute explicitly authorized actions with traceability. It is not merely a chatbot or a decorative dashboard.
+D.A.R.V.I.S. é um sistema de inteligência pessoal. Deve compreender o contexto autorizado pelo usuário, organizar conhecimentos e atividades, apoiar decisões e executar ações explicitamente autorizadas, sempre com rastreabilidade. Não é apenas um chatbot ou um painel visual.
 
-## Experience
+## Experiência
 
-The official visual direction is the **Cognitive Cockpit**, based on the Google Stitch prototype:
-- Deep Space `#080C14`
-- Graphite `#111827`
-- Electric Cyan `#38BDF8`
-- Operational Green `#10B981`
-- Space Grotesk, Geist, and JetBrains Mono
+A direção visual oficial é o **Cognitive Cockpit**, inspirada no protótipo criado no Google Stitch:
+- Deep Space: `#080C14`
+- Grafite: `#111827`
+- Ciano elétrico: `#38BDF8`
+- Verde operacional: `#10B981`
+- Tipografias Space Grotesk, Geist e JetBrains Mono.
 
-The interface must be responsive, accessible, calm under information density, and honest: every status, metric, connection, and execution indicator must reflect real system state.
+A interface deve ser responsiva, acessível, organizada mesmo com alta densidade de informações e transparente: cada status, métrica, conexão e indicador de execução deve refletir o estado real do sistema.
 
-## Initial technical direction
+## Direção técnica inicial
 
-- Web: Next.js, React, TypeScript, PWA.
-- API: FastAPI, Python, Pydantic.
-- Persistence: PostgreSQL, SQLAlchemy, Alembic.
-- Knowledge: Markdown/Obsidian integration behind an explicit adapter.
-- AI: provider abstraction; Gemini is the first candidate, not a hard dependency.
-- Execution: server-side tools with authorization, approval, idempotency, and audit records.
+- Aplicação web: Next.js, React, TypeScript e PWA.
+- API: FastAPI, Python e Pydantic.
+- Persistência: PostgreSQL, SQLAlchemy e Alembic.
+- Conhecimento: Markdown e integração com Obsidian por meio de um adaptador explícito.
+- Inteligência artificial: arquitetura independente de provedor; Gemini é o primeiro candidato, não uma dependência definitiva.
+- Execução: ferramentas no servidor, com autorização, aprovação, idempotência e registros de auditoria.
 
-These are architecture decisions for the new product workspace, not claims that the stack is already implemented.
+Estas são decisões de arquitetura para o novo espaço do produto, não afirmações de que toda essa estrutura já esteja implementada.
 
-## First delivery
+## Primeira entrega
 
-The first milestone is a secure vertical slice: API health and configuration validation; database connection and initial migration; authentication and current-user endpoint; responsive Cognitive Cockpit shell; authenticated API client and real system status; CI checks and setup documentation.
+A primeira etapa será uma fatia vertical segura e verificável: validação de configuração e saúde da API; conexão com banco de dados e migração inicial; autenticação e consulta da identidade autenticada; estrutura responsiva do Cognitive Cockpit; cliente de API autenticado e status real do sistema; verificações automatizadas e documentação de configuração.
 
-## Repository map
+## Organização do repositório
 
-- `docs/PRODUCT_VISION.md`: product principles and user experience.
-- `docs/ARCHITECTURE.md`: target system boundaries and data flow.
-- `docs/ROADMAP.md`: incremental delivery plan and acceptance criteria.
-- `docs/SECURITY_BASELINE.md`: minimum security requirements.
-- `docs/DECISIONS.md`: architecture decision log.
+- `docs/PRODUCT_VISION.md`: visão do produto, princípios e experiência.
+- `docs/ARCHITECTURE.md`: arquitetura-alvo, limites e fluxo de dados.
+- `docs/ROADMAP.md`: plano incremental e critérios de aceite.
+- `docs/SECURITY_BASELINE.md`: requisitos mínimos de segurança.
+- `docs/DECISIONS.md`: histórico das decisões de arquitetura.
 
-## Non-negotiable engineering rules
+## Regras inegociáveis de engenharia
 
-- Never put secrets in source control or browser bundles.
-- Never treat local UI state as authoritative persistence.
-- Never let an LLM directly execute arbitrary code or SQL.
-- Validate tool names and payloads on the server using allowlists and typed schemas.
-- Require server-side authorization for sensitive actions.
-- Record approval and execution outcomes in persistent audit logs.
-- Do not display simulated values as live telemetry.
-- Preserve the six source prototypes unchanged.
-- Do not claim tests or deployments passed until they have actually run.
+- Nunca incluir segredos no controle de versão ou nos arquivos enviados ao navegador.
+- Nunca tratar o estado local da interface como persistência oficial.
+- Nunca permitir que um modelo de IA execute diretamente código ou SQL arbitrário.
+- Validar nomes e parâmetros de ferramentas no servidor, usando listas de permissões e esquemas tipados.
+- Exigir autorização no servidor para ações sensíveis.
+- Registrar aprovações e resultados de execução em trilhas persistentes de auditoria.
+- Nunca apresentar valores simulados como indicadores em tempo real.
+- Preservar os seis protótipos de origem sem alterações.
+- Nunca afirmar que testes ou implantações foram concluídos sem executá-los de fato.
