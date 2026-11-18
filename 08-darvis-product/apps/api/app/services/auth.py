@@ -1,6 +1,5 @@
 import hashlib
 import hmac
-import secrets
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -83,12 +82,25 @@ def _consume_rate_limit(
     window_seconds: int,
     block_seconds: int,
 ) -> bool:
-    """Incrementa um bucket por UPSERT atômico; compatível com múltiplas réplicas PostgreSQL."""
+    """Incrementa um bucket por UPSERT atômico; coordena múltiplas réplicas PostgreSQL."""
     now = utc_now()
     bucket = _bucket_hash(scope, value)
     expired_window = AuthRateLimit.window_started_at <= now - timedelta(seconds=window_seconds)
-    attempts = case((expired_window, 1), else_=AuthRateLimit.attempts + 1)
+    active_block = (
+        AuthRateLimit.blocked_until.is_not(None) & (AuthRateLimit.blocked_until > now)
+    )
+    attempts = case(
+        (active_block, AuthRateLimit.attempts),
+        (expired_window, 1),
+        else_=AuthRateLimit.attempts + 1,
+    )
+    window_started_at = case(
+        (active_block, AuthRateLimit.window_started_at),
+        (expired_window, now),
+        else_=AuthRateLimit.window_started_at,
+    )
     blocked_until = case(
+        (active_block, AuthRateLimit.blocked_until),
         (expired_window, None),
         (AuthRateLimit.attempts >= limit - 1, now + timedelta(seconds=block_seconds)),
         else_=AuthRateLimit.blocked_until,
@@ -106,9 +118,7 @@ def _consume_rate_limit(
             index_elements=[AuthRateLimit.bucket_hash],
             set_={
                 "attempts": attempts,
-                "window_started_at": case(
-                    (expired_window, now), else_=AuthRateLimit.window_started_at
-                ),
+                "window_started_at": window_started_at,
                 "blocked_until": blocked_until,
                 "updated_at": now,
             },
@@ -177,13 +187,6 @@ def setup_owner(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Configuração inicial indisponível",
         )
-    if not setup_token or not hmac.compare_digest(expected, setup_token):
-        _audit(
-            db, event_type="auth.setup.rejected", outcome="rejected",
-            ip_address=ip_address, metadata={"reason": "credencial_invalida"},
-        )
-        db.commit()
-        raise HTTPException(status_code=403, detail="Não foi possível concluir a configuração")
 
     if _consume_rate_limit(
         db, scope="setup-ip", value=ip_address or "unknown",
@@ -191,6 +194,14 @@ def setup_owner(
     ):
         _record_rate_limited(db, "auth.setup.rate_limited", ip_address)
         raise HTTPException(status_code=429, detail="Muitas tentativas. Tente novamente mais tarde")
+
+    if not setup_token or not hmac.compare_digest(expected, setup_token):
+        _audit(
+            db, event_type="auth.setup.rejected", outcome="rejected",
+            ip_address=ip_address, metadata={"reason": "credencial_invalida"},
+        )
+        db.commit()
+        raise HTTPException(status_code=403, detail="Não foi possível concluir a configuração")
 
     # O lock transacional impede duas primeiras configurações concorrentes, mesmo com e-mails distintos.
     db.execute(text("SELECT pg_advisory_xact_lock(724190261)"))
@@ -257,7 +268,7 @@ def login(
     result = _create_session(db, user)
     _audit(
         db, event_type="auth.login.succeeded", outcome="success",
-        actor_user_id=user.id, ip_address=ip_address, resource_id=result.user.id and None,
+        actor_user_id=user.id, ip_address=ip_address,
     )
     db.commit()
     return result
@@ -372,9 +383,9 @@ def logout_session(
     session: AuthSession | None = None
     if raw_token:
         token_record = db.scalar(
-            select(RefreshToken).where(
-                RefreshToken.token_hash == hash_refresh_token(raw_token)
-            )
+            select(RefreshToken)
+            .where(RefreshToken.token_hash == hash_refresh_token(raw_token))
+            .with_for_update()
         )
         if token_record is not None:
             session = db.scalar(
