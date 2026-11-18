@@ -35,6 +35,20 @@ O navegador executa a aplicação Next.js PWA e se comunica por HTTPS com a API 
 
 O PostgreSQL é a fonte oficial do estado operacional. O cofre é uma camada de documentos e conhecimento, não um substituto para registros transacionais.
 
+## Domínio operacional inicial
+
+A primeira fatia do domínio usa PostgreSQL para manter:
+
+- **Projetos:** proprietário, nome, descrição, situação e timestamps de criação/atualização.
+- **Tarefas:** proprietário, projeto opcional, título, descrição, situação, prioridade, prazo com fuso horário e data de conclusão.
+- **Auditoria:** eventos de criação, atualização e exclusão com usuário responsável e identificação do recurso.
+
+Todas as consultas de projeto e tarefa aplicam o `user_id` da identidade autenticada. O serviço valida a propriedade do projeto antes de criar ou vincular uma tarefa. Listagens oferecem filtros e paginação limitados pela API. O resumo da Central de Comando é calculado por consultas agregadas no banco.
+
+Situações de projeto: `active`, `on_hold`, `completed`, `archived`. Situações de tarefa: `todo`, `in_progress`, `blocked`, `done`, `cancelled`. Prioridades: `low`, `normal`, `high`, `urgent`.
+
+A interface mantém o access token somente em memória. O refresh permanece no cookie HttpOnly. A renovação automática de chamadas protegidas compartilha uma promessa na aba e utiliza Web Locks para coordenar abas quando o navegador oferece essa API. Nenhum refresh token é copiado para JavaScript ou para armazenamento persistente do navegador.
+
 ## Limites de atuação da IA
 
 O modelo é um componente de raciocínio não confiável. Ele pode propor chamadas estruturadas de ferramentas, mas não pode executar diretamente comandos arbitrários, SQL, operações no sistema de arquivos ou requisições de rede.
