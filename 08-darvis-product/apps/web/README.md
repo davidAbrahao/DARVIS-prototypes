@@ -32,6 +32,14 @@ Em uma segunda janela, inicie a API conforme o [guia da API](../api/README.md). 
 - O encerramento global passa pelo cliente autenticado, podendo renovar um access token expirado antes de revogar todas as sessões.
 - A configuração inicial do proprietário não é executada pelo navegador. `INITIAL_SETUP_TOKEN` é segredo de servidor e nunca deve ser exposto em uma variável `NEXT_PUBLIC_*`.
 
+## Assistente de IA
+
+A área de conversas utiliza os endpoints autenticados `/assistant/status`, `/assistant/conversations` e `/assistant/conversations/{id}/messages`. Conversas e mensagens são carregadas do PostgreSQL, não do armazenamento local do navegador.
+
+O provedor é configurado somente no ambiente da API, conforme o [guia da API](../api/README.md). Por padrão, `AI_PROVIDER=disabled` e o campo de envio permanece desativado. Nunca crie uma variável `NEXT_PUBLIC_GEMINI_API_KEY` ou envie a chave do provedor para o navegador.
+
+Cada envio mantém um UUID durante as tentativas da mesma mensagem; o servidor usa esse identificador para responder com o turno já persistido caso a mesma requisição seja repetida. A interface não tenta executar ferramentas e não simula respostas quando o provedor não está configurado.
+
 ## Verificações de qualidade
 
 ```powershell
@@ -44,4 +52,4 @@ As verificações acima estão preparadas, mas não foram executadas nesta etapa
 
 ## Estado da interface
 
-A tela de login, a proteção de rota, a restauração, a renovação controlada e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando consulta indicadores, tarefas e projetos reais; permite criar tarefas com projeto, prioridade e prazo, alterar a situação das tarefas, concluir tarefas, criar projetos e alterar a situação dos projetos. Assistente, memória, agenda e integrações continuam identificados como planejados até que existam serviços e dados reais.
+A tela de login, a proteção de rota, a restauração, a renovação controlada e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando consulta indicadores, tarefas e projetos reais; permite criar tarefas com projeto, prioridade e prazo, alterar a situação das tarefas, concluir tarefas, criar projetos e alterar a situação dos projetos. O espaço do assistente consulta o estado real do provedor, lista/cria conversas e carrega mensagens persistidas. O envio fica habilitado somente quando a API informa provedor configurado e utiliza UUID idempotente para evitar duplicação em novas tentativas. Sem credencial, a interface explica por que o envio está desabilitado. A aplicação não envia chaves de provedor ao navegador e não oferece execução de ferramentas nesta versão. Memória externa, agenda e integrações continuam planejadas.
