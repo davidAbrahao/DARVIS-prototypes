@@ -284,7 +284,9 @@ export function DashboardOverview() {
               <span className="eyebrow">EXECUÇÃO</span>
               <h2>Suas tarefas</h2>
             </div>
-            <span className="dashboard-count">{data.summary.tasks_open} abertas</span>
+            <span className="dashboard-count">
+              {hasLoaded ? data.summary.tasks_open : "—"} abertas
+            </span>
           </div>
 
           <form className="quick-task-form" onSubmit={createTask}>
@@ -355,7 +357,9 @@ export function DashboardOverview() {
               <span className="eyebrow">DIREÇÃO</span>
               <h2>Projetos</h2>
             </div>
-            <span className="dashboard-count">{data.summary.projects_total} registrados</span>
+            <span className="dashboard-count">
+              {hasLoaded ? data.summary.projects_total : "—"} registrados
+            </span>
           </div>
 
           <form className="quick-project-form" onSubmit={createProject}>
