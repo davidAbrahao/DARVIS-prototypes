@@ -1,9 +1,14 @@
-import { Activity, BrainCircuit, Command, FolderKanban, Layers3, Mic2, Network, ShieldCheck, Sparkles, Workflow } from "lucide-react";
+import { Activity, BrainCircuit, Command, FolderKanban, Layers3, Mic2, Network, ShieldCheck, Sparkles, Workflow, type LucideIcon } from "lucide-react";
 import { DashboardOverview } from "./dashboard-overview";
 import { ProtectedPage } from "./protected-page";
 import { SessionActions } from "./session-actions";
 
-const navigation = [
+const navigation: {
+  label: string;
+  icon: LucideIcon;
+  active?: boolean;
+  href?: string;
+}[] = [
   { label: "Central de Comando", icon: Command, active: true, href: "#overview" },
   { label: "Assistente de IA", icon: BrainCircuit },
   { label: "Central de Memória", icon: Network },
