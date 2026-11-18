@@ -6,6 +6,7 @@ import pytest
 from fastapi import HTTPException
 from sqlalchemy import create_engine, select
 from sqlalchemy.engine import make_url
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.schemas.projects import ProjectCreate, ProjectUpdate
@@ -13,7 +14,7 @@ from app.api.schemas.tasks import TaskCreate, TaskUpdate
 from app.core.config import get_settings
 from app.core.security import hash_password
 from app.db.base import Base
-from app.models import AuditEvent, User
+from app.models import AuditEvent, Task, User
 from app.services.projects import (
     create_project,
     delete_project,
@@ -251,3 +252,32 @@ def test_empty_patch_is_rejected_for_projects_and_tasks(db_session: Session) -> 
 
     assert project_error.value.status_code == 422
     assert task_error.value.status_code == 422
+
+
+def test_database_rejects_task_link_to_another_owners_project(db_session: Session) -> None:
+    owner = _create_owner(db_session)
+    another_user = User(
+        email="projeto-alheio@darvis.test",
+        full_name="Outro proprietário",
+        password_hash=hash_password("outra-senha-segura"),
+    )
+    db_session.add(another_user)
+    db_session.flush()
+
+    foreign_project = create_project(
+        db_session,
+        user_id=another_user.id,
+        payload=ProjectCreate(name="Projeto de outra pessoa"),
+    )
+
+    nested = db_session.begin_nested()
+    db_session.add(
+        Task(
+            user_id=owner.id,
+            project_id=foreign_project.id,
+            title="Vínculo inválido",
+        )
+    )
+    with pytest.raises(IntegrityError):
+        db_session.flush()
+    nested.rollback()
