@@ -140,6 +140,7 @@ export function AssistantWorkspace() {
         return rows[0]?.id ?? null;
       });
     } catch (cause) {
+      setAssistantStatus(null);
       setError(getErrorMessage(cause, "Não foi possível carregar o assistente."));
     } finally {
       setInitialLoading(false);
@@ -245,7 +246,11 @@ export function AssistantWorkspace() {
       }
       setDraft("");
       pendingRequest.current = null;
-      await loadConversations();
+      try {
+        await loadConversations();
+      } catch {
+        setError("Mensagem salva. Não foi possível atualizar a lista de conversas.");
+      }
     } catch (cause) {
       setError(
         getErrorMessage(
