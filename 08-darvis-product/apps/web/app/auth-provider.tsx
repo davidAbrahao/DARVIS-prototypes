@@ -43,6 +43,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
   const accessTokenRef = useRef<string | null>(null);
   const csrfTokenRef = useRef<string | null>(null);
   const restoreTask = useRef<Promise<void> | null>(null);
+  const authChannel = useRef<BroadcastChannel | null>(null);
 
   const acceptSession = useCallback((payload: AuthPayload) => {
     accessTokenRef.current = payload.access_token;
@@ -52,13 +53,42 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     setStatus("authenticated");
   }, []);
 
-  const clearSession = useCallback(() => {
+  const clearSession = useCallback((broadcast = false) => {
     accessTokenRef.current = null;
     csrfTokenRef.current = null;
     setAccessToken(null);
     setUser(null);
     setStatus("anonymous");
+    if (broadcast) {
+      authChannel.current?.postMessage({ type: "signed_out" });
+    }
   }, []);
+
+  useEffect(() => {
+    if (typeof BroadcastChannel === "undefined") {
+      return;
+    }
+
+    const channel = new BroadcastChannel("darvis-auth-events");
+    authChannel.current = channel;
+    channel.onmessage = (event: MessageEvent<unknown>) => {
+      if (
+        typeof event.data === "object" &&
+        event.data !== null &&
+        "type" in event.data &&
+        event.data.type === "signed_out"
+      ) {
+        clearSession();
+      }
+    };
+
+    return () => {
+      channel.close();
+      if (authChannel.current === channel) {
+        authChannel.current = null;
+      }
+    };
+  }, [clearSession]);
 
   const retrySession = useCallback(async () => {
     if (restoreTask.current) {
@@ -135,7 +165,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
         });
       } catch (error) {
         if (error instanceof ApiError && error.status === 401) {
-          clearSession();
+          clearSession(true);
         } else if (!(error instanceof ApiError)) {
           setStatus("unavailable");
         }
@@ -147,12 +177,12 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const signOut = useCallback(async () => {
     await endSession(csrfTokenRef.current);
-    clearSession();
+    clearSession(true);
   }, [clearSession]);
 
   const signOutAll = useCallback(async () => {
     await apiRequest<void>("/auth/logout-all", { method: "POST" });
-    clearSession();
+    clearSession(true);
   }, [apiRequest, clearSession]);
 
   const value = useMemo<AuthContextValue>(
