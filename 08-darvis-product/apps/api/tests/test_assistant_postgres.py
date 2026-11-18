@@ -460,3 +460,44 @@ def test_assistant_user_rate_limit_blocks_before_provider_call(
         limit=50,
         offset=0,
     ) == []
+
+
+def test_reusing_request_id_with_different_content_returns_conflict(
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    owner = _create_owner(db_session)
+    provider = FakeProvider()
+    monkeypatch.setattr(assistant_service, "get_chat_provider", lambda: provider)
+    conversation = create_conversation(
+        db_session,
+        user_id=owner.id,
+        payload=ConversationCreate(),
+    )
+    request_id = uuid4()
+    send_message(
+        db_session,
+        user_id=owner.id,
+        conversation_id=conversation.id,
+        payload=MessageCreate(request_id=request_id, content="Primeiro conteúdo"),
+    )
+
+    with pytest.raises(HTTPException) as error:
+        send_message(
+            db_session,
+            user_id=owner.id,
+            conversation_id=conversation.id,
+            payload=MessageCreate(request_id=request_id, content="Outro conteúdo"),
+        )
+
+    assert error.value.status_code == 409
+    assert len(provider.calls) == 1
+    assert len(
+        list_messages(
+            db_session,
+            user_id=owner.id,
+            conversation_id=conversation.id,
+            limit=20,
+            offset=0,
+        )
+    ) == 2
