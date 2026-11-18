@@ -27,14 +27,25 @@ Este documento define os requisitos mínimos. Não significa que todos esses con
 - Verificar novamente a autorização quando uma ação proposta pela IA for aprovada.
 - Limitar credenciais de integrações às permissões estritamente necessárias.
 
-## IA e execução de ferramentas
-- Tratar toda saída do modelo como entrada não confiável.
+## IA, conversas e provedores
+- Tratar toda saída do modelo como conteúdo não confiável.
+- Manter credenciais dos provedores exclusivamente no servidor/gerenciador de segredos.
+- Não expor chaves, configurações internas ou erros brutos do SDK ao navegador.
+- Minimizar o contexto enviado: a implementação atual envia apenas o histórico explícito da conversa, com limites de quantidade e caracteres.
+- Não anexar dados de tarefas, projetos, notas, arquivos ou dispositivo sem seleção e autorização explícitas.
+- Aplicar rate limit persistente por usuário ao uso do provedor.
+- Persistir conversas e mensagens com isolamento por proprietário.
+- Utilizar UUID idempotente para envios e controle de concorrência por conversa.
+- Definir política de retenção, exportação e exclusão antes da publicação.
+- Nesta primeira versão, não habilitar execução de ferramentas nem function calling.
+
+## IA e execução futura de ferramentas
 - Utilizar esquemas estritos e listas explícitas de ferramentas permitidas.
 - Rejeitar tipos de ação desconhecidos e campos inesperados.
 - Limitar tamanho de parâmetros, textos, listas e tempo de execução.
 - Nunca executar comandos arbitrários de shell, Python, SQL ou navegador recebidos do modelo.
 - Exigir aprovação explícita para ações com consequências relevantes.
-- Utilizar chaves de idempotência e estado persistente de execução.
+- Revalidar autenticação, autorização, estado e idempotência no servidor no momento da execução.
 - Manter separados os registros de proposta, aprovação, execução e resultado.
 
 ## Dados e privacidade
