@@ -165,14 +165,16 @@ export async function bootstrapCsrf(): Promise<string> {
 }
 
 export async function authenticate(email: string, password: string): Promise<AuthPayload> {
-  const response = await fetch(`${API_BASE_URL}/auth/login`, {
-    method: "POST",
-    credentials: "include",
-    cache: "no-store",
-    headers: { "Content-Type": "application/json", Accept: "application/json" },
-    body: JSON.stringify({ email, password }),
+  return withSessionLock(async () => {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      credentials: "include",
+      cache: "no-store",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    return readJson<AuthPayload>(response);
   });
-  return readJson<AuthPayload>(response);
 }
 
 export async function authenticatedApiRequest<T>(
