@@ -54,5 +54,13 @@
 - **Situação:** aceita para a primeira implementação; Obsidian e contexto de IA pendentes.
 - **Decisão:** armazenar registros manuais no PostgreSQL, isolados por proprietário, com categorias, etiquetas, fixação, arquivamento, busca e auditoria.
 - **Motivo:** criar uma memória consultável sem captura automática e sem confundir registros transacionais com documentos Markdown.
-- **Consequência:** o assistente não recebe memórias automaticamente; sincronização Obsidian e seleção explícita de contexto serão fases posteriores.
+- **Consequência:** o assistente não recebe memórias automaticamente; sincronização Obsidian e seleção explícita de contexto são etapas separadas.
 - **Detalhes:** [ADR-0004 — Memória estruturada manual](DECISOES/ADR-0004-MEMORIA-ESTRUTURADA-MANUAL.md).
+
+
+## ADR-010 — Seleção explícita de contexto para o assistente
+- **Situação:** aceita como especificação para a próxima implementação.
+- **Decisão:** permitir seleção por mensagem de memórias, projetos e tarefas, sempre com prévia fiel, autorização por proprietário e validação de hash no envio.
+- **Motivo:** enriquecer respostas sem anexar dados pessoais silenciosamente e sem confiar em conteúdo fabricado pelo cliente.
+- **Consequência:** contexto de domínio permanece vazio por padrão; seleção não persiste entre mensagens; o servidor re-resolve as fontes e exige nova confirmação se o conteúdo mudar. O texto integral não será duplicado em metadados de auditoria.
+- **Detalhes:** [ADR-0005 — Seleção explícita de contexto](DECISOES/ADR-0005-SELECAO-EXPLICITA-DE-CONTEXTO.md).
