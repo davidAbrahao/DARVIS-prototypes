@@ -26,6 +26,28 @@ const API_BASE_URL = (
 ).replace(/\/+$/, "");
 
 let refreshInFlight: Promise<AuthPayload> | null = null;
+let fallbackSessionQueue: Promise<void> = Promise.resolve();
+
+async function withSessionLock<T>(operation: () => Promise<T>): Promise<T> {
+  if (typeof navigator !== "undefined" && navigator.locks) {
+    return navigator.locks.request("darvis-session-refresh", operation);
+  }
+
+  // Fallback: serializa operações nesta instância quando Web Locks não existe.
+  const previous = fallbackSessionQueue;
+  let release!: () => void;
+  fallbackSessionQueue = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+
+  await previous;
+  try {
+    return await operation();
+  } finally {
+    release();
+  }
+}
+
 
 export class ApiError extends Error {
   constructor(
@@ -109,10 +131,7 @@ async function renewWithBrowserLock(fallbackCsrfToken: string | null): Promise<A
     return postRefresh(csrfToken);
   };
 
-  if (typeof navigator !== "undefined" && navigator.locks) {
-    return navigator.locks.request("darvis-session-refresh", performRefresh);
-  }
-  return performRefresh();
+  return withSessionLock(performRefresh);
 }
 
 async function renewOnce(csrfToken: string | null): Promise<AuthPayload> {
@@ -213,10 +232,6 @@ export async function endSession(fallbackCsrfToken: string | null): Promise<void
     }
   };
 
-  if (typeof navigator !== "undefined" && navigator.locks) {
-    await navigator.locks.request("darvis-session-refresh", performLogout);
-    return;
-  }
-  await performLogout();
+  await withSessionLock(performLogout);
 }
 
