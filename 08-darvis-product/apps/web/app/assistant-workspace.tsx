@@ -16,10 +16,14 @@ import {
   LoaderCircle,
   MessageSquare,
   MessageSquarePlus,
+  Pencil,
+  Save,
   Send,
   ShieldCheck,
   Sparkles,
+  Trash2,
   WifiOff,
+  X,
 } from "lucide-react";
 
 import { ApiError } from "../lib/auth-api";
@@ -102,6 +106,11 @@ export function AssistantWorkspace() {
   const [initialLoading, setInitialLoading] = useState(true);
   const [messagesLoading, setMessagesLoading] = useState(false);
   const [creatingConversation, setCreatingConversation] = useState(false);
+  const [renamingConversation, setRenamingConversation] = useState(false);
+  const [savingTitle, setSavingTitle] = useState(false);
+  const [renameTitle, setRenameTitle] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deletingConversation, setDeletingConversation] = useState(false);
   const [sending, setSending] = useState(false);
   const [draft, setDraft] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -203,11 +212,74 @@ export function AssistantWorkspace() {
       ]);
       setActiveConversationId(conversation.id);
       setMessages([]);
+      setRenamingConversation(false);
+      setConfirmDelete(false);
       pendingRequest.current = null;
     } catch (cause) {
       setError(getErrorMessage(cause, "Não foi possível criar a conversa."));
     } finally {
       setCreatingConversation(false);
+    }
+  }
+
+  function beginRename() {
+    if (!currentConversation) return;
+    setRenameTitle(currentConversation.title);
+    setRenamingConversation(true);
+    setConfirmDelete(false);
+    setError(null);
+  }
+
+  async function saveConversationTitle(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const title = renameTitle.trim();
+    if (!activeConversationId || !title || savingTitle) return;
+
+    setSavingTitle(true);
+    setError(null);
+    try {
+      const updated = await apiRequest<Conversation>(
+        `/assistant/conversations/${activeConversationId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title }),
+        },
+      );
+      setConversations((current) =>
+        current.map((item) => (item.id === updated.id ? updated : item)),
+      );
+      setRenamingConversation(false);
+    } catch (cause) {
+      setError(getErrorMessage(cause, "Não foi possível renomear a conversa."));
+    } finally {
+      setSavingTitle(false);
+    }
+  }
+
+  async function deleteCurrentConversation() {
+    if (!activeConversationId || deletingConversation) return;
+
+    setDeletingConversation(true);
+    setError(null);
+    try {
+      await apiRequest<void>(
+        `/assistant/conversations/${activeConversationId}`,
+        { method: "DELETE" },
+      );
+      const remaining = conversations.filter(
+        (conversation) => conversation.id !== activeConversationId,
+      );
+      setConversations(remaining);
+      setActiveConversationId(remaining[0]?.id ?? null);
+      setMessages([]);
+      pendingRequest.current = null;
+      setRenamingConversation(false);
+      setConfirmDelete(false);
+    } catch (cause) {
+      setError(getErrorMessage(cause, "Não foi possível excluir a conversa."));
+    } finally {
+      setDeletingConversation(false);
     }
   }
 
@@ -362,7 +434,11 @@ export function AssistantWorkspace() {
                   }`}
                   type="button"
                   key={conversation.id}
-                  onClick={() => setActiveConversationId(conversation.id)}
+                  onClick={() => {
+                    setActiveConversationId(conversation.id);
+                    setRenamingConversation(false);
+                    setConfirmDelete(false);
+                  }}
                 >
                   <strong>{conversation.title}</strong>
                   <span>{formatConversationDate(conversation.updated_at)}</span>
@@ -374,14 +450,88 @@ export function AssistantWorkspace() {
 
         <div className="assistant-chat">
           <div className="assistant-chat-heading">
-            <div>
+            <div className="assistant-chat-heading-copy">
               <span className="eyebrow">CONVERSA ATUAL</span>
-              <h3>{currentConversation?.title ?? "Comece uma nova conversa"}</h3>
+              {renamingConversation ? (
+                <form className="assistant-rename-form" onSubmit={saveConversationTitle}>
+                  <input
+                    value={renameTitle}
+                    onChange={(event) => setRenameTitle(event.target.value)}
+                    aria-label="Novo título da conversa"
+                    maxLength={120}
+                    autoFocus
+                    required
+                  />
+                  <button
+                    type="submit"
+                    aria-label="Salvar título"
+                    title="Salvar título"
+                    disabled={savingTitle || !renameTitle.trim()}
+                  >
+                    {savingTitle ? <LoaderCircle size={13} className="auth-spin" /> : <Save size={13} />}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Cancelar renomeação"
+                    title="Cancelar"
+                    onClick={() => setRenamingConversation(false)}
+                    disabled={savingTitle}
+                  >
+                    <X size={13} />
+                  </button>
+                </form>
+              ) : (
+                <h3>{currentConversation?.title ?? "Comece uma nova conversa"}</h3>
+              )}
             </div>
             {currentConversation ? (
-              <span className="assistant-chat-persistence">
-                <ShieldCheck size={13} /> SALVA NO POSTGRESQL
-              </span>
+              <div className="assistant-chat-actions">
+                <span className="assistant-chat-persistence">
+                  <ShieldCheck size={13} /> SALVA NO POSTGRESQL
+                </span>
+                {!renamingConversation && !confirmDelete ? (
+                  <>
+                    <button
+                      type="button"
+                      className="assistant-chat-action"
+                      onClick={beginRename}
+                      aria-label="Renomear conversa"
+                      title="Renomear conversa"
+                    >
+                      <Pencil size={13} />
+                    </button>
+                    <button
+                      type="button"
+                      className="assistant-chat-action danger"
+                      onClick={() => setConfirmDelete(true)}
+                      aria-label="Excluir conversa"
+                      title="Excluir conversa"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  </>
+                ) : null}
+                {confirmDelete ? (
+                  <div className="assistant-delete-confirm">
+                    <span>Excluir histórico?</span>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmDelete(false)}
+                      disabled={deletingConversation}
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="button"
+                      className="danger"
+                      onClick={() => void deleteCurrentConversation()}
+                      disabled={deletingConversation}
+                    >
+                      {deletingConversation ? "Excluindo…" : "Excluir"}
+                    </button>
+                  </div>
+                ) : null}
+              </div>
             ) : null}
           </div>
 
