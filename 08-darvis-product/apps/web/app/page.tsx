@@ -27,9 +27,15 @@ export default function Home() {
         <div className="nav-label">WORKSPACE</div>
         <nav className="navigation" aria-label="Navegação principal">
           {navigation.map(({ label, icon: Icon, active }) => (
-            <a className={`nav-item${active ? " active" : ""}`} href="#overview" key={label}>
-              <Icon size={17} strokeWidth={1.8} /><span>{label}</span>
-            </a>
+            active ? (
+              <a className="nav-item active" href="#overview" key={label}>
+                <Icon size={17} strokeWidth={1.8} /><span>{label}</span>
+              </a>
+            ) : (
+              <div className="nav-item nav-disabled" aria-disabled="true" key={label}>
+                <Icon size={17} strokeWidth={1.8} /><span>{label}</span>
+              </div>
+            )
           ))}
         </nav>
         <div className="sidebar-bottom">
@@ -41,7 +47,7 @@ export default function Home() {
       <section className="main-area" id="overview">
         <header className="topbar">
           <div className="breadcrumb">D.A.R.V.I.S. <span>/</span> <strong>Command Center</strong></div>
-          <div className="topbar-right"><span className="environment"><i /> FOUNDATION BUILD</span><button className="icon-button" aria-label="Atividade"><Activity size={18} /></button></div>
+          <div className="topbar-right"><span className="environment"><i /> FOUNDATION BUILD</span><span className="icon-button" aria-hidden="true"><Activity size={18} /></span></div>
         </header>
 
         <div className="content">
