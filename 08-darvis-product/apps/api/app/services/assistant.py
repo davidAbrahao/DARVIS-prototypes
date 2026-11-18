@@ -361,6 +361,15 @@ def send_message(
     )
     if claimed.rowcount != 1:
         db.rollback()
+        # Uma solicitação concorrente com o mesmo request_id pode ter vencido.
+        existing_turn = _existing_idempotent_turn(
+            db,
+            user_id=user_id,
+            conversation_id=conversation_id,
+            request_id=request_id,
+        )
+        if existing_turn is not None:
+            return existing_turn
         raise HTTPException(
             status_code=409,
             detail="A conversa foi alterada em outra solicitação. Atualize o histórico e tente novamente.",
