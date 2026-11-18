@@ -69,7 +69,13 @@ def _audit(
 
 
 def _bucket_hash(scope: str, value: str) -> str:
-    key = signing_key().encode("utf-8")
+    try:
+        key = signing_key().encode("utf-8")
+    except RuntimeError:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Autenticação indisponível: configure SECRET_KEY",
+        ) from None
     return hmac.new(key, f"{scope}:{value}".encode("utf-8"), hashlib.sha256).hexdigest()
 
 
