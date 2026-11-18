@@ -1,42 +1,42 @@
-# Architecture Decision Log
+# Registro de decisões de arquitetura
 
-## ADR-001 — Preserve prototypes and create a new product workspace
-- Status: Accepted
-- Decision: keep all six prototypes unchanged and build the integrated product under `08-darvis-product/`.
-- Reason: preserve provenance, avoid destructive consolidation, and make the product implementation independently reviewable.
+## ADR-001 — Preservar os protótipos e criar um espaço exclusivo para o produto
+- **Situação:** aceita.
+- **Decisão:** manter os seis protótipos inalterados e construir o produto integrado em `08-darvis-product/`.
+- **Motivo:** preservar a origem dos projetos, evitar consolidação destrutiva e permitir revisão independente da implementação do produto.
 
-## ADR-002 — Use the Claude FastAPI backend as the primary implementation reference
-- Status: Accepted as a starting point; code reuse requires review
-- Decision: use its domain/API structure as the first backend reference, not as production-ready code.
-- Reason: it has the strongest backend foundation among the audited prototypes.
-- Consequence: authentication, refresh rotation, rate limiting, audit coverage, migrations, and deployment behavior must be hardened.
+## ADR-002 — Utilizar o backend FastAPI do Claude como principal referência de implementação
+- **Situação:** aceita como ponto de partida; reutilização de código depende de revisão.
+- **Decisão:** utilizar sua estrutura de domínio e API como primeira referência, sem considerá-la pronta para produção.
+- **Motivo:** entre os protótipos auditados, apresenta a base de backend mais madura.
+- **Consequência:** autenticação, rotação de tokens, limites de requisição, cobertura de auditoria, migrações e comportamento de implantação precisam ser reforçados.
 
-## ADR-003 — Use Stitch Cognitive Cockpit as the official visual reference
-- Status: Accepted
-- Decision: reproduce its design language and selected layouts in a maintainable component system.
-- Reason: it best expresses the intended product identity.
-- Consequence: visual states must be connected to real data and operations; decorative mock behavior must not be carried into production.
+## ADR-003 — Adotar o Cognitive Cockpit do Stitch como referência visual oficial
+- **Situação:** aceita.
+- **Decisão:** reconstruir sua linguagem visual e os layouts selecionados em um sistema de componentes sustentável.
+- **Motivo:** representa melhor a identidade desejada para o produto.
+- **Consequência:** os estados visuais devem estar conectados a dados e operações reais; comportamentos demonstrativos não devem ser transportados para a versão funcional.
 
-## ADR-004 — PostgreSQL is the operational source of truth
-- Status: Accepted
-- Decision: store operational entities, identity, sessions, conversations metadata, structured memories, and audit events in PostgreSQL.
-- Reason: transactional integrity, queryability, authorization, and reliable workflows.
-- Consequence: browser storage is limited to non-authoritative preferences/cache.
+## ADR-004 — PostgreSQL como fonte oficial dos dados operacionais
+- **Situação:** aceita.
+- **Decisão:** armazenar no PostgreSQL entidades operacionais, identidade, sessões, metadados de conversas, memórias estruturadas e eventos de auditoria.
+- **Motivo:** integridade transacional, capacidade de consulta, autorização e fluxos confiáveis.
+- **Consequência:** o armazenamento do navegador fica limitado a preferências e cache não oficiais.
 
-## ADR-005 — Obsidian is a knowledge/document layer, not the transactional database
-- Status: Accepted
-- Decision: use Markdown/Obsidian for long-form notes and knowledge, integrated through an adapter.
-- Reason: human-readable, portable, user-owned knowledge.
-- Consequence: synchronization requires conflict detection, provenance, and explicit deletion semantics.
+## ADR-005 — Obsidian como camada de conhecimento e documentos, não como banco transacional
+- **Situação:** aceita.
+- **Decisão:** utilizar Markdown e Obsidian para notas extensas e conhecimento, integrados por meio de um adaptador.
+- **Motivo:** conteúdo legível por pessoas, portátil e sob controle do usuário.
+- **Consequência:** a sincronização exige detecção de conflitos, rastreabilidade de origem e regras explícitas para exclusões.
 
-## ADR-006 — AI providers are replaceable adapters
-- Status: Accepted
-- Decision: isolate provider-specific SDKs behind a server-side interface.
-- Reason: privacy, cost, availability, and model capabilities can change.
-- Consequence: no provider-specific types leak into domain services or browser contracts.
+## ADR-006 — Provedores de IA como adaptadores substituíveis
+- **Situação:** aceita.
+- **Decisão:** isolar SDKs específicos de cada provedor atrás de uma interface no servidor.
+- **Motivo:** privacidade, custo, disponibilidade e capacidades dos modelos podem mudar.
+- **Consequência:** tipos específicos de um provedor não devem vazar para serviços de domínio ou contratos do navegador.
 
-## ADR-007 — AI cannot execute tools directly
-- Status: Accepted
-- Decision: AI may propose typed actions; the API validates, authorizes, obtains approval, and executes them.
-- Reason: safety, predictability, and auditability.
-- Consequence: tool registry, approval records, idempotency, and audit events are core backend capabilities.
+## ADR-007 — A IA não executa ferramentas diretamente
+- **Situação:** aceita.
+- **Decisão:** a IA pode propor ações tipadas; a API valida, autoriza, solicita aprovação e executa.
+- **Motivo:** segurança, previsibilidade e rastreabilidade.
+- **Consequência:** registro de ferramentas, aprovações, idempotência e eventos de auditoria são capacidades centrais do backend.
