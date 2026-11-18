@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Literal
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
@@ -42,6 +43,7 @@ class ConversationResponse(BaseModel):
 class MessageCreate(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
 
+    request_id: UUID
     content: str = Field(min_length=1, max_length=16000)
 
     @field_validator("content")
