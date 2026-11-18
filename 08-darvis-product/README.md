@@ -37,6 +37,7 @@ Estas são decisões de arquitetura para o novo espaço do produto, não afirma�
 - [Auditoria estática do backend Claude](docs/AUDITORIA_BACKEND_CLAUDE.md): o que pode ser reaproveitado, riscos encontrados e plano de adaptação.
 - [ADR-0002 — Sessões e autenticação](docs/DECISOES/ADR-0002-SESSOES-E-AUTENTICACAO.md): direção para sessões persistentes, rotação, revogação e detecção de reutilização.
 - [ADR-0003 — Conversas e provedores de IA](docs/DECISOES/ADR-0003-CONVERSAS-E-PROVEDORES-IA.md): persistência, idempotência e limites do primeiro assistente textual.
+- [ADR-0004 — Memória estruturada manual](docs/DECISOES/ADR-0004-MEMORIA-ESTRUTURADA-MANUAL.md): controle do proprietário, proveniência e separação de Obsidian.
 
 ## Primeira fatia implementada
 
@@ -47,7 +48,7 @@ O espaço de produto já contém a fundação de API e a primeira fatia de domí
 - Migrações Alembic incrementais até `0007` para identidade, sessões, auditoria, projetos, tarefas, integridade referencial, conversas e memória estruturada manual.
 - CRUD protegido de projetos e tarefas, com isolamento pelo usuário autenticado, FK composta no PostgreSQL e constraints para estados/prioridades.
 - Conversas e mensagens persistidas, com isolamento por proprietário e UUID idempotente para reenvios.
-- Central de Memória manual com categorias, etiquetas, busca, fixação, arquivamento e exclusão, isolada por proprietário e auditada.
+- Central de Memória manual com categorias, etiquetas, busca, fixação, arquivamento e exclusão, isolada por proprietário e auditada. Não há captura automática nem inclusão no contexto do Gemini.
 - Resumo agregado de projetos e tarefas para a Central de Comando.
 - Cliente web com restauração da sessão, renovação compartilhada e coordenação entre abas quando a Web Locks API estiver disponível; fila local como fallback dentro da aba.
 - Tela de login e Cognitive Cockpit com criação de projetos e tarefas, vínculo com projeto, prioridade, prazo, alteração de situação e logout coordenado.
