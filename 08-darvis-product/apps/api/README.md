@@ -72,8 +72,8 @@ A instalação é de proprietário único. Não existe cadastro público.
 - Cada renovação consome o token anterior e grava o sucessor na mesma transação. Se um token consumido for apresentado novamente, todas as sessões da família são revogadas.
 - Logout individual revoga uma sessão; logout global revoga todas as sessões do usuário.
 - O endpoint de configuração inicial exige `INITIAL_SETUP_TOKEN` com pelo menos 32 bytes, permite apenas o primeiro usuário e usa um advisory lock transacional do PostgreSQL para impedir duas configurações concorrentes.
-- Limites persistentes: configuração inicial (5 tentativas/15 min, bloqueio de 1 h), login (20/IP e 10/identidade por 15 min) e refresh (60/IP por 15 min). Os identificadores são armazenados como HMAC-SHA-256, não como IP/e-mail em claro nas tabelas de limite.
-- O IP utilizado é o endereço observado pela conexão. Cabeçalhos `X-Forwarded-For` não são confiados.
+- Limites persistentes: configuração inicial (5 tentativas/15 min, bloqueio de 1 h), login (20/IP e 10/identidade por 15 min) e refresh (60/IP por 15 min). Após 8 falhas consecutivas, a conta é bloqueada por 15 minutos; o contador é zerado após login válido ou expiração do bloqueio. Os identificadores dos buckets são armazenados como HMAC-SHA-256, não como IP/e-mail em claro nas tabelas de limite.
+- Endpoints de configuração, login, bootstrap CSRF e logout global rejeitam uma origem `Origin` não cadastrada. Clientes não-browser sem `Origin` continuam suportados; cabeçalhos `X-Forwarded-For` não são confiados.
 
 A rotação simultânea do mesmo token é tratada de forma conservadora: a primeira transação consome o token; a segunda identifica reutilização e revoga a família. O cliente deve evitar disparar duas renovações paralelas.
 
@@ -83,7 +83,7 @@ O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta
 
 Uma execução anterior foi interrompida durante a instalação editável porque o setuptools detectou mais de um pacote de nível superior (`app` e `alembic`). A configuração de build foi corrigida para incluir explicitamente apenas `app*`. O workflow não foi executado novamente após essa correção; os testes e Ruff permanecem sem validação em runtime.
 
-A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, setup one-time, login, rotação/replay de refresh tokens, rate limiting e revogação individual/global. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
+A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
 
 Para executar localmente:
 
