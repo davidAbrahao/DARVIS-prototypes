@@ -2,14 +2,14 @@ import pytest
 from fastapi import HTTPException
 from starlette.requests import Request
 
-from app.api import routes as api_routes
+from app.api.routes import auth as auth_routes
 from app.core.config import Settings
 
 
 @pytest.fixture(autouse=True)
 def auth_settings(monkeypatch) -> None:
     monkeypatch.setattr(
-        api_routes.auth,
+        auth_routes,
         "get_settings",
         lambda: Settings(
             app_env="test",
@@ -48,7 +48,7 @@ def test_csrf_accepts_matching_double_submit_and_allowed_origin() -> None:
         origin="https://cockpit.darvis.app",
     )
 
-    api_routes.auth._validate_csrf(request, "csrf-secret")
+    auth_routes._validate_csrf(request, "csrf-secret")
 
 
 @pytest.mark.parametrize(
@@ -66,7 +66,7 @@ def test_csrf_rejects_missing_or_mismatched_tokens(
     request = _request(csrf_cookie=cookie, origin="https://cockpit.darvis.app")
 
     with pytest.raises(HTTPException) as error:
-        api_routes.auth._validate_csrf(request, header)
+        auth_routes._validate_csrf(request, header)
 
     assert error.value.status_code == 403
 
@@ -78,7 +78,7 @@ def test_csrf_rejects_untrusted_origin() -> None:
     )
 
     with pytest.raises(HTTPException) as error:
-        api_routes.auth._validate_csrf(request, "csrf-secret")
+        auth_routes._validate_csrf(request, "csrf-secret")
 
     assert error.value.status_code == 403
 
@@ -86,4 +86,4 @@ def test_csrf_rejects_untrusted_origin() -> None:
 def test_csrf_token_comparison_does_not_require_origin_header_for_non_browser_clients() -> None:
     request = _request(csrf_cookie="csrf-secret", origin=None)
 
-    api_routes.auth._validate_csrf(request, "csrf-secret")
+    auth_routes._validate_csrf(request, "csrf-secret")
