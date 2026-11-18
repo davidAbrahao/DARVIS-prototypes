@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
+from app.api.routes.assistant import router as assistant_router
 from app.api.routes.auth import router as auth_router
 from app.api.routes.projects import router as projects_router
 from app.api.routes.tasks import router as tasks_router
@@ -34,6 +35,7 @@ app.add_middleware(
 )
 
 app.include_router(auth_router, prefix=settings.api_v1_prefix)
+app.include_router(assistant_router, prefix=settings.api_v1_prefix)
 app.include_router(projects_router, prefix=settings.api_v1_prefix)
 app.include_router(tasks_router, prefix=settings.api_v1_prefix)
 
