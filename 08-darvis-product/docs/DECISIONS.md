@@ -40,3 +40,11 @@
 - **Decisão:** a IA pode propor ações tipadas; a API valida, autoriza, solicita aprovação e executa.
 - **Motivo:** segurança, previsibilidade e rastreabilidade.
 - **Consequência:** registro de ferramentas, aprovações, idempotência e eventos de auditoria são capacidades centrais do backend.
+
+
+## ADR-008 — Conversas persistentes e provedores de IA
+- **Situação:** aceita para a primeira entrega textual; validação de produção pendente.
+- **Decisão:** persistir conversas e mensagens no PostgreSQL, usar adaptadores de provedor independentes, manter Gemini desativado por padrão e não habilitar execução de ferramentas nesta etapa.
+- **Motivo:** retomar conversas com isolamento, limitar o contexto, evitar chamadas duplicadas e manter credenciais fora do navegador.
+- **Consequência:** cada envio usa UUID idempotente; a API aplica limite de uso e controle de concorrência. Ferramentas exigirão um fluxo separado de autorização, aprovação e auditoria.
+- **Detalhes:** [ADR-0003 — Conversas e provedores de IA](DECISOES/ADR-0003-CONVERSAS-E-PROVEDORES-IA.md).
