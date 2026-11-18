@@ -89,8 +89,9 @@ def create_task(db: Session, *, user_id: int, payload: TaskCreate) -> Task:
 def update_task(db: Session, *, user_id: int, task_id: int, payload: TaskUpdate) -> Task:
     task = get_task(db, user_id=user_id, task_id=task_id)
     changes: dict[str, Any] = payload.model_dump(exclude_unset=True)
-    if "title" in changes and changes["title"] is None:
-        raise HTTPException(status_code=422, detail="O título não pode ser nulo")
+    for field in ("title", "status", "priority"):
+        if field in changes and changes[field] is None:
+            raise HTTPException(status_code=422, detail=f"O campo {field} não pode ser nulo")
     if "project_id" in changes:
         _validate_project_owner(db, user_id=user_id, project_id=changes["project_id"])
 
@@ -116,24 +117,37 @@ def delete_task(db: Session, *, user_id: int, task_id: int) -> None:
 
 
 def dashboard_summary(db: Session, *, user_id: int) -> dict[str, int]:
+    from sqlalchemy import func
+
     now = datetime.now(UTC)
     seven_days = now + timedelta(days=7)
-    project_rows = db.query(Project.status).filter(Project.user_id == user_id).all()
-    task_rows = db.query(Task.status, Task.due_at).filter(Task.user_id == user_id).all()
 
-    projects_active = sum(row.status == "active" for row in project_rows)
-    tasks_completed = sum(row.status == "done" for row in task_rows)
-    tasks_open = sum(row.status not in {"done", "cancelled"} for row in task_rows)
-    tasks_due_soon = sum(
-        row.due_at is not None and now <= row.due_at <= seven_days
-        and row.status not in {"done", "cancelled"}
-        for row in task_rows
-    )
+    project_total, project_active = db.execute(
+        select(
+            func.count(Project.id),
+            func.count(Project.id).filter(Project.status == "active"),
+        ).where(Project.user_id == user_id)
+    ).one()
+
+    task_total, task_open, task_completed, task_due_soon = db.execute(
+        select(
+            func.count(Task.id),
+            func.count(Task.id).filter(Task.status.not_in(("done", "cancelled"))),
+            func.count(Task.id).filter(Task.status == "done"),
+            func.count(Task.id).filter(
+                Task.due_at.is_not(None),
+                Task.due_at >= now,
+                Task.due_at <= seven_days,
+                Task.status.not_in(("done", "cancelled")),
+            ),
+        ).where(Task.user_id == user_id)
+    ).one()
+
     return {
-        "projects_total": len(project_rows),
-        "projects_active": projects_active,
-        "tasks_total": len(task_rows),
-        "tasks_open": tasks_open,
-        "tasks_completed": tasks_completed,
-        "tasks_due_soon": tasks_due_soon,
+        "projects_total": int(project_total or 0),
+        "projects_active": int(project_active or 0),
+        "tasks_total": int(task_total or 0),
+        "tasks_open": int(task_open or 0),
+        "tasks_completed": int(task_completed or 0),
+        "tasks_due_soon": int(task_due_soon or 0),
     }
