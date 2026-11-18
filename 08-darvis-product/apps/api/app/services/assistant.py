@@ -10,6 +10,7 @@ from app.core.config import get_settings
 from app.models.assistant_conversation import AssistantConversation
 from app.models.assistant_message import AssistantMessage
 from app.models.audit_event import AuditEvent
+from app.services.auth import _consume_rate_limit
 from app.services.providers import (
     ChatTurn,
     ProviderGenerationError,
@@ -224,6 +225,30 @@ def send_message(
                 "Habilite um provedor e configure a credencial no servidor."
             ),
         ) from None
+
+    rate_limited = _consume_rate_limit(
+        db,
+        scope="assistant-user",
+        value=str(user_id),
+        limit=20,
+        window_seconds=900,
+        block_seconds=900,
+    )
+    db.commit()
+    if rate_limited:
+        db.add(
+            AuditEvent(
+                actor_user_id=user_id,
+                event_type="assistant.generation.rate_limited",
+                outcome="rate_limited",
+                event_metadata={"reason": "limite_de_uso_do_assistente"},
+            )
+        )
+        db.commit()
+        raise HTTPException(
+            status_code=429,
+            detail="Limite temporário de uso do assistente atingido. Tente novamente mais tarde.",
+        )
 
     conversation = get_conversation(
         db, user_id=user_id, conversation_id=conversation_id
