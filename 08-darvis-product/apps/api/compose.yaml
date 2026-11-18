@@ -1,0 +1,21 @@
+services:
+  database:
+    image: postgres:16-alpine
+    container_name: darvis-postgres-local
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-darvis}
+      POSTGRES_USER: ${POSTGRES_USER:-darvis}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD no arquivo .env local}
+    ports:
+      - "5432:5432"
+    volumes:
+      - darvis_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-darvis} -d ${POSTGRES_DB:-darvis}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  darvis_postgres_data:
