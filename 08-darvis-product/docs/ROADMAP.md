@@ -18,8 +18,8 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Adicionar engine SQLAlchemy, modelos iniciais e estrutura Alembic.
 - [x] Adicionar migração inicial de identidade, sessões e auditoria.
 - [x] Separar liveness, health de configuração e readiness com verificação real do banco.
-- [ ] Adicionar integração contínua para análise estática, tipagem, testes e compilação.
-- [ ] Documentar e validar a configuração de um PostgreSQL local.
+- [x] Adicionar fluxo de integração contínua para testes e análise estática (execução ainda pendente).
+- [x] Documentar ambiente PostgreSQL local via Docker Compose (inicialização e migração ainda pendentes).
 
 **Critério de saída:** configuração inicial documentada; API e aplicação web iniciam em ambiente controlado; verificações da integração contínua são executadas com sucesso.
 
