@@ -66,13 +66,20 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 **Critério de saída:** o assistente mantém conversas persistentes com um provedor configurável; depois, uma ação tipada só poderá ser executada mediante autorização, aprovação e auditoria no servidor.
 
 ## Fase 5 — Memória e Obsidian
-- [ ] Definir o esquema e o ciclo de vida das memórias estruturadas.
+- [x] Definir esquema e ciclo de vida inicial de memórias estruturadas no PostgreSQL.
+- [x] Implementar CRUD manual com categorias, etiquetas, fixação, arquivamento, restauração e exclusão.
+- [x] Adicionar pesquisa, filtros, paginação e auditoria de alterações.
+- [x] Impor origem `manual` no serviço e no banco; não permitir que o assistente grave memórias automaticamente.
+- [x] Criar a Central de Memória conectada à API, com estados reais e ações explícitas.
 - [ ] Definir convenções de pastas e metadados das notas no cofre.
-- [ ] Implementar operações explícitas de importação, exportação e sincronização.
+- [ ] Implementar operações explícitas de importação, exportação e sincronização Obsidian.
 - [ ] Adicionar tratamento de conflitos, indexação e propagação de exclusões.
-- [ ] Apresentar ao usuário a origem dos dados e o estado real da sincronização.
+- [ ] Apresentar origem e estado real da sincronização.
+- [ ] Permitir seleção explícita de memórias como contexto para o assistente, com prévia do que será compartilhado.
 
-**Critério de saída:** uma nota pode ser sincronizada com segurança, sem sobrescrever silenciosamente dados do usuário.
+**Limite atual:** memória estruturada manual no banco. Não existe sincronização Markdown/Obsidian e o assistente não recebe esses registros automaticamente.
+
+**Critério de saída:** registros estruturados continuam íntegros e sob controle do usuário; a sincronização futura com o cofre só ocorre por operações explícitas, rastreáveis e com resolução de conflitos.
 
 ## Fase 6 — Integrações e automações
 - [ ] Construir o registro de integrações e o armazenamento de credenciais com permissões delimitadas.
