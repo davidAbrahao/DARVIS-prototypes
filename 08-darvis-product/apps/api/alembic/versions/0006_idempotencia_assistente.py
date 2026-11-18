@@ -17,7 +17,8 @@ def upgrade() -> None:
     op.create_check_constraint(
         "ck_assistant_messages_client_id_role",
         "assistant_messages",
-        "role = 'user' OR client_message_id IS NULL",
+        "(role = 'user' AND client_message_id IS NOT NULL) "
+        "OR (role = 'assistant' AND client_message_id IS NULL)",
     )
     op.create_unique_constraint(
         "uq_assistant_messages_client_id",
