@@ -38,6 +38,8 @@ def test_assistant_models_are_registered_in_metadata() -> None:
     assert "uq_assistant_conversations_id_user" in conversation_constraints
     assert "fk_assistant_messages_conversation_owner" in message_constraints
     assert "ck_assistant_messages_role" in message_constraints
+    assert "ck_assistant_messages_client_id_role" in message_constraints
+    assert "uq_assistant_messages_client_id" in message_constraints
 
 
 def test_project_task_models_declare_database_level_tenant_constraints() -> None:
