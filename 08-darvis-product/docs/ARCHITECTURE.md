@@ -49,6 +49,16 @@ Situações de projeto: `active`, `on_hold`, `completed`, `archived`. Situaçõe
 
 A interface mantém o access token somente em memória. O refresh permanece no cookie HttpOnly. A renovação automática de chamadas protegidas compartilha uma promessa na aba e utiliza Web Locks para coordenar abas quando o navegador oferece essa API. Nenhum refresh token é copiado para JavaScript ou para armazenamento persistente do navegador. Login, refresh e logout usam a mesma trava. Quando o logout é confirmado, um evento BroadcastChannel sem credenciais notifica as outras abas para limpar o estado local.
 
+## Conversas e provedores de IA — primeira implementação
+
+As conversas e mensagens do assistente são entidades operacionais do PostgreSQL, sempre vinculadas ao usuário autenticado. A API aplica isolamento de proprietário nas consultas e utiliza uma FK composta para impedir associação cruzada entre conversa e usuário.
+
+O serviço recebe um UUID idempotente por mensagem. A mesma chave, repetida na mesma conversa, devolve o turno persistido em vez de chamar novamente o provedor. A versão da conversa usa comparação otimista para evitar que respostas concorrentes sejam gravadas fora de ordem. O histórico enviado ao modelo é limitado às 20 mensagens anteriores e a 48.000 caracteres, além da mensagem atual.
+
+Os provedores implementam um contrato comum no servidor. O adaptador Gemini usa o SDK oficial Python, mas fica desativado por padrão; sua chave é lida exclusivamente do ambiente/gerenciador de segredos da API. O endpoint de estado informa somente se a configuração está presente, sem expor credenciais ou afirmar que o serviço externo está saudável.
+
+A primeira implementação só gera texto. Não registra ferramentas, não executa ações e não envia tarefas, projetos, arquivos ou dados externos como contexto. O provedor recebe apenas o histórico explícito da conversa. A execução de ferramentas exigirá contratos estritos, permissões no servidor, aprovação quando necessário, idempotência e auditoria em uma etapa posterior.
+
 ## Limites de atuação da IA
 
 O modelo é um componente de raciocínio não confiável. Ele pode propor chamadas estruturadas de ferramentas, mas não pode executar diretamente comandos arbitrários, SQL, operações no sistema de arquivos ou requisições de rede.
