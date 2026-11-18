@@ -141,3 +141,26 @@ def test_csrf_bootstrap_rejects_untrusted_origin() -> None:
         auth_routes.csrf_bootstrap(request, Response())
 
     assert error.value.status_code == 403
+
+
+def test_origin_validation_accepts_configured_origin_and_missing_origin() -> None:
+    allowed_request = _request(
+        csrf_cookie=None,
+        origin="https://cockpit.darvis.app",
+    )
+    non_browser_request = _request(csrf_cookie=None, origin=None)
+
+    auth_routes._validate_origin(allowed_request)
+    auth_routes._validate_origin(non_browser_request)
+
+
+def test_origin_validation_rejects_unconfigured_origin() -> None:
+    request = _request(
+        csrf_cookie=None,
+        origin="https://attacker.example",
+    )
+
+    with pytest.raises(HTTPException) as error:
+        auth_routes._validate_origin(request)
+
+    assert error.value.status_code == 403
