@@ -24,6 +24,10 @@ class MemoryEntry(Base):
             "category IN ('fact', 'preference', 'goal', 'work', 'relationship', 'routine', 'other')",
             name="ck_memory_entries_category",
         ),
+        CheckConstraint(
+            "source = 'manual'",
+            name="ck_memory_entries_source",
+        ),
         Index("ix_memory_entries_user_updated", "user_id", "updated_at"),
         Index("ix_memory_entries_user_category", "user_id", "category"),
         Index("ix_memory_entries_user_archived", "user_id", "is_archived"),
