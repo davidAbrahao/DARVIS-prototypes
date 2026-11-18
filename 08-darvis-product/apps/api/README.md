@@ -38,7 +38,7 @@ As tabelas são versionadas pelo Alembic. A aplicação **não executa migraçõ
 alembic upgrade head
 ```
 
-A migração `0002_auth_rotation_limits` acrescenta o histórico de tokens de renovação e os buckets persistentes de limitação de tentativas. A migração `0003_projetos_tarefas` cria as tabelas de projetos e tarefas, com índices por proprietário, estado e datas. A migração `0004_integridade_proprietario_projeto` adiciona uma chave estrangeira composta para impedir vínculo entre proprietários diferentes e constraints de estado/prioridade. A migração `0005_conversas_assistente` cria conversas e mensagens persistentes, com associação composta por proprietário. A migração `0006_idempotencia_assistente` adiciona UUID idempotente aos envios do cliente. As migrações são incrementais e não reescrevem as anteriores. O controle de rate limit usa UPSERT atômico do PostgreSQL; SQLite não é um backend suportado para autenticação.
+A migração `0002_auth_rotation_limits` acrescenta o histórico de tokens de renovação e os buckets persistentes de limitação de tentativas. A migração `0003_projetos_tarefas` cria as tabelas de projetos e tarefas, com índices por proprietário, estado e datas. A migração `0004_integridade_proprietario_projeto` adiciona uma chave estrangeira composta para impedir vínculo entre proprietários diferentes e constraints de estado/prioridade. A migração `0005_conversas_assistente` cria conversas e mensagens persistentes, com associação composta por proprietário. A migração `0006_idempotencia_assistente` adiciona UUID idempotente aos envios do cliente. A migração `0007_memoria_estruturada` cria registros manuais de memória, com categorias, etiquetas, estados de fixação/arquivamento e índices por proprietário. As migrações são incrementais e não reescrevem as anteriores. O controle de rate limit usa UPSERT atômico do PostgreSQL; SQLite não é um backend suportado para autenticação.
 
 Em produção, execute a migração como etapa única e controlada do processo de implantação, antes de disponibilizar a nova versão da API.
 
@@ -101,6 +101,24 @@ Uma tarefa só pode ser vinculada a um projeto pertencente ao mesmo usuário. Es
 
 O resumo do painel usa consultas agregadas no PostgreSQL, filtradas pelo proprietário autenticado. Não utiliza números fixos ou dados de demonstração.
 
+## Memória estruturada
+
+A memória inicial é manual: somente o proprietário cria ou altera registros. Não há extração automática pelo modelo nem ingestão de dados externos. A tabela `memory_entries` pertence a um usuário e mantém título, conteúdo, categoria, etiquetas, origem, fixação, arquivamento e timestamps.
+
+| Método | Endpoint | Objetivo |
+|---|---|---|
+| GET | `/api/v1/memories` | Lista registros próprios; aceita `category`, `query`, `include_archived`, `limit` e `offset` |
+| POST | `/api/v1/memories` | Cria registro manual |
+| GET | `/api/v1/memories/{memory_id}` | Consulta registro próprio |
+| PATCH | `/api/v1/memories/{memory_id}` | Atualiza conteúdo, categoria, etiquetas, fixação ou arquivamento |
+| DELETE | `/api/v1/memories/{memory_id}` | Exclui registro próprio |
+
+Categorias disponíveis: `fact`, `preference`, `goal`, `work`, `relationship`, `routine` e `other`. Cada registro aceita até 12 etiquetas, com até 32 caracteres cada; título até 140 caracteres e conteúdo até 12.000 caracteres. A busca textual usa correspondência parcial de título e conteúdo; as listagens priorizam registros fixados e depois os mais recentemente atualizados.
+
+O campo de origem é restrito no banco a `manual`. Criação, atualização e exclusão geram eventos persistentes de auditoria, sem duplicar o conteúdo do registro no evento. Consultas e mutações são isoladas por `user_id`.
+
+**Esta memória não é o cofre Obsidian.** Ainda não há importação/exportação ou sincronização Markdown. As memórias também não são anexadas ao contexto Gemini; a seleção de dados para o assistente será uma ação explícita, com indicação do que será compartilhado.
+
 ## Assistente e conversas
 
 O assistente é textual nesta primeira versão. O provedor é independente do serviço de conversas; o Gemini é o primeiro adaptador. **O provedor permanece desativado por padrão** e não é chamado enquanto não estiver explicitamente habilitado no ambiente da API.
@@ -152,7 +170,7 @@ O fluxo de verificação está em `.github/workflows/darvis-api-ci.yml` e, nesta
 
 Uma execução anterior foi interrompida durante a instalação editável porque o setuptools detectou mais de um pacote de nível superior (`app` e `alembic`). A configuração de build foi corrigida para incluir explicitamente apenas `app*`. O workflow não foi executado novamente após essa correção; os testes e Ruff permanecem sem validação em runtime.
 
-A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. O assistente possui testes de contratos, registro de rotas, adaptador sem chamada externa, status sem vazamento de segredo, persistência, isolamento, falha de provedor, concorrência e repetição idempotente. A camada de domínio tem testes PostgreSQL para ciclo de vida, vínculo, isolamento de proprietário, exclusão, datas, auditoria e rejeição pelo próprio banco de vínculos/estados inválidos. Os testes que apagam dados verificam que `TEST_DATABASE_URL` é PostgreSQL com nome terminado em `_test`; os contratos Pydantic possuem testes de validação. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
+A suíte escrita cobre configuração e primitivas de segurança, schemas, proteção CSRF e bootstrap do CSRF, validação de origem, setup one-time, login, bloqueio de conta, rotação/replay de refresh tokens, rate limiting, revogação individual/global e disputa concorrente de refresh. O assistente possui testes de contratos, registro de rotas, adaptador sem chamada externa, status sem vazamento de segredo, persistência, isolamento, falha de provedor, concorrência e repetição idempotente. A camada de domínio tem testes PostgreSQL para ciclo de vida, vínculo, isolamento de proprietário, exclusão, datas, auditoria e rejeição pelo próprio banco de vínculos/estados inválidos. A memória tem testes de contratos, CRUD, pesquisa, arquivamento, origem manual, auditoria e isolamento entre proprietários. Os testes que apagam dados verificam que `TEST_DATABASE_URL` é PostgreSQL com nome terminado em `_test`; os contratos Pydantic possuem testes de validação. Os fluxos que dependem de persistência são testes de integração PostgreSQL e usam `TEST_DATABASE_URL`.
 
 Para executar localmente:
 
@@ -163,6 +181,6 @@ ruff check .
 
 ## Estado desta entrega
 
-Implementados em código: modelos e migrações incrementais de identidade, sessões, limites, projetos, tarefas, integridade de propriedade e conversas do assistente; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; bootstrap do CSRF; cookies e validação CSRF; CRUD protegido de projetos e tarefas; resumo agregado do painel; auditoria persistente de autenticação e alterações de domínio.
+Implementados em código: modelos e migrações incrementais de identidade, sessões, limites, projetos, tarefas, integridade de propriedade, conversas do assistente e memória estruturada manual; Argon2id; JWT de acesso; configuração one-time do proprietário; login; rotação e detecção de reutilização; logout individual/global; endpoint de identidade; bootstrap do CSRF; cookies e validação CSRF; CRUD protegido de projetos e tarefas; resumo agregado do painel; auditoria persistente de autenticação e alterações de domínio.
 
 Ainda não comprovados: instalação editável após a correção, execução das migrações no PostgreSQL, testes automatizados, compatibilidade real entre cliente e API, revisão externa de segurança e execução do CI. Esta entrega não deve ser considerada pronta para produção até essas verificações ocorrerem.
