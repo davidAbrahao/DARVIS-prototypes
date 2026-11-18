@@ -103,7 +103,9 @@ export function DashboardOverview() {
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [savingProject, setSavingProject] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [newProjectName, setNewProjectName] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const load = useCallback(async () => {
@@ -159,6 +161,51 @@ export function DashboardOverview() {
       );
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function createProject(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const name = newProjectName.trim();
+    if (!name || savingProject) return;
+
+    setSavingProject(true);
+    setError(null);
+    try {
+      await apiRequest<Project>("/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+      });
+      setNewProjectName("");
+      await load();
+    } catch (cause) {
+      setError(
+        cause instanceof ApiError
+          ? cause.message
+          : "Não foi possível salvar o projeto.",
+      );
+    } finally {
+      setSavingProject(false);
+    }
+  }
+
+  async function changeProjectStatus(project: Project, status: Project["status"]) {
+    if (project.status === status) return;
+    setError(null);
+    try {
+      await apiRequest<Project>(`/projects/${project.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status }),
+      });
+      await load();
+    } catch (cause) {
+      setError(
+        cause instanceof ApiError
+          ? cause.message
+          : "Não foi possível atualizar o projeto.",
+      );
     }
   }
 
@@ -306,6 +353,22 @@ export function DashboardOverview() {
             <span className="dashboard-count">{data.summary.projects_total} registrados</span>
           </div>
 
+          <form className="quick-project-form" onSubmit={createProject}>
+            <input
+              type="text"
+              aria-label="Nome do novo projeto"
+              placeholder="Criar um projeto..."
+              value={newProjectName}
+              onChange={(event) => setNewProjectName(event.target.value)}
+              maxLength={120}
+              required
+            />
+            <button type="submit" disabled={savingProject || !newProjectName.trim()}>
+              {savingProject ? <LoaderCircle size={15} className="auth-spin" /> : <Plus size={15} />}
+              Criar
+            </button>
+          </form>
+
           {loading ? (
             <div className="dashboard-empty"><LoaderCircle size={18} className="auth-spin" /> Carregando projetos…</div>
           ) : data.projects.length === 0 ? (
@@ -322,9 +385,21 @@ export function DashboardOverview() {
                     <strong>{project.name}</strong>
                     <small>{project.description || "Sem descrição"}</small>
                   </div>
-                  <span className={`project-status project-${project.status}`}>
-                    {projectStatusLabel[project.status]}
-                  </span>
+                  <label className="project-status-control">
+                    <span className="sr-only">Situação de {project.name}</span>
+                    <select
+                      className={`project-status project-${project.status}`}
+                      value={project.status}
+                      onChange={(event) =>
+                        void changeProjectStatus(project, event.target.value as Project["status"])
+                      }
+                    >
+                      <option value="active">Ativo</option>
+                      <option value="on_hold">Em espera</option>
+                      <option value="completed">Concluído</option>
+                      <option value="archived">Arquivado</option>
+                    </select>
+                  </label>
                 </div>
               ))}
             </div>
