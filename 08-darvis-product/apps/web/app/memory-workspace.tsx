@@ -12,7 +12,6 @@ import {
   RefreshCw,
   Search,
   ShieldCheck,
-  Star,
   Trash2,
   X,
 } from "lucide-react";
