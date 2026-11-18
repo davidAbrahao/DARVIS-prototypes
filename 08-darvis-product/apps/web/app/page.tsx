@@ -1,6 +1,7 @@
 import { Activity, BrainCircuit, Command, FolderKanban, Layers3, Network, ShieldCheck, Workflow, type LucideIcon } from "lucide-react";
 import { AssistantWorkspace } from "./assistant-workspace";
 import { DashboardOverview } from "./dashboard-overview";
+import { MemoryWorkspace } from "./memory-workspace";
 import { ProtectedPage } from "./protected-page";
 import { SessionActions } from "./session-actions";
 
@@ -12,7 +13,7 @@ const navigation: {
 }[] = [
   { label: "Central de Comando", icon: Command, active: true, href: "#overview" },
   { label: "Assistente de IA", icon: BrainCircuit, href: "#assistant" },
-  { label: "Central de Memória", icon: Network },
+  { label: "Central de Memória", icon: Network, href: "#memory" },
   { label: "Projetos e Tarefas", icon: FolderKanban, href: "#projects" },
   { label: "Conhecimento", icon: Layers3 },
   { label: "Integrações", icon: Workflow },
@@ -67,6 +68,7 @@ export default function Home() {
           </section>
 
           <DashboardOverview />
+          <MemoryWorkspace />
 
           <section className="bottom-grid">
             <AssistantWorkspace />
