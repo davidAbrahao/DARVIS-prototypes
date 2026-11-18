@@ -44,14 +44,15 @@ O espaço de produto já contém a fundação de API e a primeira fatia de domí
 
 - Autenticação de proprietário único com Argon2id, access JWT curto e refresh token rotativo em cookie HttpOnly.
 - Proteção CSRF, rate limits persistentes, bloqueio temporário de login, auditoria e revogação de sessões.
-- Migrações Alembic incrementais até `0006` para identidade, sessões, auditoria, projetos, tarefas, integridade referencial e conversas do assistente.
+- Migrações Alembic incrementais até `0007` para identidade, sessões, auditoria, projetos, tarefas, integridade referencial, conversas e memória estruturada manual.
 - CRUD protegido de projetos e tarefas, com isolamento pelo usuário autenticado, FK composta no PostgreSQL e constraints para estados/prioridades.
 - Conversas e mensagens persistidas, com isolamento por proprietário e UUID idempotente para reenvios.
+- Central de Memória manual com categorias, etiquetas, busca, fixação, arquivamento e exclusão, isolada por proprietário e auditada.
 - Resumo agregado de projetos e tarefas para a Central de Comando.
 - Cliente web com restauração da sessão, renovação compartilhada e coordenação entre abas quando a Web Locks API estiver disponível; fila local como fallback dentro da aba.
 - Tela de login e Cognitive Cockpit com criação de projetos e tarefas, vínculo com projeto, prioridade, prazo, alteração de situação e logout coordenado.
 
-**Validação ainda pendente:** migrations 0001–0006 não aplicadas em PostgreSQL real; testes automatizados, Ruff, ESLint, TypeScript e build não executados; cookies/CORS ainda precisam ser validados na topologia final; revisão independente de segurança pendente. Os testes que limpam dados estão protegidos para aceitar apenas uma URL PostgreSQL cujo nome de banco termine em `_test`. O produto não está liberado para produção.
+**Validação ainda pendente:** migrations 0001–0007 não aplicadas em PostgreSQL real; testes automatizados, Ruff, ESLint, TypeScript e build não executados; cookies/CORS ainda precisam ser validados na topologia final; revisão independente de segurança pendente. Os testes que limpam dados estão protegidos para aceitar apenas uma URL PostgreSQL cujo nome de banco termine em `_test`. O produto não está liberado para produção.
 
 ## Organização do repositório
 
