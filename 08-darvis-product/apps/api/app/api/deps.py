@@ -3,24 +3,20 @@ from typing import Annotated
 
 import jwt
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.core.config import get_settings
 from app.core.security import decode_access_token
 from app.db.session import get_db
 from app.models.auth_session import AuthSession
 from app.models.user import User
 
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl=f"{get_settings().api_v1_prefix}/auth/login",
-    auto_error=False,
-)
+bearer_scheme = HTTPBearer(auto_error=False)
 
 
 def get_current_user(
-    token: Annotated[str | None, Depends(oauth2_scheme)],
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)],
     db: Annotated[Session, Depends(get_db)],
 ) -> User:
     unauthorized = HTTPException(
@@ -28,10 +24,10 @@ def get_current_user(
         detail="Autenticação necessária",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    if not token:
+    if credentials is None or credentials.scheme.lower() != "bearer":
         raise unauthorized
     try:
-        claims = decode_access_token(token)
+        claims = decode_access_token(credentials.credentials)
         user_id = int(claims["sub"])
         session_id = str(claims["sid"])
         if claims.get("type") != "access":
