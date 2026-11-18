@@ -222,6 +222,10 @@ export function AssistantWorkspace() {
     }
   }
 
+  const currentConversation = conversations.find(
+    (conversation) => conversation.id === activeConversationId,
+  );
+
   function beginRename() {
     if (!currentConversation) return;
     setRenameTitle(currentConversation.title);
@@ -343,10 +347,8 @@ export function AssistantWorkspace() {
     }
   }
 
-  const currentConversation = conversations.find(
-    (conversation) => conversation.id === activeConversationId,
-  );
-  const providerState = assistantStatus?.state ?? (initialLoading ? "checking" : "unavailable");
+  const providerState =
+    assistantStatus?.state ?? (initialLoading ? "checking" : "unavailable");
   const stateInfo = assistantStatus
     ? statusCopy[assistantStatus.state]
     : {
@@ -459,7 +461,6 @@ export function AssistantWorkspace() {
                     onChange={(event) => setRenameTitle(event.target.value)}
                     aria-label="Novo título da conversa"
                     maxLength={120}
-                    autoFocus
                     required
                   />
                   <button
