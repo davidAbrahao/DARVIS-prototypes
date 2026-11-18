@@ -1,5 +1,6 @@
 import os
 from collections.abc import Generator
+from datetime import UTC, datetime, timedelta
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
 
@@ -12,6 +13,7 @@ from app.core.config import get_settings
 from app.core.security import hash_refresh_token
 from app.db.base import Base
 from app.models import AuthRateLimit, AuthSession, RefreshToken, User
+from app.services import auth as auth_service
 from app.services.auth import (
     _consume_rate_limit,
     login,
@@ -270,3 +272,53 @@ def test_concurrent_refresh_reuse_revokes_the_session_family() -> None:
             for table in reversed(Base.metadata.sorted_tables):
                 connection.execute(table.delete())
         engine.dispose()
+
+
+def test_consecutive_failed_logins_lock_account_and_expiry_resets_counter(
+    db_session: Session,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _create_owner(db_session)
+    start = datetime.now(UTC)
+
+    for attempt in range(8):
+        with pytest.raises(HTTPException) as error:
+            login(
+                db_session,
+                email="proprietario@darvis.test",
+                password="senha-incorreta",
+                ip_address=f"192.0.2.{50 + attempt}",
+            )
+        assert error.value.status_code == 401
+
+    user = db_session.scalar(select(User).where(User.email == "proprietario@darvis.test"))
+    assert user is not None
+    assert user.failed_login_attempts == 8
+    assert user.locked_until is not None
+    assert user.locked_until > start
+
+    # Mesmo a senha correta não libera a conta durante a janela de bloqueio.
+    with pytest.raises(HTTPException) as blocked_error:
+        login(
+            db_session,
+            email="proprietario@darvis.test",
+            password="senha-de-integracao-segura",
+            ip_address="192.0.2.70",
+        )
+    assert blocked_error.value.status_code == 401
+
+    monkeypatch.setattr(
+        auth_service,
+        "utc_now",
+        lambda: start + timedelta(minutes=16),
+    )
+    authenticated = login(
+        db_session,
+        email="proprietario@darvis.test",
+        password="senha-de-integracao-segura",
+        ip_address="192.0.2.71",
+    )
+    db_session.refresh(user)
+    assert authenticated.user.id == user.id
+    assert user.failed_login_attempts == 0
+    assert user.locked_until is None
