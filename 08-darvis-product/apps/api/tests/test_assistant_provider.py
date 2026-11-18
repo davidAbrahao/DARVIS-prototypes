@@ -7,6 +7,7 @@ from app.core.config import Settings
 from app.services import assistant as assistant_service
 from app.services.providers import (
     ChatTurn,
+    ProviderGenerationError,
     ProviderNotConfigured,
 )
 from app.services.providers import gemini as gemini_module
@@ -99,3 +100,33 @@ def test_gemini_adapter_generates_text_without_registering_tools(
     assert captured["api_key"] == "credential-for-unit-test"
     assert captured["model"] == "gemini-3.8-flash"
     assert captured["config"].tools is None
+
+
+def test_gemini_adapter_sanitizes_transport_exceptions(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    class FailingModels:
+        def generate_content(self, **kwargs):
+            raise RuntimeError("endpoint interno, token ou detalhe de transporte")
+
+    class FailingClient:
+        def __init__(self, *, api_key: str):
+            self.models = FailingModels()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, traceback):
+            return False
+
+    monkeypatch.setattr(genai, "Client", FailingClient)
+    provider = gemini_module.GeminiProvider(
+        api_key="credential-for-unit-test",
+        model_name="gemini-3.8-flash",
+        max_output_tokens=1024,
+    )
+
+    with pytest.raises(ProviderGenerationError) as error:
+        provider.generate([ChatTurn(role="user", content="Olá")])
+
+    assert "endpoint interno" not in str(error.value)
