@@ -28,7 +28,8 @@ Em uma segunda janela, inicie a API conforme o [guia da API](../api/README.md). 
 - O access token existe somente em memória no provedor React; ele não é salvo em `localStorage`, `sessionStorage` ou IndexedDB.
 - As chamadas que enviam cookies usam `credentials: "include"`; a API deve permitir explicitamente a origem da aplicação.
 - O cliente compartilha uma única tentativa de restauração por vez e uma única renovação durante chamadas autenticadas. Quando disponível, a Web Locks API coordena renovações entre abas; a trava relê o CSRF após ser adquirida. Chamadas concorrentes aguardam a mesma renovação e repetem a operação com o access token novo. Sem Web Locks, a proteção fica limitada à instância/aba atual.
-- O botão de saída revoga a sessão na API e só depois limpa o estado local.
+- O botão de saída coordena com a renovação, relê o CSRF atual e só limpa o estado local depois que a API confirma o logout.
+- O encerramento global passa pelo cliente autenticado, podendo renovar um access token expirado antes de revogar todas as sessões.
 - A configuração inicial do proprietário não é executada pelo navegador. `INITIAL_SETUP_TOKEN` é segredo de servidor e nunca deve ser exposto em uma variável `NEXT_PUBLIC_*`.
 
 ## Verificações de qualidade
