@@ -1,6 +1,6 @@
 import os
-from uuid import uuid4
 from collections.abc import Generator
+from uuid import uuid4
 
 import pytest
 from fastapi import HTTPException
