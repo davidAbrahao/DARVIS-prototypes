@@ -9,7 +9,6 @@ from app.services.providers.base import (
     ProviderGenerationError,
 )
 
-
 SYSTEM_INSTRUCTION = """Você é o D.A.R.V.I.S., assistente de inteligência pessoal do usuário.
 Responda sempre em português brasileiro, com clareza e objetividade.
 Use somente as informações presentes na conversa e no contexto autorizado.
