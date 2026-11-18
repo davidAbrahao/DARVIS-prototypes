@@ -95,6 +95,7 @@ export function DashboardOverview() {
     projects: [],
   });
   const [loading, setLoading] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savingProject, setSavingProject] = useState(false);
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -111,6 +112,7 @@ export function DashboardOverview() {
         apiRequest<Project[]>("/projects?limit=100"),
       ]);
       setData({ summary, tasks, projects });
+      setHasLoaded(true);
     } catch (cause) {
       setError(
         cause instanceof ApiError
@@ -265,7 +267,9 @@ export function DashboardOverview() {
               <span className="module-index">API</span>
             </div>
             <strong className="dashboard-stat-value">
-              {loading ? <LoaderCircle size={21} className="auth-spin" /> : value}
+              {loading && !hasLoaded ? (
+                <LoaderCircle size={21} className="auth-spin" />
+              ) : !hasLoaded && error ? "—" : value}
             </strong>
             <h3>{label}</h3>
             <p>{note}</p>
@@ -301,6 +305,11 @@ export function DashboardOverview() {
 
           {loading ? (
             <div className="dashboard-empty"><LoaderCircle size={18} className="auth-spin" /> Carregando tarefas…</div>
+          ) : !hasLoaded && error ? (
+            <div className="dashboard-empty">
+              <AlertCircle size={18} />
+              <span>Os dados de tarefas ainda não puderam ser consultados.</span>
+            </div>
           ) : data.tasks.length === 0 ? (
             <div className="dashboard-empty">
               <Circle size={18} />
@@ -367,6 +376,11 @@ export function DashboardOverview() {
 
           {loading ? (
             <div className="dashboard-empty"><LoaderCircle size={18} className="auth-spin" /> Carregando projetos…</div>
+          ) : !hasLoaded && error ? (
+            <div className="dashboard-empty">
+              <AlertCircle size={18} />
+              <span>Os dados de projetos ainda não puderam ser consultados.</span>
+            </div>
           ) : data.projects.length === 0 ? (
             <div className="dashboard-empty">
               <FolderKanban size={18} />
@@ -401,8 +415,14 @@ export function DashboardOverview() {
             </div>
           )}
           <div className="dashboard-project-footer">
-            <span>Dados armazenados no PostgreSQL</span>
-            <span className="dashboard-data-source">API</span>
+            <span>
+              {loading
+                ? "Consultando PostgreSQL"
+                : error
+                  ? "Última consulta indisponível"
+                  : "PostgreSQL confirmado pela API"}
+            </span>
+            <span className="dashboard-data-source">{hasLoaded && !error ? "API" : "—"}</span>
           </div>
         </article>
       </div>
