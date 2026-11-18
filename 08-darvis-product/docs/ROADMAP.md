@@ -7,7 +7,7 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Registrar a visão do produto e a arquitetura inicial.
 - [x] Definir a base de segurança e a sequência de entregas.
 - [x] Auditar estaticamente o backend herdado do Claude e registrar riscos e adaptações.
-- [ ] Confirmar versões de execução suportadas e compatibilidade das dependências.
+- [x] Validar a base de execução no CI: Python 3.12 e Node.js 22; dependências da API e da web instaladas com sucesso.
 
 **Critério de saída:** arquitetura e organização do repositório coerentes; nenhum código herdado incorporado sem revisão.
 
@@ -18,26 +18,26 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Adicionar engine SQLAlchemy, modelos iniciais e estrutura Alembic.
 - [x] Adicionar migração inicial de identidade, sessões e auditoria.
 - [x] Separar liveness, health de configuração e readiness com verificação real do banco.
-- [x] Preparar workflows manuais para testes PostgreSQL/análise estática da API e qualidade/build web (execução ainda pendente; sem disparo automático nesta fase).
+- [x] Preparar workflows automáticos por alteração da API/web, com execução manual disponível; ambos executados com sucesso no CI.
 - [x] Documentar ambiente PostgreSQL local via Docker Compose (inicialização e migração ainda pendentes).
 
-**Critério de saída:** configuração inicial documentada; API e aplicação web iniciam em ambiente controlado; verificações da integração contínua são executadas com sucesso.
+**Critério de saída:** configuração inicial documentada e CI verde. A inicialização local completa da API e da aplicação web, com sessão real no navegador, ainda precisa ser validada no PC pessoal.
 
 ## Fase 2 — Identidade e domínio principal
 - [x] Implementar cadastro inicial one-time do proprietário, sem cadastro público.
-- [x] Implementar Argon2id, login, access token curto e refresh token em cookie HttpOnly.
+- [x] Implementar Argon2id, access token curto e refresh token em cookie HttpOnly.
 - [x] Implementar rotação transacional, histórico de tokens e detecção de reutilização.
 - [x] Implementar revogação individual/global e endpoint de identidade autenticada.
 - [x] Implementar proteção CSRF e rate limiting persistente para setup, login e refresh.
 - [x] Persistir eventos relevantes de autenticação na auditoria.
-- [ ] Executar e aprovar testes unitários e de integração no PostgreSQL.
+- [x] Executar testes unitários e de integração no PostgreSQL 16 efêmero do CI (85 testes aprovados; 18/11/2026).
 - [ ] Executar revisão independente de segurança da implementação.
 - [x] Adicionar operações CRUD de tarefas e projetos com verificação de propriedade e auditoria persistente.
 - [x] Criar migration incremental de projetos e tarefas com índices por proprietário.
 - [x] Impor no PostgreSQL o vínculo composto entre tarefa, projeto e proprietário e constraints de estado/prioridade.
 - [x] Adicionar resumo agregado real para a Central de Comando.
 
-**Critério de saída:** o proprietário autentica e consulta sua identidade; renova e revoga sessões com controles transacionais; projetos e tarefas são persistidos e isolados por proprietário. Testes executados no PostgreSQL e revisão de segurança permanecem pendentes.
+**Critério de saída:** implementação e testes automatizados aprovados no PostgreSQL efêmero. O fluxo de autenticação real no navegador e a revisão independente de segurança permanecem pendentes.
 
 ## Fase 3 — Cognitive Cockpit
 - [x] Preservar tokens visuais, tipografia, navegação e estrutura responsiva inicial do Stitch.
@@ -48,7 +48,7 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 - [x] Integrar o espaço de conversas do assistente com histórico persistente e status real do provedor.
 - [ ] Integrar módulos de memória externa, agenda e demais áreas.
 
-**Critério de saída:** interface utilizável em desktop e dispositivos móveis, exibindo apenas estados reais do backend. A primeira fatia de projetos e tarefas está escrita; a validação operacional e as verificações de acessibilidade continuam pendentes.
+**Validação CI:** ESLint, verificação TypeScript e build Next.js aprovados em 18/11/2026. **Critério de saída:** ainda exige teste da jornada ponta a ponta em navegador, dispositivos reais, responsividade e acessibilidade.
 
 ## Fase 4 — Assistente e arquitetura de provedores
 - [x] Definir contratos de conversa/mensagem e interface de provedor independente de SDK.
