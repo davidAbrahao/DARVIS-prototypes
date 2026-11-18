@@ -267,8 +267,13 @@ export function AssistantWorkspace() {
   const currentConversation = conversations.find(
     (conversation) => conversation.id === activeConversationId,
   );
-  const providerState = assistantStatus?.state ?? "disabled";
-  const stateInfo = statusCopy[providerState];
+  const providerState = assistantStatus?.state ?? "unavailable";
+  const stateInfo = assistantStatus
+    ? statusCopy[assistantStatus.state]
+    : {
+        title: "API indisponível",
+        detail: "Não foi possível consultar a configuração do assistente no servidor.",
+      };
 
   return (
     <section className="panel assistant-workspace" id="assistant" aria-label="Assistente de IA">
