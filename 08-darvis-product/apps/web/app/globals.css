@@ -225,3 +225,18 @@
 
 .assistant-provider-state.state-unavailable{border-color:rgba(248,113,113,.24);color:#fca5a5}
 .assistant-provider-state.state-unavailable>span{background:#f87171}
+
+.assistant-chat-heading-copy{min-width:0;flex:1}
+.assistant-chat-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px;min-width:0}
+.assistant-chat-action{display:grid;place-items:center;width:27px;height:27px;border:1px solid #2b3d52;border-radius:5px;background:#0b1420;color:#8297ad;cursor:pointer}
+.assistant-chat-action:hover{border-color:rgba(56,189,248,.4);color:#c5e8f5}
+.assistant-chat-action.danger:hover{border-color:rgba(248,113,113,.45);color:#fca5a5}
+.assistant-rename-form{display:flex;align-items:center;gap:4px;margin-top:4px}
+.assistant-rename-form input{width:min(230px,48vw);height:28px;padding:0 7px;border:1px solid rgba(56,189,248,.4);border-radius:4px;outline:0;background:#0a111c;color:#dce7f3;font-size:10px}
+.assistant-rename-form button{display:grid;place-items:center;width:27px;height:27px;border:1px solid #2b3d52;border-radius:4px;background:#0b1420;color:#8ca4bb;cursor:pointer}
+.assistant-rename-form button:disabled{opacity:.45;cursor:not-allowed}
+.assistant-delete-confirm{display:flex;align-items:center;flex-wrap:wrap;gap:5px;padding:4px 6px;border:1px solid rgba(248,113,113,.24);border-radius:5px;background:rgba(127,29,29,.08);color:#e7aaaa;font-size:8px}
+.assistant-delete-confirm button{padding:4px 6px;border:1px solid #35445a;border-radius:4px;background:#101a27;color:#a5b5c8;font-size:8px;cursor:pointer}
+.assistant-delete-confirm button.danger{border-color:rgba(248,113,113,.3);color:#fca5a5}
+.assistant-delete-confirm button:disabled{opacity:.45;cursor:wait}
+@media(max-width:520px){.assistant-chat-heading{align-items:flex-start}.assistant-chat-actions{max-width:60%;gap:4px}.assistant-chat-persistence{font-size:0}.assistant-chat-persistence svg{width:15px;height:15px}.assistant-delete-confirm{justify-content:flex-end}.assistant-delete-confirm span{width:100%;text-align:right}}
