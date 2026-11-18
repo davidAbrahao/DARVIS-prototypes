@@ -77,13 +77,25 @@ Com a API ativa, estes endereços devem responder:
 
 ## 5. Criar o primeiro proprietário
 
-O sistema não possui cadastro público. Faça a configuração one-time pela documentação interativa:
+O sistema não possui cadastro público. Abra um terceiro PowerShell no diretório `apps/api` e execute a configuração one-time. O comando não envia cabeçalho `Origin`, por isso não precisa ampliar a lista CORS local apenas para configurar o proprietário:
 
-1. Abra `http://localhost:8000/docs`.
-2. Localize `POST /api/v1/auth/setup`.
-3. Informe e-mail, nome e uma senha com pelo menos 12 caracteres.
-4. Preencha o cabeçalho `X-Setup-Token` com o mesmo valor de `INITIAL_SETUP_TOKEN` salvo no `.env`.
-5. Execute uma única vez. A API cria o proprietário e inicia a sessão.
+```powershell
+$setupToken = ((Select-String -Path .env -Pattern '^INITIAL_SETUP_TOKEN=').Line -split '=', 2)[1]
+$ownerEmail = Read-Host "E-mail do proprietário"
+$ownerName = Read-Host "Nome completo"
+$ownerPassword = Read-Host "Senha (mínimo 12 caracteres)"
+$payload = @{
+    email = $ownerEmail
+    full_name = $ownerName
+    password = $ownerPassword
+} | ConvertTo-Json
+Invoke-RestMethod -Uri "http://localhost:8000/api/v1/auth/setup" -Method POST -Headers @{ "X-Setup-Token" = $setupToken } -ContentType "application/json" -Body $payload
+$setupToken = $null
+$ownerPassword = $null
+$payload = $null
+```
+
+Guarde o e-mail e a senha para entrar pela aplicação web. A documentação interativa da API continua disponível em `http://localhost:8000/docs` para consultar os endpoints.
 
 Depois da criação, remova o valor de `INITIAL_SETUP_TOKEN` do arquivo local `.env` e reinicie a API. O endpoint de configuração inicial não permitirá um segundo proprietário.
 
@@ -94,7 +106,7 @@ Abra um segundo PowerShell:
 ```powershell
 Set-Location "$env:USERPROFILE\Documents\Projetos\DARVIS-prototypes\08-darvis-product\apps\web"
 if (!(Test-Path .env.local)) { Copy-Item .env.example .env.local }
-npm install
+npm install --no-package-lock
 npm run dev
 ```
 
