@@ -251,16 +251,42 @@ def login(
         _record_rate_limited(db, "auth.login.rate_limited", ip_address)
         raise HTTPException(status_code=429, detail="Muitas tentativas. Tente novamente mais tarde")
 
-    user = db.scalar(select(User).where(User.email == normalized_email))
+    # Bloqueio pessimista serializa contadores de falha por identidade.
+    user = db.scalar(select(User).where(User.email == normalized_email).with_for_update())
+    now = utc_now()
+
+    if user is not None and user.locked_until is not None:
+        if user.locked_until > now:
+            # Mantém custo de verificação semelhante, mas nunca autentica uma conta bloqueada.
+            verify_password(password, user.password_hash)
+            _audit(
+                db, event_type="auth.login.failed", outcome="rejected",
+                actor_user_id=user.id, ip_address=ip_address,
+                metadata={"reason": "conta_temporariamente_bloqueada"},
+            )
+            db.commit()
+            raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
+
+        user.failed_login_attempts = 0
+        user.locked_until = None
+
     password_valid = verify_password(password, user.password_hash if user else None)
     if user is None or not user.is_active or not password_valid:
+        if user is not None and user.is_active:
+            user.failed_login_attempts += 1
+            if user.failed_login_attempts >= 8:
+                user.locked_until = now + timedelta(minutes=15)
+
         _audit(
             db, event_type="auth.login.failed", outcome="rejected",
+            actor_user_id=user.id if user else None,
             ip_address=ip_address, metadata={"reason": "credenciais_invalidas"},
         )
         db.commit()
         raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
 
+    user.failed_login_attempts = 0
+    user.locked_until = None
     if password_needs_rehash(user.password_hash):
         user.password_hash = hash_password(password)
 
