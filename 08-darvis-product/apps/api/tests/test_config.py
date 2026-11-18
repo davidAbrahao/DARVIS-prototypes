@@ -32,3 +32,11 @@ def test_production_requires_strong_secret() -> None:
 def test_wildcard_cors_is_rejected() -> None:
     with pytest.raises(ValidationError):
         Settings(app_env="development", cors_origins=["*"])
+
+
+def test_ai_provider_is_disabled_and_credentials_are_empty_by_default() -> None:
+    settings = Settings(app_env="development")
+
+    assert settings.ai_provider == "disabled"
+    assert settings.gemini_api_key.get_secret_value() == ""
+    assert settings.gemini_model == "gemini-3.8-flash"
