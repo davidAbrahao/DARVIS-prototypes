@@ -14,9 +14,18 @@ export type AuthPayload = {
 
 type CsrfPayload = { csrf_token: string };
 
+export type AuthenticatedRequestSession = {
+  accessToken: string;
+  csrfToken: string | null;
+  getLatestAccessToken: () => string | null;
+  onSessionRenewed: (payload: AuthPayload) => void;
+};
+
 const API_BASE_URL = (
   process.env.NEXT_PUBLIC_DARVIS_API_URL ?? "http://localhost:8000/api/v1"
 ).replace(/\/+$/, "");
+
+let refreshInFlight: Promise<AuthPayload> | null = null;
 
 export class ApiError extends Error {
   constructor(
@@ -43,6 +52,51 @@ async function readJson<T>(response: Response): Promise<T> {
   }
 
   return payload as T;
+}
+
+function endpoint(path: string): string {
+  if (!path.startsWith("/") || path.startsWith("//")) {
+    throw new Error("O caminho da API deve ser relativo à origem configurada.");
+  }
+  return `${API_BASE_URL}${path}`;
+}
+
+async function request(
+  path: string,
+  init: RequestInit,
+  accessToken?: string,
+): Promise<Response> {
+  const headers = new Headers(init.headers);
+  headers.set("Accept", "application/json");
+  if (accessToken) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
+  }
+
+  return fetch(endpoint(path), {
+    ...init,
+    headers,
+    credentials: "include",
+    cache: "no-store",
+  });
+}
+
+async function renewOnce(csrfToken: string | null): Promise<AuthPayload> {
+  if (!refreshInFlight) {
+    const operation = (async () => {
+      const csrf = csrfToken ?? (await bootstrapCsrf());
+      return renewSession(csrf);
+    })();
+    refreshInFlight = operation;
+  }
+
+  const operation = refreshInFlight;
+  try {
+    return await operation;
+  } finally {
+    if (refreshInFlight === operation) {
+      refreshInFlight = null;
+    }
+  }
 }
 
 export async function bootstrapCsrf(): Promise<string> {
@@ -78,6 +132,35 @@ export async function renewSession(csrfToken: string): Promise<AuthPayload> {
     },
   });
   return readJson<AuthPayload>(response);
+}
+
+export async function authenticatedApiRequest<T>(
+  path: string,
+  init: RequestInit,
+  session: AuthenticatedRequestSession,
+): Promise<T> {
+  let token = session.accessToken;
+  let response = await request(path, init, token);
+
+  if (response.status === 401) {
+    const latestToken = session.getLatestAccessToken();
+    if (latestToken && latestToken !== token) {
+      token = latestToken;
+      response = await request(path, init, token);
+    }
+
+    if (response.status === 401) {
+      const renewed = await renewOnce(session.csrfToken);
+      session.onSessionRenewed(renewed);
+      token = renewed.access_token;
+      response = await request(path, init, token);
+    }
+  }
+
+  if (response.status === 204) {
+    return undefined as T;
+  }
+  return readJson<T>(response);
 }
 
 export async function endSession(csrfToken: string): Promise<void> {
