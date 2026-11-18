@@ -14,7 +14,7 @@ from app.api.schemas.tasks import TaskCreate, TaskUpdate
 from app.core.config import get_settings
 from app.core.security import hash_password
 from app.db.base import Base
-from app.models import AuditEvent, Task, User
+from app.models import AuditEvent, Project, Task, User
 from app.services.projects import (
     create_project,
     delete_project,
@@ -281,3 +281,32 @@ def test_database_rejects_task_link_to_another_owners_project(db_session: Sessio
     with pytest.raises(IntegrityError):
         db_session.flush()
     nested.rollback()
+
+
+def test_database_enforces_project_and_task_status_constraints(db_session: Session) -> None:
+    owner = _create_owner(db_session)
+
+    invalid_project = db_session.begin_nested()
+    db_session.add(
+        Project(
+            user_id=owner.id,
+            name="Projeto com situação inválida",
+            status="unknown",
+        )
+    )
+    with pytest.raises(IntegrityError):
+        db_session.flush()
+    invalid_project.rollback()
+
+    invalid_task = db_session.begin_nested()
+    db_session.add(
+        Task(
+            user_id=owner.id,
+            title="Tarefa com prioridade inválida",
+            status="todo",
+            priority="critical",
+        )
+    )
+    with pytest.raises(IntegrityError):
+        db_session.flush()
+    invalid_task.rollback()
