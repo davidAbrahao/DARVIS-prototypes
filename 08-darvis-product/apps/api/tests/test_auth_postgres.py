@@ -1,10 +1,12 @@
 import os
 from collections.abc import Generator
+from concurrent.futures import ThreadPoolExecutor
+from threading import Barrier
 
 import pytest
 from fastapi import HTTPException
 from sqlalchemy import create_engine, select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, sessionmaker
 
 from app.core.config import get_settings
 from app.core.security import hash_refresh_token
@@ -211,3 +213,60 @@ def test_invalid_password_returns_generic_authentication_error(db_session: Sessi
     assert known_user_error.value.status_code == 401
     assert unknown_user_error.value.status_code == 401
     assert known_user_error.value.detail == unknown_user_error.value.detail
+
+
+
+def test_concurrent_refresh_reuse_revokes_the_session_family() -> None:
+    engine = create_engine(TEST_DATABASE_URL, pool_pre_ping=True)
+    session_factory = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
+    try:
+        with engine.begin() as connection:
+            for table in reversed(Base.metadata.sorted_tables):
+                connection.execute(table.delete())
+
+        setup_token = get_settings().initial_setup_token.get_secret_value()
+        with session_factory() as db:
+            initial = setup_owner(
+                db,
+                email="concorrencia@darvis.test",
+                full_name="Teste concorrente",
+                password="senha-de-integracao-segura",
+                setup_token=setup_token,
+                ip_address="192.0.2.40",
+            )
+
+        barrier = Barrier(2)
+
+        def rotate_token() -> tuple[str, int | str]:
+            with session_factory() as db:
+                barrier.wait(timeout=10)
+                try:
+                    result = refresh_session(
+                        db,
+                        raw_token=initial.refresh_token,
+                        ip_address="192.0.2.41",
+                    )
+                    return ("success", result.refresh_token)
+                except HTTPException as error:
+                    return ("rejected", error.status_code)
+
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            outcomes = list(pool.map(lambda _: rotate_token(), range(2)))
+
+        assert sum(outcome[0] == "success" for outcome in outcomes) == 1
+        assert sum(outcome == ("rejected", 401) for outcome in outcomes) == 1
+
+        with session_factory() as db:
+            session = db.scalar(
+                select(AuthSession).where(
+                    AuthSession.refresh_token_hash == hash_refresh_token(initial.refresh_token)
+                )
+            )
+            assert session is not None
+            assert session.revoked_at is not None
+            assert session.revoke_reason == "refresh_token_reuse"
+    finally:
+        with engine.begin() as connection:
+            for table in reversed(Base.metadata.sorted_tables):
+                connection.execute(table.delete())
+        engine.dispose()
