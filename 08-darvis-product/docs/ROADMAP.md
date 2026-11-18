@@ -24,14 +24,17 @@ O projeto será entregue em etapas verticais pequenas e verificáveis. Uma etapa
 **Critério de saída:** configuração inicial documentada; API e aplicação web iniciam em ambiente controlado; verificações da integração contínua são executadas com sucesso.
 
 ## Fase 2 — Identidade e domínio principal
-- [ ] Implementar estratégia de cadastro inicial para uma instalação de proprietário único.
-- [ ] Implementar login, logout, rotação de tokens de renovação e revogação de sessões.
-- [ ] Adicionar endpoint de usuário autenticado.
-- [ ] Adicionar operações de criação, consulta, atualização e exclusão de tarefas e projetos, com verificação de propriedade.
-- [ ] Adicionar eventos persistentes de auditoria.
-- [ ] Adicionar testes de integração da API.
+- [x] Implementar cadastro inicial one-time do proprietário, sem cadastro público.
+- [x] Implementar Argon2id, login, access token curto e refresh token em cookie HttpOnly.
+- [x] Implementar rotação transacional, histórico de tokens e detecção de reutilização.
+- [x] Implementar revogação individual/global e endpoint de identidade autenticada.
+- [x] Implementar proteção CSRF e rate limiting persistente para setup, login e refresh.
+- [x] Persistir eventos relevantes de autenticação na auditoria.
+- [ ] Executar e aprovar testes unitários e de integração no PostgreSQL.
+- [ ] Executar revisão independente de segurança da implementação.
+- [ ] Adicionar operações de tarefas e projetos com verificação de propriedade.
 
-**Critério de saída:** usuário autenticado consegue criar e consultar suas próprias tarefas e projetos; acessos não autorizados são rejeitados e testados.
+**Critério de saída:** o proprietário autentica e consulta sua identidade; renova e revoga sessões com controles transacionais; testes e revisão de segurança aprovados.
 
 ## Fase 3 — Cognitive Cockpit
 - [ ] Reconstruir tokens visuais, tipografia, navegação e estrutura responsiva compartilhada a partir do Stitch.
