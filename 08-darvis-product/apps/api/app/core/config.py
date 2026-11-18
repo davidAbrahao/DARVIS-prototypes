@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import SecretStr, field_validator, model_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     cors_origins: list[str] = ["http://localhost:3000"]
     database_url: SecretStr | None = None
     secret_key: SecretStr = SecretStr("")
+    initial_setup_token: SecretStr = SecretStr("")
+    access_token_ttl_minutes: int = Field(default=10, ge=5, le=30)
+    refresh_token_ttl_days: int = Field(default=30, ge=1, le=90)
 
     @field_validator("database_url", mode="before")
     @classmethod
@@ -35,7 +38,7 @@ class Settings(BaseSettings):
     @field_validator("cors_origins")
     @classmethod
     def validate_cors_origins(cls, value: list[str]) -> list[str]:
-        normalized = [origin.rstrip("/") for origin in value]
+        normalized = list(dict.fromkeys(origin.rstrip("/") for origin in value))
         if "*" in normalized:
             raise ValueError("CORS não permite origem curinga")
         return normalized
