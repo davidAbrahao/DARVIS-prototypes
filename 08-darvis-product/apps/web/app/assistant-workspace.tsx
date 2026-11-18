@@ -65,7 +65,8 @@ const statusCopy: Record<AssistantStatus["state"], { title: string; detail: stri
   },
   configured: {
     title: "Provedor configurado",
-    detail: "A configuração foi detectada. A disponibilidade será confirmada ao enviar uma mensagem.",
+    detail:
+      "A configuração foi detectada. A disponibilidade será confirmada ao enviar uma mensagem.",
   },
 };
 
