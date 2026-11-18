@@ -32,6 +32,14 @@ class Settings(BaseSettings):
     def empty_database_url_is_unconfigured(cls, value):
         return None if value == "" else value
 
+    @field_validator("gemini_model")
+    @classmethod
+    def validate_gemini_model(cls, value: str) -> str:
+        normalized = value.strip()
+        if not normalized:
+            raise ValueError("GEMINI_MODEL não pode ficar vazio")
+        return normalized
+
     @field_validator("api_v1_prefix")
     @classmethod
     def validate_api_prefix(cls, value: str) -> str:
