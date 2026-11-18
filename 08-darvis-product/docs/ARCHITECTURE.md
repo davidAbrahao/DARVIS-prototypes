@@ -49,6 +49,14 @@ Situações de projeto: `active`, `on_hold`, `completed`, `archived`. Situaçõe
 
 A interface mantém o access token somente em memória. O refresh permanece no cookie HttpOnly. A renovação automática de chamadas protegidas compartilha uma promessa na aba e utiliza Web Locks para coordenar abas quando o navegador oferece essa API. Nenhum refresh token é copiado para JavaScript ou para armazenamento persistente do navegador. Login, refresh e logout usam a mesma trava. Quando o logout é confirmado, um evento BroadcastChannel sem credenciais notifica as outras abas para limpar o estado local.
 
+## Memória estruturada — primeira implementação
+
+A entidade `memory_entries` é um registro manual, pertencente a um usuário e persistido no PostgreSQL. Cada item possui título, conteúdo, categoria, etiquetas, origem, estado fixado/arquivado e timestamps. A API oferece pesquisa parcial, filtro de categoria, inclusão opcional de arquivados e paginação.
+
+A origem é limitada no serviço e no banco a `manual`. Não há captura automática de fatos pelo modelo, ingestão externa ou sincronização com Obsidian. A interface apresenta a memória como conteúdo sob controle do proprietário, com ações explícitas de criação, edição, fixação, arquivamento, restauração e exclusão.
+
+A memória estruturada e o cofre Markdown são camadas diferentes. O PostgreSQL mantém registros curtos e consultáveis; o Obsidian permanece planejado para notas extensas e documentos, por meio de um adaptador futuro. Nenhuma memória é incluída automaticamente em conversas com provedores. Uma futura seleção de contexto deverá mostrar exatamente quais registros serão compartilhados e com qual provedor.
+
 ## Conversas e provedores de IA — primeira implementação
 
 As conversas e mensagens do assistente são entidades operacionais do PostgreSQL, sempre vinculadas ao usuário autenticado. A API aplica isolamento de proprietário nas consultas e utiliza uma FK composta para impedir associação cruzada entre conversa e usuário.
