@@ -25,7 +25,8 @@ class AssistantMessage(Base):
             name="ck_assistant_messages_role",
         ),
         CheckConstraint(
-            "role = 'user' OR client_message_id IS NULL",
+            "(role = 'user' AND client_message_id IS NOT NULL) "
+            "OR (role = 'assistant' AND client_message_id IS NULL)",
             name="ck_assistant_messages_client_id_role",
         ),
         UniqueConstraint(
