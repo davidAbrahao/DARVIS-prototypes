@@ -220,18 +220,3 @@ export async function endSession(fallbackCsrfToken: string | null): Promise<void
   await performLogout();
 }
 
-export async function endAllSessions(accessToken: string): Promise<void> {
-  const response = await fetch(`${API_BASE_URL}/auth/logout-all`, {
-    method: "POST",
-    credentials: "include",
-    cache: "no-store",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (!response.ok) {
-    await readJson<never>(response);
-  }
-}
