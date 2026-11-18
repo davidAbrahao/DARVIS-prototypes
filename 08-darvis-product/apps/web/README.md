@@ -44,4 +44,4 @@ As verificações acima estão preparadas, mas não foram executadas nesta etapa
 
 ## Estado da interface
 
-A tela de login, a proteção de rota, a restauração, a renovação controlada e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando consulta indicadores, tarefas e projetos reais; permite criar tarefas e projetos, concluir tarefas e alterar a situação dos projetos. Assistente, memória, agenda e integrações continuam identificados como planejados até que existam serviços e dados reais.
+A tela de login, a proteção de rota, a restauração, a renovação controlada e o encerramento da sessão estão conectados aos contratos de autenticação da API. A Central de Comando consulta indicadores, tarefas e projetos reais; permite criar tarefas com projeto, prioridade e prazo, alterar a situação das tarefas, concluir tarefas, criar projetos e alterar a situação dos projetos. Assistente, memória, agenda e integrações continuam identificados como planejados até que existam serviços e dados reais.
