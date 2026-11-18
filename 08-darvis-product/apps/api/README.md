@@ -133,7 +133,7 @@ Todas as rotas exigem access token Bearer e filtram os registros pelo proprietá
 - O corpo de uma mensagem aceita até 16.000 caracteres.
 - O contexto enviado ao provedor usa até as 20 mensagens anteriores, limitado a 48.000 caracteres, além da mensagem atual.
 - O limite persistente inicial é de 20 tentativas de geração por usuário em uma janela de 15 minutos. O estado de bloqueio é coordenado no PostgreSQL e o limite não depende de memória local.
-- Cada envio exige `request_id` UUID. Repetir o mesmo UUID na mesma conversa devolve o turno já persistido, sem gerar outra resposta. O UUID é único por conversa e proprietário.
+- Cada envio exige `request_id` UUID. Depois que um turno é persistido, repetir o mesmo UUID com o mesmo conteúdo na mesma conversa devolve o turno salvo sem chamar novamente o provedor; reutilizar o UUID com conteúdo diferente retorna HTTP 409. O UUID é único por conversa e proprietário. Solicitações literalmente simultâneas podem chamar o provedor mais de uma vez antes do controle de versão escolher o turno vencedor; somente um turno é persistido e a outra solicitação recebe o resultado vencedor ou HTTP 409.
 - A versão da conversa é atualizada por comparação otimista. Se outra solicitação modificar a conversa enquanto o modelo responde, a API retorna HTTP 409 em vez de gravar turnos fora de ordem.
 - Se o provedor falhar, a API retorna HTTP 502, registra o evento de falha sem gravar uma mensagem incompleta e não expõe detalhes internos do SDK.
 - Mensagens e conversas são persistidas no PostgreSQL. A exclusão de uma conversa remove suas mensagens associadas.
