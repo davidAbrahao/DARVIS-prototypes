@@ -1,62 +1,62 @@
-# Security Baseline
+# Requisitos mínimos de segurança
 
-This document defines minimum requirements. It is not a claim that these controls are already implemented.
+Este documento define os requisitos mínimos. Não significa que todos esses controles já estejam implementados.
 
-## Secrets
-- Commit placeholders only; never commit real API keys, passwords, signing keys, or certificates.
-- Load secrets from environment or a managed secret store.
-- Fail startup when required production secrets are missing or use known placeholders.
-- Never expose provider credentials to the browser.
-- Rotate any credential suspected to have entered source control.
+## Segredos e credenciais
+- Incluir no controle de versão somente valores fictícios; nunca incluir chaves reais de API, senhas, chaves de assinatura ou certificados.
+- Carregar segredos por variáveis de ambiente ou por um gerenciador de segredos.
+- Impedir a inicialização em produção quando segredos obrigatórios estiverem ausentes ou contiverem valores conhecidos de exemplo.
+- Nunca expor credenciais de provedores ao navegador.
+- Renovar qualquer credencial que possa ter sido incluída no controle de versão.
 
-## Authentication
-- Hash passwords with Argon2id using reviewed parameters.
-- Use short-lived access credentials.
-- Rotate refresh tokens on every successful refresh.
-- Detect refresh-token reuse and revoke the affected session family.
-- Support logout and server-side session revocation.
-- Rate-limit login, registration/bootstrap, refresh, and password-reset flows.
-- Avoid account-enumeration differences in authentication responses.
+## Autenticação
+- Proteger senhas com Argon2id e parâmetros revisados.
+- Utilizar credenciais de acesso de curta duração.
+- Renovar os tokens de sessão a cada operação bem-sucedida de renovação.
+- Detectar reutilização de token e revogar a família de sessões afetada.
+- Oferecer logout e revogação de sessão no servidor.
+- Limitar tentativas de login, cadastro inicial, renovação e redefinição de senha.
+- Evitar respostas de autenticação que facilitem descobrir se uma conta existe.
 
-## Authorization
-- Deny by default.
-- Enforce ownership and permissions in the API/service layer, not only in UI routing.
-- Validate authorization again when an AI-proposed action is approved.
-- Scope integration credentials to the minimum required permissions.
+## Autorização
+- Negar por padrão.
+- Aplicar propriedade e permissões na camada de API e serviços, não apenas na navegação da interface.
+- Verificar novamente a autorização quando uma ação proposta pela IA for aprovada.
+- Limitar credenciais de integrações às permissões estritamente necessárias.
 
-## AI and tool execution
-- Treat model output as untrusted input.
-- Use strict schemas and explicit tool allowlists.
-- Reject unknown action types and unexpected fields.
-- Bound payload size, string length, array size, and execution time.
-- Never execute arbitrary shell, Python, SQL, or browser instructions from model output.
-- Require explicit approval for consequential actions.
-- Use idempotency keys and persistent execution state.
-- Separate proposal, approval, execution, and result records.
+## IA e execução de ferramentas
+- Tratar toda saída do modelo como entrada não confiável.
+- Utilizar esquemas estritos e listas explícitas de ferramentas permitidas.
+- Rejeitar tipos de ação desconhecidos e campos inesperados.
+- Limitar tamanho de parâmetros, textos, listas e tempo de execução.
+- Nunca executar comandos arbitrários de shell, Python, SQL ou navegador recebidos do modelo.
+- Exigir aprovação explícita para ações com consequências relevantes.
+- Utilizar chaves de idempotência e estado persistente de execução.
+- Manter separados os registros de proposta, aprovação, execução e resultado.
 
-## Data and privacy
-- Minimize context sent to providers.
-- Make context categories visible and configurable.
-- Do not send sensitive data by default.
-- Document provider, region, retention, training use, and applicable terms before enabling a provider.
-- Provide data export and deletion paths.
-- Avoid logging prompts, tokens, secrets, or unnecessary personal content.
+## Dados e privacidade
+- Minimizar o contexto enviado aos provedores.
+- Tornar as categorias de contexto visíveis e configuráveis.
+- Não enviar dados sensíveis por padrão.
+- Documentar provedor, região, retenção, uso para treinamento e termos aplicáveis antes de habilitar um provedor.
+- Oferecer caminhos para exportação e exclusão de dados.
+- Evitar registrar prompts, tokens, segredos ou conteúdo pessoal desnecessário.
 
-## API and infrastructure
-- Enforce HTTPS in deployed environments.
-- Configure explicit CORS origins.
-- Add request size limits and rate limits.
-- Validate all request bodies and query parameters.
-- Use secure headers and trusted proxy configuration.
-- Separate liveness and readiness checks.
-- Run database migrations as a controlled deployment step, not concurrently from every application replica.
-- Maintain encrypted backups and test restoration.
-- Pin and review dependencies; run automated vulnerability checks.
+## API e infraestrutura
+- Exigir HTTPS nos ambientes implantados.
+- Configurar origens CORS explicitamente.
+- Adicionar limites de tamanho de requisição e de frequência.
+- Validar todos os corpos de requisição e parâmetros de consulta.
+- Utilizar cabeçalhos seguros e configuração confiável de proxy.
+- Separar verificações de vida do processo e prontidão dos serviços.
+- Executar migrações do banco como etapa controlada da implantação, não simultaneamente em cada réplica da aplicação.
+- Manter cópias de segurança criptografadas e testar a restauração.
+- Fixar e revisar dependências; executar verificações automatizadas de vulnerabilidades.
 
-## Auditability
+## Rastreabilidade e auditoria
 
-Persist security-relevant events with actor, action, resource, timestamp, correlation ID, decision, and outcome. Audit records must not be editable through ordinary application endpoints.
+Persistir eventos relevantes de segurança com responsável, ação, recurso, data e hora, identificador de correlação, decisão e resultado. Os registros de auditoria não podem ser alterados pelos endpoints comuns da aplicação.
 
-## Release rule
+## Regra para publicação
 
-Any unresolved critical/high security issue blocks production release. Development convenience must never silently weaken production defaults.
+Qualquer vulnerabilidade crítica ou alta ainda não resolvida impede a publicação em produção. Conveniências de desenvolvimento nunca devem enfraquecer silenciosamente as configurações de produção.
