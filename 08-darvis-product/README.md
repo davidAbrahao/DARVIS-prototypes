@@ -19,6 +19,8 @@ A direção visual oficial é o **Cognitive Cockpit**, inspirada no protótipo c
 
 A interface deve ser responsiva, acessível, organizada mesmo com alta densidade de informações e transparente: cada status, métrica, conexão e indicador de execução deve refletir o estado real do sistema.
 
+**Princípio de produto:** não sacrificar a experiência visual para construir a engenharia, nem sacrificar a engenharia para manter a aparência. As duas evoluem juntas.
+
 ## Direção técnica inicial
 
 - Aplicação web: Next.js, React, TypeScript e PWA.
@@ -29,6 +31,11 @@ A interface deve ser responsiva, acessível, organizada mesmo com alta densidade
 - Execução: ferramentas no servidor, com autorização, aprovação, idempotência e registros de auditoria.
 
 Estas são decisões de arquitetura para o novo espaço do produto, não afirmações de que toda essa estrutura já esteja implementada.
+
+## Auditoria e decisões técnicas
+
+- [Auditoria estática do backend Claude](docs/AUDITORIA_BACKEND_CLAUDE.md): o que pode ser reaproveitado, riscos encontrados e plano de adaptação.
+- [ADR-0002 — Sessões e autenticação](docs/DECISOES/ADR-0002-SESSOES-E-AUTENTICACAO.md): direção para sessões persistentes, rotação, revogação e detecção de reutilização.
 
 ## Primeira entrega
 
