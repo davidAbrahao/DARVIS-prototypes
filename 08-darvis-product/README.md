@@ -64,6 +64,10 @@ O espaço de produto já contém a fundação de API e a primeira fatia de domí
 - `docs/SECURITY_BASELINE.md`: requisitos mínimos de segurança.
 - `docs/DECISIONS.md`: histórico das decisões de arquitetura.
 
+## Pré-visualização local
+
+O roteiro para abrir a versão integrada no navegador, iniciar PostgreSQL/API, criar o primeiro proprietário e executar verificações locais está em [Pré-visualização local](docs/PRE-VISUALIZACAO-LOCAL.md). A aplicação ainda não foi validada em runtime nesta branch.
+
 ## Regras inegociáveis de engenharia
 
 - Nunca incluir segredos no controle de versão ou nos arquivos enviados ao navegador.
